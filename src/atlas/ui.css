@@ -270,13 +270,6 @@ body {
   transform: translate(-50%, 24px);
   pointer-events: none;
 }
-.dock-label {
-  color: var(--ink-1);
-  font-size: 0.9375rem;
-  font-weight: 600;
-  letter-spacing: 0.005em;
-  white-space: nowrap;
-}
 
 /* The voice button is a stethoscope's chest piece: a lit green diaphragm in a fine rim.
    It's the one bold thing on screen, and the easiest way in for anyone. */

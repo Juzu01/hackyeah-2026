@@ -108,7 +108,8 @@
   const t = (k) => (L[lang()] || L.pl)[k] ?? L.pl[k];
 
   // ── The scene: a sprout on a horizon that rises left to right, like the tab bar's edge ──
-  // viewBox 360×160; the horizon runs from (0,116) to (360,100), so the stem stands on it at (180,108).
+  // viewBox 360×160; the horizon runs from (0,116) to (360,100), so the stem stands on it at (180,108);
+  // it starts 1.5 above that, so its round end stops on the line instead of poking through.
   // Each leaf is two halves either side of its midrib, one in light and one in shade; both leaves
   // pivot at their base, so they can open on the in-breath and fold on the out-breath.
   function scene(id) {
@@ -122,7 +123,7 @@
   <circle class="sc-glow" cx="180" cy="72" r="86" fill="url(#${id}-glow)"/>
   <g class="sc-motes">${motes}</g>
   <g class="sc-plant">
-    <path class="sc-stem" d="M180 108C181.5 97 177.5 86 180 71"/>
+    <path class="sc-stem" d="M180 106.5C181.5 96 177.5 86 180 71"/>
     <g class="sc-leaf sc-leaf-l">
       <path class="sc-shade" d="M180 74C165 77 145 69 132 52Q156 59 180 74Z"/>
       <path class="sc-light" d="M180 74C171 54 151 45 132 52Q156 59 180 74Z"/>

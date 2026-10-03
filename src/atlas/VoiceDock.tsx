@@ -1,6 +1,7 @@
 // The voice button at the bottom: one tap and you can say what hurts. It opens
 // the conversation and starts listening (or, where the browser can't listen,
-// opens it for typing).
+// opens it for typing). No caption under it: the button speaks for itself, and
+// the welcome sheet explains it once.
 
 import { MicIcon, StopIcon } from './icons.tsx'
 
@@ -12,7 +13,6 @@ interface Props {
 }
 
 export default function VoiceDock({ listening, canListen, hidden, onPress }: Props) {
-  const label = listening ? 'Słucham…' : canListen ? 'Powiedz, co boli' : 'Napisz, co boli'
   return (
     <div className={`dock ${hidden ? 'is-hidden' : ''}`} aria-hidden={hidden || undefined}>
       <button
@@ -27,9 +27,6 @@ export default function VoiceDock({ listening, canListen, hidden, onPress }: Pro
         <span className="voice-ring" />
         {listening ? <StopIcon /> : <MicIcon />}
       </button>
-      <span className="dock-label on-scene" aria-hidden="true">
-        {label}
-      </span>
     </div>
   )
 }
