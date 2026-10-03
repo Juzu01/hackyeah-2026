@@ -13,6 +13,39 @@
 <meta name="theme-color" content="#e8845a">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- HackYeah: GitHub Pages has no server functions (api/*). There, relative fetch('api/...') calls go
+     to the Vercel deployment, so everything works as soon as it allows CORS from https://juzu01.github.io.
+     api/chat gets a 6 s timeout; when it fails, offline-companion.js answers (see sendMessage). -->
+<script>
+(function () {
+  if (!/(^|\.)github\.io$/.test(location.hostname) || !window.fetch) return;
+  var API = 'https://soleil-sage.vercel.app/';
+  var localApi = new URL('api/', location.href).href;
+  var nativeFetch = window.fetch;
+  var downUntil = 0; // after a failed call, skip the server for 60 s (offline replies come at once)
+  function remember(promise) {
+    return promise.then(function (res) { downUntil = 0; return res; }, function (err) { downUntil = Date.now() + 60000; throw err; });
+  }
+  window.fetch = function (input, init) {
+    var url = typeof input === 'string' ? input : (input instanceof URL ? input.href : null);
+    if (url !== null) {
+      if (url.indexOf('./api/') === 0) url = url.slice(2);
+      var path = url.indexOf('api/') === 0 ? url : (url.indexOf(localApi) === 0 ? 'api/' + url.slice(localApi.length) : null);
+      if (path) {
+        if (Date.now() < downUntil) return Promise.reject(new TypeError('Soleil API unavailable'));
+        if (/^api\/chat(\?|$)/.test(path) && window.AbortController && !(init && init.signal)) {
+          var ctl = new AbortController();
+          var timer = setTimeout(function () { ctl.abort(); }, 6000);
+          return remember(nativeFetch.call(window, API + path, Object.assign({}, init, { signal: ctl.signal })))
+            .finally(function () { clearTimeout(timer); });
+        }
+        return remember(nativeFetch.call(window, API + path, init));
+      }
+    }
+    return nativeFetch.call(window, input, init);
+  };
+})();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <script
   async
@@ -302,6 +335,133 @@
   #clerk-sign-in .cl-main { gap: 16px; }
   #clerk-sign-in .cl-card > div:last-child:not(.cl-footer) { position: static; transform: none; align-self: center; align-items: center; gap: 4px; background: none; padding: 0; color: var(--muted); opacity: 0.6; }
   * { scrollbar-width: thin; scrollbar-color: var(--accent2) transparent; }
+
+  /* === Mobile comfort (HackYeah) ===
+     Phone readability and comfort: AA contrast (≥ 4.5:1), body text ≥ 16px, tap targets ≥ 44px,
+     safe areas, calmer background. Plus the 3D atlas / "Gdzie boli?" cards and the offline chat styles.
+     Overrides only: the rules above stay unchanged. */
+  :root {
+    --muted: #6e5d52;        /* was #9e8e83: 2.9:1 on cream, now 5.9:1 */
+    --ink: #a84a22;          /* coral for text: 5.3:1 on cream (--accent #e8845a is 2.5:1) */
+    --accent-deep: #b4532a;  /* fill under white text: 5.0:1 */
+    --cta: linear-gradient(135deg, #a84a22, #b4532a);
+  }
+  * { scrollbar-color: rgba(58,46,40,0.22) transparent; }
+  @supports (height: 100dvh) { html, body, .app { height: 100dvh; } }
+  .app { padding-left: max(14px, env(safe-area-inset-left)); padding-right: max(14px, env(safe-area-inset-right)); }
+  .particles { opacity: 0.6; }
+
+  /* Header */
+  header { padding-top: max(10px, env(safe-area-inset-top)); gap: 6px; }
+  .header-text h1 { color: var(--ink); font-size: 1.4rem; }
+  .header-text p { font-size: 0.8125rem; font-weight: 400; color: var(--muted); }
+  .back-btn, .header-icon-btn, .week-btn, .push-btn, .lang-btn, .user-avatar { width: 44px; height: 44px; font-size: 1.05rem; }
+  .back-btn, .header-icon-btn { color: var(--ink); }
+  .back-btn.visible + .logo-circle { display: none; }
+  .back-btn:hover, .header-icon-btn:hover, .week-btn:hover { background: var(--accent-deep); }
+  .header-icon-btn.hy-labeled { width: auto; padding: 0 14px 0 11px; gap: 6px; border-radius: 22px; font: 700 0.9375rem/1 'Lato', sans-serif; }
+  .auth-btn { min-height: 44px; padding: 0 14px; font-size: 0.9375rem; font-weight: 700; color: var(--ink); background: transparent; border-color: rgba(168,74,34,0.3); box-shadow: none; }
+  .auth-btn:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
+  .inapp-banner { font-size: 0.875rem; }
+  .inapp-banner button { min-height: 44px; font-size: 0.875rem; background: var(--accent-deep); }
+
+  /* User menu and popups */
+  .user-menu { top: calc(max(10px, env(safe-area-inset-top)) + 56px); right: max(14px, env(safe-area-inset-right)); width: max-content; min-width: 240px; max-width: calc(100vw - 28px); padding: 6px; }
+  .user-menu-name { font-size: 1rem; }
+  .user-menu-email { font-size: 0.875rem; }
+  .user-menu-btn { min-height: 48px; padding: 10px 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+  .popup-close { width: 44px; height: 44px; top: 6px; right: 6px; font-size: 1.2rem; border-radius: 50%; }
+  .popup h2, .lang-popup h2, .conversations-header h2 { color: var(--ink); }
+  .popup p { font-size: 0.9375rem; }
+  .popup-btn, .new-chat-btn { min-height: 48px; font-size: 1rem; background: var(--cta); }
+  .mood-label { font-size: 0.75rem; }
+  .conv-delete { min-width: 44px; min-height: 44px; }
+
+  /* Chat */
+  .chat-window { overscroll-behavior: contain; scrollbar-color: rgba(58,46,40,0.18) transparent; }
+  .chat-window::-webkit-scrollbar-thumb { background: rgba(58,46,40,0.18); }
+  @media (max-width: 600px), (pointer: coarse) {
+    .chat-window { scrollbar-width: none; }
+    .chat-window::-webkit-scrollbar { display: none; }
+  }
+  .bubble { font-size: 1.0625rem; line-height: 1.55; max-width: 84%; overflow-wrap: anywhere; }
+  .bubble.user { background: var(--cta); }
+  .bubble.ai a { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+  .hy-offline-note { display: block; margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(58,46,40,0.1); font-size: 0.875rem; line-height: 1.45; color: var(--muted); }
+  .hy-offline-note a { white-space: nowrap; }
+  .hy-help { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+  .bubble.ai a.hy-tel-row { display: flex; flex-direction: column; gap: 2px; min-height: 44px; padding: 10px 14px; border: 1.5px solid #efc2a6; border-radius: 14px; background: #fff6ef; color: var(--text); font-weight: 400; text-decoration: none; }
+  .hy-tel-row strong { font-size: 1.125rem; color: var(--ink); }
+  .hy-tel-row span { font-size: 0.9375rem; line-height: 1.35; color: var(--muted); }
+  .hy-reminder { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; font-size: 0.875rem; color: var(--muted); }
+  .bubble.ai a.hy-tel { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 104px; padding: 0 14px; border-radius: 22px; background: var(--accent-deep); color: #fff; text-decoration: none; font-weight: 700; white-space: nowrap; }
+  .hy-reminder a.hy-tel { min-width: 0; }
+
+  /* Welcome: what Soleil is and what to do */
+  .welcome { padding: 10px 4px 20px; }
+  .welcome .sun { font-size: 2.2rem; margin-bottom: 6px; }
+  .welcome h2 { color: var(--ink); font-size: 1.6rem; line-height: 1.2; }
+  .welcome p { color: #4d3f37; font-size: 1.0625rem; font-weight: 400; line-height: 1.55; max-width: 420px; }
+  .hy-free-note { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 6px 14px; border-radius: 999px; background: #e3f0ec; color: #2c5953; font-size: 0.9375rem; font-weight: 700; }
+  .hy-free-note::before { content: '✓'; }
+  .hy-free-note[hidden] { display: none; }
+  .suggestions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+  .suggestion-btn { min-height: 56px; padding: 8px 12px; border-radius: 16px; font-size: 1rem; font-weight: 700; line-height: 1.25; color: var(--ink); border-color: #ebb08f; }
+  .suggestion-btn:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
+
+  /* Quote of the day */
+  .daily-card { margin-top: 18px; padding: 14px 16px; text-align: left; }
+  .daily-label { font-size: 0.75rem; color: var(--ink); }
+  .daily-quote { font-family: 'Playfair Display', serif; font-size: 1.125rem; line-height: 1.45; color: var(--text); }
+  .daily-author { font-size: 0.875rem; color: var(--muted); margin-top: 4px; }
+  .daily-loading { text-align: left; font-size: 0.9375rem; color: var(--muted); }
+
+  /* 3D atlas card and "Gdzie boli?" */
+  .hy-atlas-card { margin-top: 16px; background: #fff; border-radius: 22px; overflow: hidden; box-shadow: 0 4px 18px var(--shadow); cursor: pointer; text-align: left; animation: fadeSlideIn 0.8s ease both; animation-delay: 0.35s; }
+  .hy-atlas-visual { position: relative; height: 210px; background: #0b1f1c; overflow: hidden; }
+  .hy-atlas-visual img { position: absolute; top: 0; right: 0; height: 100%; width: auto; }
+  .hy-atlas-head { position: relative; max-width: 64%; padding: 22px 18px; }
+  .hy-atlas-fact { position: absolute; left: 18px; bottom: 16px; max-width: 52%; font-size: 0.875rem; line-height: 1.35; color: #c9d6d2; }
+  .hy-eyebrow { display: block; margin-bottom: 8px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #f3d488; }
+  .hy-atlas-head h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 1.6rem; line-height: 1.15; color: #fdf6ee; }
+  .hy-atlas-body { padding: 14px 18px 18px; }
+  .hy-atlas-body p { margin-bottom: 14px; font-size: 1rem; line-height: 1.5; color: var(--text); }
+  .hy-btn { width: 100%; min-height: 52px; display: flex; align-items: center; justify-content: center; gap: 8px; border: none; border-radius: 16px; background: var(--cta); color: #fff; font: 700 1.0625rem 'Lato', sans-serif; cursor: pointer; box-shadow: 0 4px 14px rgba(168,74,34,0.28); }
+  .hy-atlas-card:hover .hy-btn { filter: brightness(1.06); }
+  .hy-mini-card { width: 100%; min-height: 72px; margin-top: 12px; display: flex; align-items: center; gap: 12px; padding: 14px 12px 14px 14px; background: #fff; border: 1px solid rgba(232,132,90,0.14); border-radius: 18px; box-shadow: 0 2px 10px var(--shadow); text-align: left; cursor: pointer; font-family: 'Lato', sans-serif; color: var(--text); animation: fadeSlideIn 0.8s ease both; animation-delay: 0.4s; }
+  .hy-mini-icon { flex-shrink: 0; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 14px; background: #e3f0ec; font-size: 1.5rem; }
+  .hy-mini-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+  .hy-mini-text strong { font-size: 1.0625rem; }
+  .hy-mini-text span { font-size: 1rem; line-height: 1.4; color: var(--muted); }
+  .hy-mini-arrow { flex-shrink: 0; font-size: 1.8rem; line-height: 1; color: var(--ink); }
+
+  /* Short exercise: chips instead of the figure */
+  .body-card { padding: 18px 16px; }
+  .body-card-title { font-size: 1.15rem; color: var(--ink); }
+  .body-card-sub { margin-bottom: 14px; font-size: 1rem; color: var(--muted); }
+  .body-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .body-chips .body-zone { opacity: 1; min-height: 48px; padding: 6px 10px; line-height: 1.2; border: 1.5px solid #efc2a6; border-radius: 16px; background: #fff8f2; color: var(--text); font: 700 1rem 'Lato', sans-serif; cursor: pointer; transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
+  .body-chips .body-zone:hover { opacity: 1; border-color: var(--accent-deep); }
+  .body-chips .body-zone.selected { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
+  .body-card .body-detail { display: block; min-height: 0; margin-top: 14px; }
+  .body-card .body-detail-placeholder { padding: 4px 0 0; font-size: 1rem; color: var(--muted); }
+  .body-detail-title { font-size: 1.0625rem; color: var(--ink); }
+  .body-detail-link, .body-detail-exercise { font-size: 1rem; }
+
+  /* Input bar: 16px+ text (no zoom on iPhone), 44px buttons, emoji row and footer in one line */
+  .input-area { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; column-gap: 10px; padding: 8px 0 4px; }
+  .input-wrapper { flex: 1 0 100%; align-items: center; padding: 6px 6px 6px 18px; border-color: rgba(168,74,34,0.22); }
+  #userInput { font-size: 1.0625rem; line-height: 1.45; min-height: 26px; }
+  #userInput::placeholder { color: var(--muted); font-weight: 400; opacity: 1; }
+  .send-btn { width: 44px; height: 44px; background: var(--cta); box-shadow: 0 2px 10px rgba(168,74,34,0.3); }
+  .send-btn svg { width: 18px; height: 18px; }
+  .mood-bar { padding: 0; gap: 8px; font-size: 0.8rem; opacity: 0.55; }
+  .hy-footer a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; font-size: 0.875rem; color: var(--muted); text-decoration: underline; text-decoration-color: rgba(110,93,82,0.45); text-underline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .particles { display: none; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
 </style>
 <link rel="stylesheet" href="voice.css">
 </head>
@@ -481,7 +641,7 @@
   <button class="user-menu-btn" id="pushMenuBtn" onclick="document.getElementById('userMenu').classList.remove('visible'); setTimeout(togglePushNotifications, 400)">🔔 <span id="menuPushLabel">Włącz powiadomienia</span></button>
   <button class="user-menu-btn premium-menu" id="premiumMenuBtn" onclick="openPremium()" style="display:none">✨ <span id="menuPremiumLabel">Przejdź na Premium</span></button>
   <button class="user-menu-btn" onclick="openReferral(); toggleUserMenu()">🎁 <span id="menuReferralLabel">Poleć znajomym</span></button>
-  <button class="user-menu-btn" onclick="location.href='cialo/'">🫀 <span>Mapa ciała</span></button>
+  <button class="user-menu-btn" onclick="location.href='cialo/'">🫀 <span>Atlas ciała 3D</span></button>
   <button class="user-menu-btn" onclick="location.href='gdzie-boli/'">🩺 <span>Gdzie boli?</span></button>
   <div style="height:1px;background:rgba(232,132,90,0.1);margin:4px 0;"></div>
   <button class="user-menu-btn danger" onclick="signOut()">🚪 <span id="menuSignOutLabel">Wyloguj się</span></button>
@@ -493,9 +653,9 @@
     <button onclick="copyPageLink()" id="inappBannerBtn">Kopiuj link</button>
   </div>
   <header>
-    <button class="back-btn" id="backBtn" onclick="goBack()">←</button>
+    <button class="back-btn" id="backBtn" onclick="goBack()" aria-label="Wróć do początku">←</button>
     <div class="logo-circle">
-      <img src="logosoleil.png" style="width:90px;height:90px;object-fit:contain;">
+      <img src="img/logo-soleil.webp" alt="" style="width:90px;height:90px;object-fit:contain;">
     </div>
     <div class="header-text">
       <h1>Soleil</h1>
@@ -504,7 +664,7 @@
     <div class="header-actions">
       <span id="premiumBadge">✨ Premium</span>
       <span id="streakBadge"></span>
-      <button class="header-icon-btn visible" onclick="openSummary()" title="Mój tydzień">📊</button>
+      <button class="header-icon-btn visible hy-labeled" onclick="openSummary()" title="Mój tydzień" aria-label="Nastrój: mój tydzień"><span aria-hidden="true">📊</span><span class="hy-btn-label" id="hyMoodLabel">Nastrój</span></button>
       <button class="header-icon-btn" id="conversationsBtn" onclick="openConversations()" title="Rozmowy">💬</button>
       <button class="auth-btn" id="loginBtn" onclick="openAuth()">Zaloguj się</button>
       <div class="user-avatar" id="userAvatar" onclick="toggleUserMenu()"></div>
@@ -515,7 +675,8 @@
     <div class="welcome" id="welcomeMsg">
       <span class="sun">☀️</span>
       <h2>Hej, jestem tu dla Ciebie</h2>
-      <p>Możesz mi powiedzieć wszystko — swoje troski, problemy, smutki. Pomogę Ci spojrzeć na nie z nowej perspektywy. 💛</p>
+      <p>Jestem Soleil, Twój przyjaciel AI do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz — albo wybierz temat poniżej.&nbsp;💛</p>
+      <div class="hy-free-note" id="hyFreeNote">Możesz pisać od razu — bez logowania.</div>
       <div class="suggestions">
         <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s1 || translations.pl.s1)">😔 Jestem smutny/a</button>
         <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s2 || translations.pl.s2)">💼 Problem w pracy/szkole</button>
@@ -536,27 +697,44 @@
         </div>
       </div>
 
+      <!-- HackYeah: entry points to the rest of the product (3D atlas, "Gdzie boli?").
+           Navigation via location.href, as in the user menu: tools/sprawdz.py doesn't build cialo/ and gdzie-boli/ -->
+      <div class="hy-atlas-card" onclick="location.href='cialo/'">
+        <div class="hy-atlas-visual">
+          <img src="img/atlas-3d.webp" width="502" height="630" alt="Trójwymiarowy model ciała człowieka z widocznymi mięśniami" loading="lazy">
+          <div class="hy-atlas-head">
+            <span class="hy-eyebrow">Atlas ciała · 3D</span>
+            <h3>Zobacz swoje ciało w&nbsp;3D</h3>
+          </div>
+          <span class="hy-atlas-fact">Ponad 100 części ciała z prostym opisem</span>
+        </div>
+        <div class="hy-atlas-body">
+          <p>Obracaj model palcem i dotknij mięśnia albo narządu — zobaczysz prosty opis, co to jest i do czego służy.</p>
+          <button type="button" class="hy-btn">Otwórz atlas ciała <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+      <button type="button" class="hy-mini-card" onclick="location.href='gdzie-boli/'">
+        <span class="hy-mini-icon" aria-hidden="true">🩺</span>
+        <span class="hy-mini-text"><strong>Gdzie boli?</strong><span>Sprawdź objaw krok po kroku: wskaż miejsce na sylwetce i odpowiedz na kilka pytań.</span></span>
+        <span class="hy-mini-arrow" aria-hidden="true">›</span>
+      </button>
+
       <!-- Ruch i ciało -->
       <div class="body-card" id="bodyCard">
-        <div class="body-card-title" id="bodyTitle">Ruch i ciało 🧍</div>
-        <div class="body-card-sub" id="bodySubtitle">Dotknij część ciała, żeby zobaczyć krótkie ćwiczenie powiązane z nastrojem.</div>
-        <div class="body-card-row">
-          <div class="body-silhouette-wrap">
-            <svg class="body-silhouette" id="bodySvg" viewBox="0 0 200 420" xmlns="http://www.w3.org/2000/svg">
-              <circle class="body-zone" data-zone="head_neck" cx="100" cy="36" r="26"></circle>
-              <rect class="body-zone" data-zone="head_neck" x="88" y="58" width="24" height="18" rx="6"></rect>
-              <rect class="body-zone" data-zone="shoulders" x="48" y="78" width="104" height="26" rx="13"></rect>
-              <rect class="body-zone" data-zone="chest" x="62" y="98" width="76" height="56" rx="16"></rect>
-              <rect class="body-zone" data-zone="arms" x="18" y="86" width="26" height="118" rx="13"></rect>
-              <rect class="body-zone" data-zone="arms" x="156" y="86" width="26" height="118" rx="13"></rect>
-              <rect class="body-zone" data-zone="core" x="66" y="150" width="68" height="58" rx="18"></rect>
-              <rect class="body-zone" data-zone="legs" x="66" y="206" width="30" height="170" rx="14"></rect>
-              <rect class="body-zone" data-zone="legs" x="104" y="206" width="30" height="170" rx="14"></rect>
-            </svg>
-          </div>
-          <div class="body-detail" id="bodyDetail">
-            <div class="body-detail-placeholder">👆 <span id="bodyPlaceholderText">Wybierz część ciała</span></div>
-          </div>
+        <div class="body-card-title" id="bodyTitle">Minuta ruchu na lepszy nastrój</div>
+        <div class="body-card-sub" id="bodySubtitle">Gdzie czujesz napięcie? Wybierz miejsce, a pokażę krótkie ćwiczenie.</div>
+        <!-- HackYeah: big chips instead of the SVG figure. id="bodySvg" and data-zone stay, because the existing
+             click handler (selectBodyZone) is bound to them; chip labels are translated in the "Mobile comfort" script. -->
+        <div class="body-chips" id="bodySvg" role="group" aria-label="Część ciała">
+          <button type="button" class="body-zone body-chip" data-zone="head_neck">🧠 Głowa i kark</button>
+          <button type="button" class="body-zone body-chip" data-zone="shoulders">💪 Barki i ramiona</button>
+          <button type="button" class="body-zone body-chip" data-zone="chest">🫁 Klatka piersiowa</button>
+          <button type="button" class="body-zone body-chip" data-zone="core">🌀 Brzuch i rdzeń</button>
+          <button type="button" class="body-zone body-chip" data-zone="arms">🙌 Ręce i dłonie</button>
+          <button type="button" class="body-zone body-chip" data-zone="legs">🦵 Nogi</button>
+        </div>
+        <div class="body-detail" id="bodyDetail" aria-live="polite">
+          <div class="body-detail-placeholder">👆 <span id="bodyPlaceholderText">Wybierz część ciała</span></div>
         </div>
       </div>
 
@@ -576,17 +754,17 @@
 
   <div class="input-area">
     <div class="input-wrapper">
-      <textarea id="userInput" placeholder="Napisz mi o swoim dniu..." rows="1"></textarea>
+      <textarea id="userInput" placeholder="Napisz mi o swoim dniu..." rows="1" aria-label="Wiadomość do Soleil" enterkeyhint="send"></textarea>
       <button class="send-btn" id="voiceCallBtn" onclick="openVoiceCall()" title="Porozmawiaj z Soleil" aria-label="Porozmawiaj z Soleil">
         <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
       </button>
-      <button class="send-btn" onclick="sendMessage()">
+      <button class="send-btn" onclick="sendMessage()" aria-label="Wyślij" title="Wyślij">
         <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
       </button>
     </div>
-    <div class="mood-bar">🌸 🌈 ✨ 🌻 💛 🌿 🤗</div>
-    <div style="text-align:center;padding:4px 0 0;font-size:0.65rem;opacity:0.45;">
-      <a href="privacy.html" style="color:var(--muted);text-decoration:none;" id="privacyLink">Polityka prywatności</a>
+    <div class="mood-bar" aria-hidden="true">🌸 🌈 ✨ 🌻 💛 🌿 🤗</div>
+    <div class="hy-footer">
+      <a href="privacy.html" id="privacyLink">Polityka prywatności</a>
     </div>
   </div>
 </div>
@@ -690,7 +868,7 @@ const translations = {
   pl: {
     tagline: 'Zawsze tutaj dla Ciebie',
     welcomeTitle: 'Hej, jestem tu dla Ciebie',
-    welcomeText: 'Możesz mi powiedzieć wszystko — swoje troski, problemy, smutki. Pomogę Ci spojrzeć na nie z nowej perspektywy. 💛',
+    welcomeText: 'Jestem Soleil, Twój przyjaciel AI do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz — albo wybierz temat poniżej.\u00a0💛',
     s1: '😔 Jestem smutny/a', s2: '💼 Problem w pracy/szkole', s3: '💔 Kłótnia z kimś bliskim', s4: '😰 Czuję stres',
     placeholder: 'Napisz mi o swoim dniu...',
     loginBtn: 'Zaloguj się',
@@ -731,7 +909,7 @@ const translations = {
   en: {
     tagline: 'Always here for you',
     welcomeTitle: 'Hey, I\'m here for you',
-    welcomeText: 'You can tell me anything — your worries, problems, sadness. I\'ll help you see them from a new perspective. 💛',
+    welcomeText: 'I\'m Soleil, your AI friend to talk to about whatever is on your mind. Write how you feel — or pick a topic below.\u00a0💛',
     s1: '😔 I\'m sad', s2: '💼 Work/school problem', s3: '💔 Argument with someone', s4: '😰 I feel stressed',
     placeholder: 'Tell me about your day...',
     loginBtn: 'Sign in',
@@ -959,10 +1137,10 @@ function updateInterfaceLanguage(lang) {
   if (document.getElementById('wardrobeSubtitle')) document.getElementById('wardrobeSubtitle').textContent = wardrobeSubs[lang] || wardrobeSubs.pl;
   if (document.getElementById('closeWardrobeBtn')) document.getElementById('closeWardrobeBtn').textContent = wardrobeClose[lang] || wardrobeClose.pl;
   // Popup ruchu i ciała
-  const bodyTitles = { pl: 'Ruch i ciało 🧍', en: 'Movement & body 🧍', uk: 'Рух і тіло 🧍', de: 'Bewegung & Körper 🧍', es: 'Movimiento y cuerpo 🧍' };
+  const bodyTitles = { pl: 'Minuta ruchu na lepszy nastrój', en: 'A minute of movement for your mood', uk: 'Рух і тіло 🧍', de: 'Bewegung & Körper 🧍', es: 'Movimiento y cuerpo 🧍' };
   const bodySubs = {
-    pl: 'Dotknij część ciała, żeby zobaczyć krótkie ćwiczenie powiązane z nastrojem.',
-    en: 'Tap a body part to see a short exercise linked to your mood.',
+    pl: 'Gdzie czujesz napięcie? Wybierz miejsce, a pokażę krótkie ćwiczenie.',
+    en: 'Where do you feel tension? Pick a spot and I\'ll show you a short exercise.',
     uk: 'Торкнися частини тіла, щоб побачити коротку вправу, пов\'язану з настроєм.',
     de: 'Tippe auf einen Körperteil, um eine kurze Übung passend zu deiner Stimmung zu sehen.',
     es: 'Toca una parte del cuerpo para ver un ejercicio corto relacionado con tu estado de ánimo.'
@@ -2111,6 +2289,15 @@ async function sendMessage() {
     conversationHistory.push({ role: 'assistant', content: reply });
     appendMessage('ai', reply);
   } catch (err) {
+    // HackYeah: no AI server (e.g. on GitHub Pages) -> the offline companion from offline-companion.js answers
+    const offline = currentLanguage === 'pl' && window.SoleilOffline ? window.SoleilOffline.reply(text) : null;
+    if (offline) {
+      await new Promise(r => setTimeout(r, offline.delay));
+      removeTyping();
+      conversationHistory.push({ role: 'assistant', content: offline.text });
+      appendMessage('ai', offline.html);
+      return;
+    }
     removeTyping();
     appendMessage('ai', 'Przepraszam, mam chwilowe trudności z połączeniem. 🌸');
   }
@@ -2120,6 +2307,103 @@ window.__clerk_init = initClerk;
 document.querySelector('script[data-clerk-publishable-key]').onload = initClerk;
 window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangUI(); updateInterfaceLanguage(currentLanguage); loadDailyQuote(); });
 </script>
+<script>
+/* === Mobile comfort (HackYeah) ===
+   Small additions to the main page; Clerk/Stripe/push/pet/voice logic is unchanged.
+   Existing functions are wrapped, not rewritten: the original runs first, then the addition. */
+(function () {
+  // 1. Quote of the day: when the API doesn't respond (e.g. on GitHub Pages), a local quote, one per day.
+  //    Never an empty card. Real quotes with their sources; the rest are thoughts without an author.
+  const HY_QUOTES = [
+    ['Czemu ty się, zła godzino, z niepotrzebnym mieszasz lękiem? Jesteś — a więc musisz minąć. Miniesz — a więc to jest piękne.', 'Wisława Szymborska, „Nic dwa razy”'],
+    ['W środku zimy wreszcie zrozumiałem, że jest we mnie niezwyciężone lato.', 'Albert Camus, „Powrót do Tipasy”'],
+    ['Człowiek jest jak rower: tylko w ruchu łatwo utrzymuje równowagę.', 'Albert Einstein, w liście do syna'],
+    ['Podróż tysiąca mil zaczyna się od pierwszego kroku.', 'Laozi'],
+    ['Nie same rzeczy nas niepokoją, lecz nasze wyobrażenia o nich.', 'Epiktet'],
+    ['Nie dlatego nie mamy odwagi, że rzeczy są trudne. Są trudne, bo nie mamy odwagi.', 'Seneka'],
+    ['Kiedy nie możemy już zmienić sytuacji, stajemy przed wyzwaniem, by zmienić siebie.', 'Viktor E. Frankl'],
+    ['Dobrze widzi się tylko sercem. Najważniejsze jest niewidoczne dla oczu.', 'Antoine de Saint-Exupéry, „Mały Książę”'],
+    ['Wszystko ma w sobie pęknięcie — i właśnie tędy wpada światło.', 'Leonard Cohen, „Anthem”'],
+    ['Musimy tylko zdecydować, co zrobić z czasem, który został nam dany.', 'J.R.R. Tolkien, „Władca Pierścieni”'],
+    ['Gorszy dzień to nie gorsze życie. Jutro możesz zacząć od nowa.', ''],
+    ['Nie musisz dziś zrobić wszystkiego. Wystarczy jeden mały krok.', ''],
+    ['Traktuj siebie z taką życzliwością, jaką okazujesz przyjaciołom.', ''],
+    ['Odpoczynek to nie strata czasu. To część drogi.', ''],
+    ['Kilka spokojnych oddechów i krótki spacer potrafią zmienić cały dzień.', ''],
+  ];
+  const $ = (id) => document.getElementById(id);
+  function hyQuoteShown() {
+    const q = ($('dailyQuote').textContent || '').replace(/["„”\s]/g, '');
+    return $('dailyContent').style.display !== 'none' && q !== '' && q !== 'undefined' && q !== 'null';
+  }
+  function hyShowLocalQuote() {
+    if (currentLanguage !== 'pl') { $('dailyCard').style.display = 'none'; return; } // local quotes are Polish only
+    try { // drop a broken API response cached for today, so the API is retried next time
+      const key = `soleil_daily_${new Date().toISOString().split('T')[0]}_${currentLanguage}`;
+      const cached = JSON.parse(localStorage.getItem(key) || 'null');
+      if (cached && !cached.quote) localStorage.removeItem(key);
+    } catch (e) {}
+    const d = new Date();
+    const [quote, author] = HY_QUOTES[Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5) % HY_QUOTES.length];
+    $('dailyLabel').textContent = author ? 'Cytat dnia' : 'Przemyślenie dnia';
+    $('dailyQuote').textContent = `„${quote}”`;
+    $('dailyAuthor').textContent = author ? `— ${author}` : '';
+    $('dailyLoading').style.display = 'none';
+    $('dailyContent').style.display = 'block';
+    $('dailyCard').style.display = '';
+  }
+  const hyLoadDailyQuote = loadDailyQuote;
+  loadDailyQuote = async function () {
+    $('dailyCard').style.display = '';
+    const run = hyLoadDailyQuote().catch(() => {}).then(() => { if (!hyQuoteShown()) hyShowLocalQuote(); });
+    await Promise.race([run, new Promise((r) => setTimeout(r, 5000))]);
+    if (!hyQuoteShown()) hyShowLocalQuote();
+  };
+
+  // 2. Translated labels: "Nastrój" in the header, "no login needed", exercise chips (from BODY_ZONES)
+  const HY_MOOD = { pl: 'Nastrój', en: 'Mood', uk: 'Настрій', de: 'Stimmung', es: 'Ánimo' };
+  const HY_FREE = { pl: 'Możesz pisać od razu — bez logowania.', en: 'You can start right away — no sign-in needed.', uk: 'Можна писати одразу — без входу.', de: 'Du kannst sofort schreiben — ohne Anmeldung.', es: 'Puedes escribir ya — sin iniciar sesión.' };
+  const hyUpdateInterfaceLanguage = updateInterfaceLanguage;
+  updateInterfaceLanguage = function (lang) {
+    hyUpdateInterfaceLanguage(lang);
+    $('hyMoodLabel').textContent = HY_MOOD[lang] || HY_MOOD.pl;
+    $('hyFreeNote').textContent = HY_FREE[lang] || HY_FREE.pl;
+    document.querySelectorAll('.body-chip').forEach((b) => {
+      const z = BODY_ZONES[b.dataset.zone];
+      if (z) b.textContent = `${z.icon} ${z.title[lang] || z.title.pl}`;
+    });
+  };
+  // "Bez logowania" only makes sense when logged out
+  const hyUpdateAuthUI = updateAuthUI;
+  updateAuthUI = function (user) { hyUpdateAuthUI(user); $('hyFreeNote').hidden = !!user; };
+
+  // 3. "Nastrój" (week summary) when logged out: sign-in instead of the "Nie udało się załadować" error
+  const hyOpenSummary = openSummary;
+  openSummary = function () { if (!currentUser) { openAuth(); return; } return hyOpenSummary(); };
+
+  // 4. Calmer background: half the particles, slower
+  document.querySelectorAll('#particles .particle').forEach((p, i) => {
+    if (i % 2) { p.remove(); return; }
+    p.style.animationDuration = (parseFloat(p.style.animationDuration) * 1.8).toFixed(1) + 's';
+  });
+
+  // 5. Names for icon-only buttons (screen readers); voice.js adds its popups later, hence also on load
+  function hyLabelButtons() {
+    document.querySelectorAll('.popup-close:not([aria-label])').forEach((b) => b.setAttribute('aria-label', 'Zamknij'));
+    $('conversationsBtn')?.setAttribute('aria-label', 'Rozmowy');
+    const avatar = $('userAvatar');
+    if (avatar && !avatar.hasAttribute('role')) {
+      avatar.setAttribute('role', 'button');
+      avatar.setAttribute('tabindex', '0');
+      avatar.setAttribute('aria-label', 'Menu konta');
+      avatar.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleUserMenu(); } });
+    }
+  }
+  hyLabelButtons();
+  window.addEventListener('load', hyLabelButtons);
+})();
+</script>
+<script src="offline-companion.js"></script>
 <script src="voice.js"></script>
 </body>
 </html>
