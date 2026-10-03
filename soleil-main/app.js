@@ -92,6 +92,16 @@
     renderWeek();
   });
 
+  // The faces on the chat screen save today's mood here too (chat.js); a note written earlier stays.
+  window.hyRecordMood = (n) => {
+    const all = load();
+    const key = dayKey(new Date());
+    all[key] = { note: '', ...all[key], mood: n, at: Date.now() };
+    picked = null;
+    return store(all);
+  };
+  window.hyTodayMood = () => load()[dayKey(new Date())]?.mood || null;
+
   const DAY = new Intl.DateTimeFormat('pl-PL', { weekday: 'short' });
   function renderWeek() {
     const all = load();

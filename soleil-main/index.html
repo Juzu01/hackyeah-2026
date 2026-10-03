@@ -35,7 +35,7 @@
   src="https://awaited-mink-45.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
   type="text/javascript"
 ></script>
-<link rel="stylesheet" href="soleil.css">
+<link rel="stylesheet" href="soleil.css?v=2">
 <link rel="stylesheet" href="voice.css">
 </head>
 <body>
@@ -71,6 +71,9 @@
     <symbol id="i-heartbreak" viewBox="0 0 24 24"><path d="M12 20.5 3.5 12V6.5L6.5 4h3L12 6.5 14.5 4h3l3 2.5V12z"/><path d="m12 6.5-1.5 3.5 3 2.5-2 4"/></symbol>
     <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2 13h5l2-4 2.5 9 3-13 2 8h5.5"/></symbol>
     <symbol id="i-sad" viewBox="0 0 24 24"><path d="M8 2.5h8L21.5 8v8L16 21.5H8L2.5 16V8z"/><path d="M8.5 9.5h2M13.5 9.5h2M8 16.5l4-2 4 2"/></symbol>
+    <symbol id="i-lonely" viewBox="0 0 24 24"><path d="M8 2.5 10 5 8 7.5 6 5z"/><path d="M4 9.5h8l-1.6 5.5H5.6z"/><path d="M6.5 15l-.8 4.8M9.5 15l.8 4.6"/><path d="M14 20 22 18.3"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M14.5 3A9 9 0 1 0 21 16.5 7.2 7.2 0 0 1 14.5 3z"/><path d="M19 3.5v3M17.5 5h3"/></symbol>
+    <symbol id="i-breath" viewBox="0 0 24 24"><path d="M2 17 22 13"/><path d="M7 16a5 5 0 0 1 10-2"/><path d="M12 3v5M9.5 5.5 12 3l2.5 2.5"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12.5 5 5L20 6.5"/></symbol>
     <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 22 20.5H2z"/><path d="M12 9.5v5M12 17v.5"/></symbol>
     <!-- Mood faces: an octagon, eyes and a mouth that bends at one sharp point. -->
@@ -213,6 +216,26 @@
   <button class="user-menu-btn danger" onclick="signOut()"><svg class="ico"><use href="#i-logout"/></svg><span id="menuSignOutLabel">Wyloguj się</span></button>
 </div>
 
+<!-- A minute of breathing: the sun rises while you breathe in (4 s) and sets while you breathe out (6 s), six times. chat.js runs it. -->
+<div class="breathe" id="hyBreathe" role="dialog" aria-modal="true" aria-labelledby="hyBreatheCue" hidden>
+  <button type="button" class="breathe-close" id="hyBreatheClose" aria-label="Zakończ"><svg class="ico"><use href="#i-close"/></svg></button>
+  <div class="breathe-scene" id="hyBreatheScene"></div>
+  <div class="breathe-text">
+    <div class="breathe-cue" id="hyBreatheCue" aria-live="polite">Wdech</div>
+    <div class="breathe-sub" id="hyBreatheSub">nosem, powoli</div>
+  </div>
+  <div class="breathe-after" id="hyBreatheAfter" hidden>
+    <div class="checkin-faces" role="group" aria-label="Jak się teraz czujesz?">
+      <button type="button" class="cface" data-mood="1" aria-label="Bardzo źle"><svg><use href="#face-1"/></svg></button>
+      <button type="button" class="cface" data-mood="2" aria-label="Źle"><svg><use href="#face-2"/></svg></button>
+      <button type="button" class="cface" data-mood="3" aria-label="Średnio"><svg><use href="#face-3"/></svg></button>
+      <button type="button" class="cface" data-mood="4" aria-label="Dobrze"><svg><use href="#face-4"/></svg></button>
+      <button type="button" class="cface" data-mood="5" aria-label="Świetnie"><svg><use href="#face-5"/></svg></button>
+    </div>
+  </div>
+  <div class="breathe-bar"><i id="hyBreatheProgress"></i><span id="hyBreatheCount">1 / 6</span></div>
+</div>
+
 <div class="app" id="app" data-view="rozmowa">
   <div class="inapp-banner" id="inappBanner" style="display:none">
     <span id="inappBannerText">Aby się zalogować, otwórz tę stronę w przeglądarce (Safari/Chrome).</span>
@@ -234,19 +257,39 @@
   <main class="views">
     <section class="view view-chat" id="view-rozmowa" aria-label="Rozmowa">
       <div class="chat-window" id="chatWindow">
+        <!-- The welcome: a sunrise (tap it to breathe for a minute), how you feel in one tap, topics as tiles.
+             chat.js draws the scene, sets the greeting for the time of day and starts the conversation. -->
         <div class="welcome" id="welcomeMsg">
-          <h2>Hej, jestem tu dla Ciebie</h2>
-          <p>Jestem Soleil, Twój przyjaciel do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz, albo wybierz temat poniżej.</p>
-          <div class="hy-free-note" id="hyFreeNote">Możesz pisać od razu — bez logowania.</div>
+          <button type="button" class="hero" id="hyHero" style="--i:0" aria-label="Oddychaj ze mną przez minutę">
+            <span class="hero-scene" id="hyHeroScene"></span>
+            <span class="hero-cta"><svg class="ico"><use href="#i-breath"/></svg><span id="hyBreatheLabel">Oddychaj ze mną · 1 min</span></span>
+          </button>
+          <h2 style="--i:1">Hej, jestem tu dla Ciebie</h2>
+          <p style="--i:2">Napisz, co czujesz, albo stuknij poniżej.</p>
+          <div class="hy-free-note" id="hyFreeNote" style="--i:2">Możesz pisać od razu — bez logowania.</div>
+
+          <div class="checkin" style="--i:3">
+            <div class="checkin-label" id="hyCheckinLabel">Jak się dziś czujesz?</div>
+            <div class="checkin-faces" id="hyCheckin" role="group" aria-labelledby="hyCheckinLabel">
+              <button type="button" class="cface" data-mood="1" aria-label="Bardzo źle"><svg><use href="#face-1"/></svg></button>
+              <button type="button" class="cface" data-mood="2" aria-label="Źle"><svg><use href="#face-2"/></svg></button>
+              <button type="button" class="cface" data-mood="3" aria-label="Średnio"><svg><use href="#face-3"/></svg></button>
+              <button type="button" class="cface" data-mood="4" aria-label="Dobrze"><svg><use href="#face-4"/></svg></button>
+              <button type="button" class="cface" data-mood="5" aria-label="Świetnie"><svg><use href="#face-5"/></svg></button>
+            </div>
+          </div>
+
           <div class="suggestions">
-            <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s1 || translations.pl.s1)"><svg class="ico"><use href="#i-sad"/></svg><span class="s-text">Jestem smutny/a</span></button>
-            <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s2 || translations.pl.s2)"><svg class="ico"><use href="#i-work"/></svg><span class="s-text">Problem w pracy/szkole</span></button>
-            <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s3 || translations.pl.s3)"><svg class="ico"><use href="#i-heartbreak"/></svg><span class="s-text">Kłótnia z kimś bliskim</span></button>
-            <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s4 || translations.pl.s4)"><svg class="ico"><use href="#i-pulse"/></svg><span class="s-text">Czuję stres</span></button>
+            <button class="suggestion-btn" style="--i:4" onclick="sendSuggestion(translations[currentLanguage]?.s1 || translations.pl.s1)"><svg class="ico"><use href="#i-sad"/></svg><span class="s-text">Jestem smutny/a</span></button>
+            <button class="suggestion-btn" style="--i:4.5" onclick="sendSuggestion(translations[currentLanguage]?.s2 || translations.pl.s2)"><svg class="ico"><use href="#i-work"/></svg><span class="s-text">Problem w pracy/szkole</span></button>
+            <button class="suggestion-btn" style="--i:5" onclick="sendSuggestion(translations[currentLanguage]?.s3 || translations.pl.s3)"><svg class="ico"><use href="#i-heartbreak"/></svg><span class="s-text">Kłótnia z kimś bliskim</span></button>
+            <button class="suggestion-btn" style="--i:5.5" onclick="sendSuggestion(translations[currentLanguage]?.s4 || translations.pl.s4)"><svg class="ico"><use href="#i-pulse"/></svg><span class="s-text">Czuję stres</span></button>
+            <button class="suggestion-btn" style="--i:6" data-hy-say="lonely"><svg class="ico"><use href="#i-lonely"/></svg><span class="s-text">Czuję się samotny/a</span></button>
+            <button class="suggestion-btn" style="--i:6.5" data-hy-say="sleep"><svg class="ico"><use href="#i-moon"/></svg><span class="s-text">Nie mogę zasnąć</span></button>
           </div>
 
           <!-- Cytat dnia -->
-          <div class="daily-card" id="dailyCard">
+          <div class="daily-card" id="dailyCard" style="--i:7">
             <div class="daily-inner">
               <div class="daily-loading" id="dailyLoading">Ładowanie cytatu dnia...</div>
               <div id="dailyContent" style="display:none">
@@ -1989,8 +2032,9 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
   window.addEventListener('load', hyLabelButtons);
 })();
 </script>
-<script src="offline-companion.js"></script>
+<script src="offline-companion.js?v=2"></script>
 <script src="voice.js"></script>
-<script src="app.js"></script>
+<script src="app.js?v=2"></script>
+<script src="chat.js?v=2"></script>
 </body>
 </html>

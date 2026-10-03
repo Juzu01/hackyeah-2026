@@ -4,7 +4,8 @@
    Order: 1) crisis signals (always crisis-line numbers), 2) urgent body symptoms (112),
    3) topics, 4) short answers in the context of the previous topic, 5) open question.
    Never diagnoses or gives medical advice. Never repeats the user's words (safe for innerHTML).
-   In the browser: window.SoleilOffline.reply(text) -> { topic, html, text, delay }.
+   In the browser: window.SoleilOffline.reply(text) -> { topic, kind, html, text, delay };
+   kind is what the reply offers ('ask', a small step such as 'breath', 'done', 'end'), for chat.js's quick replies.
    In Node: require('./offline-companion.js').create() (see offline-companion.test.mjs). */
 (function (root) {
   'use strict';
@@ -55,7 +56,8 @@
   const T = {
     sad: [/\bsmut/, /\bprzygnebi/, /\bdolek\b/, /\bdola\b/, /\b(placz|placze|plakac|plakal\w*|placzu)\b/, /\bbeznadziej/,
       /\bzle sie czuje\b/, /\bkiepsk/, /\bprzybit/, /\bzalaman/, /\bzalamal/, /\bciezko mi\b/, /\bdepres/, /\bpustk/,
-      /\bnic mnie nie cieszy\b/, /\bnie mam na nic sily\b/, /\bjest mi zle\b/, /\bsmutn/, /\btesknie\b/, /\btesknot/, /^zle\b/, /^(bardzo )?zle$/],
+      /\bnic mnie nie cieszy\b/, /\bnie mam na nic sily\b/, /\bjest mi (dzis |dzisiaj |teraz )?(bardzo |tak )?zle\b/,
+      /\bczuje sie (dzis |dzisiaj )?(bardzo |strasznie |naprawde |tak )?(zle|fatalnie|okropnie|beznadziejnie|kiepsko|podle)\b/, /\b(fatalnie|okropnie)\b/, /\bsmutn/, /\btesknie\b/, /\btesknot/, /^zle\b/, /^(bardzo )?zle$/],
     work: [/\bprac(a|y|e|uje|ujesz|owac|odawc\w*|ownik\w*)?\b/, /\bszef/, /\bszkol/, /\bnauczyciel/, /\begzamin/, /\bsprawdzian/,
       /\bkolokwi/, /\bstudi(a|ow|ach|uje)/, /\buczelni/, /\bsesj/, /\bmatur/, /\bocen(a|y|e|ie)\b/, /\bprojekt/, /\bdeadline/,
       /\bzwolni/, /\bkorpo/, /\bklient/, /\bzebrani/, /\bnadgodzin/, /\bwykladowc/, /\bpromotor/, /\bjedynk/],
@@ -65,13 +67,14 @@
     stress: [/\bstres/, /\bpresj/, /\bprzytlocz/, /\bza duzo\b/, /\bnie wyrabiam\b/, /\bnapiec/, /\bnapiet/, /\bspiet/, /\bpospiech/,
       /\bnie ogarniam\b/, /\bwszystko na mojej glowie\b/, /\bmetlik/, /\bchaos/, /\bnie daje rady\b/, /\bnie dam rady\b/],
     anxiety: [/\bboje sie\b/, /\bbac sie\b/, /\bobaw/, /\bniepok/, /\bpanik/, /\bstrach/,
-      /\bprzeraz/, /\bmartwi/, /\bzamartw/, /\bnerwic/, /\bniespokojn/, /\bco jesli\b/, /\bczarne mysli\b/, /\bserce mi wali\b/],
+      /\bprzeraz/, /\bmartwi/, /\bzamartw/, /\bnerwic/, /\bniespokojn/, /\bco jesli\b/, /\bczarne mysli\b/, /\bserce mi wali\b/,
+      /\bgonitw/, /\bnie moge przestac (o tym )?myslec\b/, /\bnakrec/, /\bmysli (mi )?(krazy|pedza|nie daja)/],
     lonely: [/\bsamotn/, /\bjestem (zupelnie |calkiem |taki |taka )?(sam|sama)\b/, /\bczuje sie (taki |taka )?(sam|sama)\b/,
       /\bnikt mnie nie/, /\bnie mam (nikogo|przyjaciol|z kim)\b/, /\bnikogo nie mam\b/, /\bopuszcz/, /\bodrzuc/, /\bwyobcow/,
       /\bnikomu na mnie nie zalezy\b/, /\bnigdzie nie pasuje\b/, /\bnie mam do kogo\b/],
     anger: [/\bzlosc/, /\bzlosci/, /\bjestem (taki |taka |strasznie |bardzo )?(zly|zla|wsciekly|wsciekla)\b/, /\bwkurz/, /\bwscie/,
       /\birytuj/, /\bdenerwuj/, /\bzdenerwow/, /\bwnerw/, /\bfrustr/, /\bszlag/, /\bfuri/, /\bnienawidz/, /\bmam dosc\b/],
-    tired: [/\bzmecz/, /\bwyczerp/, /\bwypal/, /\bnie moge (za)?spac\b/, /\bnie spie\b/, /\bbezsenn/, /\bspac\b/, /\bsen\b/, /\bsnu\b/,
+    tired: [/\bzmecz/, /\bwyczerp/, /\bwypal/, /\bnie moge (za)?spac\b/, /\bzasn/, /\bzasypi/, /\bnie moge spac\b/, /\bnie spie\b/, /\bbezsenn/, /\bspac\b/, /\bsen\b/, /\bsnu\b/,
       /\bspie\b/, /\bspalem\b/, /\bspalam\b/, /\bsenn/, /\bpadam\b/, /\bnie mam sily\b/, /\bbrak (mi )?sil\b/, /\bbrak (mi )?energii\b/,
       /\bbez energii\b/, /\bwykonczon/, /\bbudze sie\b/, /\bnie wyspal/, /\bniewyspan/],
     motivation: [/\bmotywac/, /\bzmotyw/, /\bnie chce mi sie\b/, /\bprokrastyn/, /\bodklad/, /\blenis/, /\bleniw/, /\bnie moge sie zabrac\b/,
@@ -80,7 +83,7 @@
       /\bdostal(em|am)\b/, /\bawans/, /\bwygral/, /\bdobry dzien\b/, /\bdobrze mi\b/, /\bfajn/, /\bekstra\b/, /\bwspanial/,
       /\bmam dobry\b/, /\bzakochal/, /\bczuje sie (dobrze|lepiej|swietnie|super)\b/, /\bjest (dobrze|super|swietnie|ok)\b/, /\bhura\b/],
   };
-  const MEH = /^(srednio|tak sobie|jakos|jako tako|bywalo lepiej|ujdzie|bez szalu|tak srednio)$/;
+  const MEH = /^(jakos|ujdzie|tak srednio)$|\b(srednio|tak sobie|jako tako|bywalo lepiej|bez szalu|ni to ni owo)\b/;
   const FINE = /^(dobrze|ok|okej|oki|spoko|dobra|w porzadku|niezle|calkiem dobrze|git)$/;
   const NEGATED_JOY = /\bnie (jest |czuje sie |bylo |jestem |mam )?(dobrze|super|fajnie|swietnie|wesolo|szczesliw\w*|dobry)\b/;
   const PAIN_WORD = /\b(boli|bola|bolal\w*|bolec|bol|bolu|bole|bolem|bolow|obolal\w*|kluje|klucie|rwie|piecze|kontuzj\w*|uraz\w*|skrecil\w*|naciagn\w*|migren\w*)\b/;
@@ -340,7 +343,7 @@
       else if (crisisSeen) html += REMINDER;
 
       const text = strip(html);
-      return { topic: t, html, text, delay: 600 + Math.round(rand() * 300) + Math.min(300, text.length) };
+      return { topic: t, kind, html, text, delay: 600 + Math.round(rand() * 300) + Math.min(300, text.length) };
     }
 
     return { reply: respond, get topic() { return topic; } };

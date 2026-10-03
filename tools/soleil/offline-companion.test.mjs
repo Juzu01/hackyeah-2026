@@ -61,6 +61,16 @@ const TOPICS = [
   ['Hej!', 'greeting'],
   ['dziękuję ci bardzo', 'thanks'],
   ['zupa była za słona', 'open'],
+  // The mood faces on the chat screen send these (chat.js)
+  ['Czuję się bardzo źle', 'sad'],
+  ['Jest mi dziś źle', 'sad'],
+  ['Tak sobie, średnio', 'meh'],
+  ['Czuję się dobrze', 'joy'],
+  ['Czuję się świetnie!', 'joy'],
+  // The extra topic tiles
+  ['Czuję się samotny/a', 'lonely'],
+  ['Nie mogę zasnąć', 'tired'],
+  ['Mam w głowie gonitwę myśli', 'anxiety'],
 ]
 console.log('\n— Topics (fresh conversation each) —')
 for (const [msg, want] of TOPICS) {
@@ -93,6 +103,7 @@ check('4 × "Czuję stres" gives 4 different replies', () => {
 check('crisis mid-conversation', () => { for (const k of CONTACTS) assert.ok(replies[7].html.includes(k)) })
 check('after a crisis, "nie" keeps the contacts', () => assert.ok(replies[8].html.includes('tel:116123')))
 check('after a crisis, every reply keeps a crisis line', () => assert.ok(replies[9].html.includes('tel:116123')))
+check('every reply says what it offers (kind)', () => { for (const r of replies) assert.ok(typeof r.kind === 'string' && r.kind, `kind ${r.kind}`) })
 check('typing delay 600–1200 ms', () => { for (const r of replies) assert.ok(r.delay >= 600 && r.delay <= 1200, `delay ${r.delay}`) })
 
 console.log(failures ? `\n${failures} FAILED` : '\nAll checks passed')
