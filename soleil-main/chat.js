@@ -284,6 +284,7 @@
     if (cycle >= CYCLES) return finish();
     cycle++;
     $('hyBreatheCount').textContent = `${cycle} / ${CYCLES}`;
+    $('hyBreatheProgress').style.transform = `scaleX(${cycle / CYCLES})`;
     cue(t('inhale'), t('inhaleSub'));
     phase('in', IN);
     timer = setTimeout(() => {
@@ -303,9 +304,12 @@
     returnFocus = document.activeElement;
     cycle = 0;
     $('hyBreatheAfter').hidden = true;
+    // The line starts empty without sliding back; then each new breath moves it on by a sixth (soleil.css)
     const bar = $('hyBreatheProgress');
     bar.style.transition = 'none';
     bar.style.transform = 'scaleX(0)';
+    void bar.offsetWidth;
+    bar.style.transition = '';
     phase('ready', 0);
     B.hidden = false;
     history.pushState({ hyBreathe: true }, '');
@@ -313,8 +317,6 @@
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
         B.classList.add('open');
-        bar.style.transition = `transform ${CYCLES * (IN + OUT)}ms linear`;
-        bar.style.transform = 'scaleX(1)';
         step();
       }),
     );
