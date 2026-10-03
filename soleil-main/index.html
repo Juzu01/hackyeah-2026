@@ -12,7 +12,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#e8845a">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <script
   async
@@ -472,6 +472,7 @@
   <button class="user-menu-btn" id="pushMenuBtn" onclick="document.getElementById('userMenu').classList.remove('visible'); setTimeout(togglePushNotifications, 400)">🔔 <span id="menuPushLabel">Włącz powiadomienia</span></button>
   <button class="user-menu-btn premium-menu" id="premiumMenuBtn" onclick="openPremium()" style="display:none">✨ <span id="menuPremiumLabel">Przejdź na Premium</span></button>
   <button class="user-menu-btn" onclick="openReferral(); toggleUserMenu()">🎁 <span id="menuReferralLabel">Poleć znajomym</span></button>
+  <button class="user-menu-btn" onclick="location.href='cialo/'">🫀 <span>Mapa ciała</span></button>
   <div style="height:1px;background:rgba(232,132,90,0.1);margin:4px 0;"></div>
   <button class="user-menu-btn danger" onclick="signOut()">🚪 <span id="menuSignOutLabel">Wyloguj się</span></button>
 </div>
@@ -572,7 +573,7 @@
     </div>
     <div class="mood-bar">🌸 🌈 ✨ 🌻 💛 🌿 🤗</div>
     <div style="text-align:center;padding:4px 0 0;font-size:0.65rem;opacity:0.45;">
-      <a href="/privacy.html" style="color:var(--muted);text-decoration:none;" id="privacyLink">Polityka prywatności</a>
+      <a href="privacy.html" style="color:var(--muted);text-decoration:none;" id="privacyLink">Polityka prywatności</a>
     </div>
   </div>
 </div>
@@ -648,7 +649,7 @@ async function loadDailyQuote() {
 
   if (!data) {
     try {
-      const res = await fetch('/api/history', {
+      const res = await fetch('api/history', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ language: currentLanguage, userId: currentUser?.id || null })
@@ -1049,7 +1050,7 @@ async function registerPendingReferral(userId) {
     const pendingRef = localStorage.getItem('soleil_pending_ref');
     const alreadySent = localStorage.getItem('soleil_ref_sent_' + userId);
     if (!pendingRef || alreadySent || pendingRef === userId) return;
-    await fetch('/api/referral', {
+    await fetch('api/referral', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ referrerId: pendingRef, referredId: userId })
@@ -1061,7 +1062,7 @@ async function registerPendingReferral(userId) {
 
 async function loadSubscription(userId) {
   try {
-    const res = await fetch(`/api/subscription?userId=${userId}`);
+    const res = await fetch(`api/subscription?userId=${userId}`);
     const data = await res.json();
     userIsPremium = data.isPremium || false;
     updatePremiumUI();
@@ -1128,7 +1129,7 @@ async function startCheckout() {
   const btn = document.querySelector('.premium-btn');
   btn.textContent = 'Przekierowuję...'; btn.disabled = true;
   try {
-    const res = await fetch('/api/subscription', {
+    const res = await fetch('api/subscription', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: currentUser.id, userEmail: currentUser.emailAddresses?.[0]?.emailAddress })
@@ -1167,7 +1168,7 @@ async function togglePushNotifications() {
     if (existing) {
       // Wyłącz — usuń istniejącą subskrypcję
       await existing.unsubscribe();
-      await fetch('/api/push-subscribe', {
+      await fetch('api/push-subscribe', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: currentUser.id })
@@ -1179,7 +1180,7 @@ async function togglePushNotifications() {
       const permission = await Notification.requestPermission();
       if (permission !== 'granted') return;
 
-      const keyRes = await fetch('/api/push-subscribe');
+      const keyRes = await fetch('api/push-subscribe');
       const { publicKey } = await keyRes.json();
 
       const subscription = await registration.pushManager.subscribe({
@@ -1188,7 +1189,7 @@ async function togglePushNotifications() {
       });
 
       pushSubscription = subscription;
-      await fetch('/api/push-subscribe', {
+      await fetch('api/push-subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: currentUser.id, subscription: subscription.toJSON() })
@@ -1213,7 +1214,7 @@ function urlBase64ToUint8Array(base64String) {
 // POST /api/streak jest bezpieczny do wołania wielokrotnie tego samego dnia (jeśli last_streak_date === dziś, nic nie zmienia).
 async function loadStreak(userId) {
   try {
-    const res = await fetch('/api/streak', {
+    const res = await fetch('api/streak', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId })
@@ -1230,7 +1231,7 @@ async function loadStreak(userId) {
 async function checkDailyMood() {
   if (!currentUser || !currentUser.id) { console.warn('checkDailyMood: brak currentUser.id, pomijam'); return; }
   try {
-    const res = await fetch(`/api/mood?userId=${currentUser.id}&today=true`);
+    const res = await fetch(`api/mood?userId=${currentUser.id}&today=true`);
     if (!res.ok) { console.error('checkDailyMood: odpowiedź API nie OK', res.status); return; }
     const data = await res.json();
     console.log('checkDailyMood:', data);
@@ -1261,7 +1262,7 @@ async function saveMood() {
   const btn = document.getElementById('saveMoodBtn');
   btn.disabled = true; btn.textContent = 'Zapisywanie...';
   try {
-    const res = await fetch('/api/mood', {
+    const res = await fetch('api/mood', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: currentUser.id, mood: selectedMood, note })
@@ -1296,7 +1297,7 @@ async function openSummary() {
   if (shareBtnLabelEl) shareBtnLabelEl.textContent = shareLabels[currentLanguage] || shareLabels.pl;
   try {
     const [res, dailyMoods] = await Promise.all([
-      fetch('/api/summary', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: currentUser.id, language: currentLanguage }) }),
+      fetch('api/summary', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: currentUser.id, language: currentLanguage }) }),
       fetchDailyMoods(currentUser.id)
     ]);
     const data = await res.json();
@@ -1314,7 +1315,7 @@ async function openSummary() {
 // Pobiera nastroje z ostatnich 7 dni i grupuje je dzień po dniu (czas polski)
 async function fetchDailyMoods(userId) {
   try {
-    const res = await fetch(`/api/mood?userId=${userId}`);
+    const res = await fetch(`api/mood?userId=${userId}`);
     const data = await res.json();
     const moods = data.moods || [];
     const byDay = {};
@@ -1343,9 +1344,9 @@ async function openReferral() {
   pushOverlayState('referralOverlay');
   document.getElementById('referralOverlay').classList.add('visible');
   document.getElementById('referralContent').innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px 0">Ładowanie...</p>';
-  currentReferralLink = `${window.location.origin}/?ref=${currentUser.id}`;
+  currentReferralLink = new URL(`./?ref=${currentUser.id}`, window.location.href).href;
   try {
-    const res = await fetch(`/api/referral?userId=${currentUser.id}`);
+    const res = await fetch(`api/referral?userId=${currentUser.id}`);
     const data = await res.json();
     const statsLabels = { pl: ['poleconych', 'dni Premium zdobyte'], en: ['referred', 'Premium days earned'], uk: ['запрошено', 'днів Premium отримано'], de: ['geworben', 'Premium-Tage erhalten'], es: ['referidos', 'días Premium ganados'] };
     const labels = statsLabels[currentLanguage] || statsLabels.pl;
@@ -1430,7 +1431,7 @@ let petState = null;
 
 async function loadPet(userId) {
   try {
-    const res = await fetch(`/api/pet?userId=${userId}`);
+    const res = await fetch(`api/pet?userId=${userId}`);
     const data = await res.json();
     if (!data.hasPet) {
       document.getElementById('petCard').style.display = 'none';
@@ -1446,7 +1447,7 @@ async function loadPet(userId) {
 async function choosePet(species) {
   if (!currentUser) return;
   try {
-    const res = await fetch('/api/pet', {
+    const res = await fetch('api/pet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: currentUser.id, action: 'create', species })
@@ -1654,7 +1655,7 @@ async function petTheAnimal() {
   setTimeout(() => heart.remove(), 900);
 
   try {
-    const res = await fetch('/api/pet', {
+    const res = await fetch('api/pet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: currentUser.id, action: 'pet' })
@@ -1689,8 +1690,8 @@ function showUnlockToast(emoji) {
 }
 
 // Dźwięki zwierzaka — prawdziwe nagrania (pliki mp3 w /sounds), preładowane raz
-const barkAudio = new Audio('/sounds/bark.mp3');
-const meowAudio = new Audio('/sounds/meow.mp3');
+const barkAudio = new Audio('sounds/bark.mp3');
+const meowAudio = new Audio('sounds/meow.mp3');
 barkAudio.preload = 'auto';
 meowAudio.preload = 'auto';
 
@@ -1712,7 +1713,7 @@ async function toggleAccessory(key) {
   if (!currentUser || !petState) return;
   const newAccessory = petState.equipped === key ? null : key;
   try {
-    const res = await fetch('/api/pet', {
+    const res = await fetch('api/pet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: currentUser.id, action: 'equip', accessory: newAccessory })
@@ -1948,7 +1949,7 @@ async function loadConversationsList() {
   const list = document.getElementById('conversationsList');
   list.innerHTML = `<div class="conv-empty">${t.convsLoading}</div>`;
   try {
-    const res = await fetch(`/api/history?userId=${currentUser.id}`);
+    const res = await fetch(`api/history?userId=${currentUser.id}`);
     const data = await res.json();
     if (!data.conversations || data.conversations.length === 0) { list.innerHTML = `<div class="conv-empty">${t.convsEmpty}</div>`; return; }
     list.innerHTML = data.conversations.map(conv => {
@@ -1964,7 +1965,7 @@ async function loadConversationsList() {
 
 async function loadConversation(conversationId) {
   try {
-    const res = await fetch(`/api/history?userId=${currentUser.id}&conversationId=${conversationId}`);
+    const res = await fetch(`api/history?userId=${currentUser.id}&conversationId=${conversationId}`);
     const data = await res.json();
     if (!data.messages || data.messages.length === 0) return;
     chatWindow.querySelectorAll('.message-row').forEach(m => m.remove());
@@ -1980,7 +1981,7 @@ async function deleteConversation(event, conversationId) {
   const t = translations[currentLanguage] || translations.pl;
   if (!confirm(t.convsDelete)) return;
   try {
-    await fetch('/api/history', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: currentUser.id, conversationId }) });
+    await fetch('api/history', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: currentUser.id, conversationId }) });
     if (currentConversationId === conversationId) startNewChat();
     await loadConversationsList();
   } catch (err) { console.error(err); }
@@ -2070,7 +2071,7 @@ async function sendMessage() {
   conversationHistory.push({ role: 'user', content: text });
   showTyping();
   try {
-    const res = await fetch('/api/chat', {
+    const res = await fetch('api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages: conversationHistory, userId: currentUser?.id || null, conversationId: currentConversationId, language: currentLanguage })

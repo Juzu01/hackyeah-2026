@@ -2,7 +2,7 @@
   "name": "Soleil — Twój przyjaciel",
   "short_name": "Soleil",
   "description": "Twój przyjaciel AI — zawsze tu, by poprawić Ci nastrój",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#fdf6ee",
