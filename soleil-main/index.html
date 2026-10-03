@@ -32,11 +32,12 @@
   async
   crossorigin="anonymous"
   data-clerk-publishable-key="pk_test_YXdhaXRlZC1taW5rLTQ1LmNsZXJrLmFjY291bnRzLmRldiQ"
-  src="https://awaited-mink-45.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+  src="https://awaited-mink-45.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
   type="text/javascript"
 ></script>
-<link rel="stylesheet" href="soleil.css?v=5">
+<link rel="stylesheet" href="soleil.css?v=7">
 <link rel="stylesheet" href="voice.css">
+<link rel="stylesheet" href="diary.css?v=2">
 </head>
 <body>
 
@@ -70,6 +71,8 @@
     <symbol id="i-work" viewBox="0 0 24 24"><path d="M3 8h18v11.5H3zM9 8V4.5h6V8M3 13h18"/></symbol>
     <symbol id="i-heartbreak" viewBox="0 0 24 24"><path d="M12 20.5 3.5 12V6.5L6.5 4h3L12 6.5 14.5 4h3l3 2.5V12z"/><path d="m12 6.5-1.5 3.5 3 2.5-2 4"/></symbol>
     <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2 13h5l2-4 2.5 9 3-13 2 8h5.5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/></symbol>
+    <symbol id="i-diary" viewBox="0 0 24 24"><path d="M5 3h13a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5zM8 3v18"/><path d="M10.5 12h1.5l1.2-2.5 1.6 5 1.2-2.5h1.5"/></symbol>
     <symbol id="i-sad" viewBox="0 0 24 24"><path d="M8 2.5h8L21.5 8v8L16 21.5H8L2.5 16V8z"/><path d="M8.5 9.5h2M13.5 9.5h2M8 16.5l4-2 4 2"/></symbol>
     <symbol id="i-breath" viewBox="0 0 24 24"><path d="M2 17 22 13"/><path d="M7 16a5 5 0 0 1 10-2"/><path d="M12 3v5M9.5 5.5 12 3l2.5 2.5"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12.5 5 5L20 6.5"/></symbol>
@@ -194,11 +197,11 @@
     <button class="popup-close" onclick="closeLanguage()">✕</button>
     <h2>Wybierz język</h2>
     <div class="lang-options">
-      <div class="lang-option" onclick="setLanguage('pl')" id="lang-pl"><span class="lang-flag">PL</span><div><div class="lang-name">Polski</div><div class="lang-native">Polish</div></div></div>
-      <div class="lang-option" onclick="setLanguage('en')" id="lang-en"><span class="lang-flag">EN</span><div><div class="lang-name">English</div><div class="lang-native">Angielski</div></div></div>
-      <div class="lang-option" onclick="setLanguage('uk')" id="lang-uk"><span class="lang-flag">UK</span><div><div class="lang-name">Українська</div><div class="lang-native">Ukraiński</div></div></div>
-      <div class="lang-option" onclick="setLanguage('de')" id="lang-de"><span class="lang-flag">DE</span><div><div class="lang-name">Deutsch</div><div class="lang-native">Niemiecki</div></div></div>
-      <div class="lang-option" onclick="setLanguage('es')" id="lang-es"><span class="lang-flag">ES</span><div><div class="lang-name">Español</div><div class="lang-native">Hiszpański</div></div></div>
+      <div class="lang-option" role="button" tabindex="0" onclick="setLanguage('pl')" id="lang-pl"><span class="lang-flag">PL</span><div><div class="lang-name">Polski</div><div class="lang-native">Polish</div></div></div>
+      <div class="lang-option" role="button" tabindex="0" onclick="setLanguage('en')" id="lang-en"><span class="lang-flag">EN</span><div><div class="lang-name">English</div><div class="lang-native">Angielski</div></div></div>
+      <div class="lang-option" role="button" tabindex="0" onclick="setLanguage('uk')" id="lang-uk"><span class="lang-flag">UK</span><div><div class="lang-name">Українська</div><div class="lang-native">Ukraiński</div></div></div>
+      <div class="lang-option" role="button" tabindex="0" onclick="setLanguage('de')" id="lang-de"><span class="lang-flag">DE</span><div><div class="lang-name">Deutsch</div><div class="lang-native">Niemiecki</div></div></div>
+      <div class="lang-option" role="button" tabindex="0" onclick="setLanguage('es')" id="lang-es"><span class="lang-flag">ES</span><div><div class="lang-name">Español</div><div class="lang-native">Hiszpański</div></div></div>
     </div>
   </div>
 </div>
@@ -254,7 +257,7 @@
 
   <main class="views">
     <section class="view view-chat" id="view-rozmowa" aria-label="Rozmowa">
-      <div class="chat-window" id="chatWindow">
+      <div class="chat-window" id="chatWindow" role="log" aria-live="polite">
         <!-- The welcome: a sunrise (tap it to breathe for a minute), how you feel in one tap, topics as tiles.
              chat.js draws the scene, sets the greeting for the time of day and starts the conversation. -->
         <div class="welcome" id="welcomeMsg">
@@ -332,6 +335,11 @@
       </div>
     </section>
 
+    <!-- Dziennik: samopoczucie i ból na jednym ekranie (diary.js) -->
+    <section class="view view-page" id="view-dziennik" aria-labelledby="diaryHeading" hidden>
+      <div class="page" id="diaryPage"></div>
+    </section>
+
     <section class="view view-frame" id="view-cialo" aria-label="Atlas ciała" hidden>
       <iframe data-src="cialo/" title="Atlas ciała" allow="microphone; fullscreen"></iframe>
     </section>
@@ -351,6 +359,7 @@
         </div>
 
         <ul class="rows">
+          <li id="hyNameRowItem" hidden><button type="button" class="row" onclick="hyOpenNamePrompt()"><svg class="ico"><use href="#i-user"/></svg><span class="row-text" id="hyNameRow">Jak mam się do Ciebie zwracać</span><span class="row-value" id="hyNameValue"></span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
           <li><button type="button" class="row" onclick="openLanguage()"><svg class="ico"><use href="#i-lang"/></svg><span class="row-text">Język</span><span class="row-value" id="hyLangValue">Polski</span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
           <li><button type="button" class="row" onclick="openVoicePicker()"><svg class="ico"><use href="#i-voice"/></svg><span class="row-text">Głos Doco w rozmowie telefonicznej</span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
           <li>
@@ -375,10 +384,11 @@
     <svg class="tabbar-edge" viewBox="0 0 100 16" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="15.5" x2="100" y2="0.5" vector-effect="non-scaling-stroke"/></svg>
     <div class="tabs">
       <a class="tab" href="#rozmowa" data-view="rozmowa" style="--k:0"><svg class="ico"><use href="#i-chat"/></svg><span>Rozmowa</span></a>
-      <a class="tab" href="#nastroj" data-view="nastroj" style="--k:1"><svg class="ico"><use href="#i-mood"/></svg><span>Nastrój</span></a>
-      <a class="tab" href="#cialo" data-view="cialo" style="--k:2"><svg class="ico"><use href="#i-body"/></svg><span>Ciało</span></a>
-      <a class="tab" href="#objawy" data-view="objawy" style="--k:3"><svg class="ico"><use href="#i-symptom"/></svg><span>Objawy</span></a>
-      <a class="tab" href="#wiecej" data-view="wiecej" style="--k:4"><svg class="ico"><use href="#i-more"/></svg><span>Więcej</span></a>
+      <a class="tab" href="#dziennik" data-view="dziennik" style="--k:1"><svg class="ico"><use href="#i-diary"/></svg><span>Dziennik</span></a>
+      <a class="tab" href="#nastroj" data-view="nastroj" style="--k:2"><svg class="ico"><use href="#i-mood"/></svg><span>Nastrój</span></a>
+      <a class="tab" href="#cialo" data-view="cialo" style="--k:3"><svg class="ico"><use href="#i-body"/></svg><span>Ciało</span></a>
+      <a class="tab" href="#objawy" data-view="objawy" style="--k:4"><svg class="ico"><use href="#i-symptom"/></svg><span>Objawy</span></a>
+      <a class="tab" href="#wiecej" data-view="wiecej" style="--k:5"><svg class="ico"><use href="#i-more"/></svg><span>Więcej</span></a>
     </div>
   </nav>
 </div>
@@ -813,18 +823,29 @@ function updateInterfaceLanguage(lang) {
 
 // History API
 function pushOverlayState(id) { history.pushState({ overlay: id }, ''); }
+// Clerk's sign-in steps live in the hash (#/factor-one, #/sso-callback…) and fire popstate: that's not "Back", keep the popups
+const isClerkRoute = () => location.hash.startsWith('#/');
 window.addEventListener('popstate', () => {
-  ['authOverlay','moodOverlay','summaryOverlay','conversationsOverlay','premiumOverlay','referralOverlay','petSelectOverlay','wardrobeOverlay'].forEach(id => {
+  if (isClerkRoute()) return;
+  if (document.getElementById('authOverlay').classList.contains('visible')) closeAuth(); // also unmounts the Clerk form
+  ['authOverlay','moodOverlay','summaryOverlay','conversationsOverlay','premiumOverlay','referralOverlay','petSelectOverlay','wardrobeOverlay','languageOverlay'].forEach(id => {
     document.getElementById(id).classList.remove('visible');
   });
   document.getElementById('userMenu').classList.remove('visible');
 });
 
 // CLERK
+let clerkInitStarted = false; // initClerk is wired to both the script's onload and a timer; run it once
 async function initClerk() {
+  if (clerkInitStarted || !window.Clerk) return;
+  clerkInitStarted = true;
   try {
     clerk = window.Clerk;
-    await clerk.load({ publishableKey: CLERK_PUBLISHABLE_KEY });
+    await clerk.load(); // Clerk 5: the key comes from the script's data-clerk-publishable-key
+    // "Zaloguj się" clicked while Clerk was still loading: show the form now
+    if (document.getElementById('authOverlay').classList.contains('visible')) mountClerkSignIn();
+    // Back from Google mid sign-in (#/sso-callback…): the sign-in form has to be open to finish it
+    else if (isClerkRoute() && !clerk.user) openAuth();
     clerk.addListener(({ user }) => {
       currentUser = user;
       updateAuthUI(user);
@@ -836,7 +857,7 @@ async function initClerk() {
     // Sprawdź czy wrócił po płatności
     const params = new URLSearchParams(window.location.search);
     if (params.get('premium') === 'success') {
-      history.replaceState({}, '', '/');
+      history.replaceState({}, '', location.pathname);
       setTimeout(() => showSuccessMessage(), 1000);
     }
     // Zapamiętaj kod polecającego z linku (?ref=...), zanim usuniemy go z URL
@@ -920,12 +941,23 @@ function updateAuthUI(user) {
     document.getElementById('premiumBadge').style.display = 'none';
   }
   if (typeof updateVoiceAuth === 'function') updateVoiceAuth(user);
+  if (typeof updateDiaryAuth === 'function') updateDiaryAuth(user);
 }
 
-function openAuth() { pushOverlayState('authOverlay'); document.getElementById('authOverlay').classList.add('visible'); if (clerk) clerk.mountSignIn(document.getElementById('clerk-sign-in'), { routing: 'virtual', appearance: { variables: { colorPrimary: '#a6e8c4', colorTextOnPrimaryBackground: '#04140c', colorBackground: '#08110d', colorInputBackground: '#0f1a15', colorInputText: '#eef6f1', colorText: '#eef6f1', colorTextSecondary: '#9fb3a8', colorNeutral: '#eef6f1', colorDanger: '#ff7a6b', borderRadius: '0px', fontFamily: "'Nunito', system-ui, sans-serif", fontSize: '1rem' }, elements: { rootBox: { width: '100%' }, cardBox: { width: '100%', boxShadow: 'none', border: '1px solid rgba(190,240,215,0.18)' }, card: { boxShadow: 'none' } } } }); }
-function closeAuth() { document.getElementById('authOverlay').classList.remove('visible'); if (clerk) clerk.unmountSignIn(document.getElementById('clerk-sign-in')); }
+// Po zalogowaniu wracamy na bieżącą stronę i zakładkę: w panelu Clerka adres powrotu to główna domena, a na GitHub Pages
+// Soleil żyje pod /hackyeah-2026/ (bez tego 404). Różni się najwyżej #, więc Clerk nie przeładowuje strony i rozmowa zostaje.
+// withSignUp: rejestracja w tym samym okienku (bez tego „Sign up” wyprowadza na stronę Clerka, która wraca na 404).
+const authReturnUrl = () => location.href.split('#')[0] + '#' + (document.getElementById('app')?.dataset.view || 'rozmowa');
+function openAuth() { pushOverlayState('authOverlay'); document.getElementById('authOverlay').classList.add('visible'); if (clerk && clerk.loaded) mountClerkSignIn(); }
+function mountClerkSignIn() { clerk.mountSignIn(document.getElementById('clerk-sign-in'), { routing: 'virtual', withSignUp: true, forceRedirectUrl: authReturnUrl(), signUpForceRedirectUrl: authReturnUrl(), appearance: { variables: { colorPrimary: '#a6e8c4', colorTextOnPrimaryBackground: '#04140c', colorBackground: '#08110d', colorInputBackground: '#0f1a15', colorInputText: '#eef6f1', colorText: '#eef6f1', colorTextSecondary: '#9fb3a8', colorNeutral: '#eef6f1', colorDanger: '#ff7a6b', borderRadius: '0px', fontFamily: "'Nunito', system-ui, sans-serif", fontSize: '1rem' }, elements: { rootBox: { width: '100%' }, cardBox: { width: '100%', boxShadow: 'none', border: '1px solid rgba(190,240,215,0.18)' }, card: { boxShadow: 'none' } } } }); }
+function closeAuth() {
+  document.getElementById('authOverlay').classList.remove('visible');
+  if (clerk) clerk.unmountSignIn(document.getElementById('clerk-sign-in'));
+  // Leave Clerk's step out of the address, so the next sign-in starts from the beginning
+  if (isClerkRoute()) history.replaceState(history.state, '', authReturnUrl());
+}
 function toggleUserMenu() { const menu = document.getElementById('userMenu'); if (!menu.classList.contains('visible')) pushOverlayState('userMenu'); menu.classList.toggle('visible'); }
-async function signOut() { if (clerk) { await clerk.signOut(); document.getElementById('userMenu').classList.remove('visible'); userIsPremium = false; } }
+async function signOut() { if (clerk) { await clerk.signOut({ redirectUrl: authReturnUrl() }); document.getElementById('userMenu').classList.remove('visible'); userIsPremium = false; goBack(); } } // goBack: the next person on this device must not see the conversation
 
 // PREMIUM
 function openPremium() { pushOverlayState('premiumOverlay'); document.getElementById('premiumOverlay').classList.add('visible'); document.getElementById('userMenu').classList.remove('visible'); }
@@ -1797,7 +1829,7 @@ async function deleteConversation(event, conversationId) {
 function startNewChat() {
   chatWindow.querySelectorAll('.message-row').forEach(m => m.remove());
   welcomeMsg.style.display = 'block'; backBtn.classList.remove('visible');
-  conversationHistory = []; currentConversationId = null; firstMessage = true;
+  conversationHistory = []; currentConversationId = null; firstMessage = true; offlineChat = null;
   input.value = ''; input.style.height = 'auto'; closeConversations();
 }
 
@@ -1839,8 +1871,75 @@ input.addEventListener('keydown', function(e) { if (e.key === 'Enter' && !e.shif
 function goBack() {
   chatWindow.querySelectorAll('.message-row').forEach(m => m.remove());
   welcomeMsg.style.display = 'block'; backBtn.classList.remove('visible');
-  conversationHistory = []; currentConversationId = null; firstMessage = true;
+  conversationHistory = []; currentConversationId = null; firstMessage = true; offlineChat = null;
   input.value = ''; input.style.height = 'auto';
+}
+
+// Text typed by the user or returned by the server goes into innerHTML (appendMessage), so it is escaped first
+const escapeHtml = (s) => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+// Without the AI server (GitHub Pages) the offline companion (offline-companion.js) answers, but only in Polish.
+// Other languages still get crisis numbers and urgent-symptom help, plus an honest note and a way forward.
+let offlineChat = null; // one per conversation, so "start over" also forgets its topic
+const CHAT_FALLBACK = {
+  pl: { error: 'Przepraszam, wystąpił błąd.', retry: 'Przepraszam, spróbuj jeszcze raz.', connection: 'Przepraszam, mam chwilowe trudności z połączeniem.' },
+  en: {
+    error: 'Sorry, something went wrong.', retry: 'Sorry, please try again.', connection: 'Sorry, I\'m having trouble connecting right now.',
+    crisis: /kill myself|suicid|want to die|self[- ]?harm|end my life|(don'?t|do not) want to (live|be alive)|hurt myself/i,
+    redflag: /chest pain|pain in (my|the) chest|can'?t breathe|hard to breathe|short(ness)? of breath|fainted|passed out|lost consciousness/i,
+    crisisReply: 'I\'m here and I take this seriously. Your life matters. Please talk right now to someone trained to help at a moment like this (numbers in Poland):',
+    crisisOutro: 'You can keep writing to me. Is there someone close by you can call or text right now?',
+    lines: ['if you are in danger right now', 'helpline for adults in emotional crisis', 'Support Centre, 24/7', 'helpline for children and young people'],
+    redflagReply: 'This may be urgent. If the chest pain is strong, it is hard to breathe, something suddenly goes numb or someone loses consciousness, don\'t wait: call <a class="hy-tel" href="tel:112">112</a>.',
+    onlyPolish: 'Without the server I can only chat in Polish for now. You can switch to Polish in <a href="#wiecej">More → Language</a>, or tap <a href="#" onclick="openVoiceCall(); return false">Call</a>: the voice conversation works in English after you sign in.'
+  },
+  uk: {
+    error: 'Вибач, сталася помилка.', retry: 'Вибач, спробуй ще раз.', connection: 'Вибач, зараз є проблеми зі з\'єднанням.',
+    crisis: /не хочу жити|не хочу більше жити|покінчити з собою|вбити себе|убити себе|суїцид|самогубств|хочу померти|завдати собі шкоди/i,
+    redflag: /біль у грудях|болить у грудях|не можу дихати|важко дихати|задихаюсь|знепритомн|втратив свідомість|втратила свідомість/i,
+    crisisReply: 'Я тут і ставлюся до цього серйозно. Твоє життя важливе. Будь ласка, зателефонуй зараз тому, хто вміє допомогти в такий момент (номери в Польщі):',
+    crisisOutro: 'Ти можеш і далі мені писати. Чи є зараз поруч хтось, кому можна зателефонувати або написати?',
+    lines: ['якщо тобі зараз загрожує небезпека', 'телефон довіри для дорослих у кризі', 'Центр підтримки, цілодобово', 'телефон довіри для дітей і молоді'],
+    redflagReply: 'Це може бути терміново. Якщо біль у грудях сильний, важко дихати, щось раптово німіє або хтось втрачає свідомість — не чекай, телефонуй на <a class="hy-tel" href="tel:112">112</a>.',
+    onlyPolish: 'Без сервера я поки що можу писати лише польською. Можеш перемкнути мову на польську в <a href="#wiecej">Більше → Мова</a> або натиснути <a href="#" onclick="openVoiceCall(); return false">Дзвінок</a>: голосова розмова працює українською після входу.'
+  },
+  de: {
+    error: 'Entschuldige, da ist etwas schiefgelaufen.', retry: 'Entschuldige, versuch es noch einmal.', connection: 'Entschuldige, ich habe gerade Verbindungsprobleme.',
+    crisis: /umbringen|selbstmord|suizid|nicht mehr leben|will sterben|möchte sterben|mich (selbst )?verletzen|mir das leben nehmen/i,
+    redflag: /brustschmerz|schmerzen in der brust|bekomme keine luft|kann nicht atmen|atemnot|ohnmächtig|bewusstlos/i,
+    crisisReply: 'Ich bin da und nehme das ernst. Dein Leben ist wichtig. Bitte sprich jetzt mit jemandem, der in so einem Moment helfen kann (Nummern in Polen):',
+    crisisOutro: 'Du kannst mir weiter schreiben. Gibt es gerade jemanden in deiner Nähe, den du anrufen oder dem du schreiben kannst?',
+    lines: ['wenn du gerade in Gefahr bist', 'Krisentelefon für Erwachsene', 'Hilfezentrum, rund um die Uhr', 'Hilfetelefon für Kinder und Jugendliche'],
+    redflagReply: 'Das kann dringend sein. Wenn der Brustschmerz stark ist, das Atmen schwerfällt, plötzlich etwas taub wird oder jemand bewusstlos wird – warte nicht, ruf die <a class="hy-tel" href="tel:112">112</a> an.',
+    onlyPolish: 'Ohne Server kann ich gerade nur auf Polnisch schreiben. Du kannst unter <a href="#wiecej">Mehr → Sprache</a> auf Polnisch umstellen oder auf <a href="#" onclick="openVoiceCall(); return false">Anrufen</a> tippen: Das Sprachgespräch funktioniert nach der Anmeldung auf Deutsch.'
+  },
+  es: {
+    error: 'Lo siento, ha ocurrido un error.', retry: 'Lo siento, inténtalo de nuevo.', connection: 'Lo siento, ahora mismo tengo problemas de conexión.',
+    crisis: /suicid|matarme|quiero morir|no quiero vivir|hacerme daño|quitarme la vida|acabar con mi vida/i,
+    redflag: /dolor (en el|de) pecho|no puedo respirar|me cuesta respirar|me falta el aire|me desmay|perd\w* el conocimiento/i,
+    crisisReply: 'Estoy aquí y me lo tomo en serio. Tu vida importa. Por favor, habla ahora con alguien preparado para ayudar en un momento así (números en Polonia):',
+    crisisOutro: 'Puedes seguir escribiéndome. ¿Hay alguien cerca a quien puedas llamar o escribir ahora mismo?',
+    lines: ['si estás en peligro ahora', 'línea de ayuda para adultos en crisis emocional', 'Centro de Apoyo, 24 h', 'línea de ayuda para niños y jóvenes'],
+    redflagReply: 'Puede ser urgente. Si el dolor en el pecho es fuerte, cuesta respirar, algo se adormece de repente o alguien pierde el conocimiento, no esperes: llama al <a class="hy-tel" href="tel:112">112</a>.',
+    onlyPolish: 'Sin el servidor, por ahora solo puedo escribir en polaco. Puedes cambiar a polaco en <a href="#wiecej">Más → Idioma</a> o tocar <a href="#" onclick="openVoiceCall(); return false">Llamar</a>: la llamada de voz funciona en español después de iniciar sesión.'
+  }
+};
+const chatText = () => CHAT_FALLBACK[currentLanguage] || CHAT_FALLBACK.pl;
+function offlineReply(text) {
+  if (!window.SoleilOffline) return null;
+  if (currentLanguage === 'pl') return (offlineChat = offlineChat || window.SoleilOffline.create()).reply(text);
+  const t = chatText();
+  const topic = window.SoleilOffline.detect(text).topic;
+  let html;
+  if (topic === 'crisis' || t.crisis.test(text)) {
+    const tels = [['112', '112'], ['116123', '116 123'], ['800702222', '800 70 2222'], ['116111', '116 111']];
+    html = t.crisisReply + '<span class="hy-help">' + tels.map(([tel, label], i) => `<a class="hy-tel-row" href="tel:${tel}"><strong>${label}</strong><span>${t.lines[i]}</span></a>`).join('') + '</span>' + t.crisisOutro;
+  } else if (topic === 'redflag' || t.redflag.test(text)) {
+    html = t.redflagReply;
+  } else {
+    html = t.onlyPolish;
+  }
+  return { html, text: html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(), delay: 700 };
 }
 
 function appendMessage(role, text) {
@@ -1874,7 +1973,7 @@ async function sendMessage() {
   const text = input.value.trim();
   if (!text) return;
   input.value = ''; input.style.height = 'auto';
-  appendMessage('user', text);
+  appendMessage('user', escapeHtml(text));
   conversationHistory.push({ role: 'user', content: text });
   showTyping();
   try {
@@ -1897,14 +1996,14 @@ async function sendMessage() {
       return;
     }
 
-    if (!res.ok) { appendMessage('ai', 'Przepraszam, wystąpił błąd.'); return; }
+    if (!res.ok) { appendMessage('ai', chatText().error); return; }
     if (data.conversationId) currentConversationId = data.conversationId;
-    const reply = data.reply || 'Przepraszam, spróbuj jeszcze raz.';
+    const reply = data.reply || chatText().retry;
     conversationHistory.push({ role: 'assistant', content: reply });
-    appendMessage('ai', reply);
+    appendMessage('ai', escapeHtml(reply));
   } catch (err) {
-    // HackYeah: no AI server (e.g. on GitHub Pages) -> the offline companion from offline-companion.js answers
-    const offline = currentLanguage === 'pl' && window.SoleilOffline ? window.SoleilOffline.reply(text) : null;
+    // HackYeah: no AI server (e.g. on GitHub Pages) -> the offline companion answers (offlineReply above)
+    const offline = offlineReply(text);
     if (offline) {
       await new Promise(r => setTimeout(r, offline.delay));
       removeTyping();
@@ -1913,7 +2012,7 @@ async function sendMessage() {
       return;
     }
     removeTyping();
-    appendMessage('ai', 'Przepraszam, mam chwilowe trudności z połączeniem.');
+    appendMessage('ai', chatText().connection);
   }
 }
 
@@ -1992,10 +2091,11 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
 })();
 </script>
 <script src="offline-companion.js?v=4"></script>
-<script src="voice.js"></script>
-<script src="app.js?v=4"></script>
+<script src="voice.js?v=3"></script>
+<script src="diary.js?v=2"></script>
+<script src="app.js?v=6"></script>
 <script src="quotes.js?v=5"></script>
 <script src="art.js?v=4"></script>
-<script src="chat.js?v=5"></script>
+<script src="chat.js?v=6"></script>
 </body>
 </html>

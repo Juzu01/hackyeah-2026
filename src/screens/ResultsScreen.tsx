@@ -4,7 +4,8 @@ import { DISCLAIMER } from '../components/Footer.tsx'
 import TriageCard from '../components/TriageCard.tsx'
 import { symptomName } from '../data/symptoms.ts'
 import { useAccount } from '../lib/account.ts'
-import { interviewRedFlags, regionsSummary, toInput, type CheckDraft } from '../lib/check.ts'
+import { interviewRedFlags, regionDefIds, regionsSummary, toInput, type CheckDraft } from '../lib/check.ts'
+import { addToDiary, openDiary, soleilShell } from '../lib/diary.ts'
 import { analyze, TRIAGE_INFO } from '../lib/engine.ts'
 import { saveCheck } from '../lib/history.ts'
 
@@ -46,6 +47,35 @@ export default function ResultsScreen({ draft, savedAt, onRestart, onToast }: Pr
   const onSaveClick = () => {
     if (account.status === 'signed-out') setAskLogin(true)
     else save()
+  }
+
+  // The diary belongs to the Doco account: inside Doco the signed-in user may be known only there
+  const [inDiary, setInDiary] = useState(false)
+  const [diaryLogin, setDiaryLogin] = useState(false)
+  const addEntry = () => {
+    const userId = account.user?.id ?? soleilShell()?.Clerk?.user?.id
+    if (!userId) {
+      setDiaryLogin(true)
+      const shell = soleilShell()
+      if (shell?.openAuth) shell.openAuth()
+      else account.signIn()
+      return
+    }
+    const ok = addToDiary(userId, {
+      at: date.toISOString(),
+      where: where || 'Objawy ogólne',
+      regions: regionDefIds(draft),
+      symptoms,
+      level: draft.severity,
+      duration: draft.duration,
+      onset: draft.onset,
+      trend: draft.trend,
+      triage: result.triage,
+      advice: TRIAGE_INFO[result.triage].short,
+    })
+    setDiaryLogin(false)
+    setInDiary(ok)
+    onToast(ok ? 'Dodano wpis do dziennika.' : 'Nie udało się zapisać wpisu na tym urządzeniu.')
   }
 
   const share = async () => {
@@ -119,7 +149,16 @@ export default function ResultsScreen({ draft, savedAt, onRestart, onToast }: Pr
           Co dalej
         </h2>
         <div className="mt-4 grid gap-2 sm:flex sm:flex-wrap">
-          <button type="button" onClick={onSaveClick} disabled={saved} className="btn-primary">
+          {inDiary ? (
+            <button type="button" onClick={openDiary} className="btn-primary">
+              Zobacz dziennik
+            </button>
+          ) : (
+            <button type="button" onClick={addEntry} className="btn-primary">
+              Dodaj wpis do dziennika
+            </button>
+          )}
+          <button type="button" onClick={onSaveClick} disabled={saved} className="btn-secondary">
             {saved ? 'Zapisano w historii' : 'Zapisz wynik'}
           </button>
           <button type="button" onClick={() => window.print()} className="btn-secondary">
@@ -132,6 +171,7 @@ export default function ResultsScreen({ draft, savedAt, onRestart, onToast }: Pr
             Sprawdź inne objawy
           </button>
         </div>
+        {diaryLogin && <p className="mt-3 border border-green/35 bg-green-soft p-3 text-base text-ink">Dziennik jest częścią konta Doco. Zaloguj się, a potem dodaj wpis jeszcze raz.</p>}
         {askLogin && (
           <div className="mt-3 border border-green/35 bg-green-soft p-3 text-base text-ink">
             <p>Zaloguj się, żeby historia była przypisana do Twojego konta i dostępna po ponownym wejściu.</p>

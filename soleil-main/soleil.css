@@ -1917,7 +1917,7 @@ a {
 .tabbar {
   grid-row: 4;
   --slant: 18px;
-  --rise: calc(var(--slant) / 5);
+  --rise: calc(var(--slant) / 6);
   position: relative;
   z-index: 20;
   height: calc(72px + var(--slant) + var(--sab));
@@ -2022,11 +2022,30 @@ a {
   box-shadow: 0 0 28px var(--green-glow);
 }
 
+/* Six tabs on a phone: slightly smaller labels. */
+@media (max-width: 480px) {
+  .tab {
+    font-size: 0.68rem;
+  }
+}
+/* Narrow phones: room for the longest translated labels (Symptoms, Симптоми, Symptome). */
+@media (max-width: 380px) {
+  .tab {
+    font-size: 0.62rem;
+    letter-spacing: -0.01em;
+  }
+}
+@media (max-width: 340px) {
+  .tab {
+    font-size: 0.58rem;
+  }
+}
+
 @media (min-width: 900px) {
   .tabs {
     right: 50%;
     left: auto;
-    width: 560px;
+    width: 660px;
     transform: translateX(50%);
   }
   .tabbar {
@@ -2383,4 +2402,14 @@ a {
   #hyBreatheProgress {
     transition-duration: 60000ms !important;
   }
+}
+
+/* "Pomiń" under the name prompt (app.js) */
+.name-skip {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  margin-top: 6px;
+  color: var(--ink-2);
+  font-weight: 700;
 }

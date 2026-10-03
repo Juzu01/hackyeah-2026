@@ -1,0 +1,53 @@
+/* DZIENNIK (diary.js) — pełny ekran w stylu aplikacji: twarze z Nastroju, statystyki, kafelki od najstarszego wpisu */
+.diary-checkin { margin-top: 18px; }
+.diary-checkin .faces { margin-top: 12px; }
+
+/* Wejście do „Gdzie boli?” */
+.diary-cta {
+  display: flex; align-items: center; gap: 14px; width: 100%; min-height: 64px; margin-top: 14px; padding: 12px 14px;
+  border: 1px solid var(--line-2); background: var(--s1); color: var(--ink); font-size: 1rem; font-weight: 700; text-align: left;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+}
+.diary-cta > .ico:first-child { color: var(--green); }
+.diary-cta span { flex: 1; }
+.diary-cta:active { background: var(--s2); }
+
+/* Statystyki: tekst w kolorach tekstu, kolor tylko jako znacznik obok liczby */
+.diary-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+.diary-stat { display: flex; flex-direction: column; gap: 4px; min-height: 104px; padding: 12px; border: 1px solid var(--line-2); border-left: 4px solid var(--lvl-color, var(--line-2)); background: var(--s1); }
+.diary-stat-label { color: var(--ink-2); font-size: 0.8125rem; font-weight: 700; }
+.diary-stat-value { color: var(--ink); font-size: 1.5rem; font-weight: 800; line-height: 1.15; overflow-wrap: anywhere; }
+.diary-stat-context { margin-top: auto; color: var(--ink-3); font-size: 0.8125rem; }
+.diary-insight { margin-top: 10px; padding: 10px 12px; border-left: 2px solid var(--green); background: var(--green-soft); color: var(--ink); font-size: 0.9375rem; }
+.diary-sub-note { color: var(--ink-3); font-size: 0.8125rem; font-weight: 600; }
+
+/* Kafelki wpisów */
+.diary-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 8px; margin-top: 12px; }
+.diary-month { grid-column: 1 / -1; margin-top: 10px; color: var(--ink-2); font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+.diary-month:first-child { margin-top: 0; }
+.diary-tile { display: flex; flex-direction: column; gap: 3px; min-width: 0; min-height: 128px; padding: 10px 12px 12px; border: 1px solid var(--line-2); background: var(--s1); }
+.diary-tile-top { display: flex; align-items: center; gap: 8px; min-height: 30px; }
+.diary-when { flex: 1; color: var(--ink-2); font-size: 0.8125rem; }
+.diary-kind { margin-top: 4px; color: var(--ink-3); font-size: 0.75rem; font-weight: 700; }
+.diary-tile-title { color: var(--ink); font-size: 1rem; font-weight: 800; line-height: 1.25; overflow-wrap: anywhere; }
+.diary-tile-meta { color: var(--ink-2); font-size: 0.875rem; }
+.diary-tile-note { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--ink-2); font-size: 0.875rem; }
+.diary-tile-advice { margin-top: auto; padding-top: 4px; color: var(--ink-3); font-size: 0.75rem; }
+.diary-level { display: grid; place-items: center; min-width: 30px; height: 26px; padding: 0 6px; font-weight: 800; font-size: 0.875rem; }
+.diary-pain-ico { color: var(--alarm); }
+.diary-face { width: 28px; height: 28px; fill: none; stroke: var(--tone, var(--green)); stroke-width: 2.4; stroke-linejoin: miter; stroke-linecap: square; }
+.diary-tile.is-mood[data-mood='1'] { --tone: #8fa3c2; }
+.diary-tile.is-mood[data-mood='2'] { --tone: #9fb8bb; }
+.diary-tile.is-mood[data-mood='3'] { --tone: #b9c9bf; }
+.diary-tile.is-mood[data-mood='4'] { --tone: #b4e3c8; }
+.diary-tile.is-mood[data-mood='5'] { --tone: #a6e8c4; }
+.diary-delete { display: grid; place-items: center; width: 36px; height: 36px; margin: -6px -8px -6px 0; color: var(--ink-3); }
+.diary-delete:active, .diary-delete:focus-visible { color: var(--alarm); }
+.diary-delete .ico { width: 16px; height: 16px; }
+.diary-empty { margin-top: 12px; color: var(--ink-2); }
+.diary-fine { margin-top: 20px; color: var(--ink-3); font-size: 0.8125rem; line-height: 1.5; }
+
+@media (min-width: 640px) {
+  .diary-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .diary-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

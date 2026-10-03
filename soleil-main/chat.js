@@ -155,10 +155,19 @@
     const h = new Date().getHours();
     return h >= 23 || h < 5 ? 'night' : h < 11 ? 'morning' : h < 18 ? 'day' : 'evening';
   }
+  // The greeting for the time of day, with the user's first name when the account has one (app.js)
+  function renderGreeting() {
+    const p = period();
+    const greet = t('greet')[p];
+    const name = window.hyUserName ? window.hyUserName() : null;
+    const first = [...greet].findIndex((c) => c.toLowerCase() !== c.toUpperCase()); // first letter, after "¿" in Spanish
+    const lowered = first < 0 ? greet : greet.slice(0, first) + greet[first].toLowerCase() + greet.slice(first + 1);
+    welcome.querySelector('h2').textContent = !name ? greet : p === 'night' ? `${name}, ${lowered}` : `${greet}, ${name}`;
+  }
   function renderWelcome() {
     const p = period();
     welcome.dataset.period = p;
-    welcome.querySelector('h2').textContent = t('greet')[p];
+    renderGreeting();
     welcome.querySelector('p').textContent = p === 'night' ? t('introNight') : t('intro');
     $('hyBreatheLabel').textContent = t('breathe');
     $('hyHero').setAttribute('aria-label', t('breatheAria'));
@@ -172,6 +181,12 @@
     baseLanguage(l);
     renderWelcome();
     fitPlaceholder();
+  };
+  // Signing in or changing the name updates the greeting
+  const baseAuth = window.updateAuthUI;
+  window.updateAuthUI = function (user) {
+    baseAuth(user);
+    renderGreeting();
   };
   const baseBack = window.goBack;
   window.goBack = function () {

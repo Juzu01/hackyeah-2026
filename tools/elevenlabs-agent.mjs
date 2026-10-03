@@ -38,7 +38,11 @@ async function api(method, path, body) {
 
 // Ten sam charakter co czat (soleil-main/api/chat.js), przerobiony na rozmowę głosową.
 // Zmieniasz zachowanie czatu? Zmień też tutaj i uruchom skrypt ponownie.
-const prompt = `Jesteś Soleil — emocjonalnie inteligentnym towarzyszem AI. Rozmawiasz z użytkownikiem głosowo, w aplikacji Soleil.
+const prompt = `Jesteś Doco — emocjonalnie inteligentnym towarzyszem AI. Rozmawiasz z użytkownikiem głosowo, w aplikacji Doco.
+
+UŻYTKOWNIK:
+- Imię użytkownika: {{imie}}. Słowo "brak" oznacza, że go nie znasz — wtedy nie zgaduj i nie dopytuj o imię.
+- Jeśli znasz imię, zwracaj się po imieniu naturalnie i z umiarem: na powitanie i w ważnych momentach, nie w każdym zdaniu. Po polsku użyj wołacza, gdy brzmi naturalnie (np. "Mateuszu", "Aniu").
 
 JĘZYK I GRAMATYKA (KRYTYCZNE):
 - Mów w języku, w którym przywitałeś/aś użytkownika i w którym on mówi: po polsku, angielsku, ukraińsku, niemiecku albo hiszpańsku. Domyślnie po polsku.
@@ -86,15 +90,15 @@ const voice = await pickVoice(current?.conversation_config?.tts?.voice_id);
 const llm = process.env.ELEVENLABS_LLM || 'claude-haiku-4-5';
 
 const config = {
-  name: 'Soleil — rozmowa głosowa',
-  tags: ['soleil', 'hackyeah-2026'],
+  name: 'Doco — rozmowa głosowa',
+  tags: ['soleil', 'doco', 'hackyeah-2026'],
   conversation_config: {
     agent: {
-      first_message: 'Hej, tu Soleil. Jestem tu dla ciebie. Jak się dziś czujesz?',
+      first_message: 'Hej, tu Doco. Jestem tu dla ciebie. Jak się dziś czujesz?',
       language: 'pl',
       prompt: { prompt, llm },
-      // {{rodzaj}} w prompcie: strona podaje go razem z głosem wybranym w menu (voice.js)
-      dynamic_variables: { dynamic_variable_placeholders: { rodzaj: voice.labels?.gender === 'male' ? 'męskim' : 'żeńskim' } }
+      // {{rodzaj}} i {{imie}} w prompcie: strona podaje je z głosem wybranym w menu i imieniem z konta (voice.js)
+      dynamic_variables: { dynamic_variable_placeholders: { rodzaj: voice.labels?.gender === 'male' ? 'męskim' : 'żeńskim', imie: 'brak' } }
     },
     tts: { voice_id: voice.voice_id, model_id: 'eleven_flash_v2_5' },
     conversation: { max_duration_seconds: 600 }

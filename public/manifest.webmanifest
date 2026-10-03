@@ -2,7 +2,6 @@
   "name": "Atlas ciała",
   "short_name": "Atlas ciała",
   "description": "Trójwymiarowy atlas anatomiczny: mięśnie, narządy i kości. Zgłaszaj ból i śledź go w czasie.",
-  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

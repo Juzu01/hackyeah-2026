@@ -22,7 +22,8 @@ const voiceTexts = {
     listen: 'Posłuchaj', pickerNote: 'Próbki są po angielsku — w rozmowie Doco mówi w twoim języku.',
     gender: { f: 'kobiecy', m: 'męski' },
     traits: { upbeat: 'pogodny', warm: 'ciepły', soothing: 'kojący', deep: 'głęboki', calm: 'spokojny', relaxed: 'swobodny' },
-    firstMessage: 'Hej, tu Doco. Jestem tu dla ciebie. Jak się dziś czujesz?'
+    firstMessage: 'Hej, tu Doco. Jestem tu dla ciebie. Jak się dziś czujesz?',
+    firstMessageNamed: (n) => `Hej, ${n}, tu Doco. Jestem tu dla ciebie. Jak się dziś czujesz?`
   },
   en: {
     button: 'Talk to Doco', title: 'Call with Doco', credit: 'Voice: ElevenLabs',
@@ -40,7 +41,8 @@ const voiceTexts = {
     listen: 'Listen', pickerNote: 'Samples are in English — in the call Doco speaks your language.',
     gender: { f: 'female', m: 'male' },
     traits: { upbeat: 'upbeat', warm: 'warm', soothing: 'reassuring', deep: 'deep', calm: 'calm', relaxed: 'relaxed' },
-    firstMessage: 'Hey, it\'s Doco. I\'m here for you. How are you feeling today?'
+    firstMessage: 'Hey, it\'s Doco. I\'m here for you. How are you feeling today?',
+    firstMessageNamed: (n) => `Hey ${n}, it's Doco. I'm here for you. How are you feeling today?`
   },
   uk: {
     button: 'Поговори з Doco', title: 'Розмова з Doco', credit: 'Голос: ElevenLabs',
@@ -58,7 +60,8 @@ const voiceTexts = {
     listen: 'Послухати', pickerNote: 'Зразки англійською — у розмові Doco говорить твоєю мовою.',
     gender: { f: 'жіночий', m: 'чоловічий' },
     traits: { upbeat: 'бадьорий', warm: 'теплий', soothing: 'заспокійливий', deep: 'глибокий', calm: 'спокійний', relaxed: 'невимушений' },
-    firstMessage: 'Привіт, це Doco. Я тут для тебе. Як ти сьогодні почуваєшся?'
+    firstMessage: 'Привіт, це Doco. Я тут для тебе. Як ти сьогодні почуваєшся?',
+    firstMessageNamed: (n) => `Привіт, ${n}, це Doco. Я тут для тебе. Як ти сьогодні почуваєшся?`
   },
   de: {
     button: 'Mit Doco sprechen', title: 'Gespräch mit Doco', credit: 'Stimme: ElevenLabs',
@@ -76,7 +79,8 @@ const voiceTexts = {
     listen: 'Anhören', pickerNote: 'Die Hörproben sind auf Englisch — im Gespräch spricht Doco deine Sprache.',
     gender: { f: 'weiblich', m: 'männlich' },
     traits: { upbeat: 'fröhlich', warm: 'warm', soothing: 'beruhigend', deep: 'tief', calm: 'ruhig', relaxed: 'entspannt' },
-    firstMessage: 'Hey, hier ist Doco. Ich bin für dich da. Wie fühlst du dich heute?'
+    firstMessage: 'Hey, hier ist Doco. Ich bin für dich da. Wie fühlst du dich heute?',
+    firstMessageNamed: (n) => `Hey ${n}, hier ist Doco. Ich bin für dich da. Wie fühlst du dich heute?`
   },
   es: {
     button: 'Habla con Doco', title: 'Llamada con Doco', credit: 'Voz: ElevenLabs',
@@ -94,7 +98,8 @@ const voiceTexts = {
     listen: 'Escuchar', pickerNote: 'Las muestras están en inglés; en la llamada Doco habla tu idioma.',
     gender: { f: 'femenina', m: 'masculina' },
     traits: { upbeat: 'alegre', warm: 'cálida', soothing: 'tranquilizadora', deep: 'profunda', calm: 'tranquila', relaxed: 'relajada' },
-    firstMessage: 'Hola, soy Doco. Estoy aquí para ti. ¿Cómo te sientes hoy?'
+    firstMessage: 'Hola, soy Doco. Estoy aquí para ti. ¿Cómo te sientes hoy?',
+    firstMessageNamed: (n) => `Hola, ${n}, soy Doco. Estoy aquí para ti. ¿Cómo te sientes hoy?`
   }
 };
 
@@ -133,7 +138,8 @@ let voiceState = 'ended';
 let voiceLines = [];
 let voiceLevelFrame = 0;
 let voiceSdkPromise = null;
-let voiceLoginRequestedAt = 0;
+// Kept in sessionStorage too: signing in with Google reloads the page on the way back
+let voiceLoginRequestedAt = Number(sessionStorage.getItem('soleil_voice_login')) || 0;
 let voicePreview = null;
 
 function vt() { return voiceTexts[currentLanguage] || voiceTexts.pl; }
@@ -200,7 +206,7 @@ function renderVoicePicker() {
   const selected = currentVoiceOption().id;
   const playing = voicePreview?.voiceId;
   document.getElementById('voicePickerList').innerHTML = VOICE_OPTIONS.map(v => `
-    <div class="lang-option ${v.id === selected ? 'active' : ''}" onclick="selectVoice('${v.id}')">
+    <div class="lang-option ${v.id === selected ? 'active' : ''}" role="button" tabindex="0" onclick="selectVoice('${v.id}')">
       <span class="voice-option-avatar ${v.gender}">${v.name[0]}</span>
       <div class="voice-option-text"><div class="lang-name">${v.name}</div><div class="lang-native">${t.gender[v.gender]} · ${t.traits[v.trait]}</div></div>
       <button class="voice-preview ${v.id === playing ? 'playing' : ''}" onclick="previewVoice(event, '${v.id}')" title="${t.listen}" aria-label="${t.listen}: ${v.name}">${v.id === playing ? VOICE_ICONS.stop : VOICE_ICONS.play}</button>
@@ -261,7 +267,7 @@ function closeVoiceCall() {
 
 function voiceMainAction() {
   if (voiceLive) endVoiceCall();
-  else if (voiceState === 'locked') { voiceLoginRequestedAt = Date.now(); closeVoiceCall(); openAuth(); }
+  else if (voiceState === 'locked') { voiceLoginRequestedAt = Date.now(); sessionStorage.setItem('soleil_voice_login', voiceLoginRequestedAt); closeVoiceCall(); openAuth(); }
   else startVoiceCall();
 }
 
@@ -269,6 +275,7 @@ function voiceMainAction() {
 function updateVoiceAuth(user) {
   if (user && Date.now() - voiceLoginRequestedAt < 5 * 60 * 1000) {
     voiceLoginRequestedAt = 0;
+    sessionStorage.removeItem('soleil_voice_login');
     openVoiceCall();
   } else if (!user && voiceLive) {
     closeVoiceCall();
@@ -302,11 +309,12 @@ async function startVoiceCall() {
     const sdk = await loadVoiceSdk();
     if (!current()) return;
     const voice = currentVoiceOption();
+    const name = window.hyUserName ? window.hyUserName() : null; // optional first name from the account (app.js)
     const conversation = await sdk.Conversation.startSession({
       agentId: ELEVENLABS_AGENT_ID,
       connectionType: 'webrtc',
-      overrides: { agent: { language: currentLanguage, firstMessage: t.firstMessage }, tts: { voiceId: voice.id } },
-      dynamicVariables: { rodzaj: voice.gender === 'm' ? 'męskim' : 'żeńskim' },
+      overrides: { agent: { language: currentLanguage, firstMessage: name ? t.firstMessageNamed(name) : t.firstMessage }, tts: { voiceId: voice.id } },
+      dynamicVariables: { rodzaj: voice.gender === 'm' ? 'męskim' : 'żeńskim', imie: name || 'brak' },
       onModeChange: ({ mode }) => { if (current()) setVoiceState(mode); },
       onMessage: ({ message, role }) => { if (current()) addVoiceLine(role === 'agent' ? 'ai' : 'user', message); },
       onDisconnect: (details) => { if (current()) finishVoiceCall(details.reason === 'error' ? t.error : null); },
