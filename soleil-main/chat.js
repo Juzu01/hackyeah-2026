@@ -18,8 +18,6 @@
       breatheAria: 'Oddychaj ze mną przez minutę',
       names: ['Bardzo źle', 'Źle', 'Średnio', 'Dobrze', 'Świetnie'],
       say: ['Czuję się bardzo źle', 'Jest mi dziś źle', 'Tak sobie, średnio', 'Czuję się dobrze', 'Czuję się świetnie!'],
-      lonely: 'Czuję się samotny/a',
-      sleep: 'Nie mogę zasnąć',
       inhale: 'Wdech', inhaleSub: 'nosem, powoli',
       exhale: 'Wydech', exhaleSub: 'ustami, dłużej',
       done: 'Dobra robota', doneSub: 'Jak się teraz czujesz?',
@@ -29,6 +27,7 @@
       checker: 'Gdzie boli?', atlas: 'Atlas ciała',
       quick: 'Szybkie odpowiedzi',
       short: 'Napisz tutaj…',
+      more: 'Pokaż inne tematy',
     },
     en: {
       greet: { morning: 'Good morning', day: 'Hi there', evening: 'Good evening', night: "Can't sleep?" },
@@ -39,8 +38,6 @@
       breatheAria: 'Breathe with me for a minute',
       names: ['Very bad', 'Bad', 'So-so', 'Good', 'Great'],
       say: ['I feel really bad', 'I feel bad today', 'So-so', 'I feel good', 'I feel great!'],
-      lonely: 'I feel lonely',
-      sleep: "I can't fall asleep",
       inhale: 'Breathe in', inhaleSub: 'through your nose, slowly',
       exhale: 'Breathe out', exhaleSub: 'through your mouth, longer',
       done: 'Well done', doneSub: 'How do you feel now?',
@@ -50,6 +47,7 @@
       checker: 'Where does it hurt?', atlas: 'Body atlas',
       quick: 'Quick replies',
       short: 'Write here…',
+      more: 'Show other topics',
     },
     uk: {
       greet: { morning: 'Доброго ранку', day: 'Привіт', evening: 'Добрий вечір', night: 'Не можеш заснути?' },
@@ -60,8 +58,6 @@
       breatheAria: 'Дихай зі мною одну хвилину',
       names: ['Дуже погано', 'Погано', 'Так собі', 'Добре', 'Чудово'],
       say: ['Мені дуже погано', 'Мені сьогодні погано', 'Так собі', 'Я почуваюся добре', 'Я почуваюся чудово!'],
-      lonely: 'Я почуваюся самотньо',
-      sleep: 'Не можу заснути',
       inhale: 'Вдих', inhaleSub: 'носом, повільно',
       exhale: 'Видих', exhaleSub: 'ротом, довше',
       done: 'Молодець', doneSub: 'Як ти зараз почуваєшся?',
@@ -71,6 +67,7 @@
       checker: 'Де болить?', atlas: 'Атлас тіла',
       quick: 'Швидкі відповіді',
       short: 'Напиши тут…',
+      more: 'Інші теми',
     },
     de: {
       greet: { morning: 'Guten Morgen', day: 'Hallo', evening: 'Guten Abend', night: 'Kannst du nicht schlafen?' },
@@ -81,8 +78,6 @@
       breatheAria: 'Eine Minute mit mir atmen',
       names: ['Sehr schlecht', 'Schlecht', 'Geht so', 'Gut', 'Super'],
       say: ['Mir geht es sehr schlecht', 'Mir geht es heute schlecht', 'Geht so', 'Mir geht es gut', 'Mir geht es super!'],
-      lonely: 'Ich fühle mich einsam',
-      sleep: 'Ich kann nicht einschlafen',
       inhale: 'Einatmen', inhaleSub: 'durch die Nase, langsam',
       exhale: 'Ausatmen', exhaleSub: 'durch den Mund, länger',
       done: 'Gut gemacht', doneSub: 'Wie fühlst du dich jetzt?',
@@ -92,6 +87,7 @@
       checker: 'Wo tut es weh?', atlas: 'Körperatlas',
       quick: 'Schnelle Antworten',
       short: 'Schreib hier…',
+      more: 'Andere Themen',
     },
     es: {
       greet: { morning: 'Buenos días', day: 'Hola', evening: 'Buenas tardes', night: '¿No puedes dormir?' },
@@ -102,8 +98,6 @@
       breatheAria: 'Respira conmigo un minuto',
       names: ['Muy mal', 'Mal', 'Más o menos', 'Bien', 'Genial'],
       say: ['Me siento muy mal', 'Hoy me siento mal', 'Más o menos', 'Me siento bien', '¡Me siento genial!'],
-      lonely: 'Me siento solo/a',
-      sleep: 'No puedo dormir',
       inhale: 'Inhala', inhaleSub: 'por la nariz, despacio',
       exhale: 'Exhala', exhaleSub: 'por la boca, más largo',
       done: 'Muy bien', doneSub: '¿Cómo te sientes ahora?',
@@ -113,6 +107,7 @@
       checker: '¿Dónde duele?', atlas: 'Atlas del cuerpo',
       quick: 'Respuestas rápidas',
       short: 'Escribe aquí…',
+      more: 'Otros temas',
     },
   };
   const t = (k) => (L[lang()] || L.pl)[k] ?? L.pl[k];
@@ -174,7 +169,8 @@
     $('hyBreatheLabel').textContent = t('breathe');
     $('hyHero').setAttribute('aria-label', t('breatheAria'));
     $('hyBreatheClose').setAttribute('aria-label', t('stop'));
-    welcome.querySelectorAll('[data-hy-say]').forEach((b) => (b.querySelector('.s-text').textContent = t(b.dataset.hySay)));
+    $('hyTopicsMoreLabel').textContent = t('more');
+    renderTopics();
     document.querySelectorAll('.cface').forEach((b) => b.setAttribute('aria-label', t('names')[b.dataset.mood - 1]));
     const today = window.hyTodayMood ? window.hyTodayMood() : null;
     $('hyCheckin').querySelectorAll('.cface').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.mood) === today)));
@@ -188,10 +184,52 @@
   const baseBack = window.goBack;
   window.goBack = function () {
     baseBack();
+    topics = null; // starting over draws new topics
     renderWelcome();
   };
+
+  // ── Topics: six from art.js's pool of twenty, new on every visit ──────
+  const Art = window.SoleilArt;
+  let topics = null;
+  function renderTopics(animate) {
+    const box = $('hyTopics');
+    if (!Art) return;
+    if (!topics) topics = Art.draw(6, period() === 'night');
+    box.innerHTML = '';
+    topics.forEach((topic, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'topic';
+      b.style.setProperty('--i', 4 + i * 0.5);
+      b.innerHTML = Art.ART[topic.art] + '<span class="topic-text"></span>';
+      const text = topic[lang()] || topic.pl;
+      b.querySelector('.topic-text').textContent = text.replace(/\//g, '/\u2060'); // "samotny/a" stays on one line
+      b.addEventListener('click', () => say(text));
+      box.append(b);
+    });
+    if (animate) {
+      box.classList.remove('reroll');
+      void box.offsetWidth; // restart the animation
+      box.classList.add('reroll');
+    }
+  }
+  $('hyTopicsMore').addEventListener('click', () => {
+    topics = Art.draw(6, false);
+    renderTopics(true);
+    $('hyTopicsMore').classList.remove('spun');
+    void $('hyTopicsMore').offsetWidth;
+    $('hyTopicsMore').classList.add('spun');
+  });
+  if (Art) $('hyTopicsMore').insertAdjacentHTML('afterbegin', Art.ART.dice);
+  // Coming back to the app after a while is a new visit: new greeting, new topics (unless mid-conversation).
+  let hiddenAt = 0;
   document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) renderWelcome();
+    if (document.hidden) {
+      hiddenAt = Date.now();
+      return;
+    }
+    if (hiddenAt && Date.now() - hiddenAt > 20 * 60e3 && welcome.style.display !== 'none') topics = null;
+    renderWelcome();
   });
 
   // Sending something from the welcome, or a quick reply: the chat's own path, as if typed.
@@ -222,7 +260,6 @@
   }
   $('hyCheckin').addEventListener('click', faceTap);
   $('hyBreatheAfter').addEventListener('click', faceTap);
-  welcome.querySelectorAll('[data-hy-say]').forEach((b) => b.addEventListener('click', () => say(t(b.dataset.hySay))));
   $('hyHero').addEventListener('click', () => openBreathe());
 
   // ── A minute of breathing ───────────────────────────────────────────

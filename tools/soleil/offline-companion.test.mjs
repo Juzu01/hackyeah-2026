@@ -3,6 +3,7 @@
 // Prints topic -> reply for sample messages; fails (exit 1) if any crisis message
 // comes back without the crisis contacts, or a topic is detected wrongly.
 import { createRequire } from 'node:module'
+import { readFileSync } from 'node:fs'
 import assert from 'node:assert/strict'
 
 const require = createRequire(import.meta.url)
@@ -67,10 +68,9 @@ const TOPICS = [
   ['Tak sobie, średnio', 'meh'],
   ['Czuję się dobrze', 'joy'],
   ['Czuję się świetnie!', 'joy'],
-  // The extra topic tiles
-  ['Czuję się samotny/a', 'lonely'],
-  ['Nie mogę zasnąć', 'tired'],
   ['Mam w głowie gonitwę myśli', 'anxiety'],
+  // Every topic tile in art.js's pool lands on its own topic
+  ...[...readFileSync(new URL('../../soleil-main/art.js', import.meta.url), 'utf8').matchAll(/group: '(\w+)', pl: '([^']+)'/g)].map(([, group, pl]) => [pl, group]),
 ]
 console.log('\n— Topics (fresh conversation each) —')
 for (const [msg, want] of TOPICS) {

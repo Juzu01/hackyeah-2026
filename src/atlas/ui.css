@@ -2,8 +2,8 @@
    pain form, conversation, info). Phone first; from 900px the sheet becomes a
    card on the right. Tokens come from src/anatomy/style.css.
 
-   Type: Atkinson Hyperlegible for everything people read and tap; Newsreader
-   only for the names of things (the app, a part), as on an anatomical plate. */
+   Type: Nunito, round and warm, for everything; the names of things (the app, a part)
+   in its heavier weights via --font-serif. */
 
 :root {
   --radius: 14px;
@@ -26,10 +26,9 @@ body {
   -webkit-touch-callout: none;
 }
 
-.topbar button,
-.layers button,
-.dock button,
-.sheet button {
+/* :where() keeps this reset weaker than a button's own class, so .btn-primary and the rest keep
+   their size and weight. */
+:where(.topbar, .layers, .dock, .sheet) button {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   font: inherit;
@@ -69,7 +68,7 @@ body {
   color: var(--ink-1);
   font-family: var(--font-serif);
   font-size: 1.5625rem;
-  font-weight: 560;
+  font-weight: 800;
   font-optical-sizing: auto;
   letter-spacing: -0.01em;
   line-height: 1;
@@ -500,7 +499,7 @@ body {
   color: var(--ink-1);
   font-family: var(--font-serif);
   font-size: 1.875rem;
-  font-weight: 540;
+  font-weight: 800;
   font-optical-sizing: auto;
   letter-spacing: -0.012em;
   line-height: 1.08;
@@ -510,6 +509,7 @@ body {
   margin: 6px 0 0;
   color: var(--ink-2);
   font-family: var(--font-serif);
+  font-weight: 640;
   font-size: 1.0625rem;
   font-style: italic;
   line-height: 1.3;
@@ -814,7 +814,7 @@ body {
   color: var(--ink-1);
   font-family: var(--font-serif);
   font-size: 1.3125rem;
-  font-weight: 560;
+  font-weight: 800;
 }
 .info-howto {
   margin: 0;
@@ -996,7 +996,7 @@ body {
   color: var(--ink-1);
   font-family: var(--font-serif);
   font-size: 1.0625rem;
-  font-weight: 600;
+  font-weight: 800;
 }
 .search-result-where {
   color: var(--ink-2);
@@ -1108,7 +1108,7 @@ body {
   color: var(--ink-1);
   font-family: var(--font-serif);
   font-size: 1.375rem;
-  font-weight: 650;
+  font-weight: 800;
 }
 .pain-saved-text {
   margin: 0;
@@ -1144,7 +1144,7 @@ body {
   color: var(--ink-1);
   font-family: var(--font-serif);
   font-size: 1.75rem;
-  font-weight: 540;
+  font-weight: 800;
   font-optical-sizing: auto;
   letter-spacing: -0.01em;
 }
@@ -1181,6 +1181,7 @@ body {
   background: none;
   color: var(--ink-1);
   font-family: var(--font-serif);
+  font-weight: 640;
   font-size: 1.25rem;
   font-style: italic;
   text-align: left;
@@ -1236,6 +1237,7 @@ body {
   max-width: 85%;
   color: var(--ink-2);
   font-family: var(--font-serif);
+  font-weight: 640;
   font-size: 1.25rem;
   font-style: italic;
   line-height: 1.35;
@@ -1299,12 +1301,13 @@ body {
 .talk-part-name {
   font-family: var(--font-serif);
   font-size: 1.1875rem;
-  font-weight: 540;
+  font-weight: 800;
 }
 .talk-part-latin {
   grid-column: 2;
   color: var(--ink-2);
   font-family: var(--font-serif);
+  font-weight: 640;
   font-size: 0.9375rem;
   font-style: italic;
 }
@@ -1329,7 +1332,7 @@ body {
   color: var(--ink-1);
   font-family: var(--font-serif);
   font-size: 1.3125rem;
-  font-weight: 540;
+  font-weight: 800;
   text-align: left;
 }
 .talk-part-side {

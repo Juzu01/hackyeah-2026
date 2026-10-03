@@ -3,9 +3,8 @@
 // animation or loading is changing something. Framework-free: the app's chrome
 // (title bar, layer switch, sheets) talks to it through the returned handle.
 
-import '@fontsource-variable/atkinson-hyperlegible-next'
-import '@fontsource-variable/newsreader/opsz.css'
-import '@fontsource-variable/newsreader/opsz-italic.css'
+import '@fontsource-variable/nunito'
+import '@fontsource-variable/nunito/wght-italic.css'
 import './style.css'
 
 import { Box3, Group, MathUtils, Mesh, Plane, Ray, SphereGeometry, Vector3, type Material } from 'three'

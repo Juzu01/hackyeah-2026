@@ -21,10 +21,10 @@
   --surface-solid: #08110d;
   --surface-2: rgb(214 245 230 / 0.06);
   --surface-3: rgb(214 242 230 / 0.11);
-  /* Atkinson Hyperlegible: drawn for readers with low vision, so every letter is unmistakable. */
-  --font-sans: 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif;
-  /* Newsreader: the names, as on an anatomical plate; italic for Latin. */
-  --font-serif: 'Newsreader Variable', Georgia, serif;
+  /* Nunito: round and warm, easy on the eyes, with Polish and Cyrillic letters. The names of
+     things use the same face (the token keeps its name); Latin stays in italic. */
+  --font-sans: 'Nunito Variable', system-ui, sans-serif;
+  --font-serif: 'Nunito Variable', system-ui, sans-serif;
   --gutter: 16px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);

@@ -41,8 +41,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif;
-  --font-serif: 'Newsreader Variable', Georgia, serif;
+  --font-sans: 'Nunito Variable', system-ui, sans-serif;
+  --font-serif: 'Nunito Variable', system-ui, sans-serif;
 
   --color-page: var(--bg);
   --color-s1: var(--s1);
@@ -62,6 +62,29 @@
   --color-care-urgent: var(--care-urgent);
   --color-care-gp: var(--care-gp);
   --color-care-self: var(--care-self);
+}
+
+/* Titles: the title face is Nunito like the text, so they get its heavy weights. Unlayered, so it wins
+   over the font-medium utility on the headings. */
+.font-serif {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+/* The bar at the top stays on one line on a phone; Nunito's heavy title is wider than the old serif. */
+header .font-serif {
+  font-size: 1.25rem;
+  white-space: nowrap;
+}
+header nav :is(a, button) {
+  white-space: nowrap;
+}
+@media (max-width: 400px) {
+  header nav a {
+    padding-inline: 8px;
+  }
+  header nav .btn-secondary {
+    padding-inline: 12px;
+  }
 }
 
 @layer base {
