@@ -140,8 +140,38 @@ export function limbFrame(a: Pt, b: Pt, profile: [t: number, medial: number, lat
   }
 }
 
-/** Closed outline of a tube of constant width around a centerline (for the colon). */
-export function tube(center: readonly Pt[], width: number): { outline: CtrlPt[]; pieces: Pt[][] } {
+/** Dense points along an open Catmull-Rom curve through `pts`. */
+export function sampleOpen(pts: readonly Pt[], perSegment = 4): Pt[] {
+  const out: Pt[] = []
+  const n = pts.length
+  for (let i = 0; i < n - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)]
+    const p1 = pts[i]
+    const p2 = pts[i + 1]
+    const p3 = pts[Math.min(n - 1, i + 2)]
+    for (let k = 0; k < perSegment; k++) {
+      const t = k / perSegment
+      const t2 = t * t
+      const t3 = t2 * t
+      const f = (a: number, b: number, c: number, d: number) =>
+        0.5 * (2 * b + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t2 + (-a + 3 * b - 3 * c + d) * t3)
+      out.push([f(p0[0], p1[0], p2[0], p3[0]), f(p0[1], p1[1], p2[1], p3[1])])
+    }
+  }
+  out.push(pts[n - 1])
+  return out
+}
+
+/**
+ * Closed outline of a tube of constant width around a centerline (intestines),
+ * plus one convex piece per segment for collision and "rungs" across the tube
+ * every `rungEvery` points for drawing folds.
+ */
+export function tube(
+  center: readonly Pt[],
+  width: number,
+  rungEvery = 0,
+): { outline: CtrlPt[]; pieces: Pt[][]; rungs: CtrlPt[][] } {
   const h = width / 2
   const normals = center.map((_, i) => {
     const prev = center[Math.max(0, i - 1)]
@@ -167,7 +197,18 @@ export function tube(center: readonly Pt[], width: number): { outline: CtrlPt[];
   for (let i = 0; i < last; i++) {
     pieces.push(convexHull([left[i], left[i + 1], right[i + 1], right[i]]))
   }
-  return { outline, pieces }
+  const rungs: CtrlPt[][] = []
+  if (rungEvery > 0) {
+    for (let i = rungEvery; i < last; i += rungEvery) {
+      const [x, y] = center[i]
+      const [nx, ny] = normals[i]
+      rungs.push([
+        [x + nx * h * 0.8, y + ny * h * 0.8],
+        [x - nx * h * 0.8, y - ny * h * 0.8],
+      ])
+    }
+  }
+  return { outline, pieces, rungs }
 }
 
 export function bboxOf(pts: readonly Pt[]): BBox {
@@ -232,52 +273,68 @@ export function convexHull(points: readonly Pt[]): Pt[] {
 }
 
 /**
- * Separating-axis test between two convex polygons, `b` shifted by (bx, by).
- * Returns the shortest vector that moves `b` clear of `a` plus `gap`, or null
- * if they are already at least `gap` apart.
+ * Separating-axis data for two convex polygons: every edge normal of both, with
+ * each polygon's projected range on it, packed as [nx, ny, aMin, aMax, bMin, bMax].
+ * Translating `b` only shifts its range by a dot product, so this is computed
+ * once per pair and reused by `satPush` for any offset.
  */
-export function separation(a: readonly Pt[], b: readonly Pt[], bx: number, by: number, gap: number): Pt | null {
-  let best = Infinity
-  let bestAxis: Pt = [0, 0]
+export function satAxes(a: readonly Pt[], b: readonly Pt[]): Float64Array {
+  const out = new Float64Array((a.length + b.length) * 6)
+  let n = 0
+  const range = (poly: readonly Pt[], nx: number, ny: number) => {
+    let min = Infinity
+    let max = -Infinity
+    for (const [x, y] of poly) {
+      const p = x * nx + y * ny
+      if (p < min) min = p
+      if (p > max) max = p
+    }
+    return [min, max] as const
+  }
   for (const poly of [a, b]) {
     for (let i = 0; i < poly.length; i++) {
       const [x0, y0] = poly[i]
       const [x1, y1] = poly[(i + 1) % poly.length]
-      let nx = y1 - y0
-      let ny = x0 - x1
-      const len = Math.hypot(nx, ny)
+      const len = Math.hypot(y1 - y0, x0 - x1)
       if (len === 0) continue
-      nx /= len
-      ny /= len
-      let aMin = Infinity
-      let aMax = -Infinity
-      for (const [x, y] of a) {
-        const p = x * nx + y * ny
-        if (p < aMin) aMin = p
-        if (p > aMax) aMax = p
-      }
-      let bMin = Infinity
-      let bMax = -Infinity
-      for (const [x, y] of b) {
-        const p = (x + bx) * nx + (y + by) * ny
-        if (p < bMin) bMin = p
-        if (p > bMax) bMax = p
-      }
-      // Push b whichever way along this axis is shorter.
-      const pushPos = aMax - bMin + gap
-      const pushNeg = bMax - aMin + gap
-      if (pushPos <= 0 || pushNeg <= 0) return null
-      if (pushPos < best) {
-        best = pushPos
-        bestAxis = [nx, ny]
-      }
-      if (pushNeg < best) {
-        best = pushNeg
-        bestAxis = [-nx, -ny]
-      }
+      const nx = (y1 - y0) / len
+      const ny = (x0 - x1) / len
+      const [aMin, aMax] = range(a, nx, ny)
+      const [bMin, bMax] = range(b, nx, ny)
+      out.set([nx, ny, aMin, aMax, bMin, bMax], n)
+      n += 6
     }
   }
-  return [bestAxis[0] * best, bestAxis[1] * best]
+  return out.subarray(0, n)
+}
+
+/**
+ * Shortest vector that moves `b`, offset by (dx, dy) relative to `a`, at least
+ * `gap` clear of it; null if they are already that far apart.
+ */
+export function satPush(axes: Float64Array, dx: number, dy: number, gap: number): Pt | null {
+  let best = Infinity
+  let bx = 0
+  let by = 0
+  for (let i = 0; i < axes.length; i += 6) {
+    const nx = axes[i]
+    const ny = axes[i + 1]
+    const shift = dx * nx + dy * ny
+    const pushPos = axes[i + 3] - (axes[i + 4] + shift) + gap
+    const pushNeg = axes[i + 5] + shift - axes[i + 2] + gap
+    if (pushPos <= 0 || pushNeg <= 0) return null
+    if (pushPos < best) {
+      best = pushPos
+      bx = nx
+      by = ny
+    }
+    if (pushNeg < best) {
+      best = pushNeg
+      bx = -nx
+      by = -ny
+    }
+  }
+  return [bx * best, by * best]
 }
 
 export const smoothstep = (e0: number, e1: number, x: number) => {

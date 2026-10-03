@@ -34,6 +34,17 @@ jobs:
           echo "${{ github.sha }}" > _site/version.txt
           cp -r pomysly _site/pomysly
 
+      # The interactive body map (Vite app in src/) lives at /cialo/.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
+      - run: npm ci
+      - run: npm run build -- --outDir _site/cialo --emptyOutDir
+        env:
+          BASE_PATH: ./
+          VITE_COMMIT_SHA: ${{ github.sha }}
+
       # Fallback for the ideas page when the visitor's IP hits GitHub's unauthenticated API limit.
       # Not fatal: a failed snapshot shouldn't block deploying the app.
       - run: |

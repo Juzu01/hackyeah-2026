@@ -10,6 +10,7 @@ import {
   limbFrame,
   mirror,
   mirrorClosed,
+  sampleOpen,
   sampleOutline,
   smoothOpenPath,
   smoothPath,
@@ -50,6 +51,8 @@ export interface BodyPart {
 
 export interface BodyModel {
   skin: string[]
+  /** Non-interactive strokes on the skin (fingers). */
+  skinDetails: string
   muscles: BodyPart[]
   organs: BodyPart[]
   bounds: BBox
@@ -160,7 +163,7 @@ const hand = limbFrame([151, 408], [164, 482], [
   [1, 4, 4],
 ])
 const thigh = limbFrame([42, 410], [38, 592], [
-  [0, 38, 40],
+  [0, 38, 34],
   [0.12, 36, 38],
   [0.4, 30, 31],
   [0.7, 22, 23],
@@ -193,6 +196,8 @@ const TORSO = mirrorClosed([
   [74, 256], [67, 290], [65, 316], [71, 348], [79, 378], [82, 402], [72, 424], [48, 436], [22, 442], [0, 444],
 ])
 const THUMB = hand.map([[0.1, 0.6], [0.28, 1.25], [0.48, 1.55], [0.6, 1.4], [0.45, 0.9], [0.32, 0.55]])
+
+const FINGER_GAPS: CtrlPt[][] = [-0.45, 0.05, 0.5].map((s) => hand.map([[0.58, s], [0.8, s * 0.95], [0.95, s * 0.7]]))
 
 const SKIN_RIGHT_HALF: CtrlPt[][] = [
   upperArm.outline(0.06),
@@ -231,8 +236,8 @@ const MUSCLES: MuscleDef[] = [
   },
   {
     info: INFO.obliqueExternal,
-    pts: [[27, 216], [46, 214], [60, 226], [65, 250], [64, 290], [65, 318], [72, 350], [77, 374], [64, 384], [44, 394], [30, 394], [27, 360], [28, 300], [28, 250]],
-    details: [[[34, 236], [58, 262]], [[34, 270], [62, 300]], [[34, 306], [66, 340]]],
+    pts: [[27, 222], [40, 216], [56, 222], [64, 240], [66, 262], [63, 290], [62, 314], [66, 340], [70, 362], [64, 376], [50, 392], [34, 404], [28, 398], [27, 360], [28, 300], [28, 250]],
+    details: [[[33, 236], [58, 260]], [[33, 270], [61, 298]], [[33, 306], [64, 340]]],
   },
   {
     info: INFO.deltoid,
@@ -240,15 +245,15 @@ const MUSCLES: MuscleDef[] = [
   },
   {
     info: INFO.biceps,
-    pts: upperArm.map([[0.3, -0.45], [0.32, 0.2], [0.45, 0.45], [0.65, 0.5], [0.84, 0.3], [0.95, 0.05, 1], [0.88, -0.3], [0.7, -0.6], [0.5, -0.65]]),
+    pts: upperArm.map([[0.28, -0.55], [0.3, 0.25], [0.45, 0.55], [0.65, 0.6], [0.84, 0.38], [0.96, 0.05, 1], [0.88, -0.35], [0.7, -0.68], [0.5, -0.72]]),
   },
   {
     info: INFO.triceps,
-    pts: upperArm.map([[0.28, -0.75], [0.45, -0.97], [0.72, -0.97], [0.9, -0.8], [0.75, -0.72], [0.5, -0.8]]),
+    pts: upperArm.map([[0.3, -0.8], [0.45, -0.99], [0.72, -0.99], [0.9, -0.84], [0.75, -0.78], [0.5, -0.84]]),
   },
   {
     info: INFO.brachialis,
-    pts: upperArm.map([[0.52, 0.66], [0.7, 0.96], [0.93, 0.78], [0.97, 0.38], [0.88, 0.42], [0.7, 0.6]]),
+    pts: upperArm.map([[0.55, 0.7], [0.7, 0.98], [0.93, 0.8], [0.98, 0.42], [0.88, 0.46], [0.72, 0.66]]),
   },
   {
     info: INFO.brachioradialis,
@@ -269,15 +274,15 @@ const MUSCLES: MuscleDef[] = [
   },
   {
     info: INFO.vastusLateralis,
-    pts: thigh.map([[0.3, 1.0], [0.55, 1.02], [0.8, 0.92], [0.92, 0.65], [0.9, 0.38], [0.82, 0.4], [0.62, 0.62], [0.38, 0.86]]),
+    pts: thigh.map([[0.26, 0.96], [0.5, 1.03], [0.78, 0.96], [0.93, 0.7], [0.92, 0.42], [0.84, 0.4], [0.64, 0.68], [0.4, 0.9]]),
   },
   {
     info: INFO.vastusMedialis,
-    pts: thigh.map([[0.6, -0.12], [0.72, -0.34], [0.86, -0.48], [0.95, -0.5], [0.99, -0.3], [0.95, -0.08], [0.88, 0.0], [0.76, -0.06]]),
+    pts: thigh.map([[0.58, -0.16], [0.7, -0.38], [0.85, -0.52], [0.96, -0.54], [1.0, -0.3], [0.96, -0.06], [0.88, 0.04], [0.74, -0.08]]),
   },
   {
     info: INFO.rectusFemoris,
-    pts: thigh.map([[0.1, 0.66], [0.14, 0.84], [0.35, 0.78], [0.6, 0.55], [0.82, 0.28], [0.9, 0.08, 1], [0.84, -0.12], [0.7, -0.22], [0.55, 0.0], [0.38, 0.3], [0.22, 0.52]]),
+    pts: thigh.map([[0.08, 0.62], [0.12, 0.86], [0.35, 0.84], [0.6, 0.62], [0.82, 0.34], [0.9, 0.1, 1], [0.84, -0.14], [0.68, -0.28], [0.52, -0.08], [0.36, 0.22], [0.2, 0.46]]),
   },
   {
     info: INFO.sartorius,
@@ -285,15 +290,15 @@ const MUSCLES: MuscleDef[] = [
   },
   {
     info: INFO.tibialisAnterior,
-    pts: shin.map([[0.04, 0.08], [0.06, 0.52], [0.3, 0.55], [0.6, 0.42], [0.86, 0.15], [0.95, -0.05, 1], [0.86, -0.12], [0.55, 0.02], [0.25, -0.05]]),
+    pts: shin.map([[0.04, 0.0], [0.06, 0.6], [0.3, 0.66], [0.6, 0.5], [0.86, 0.18], [0.96, -0.06, 1], [0.86, -0.16], [0.55, -0.06], [0.25, -0.14]]),
   },
   {
     info: INFO.fibularisLongus,
-    pts: shin.map([[0.06, 0.66], [0.1, 0.98], [0.4, 0.98], [0.68, 0.72], [0.62, 0.58], [0.38, 0.68], [0.2, 0.64]]),
+    pts: shin.map([[0.06, 0.74], [0.1, 1.0], [0.4, 1.0], [0.7, 0.78], [0.64, 0.62], [0.4, 0.74], [0.2, 0.72]]),
   },
   {
     info: INFO.gastrocnemius,
-    pts: shin.map([[0.04, -0.55], [0.1, -0.98], [0.32, -1.02], [0.5, -0.82], [0.52, -0.62], [0.36, -0.45], [0.18, -0.42]]),
+    pts: shin.map([[0.04, -0.5], [0.1, -1.0], [0.32, -1.04], [0.5, -0.84], [0.52, -0.6], [0.36, -0.4], [0.18, -0.34]]),
   },
   {
     info: INFO.soleus,
@@ -325,14 +330,44 @@ const LUNG_RIGHT_PLUS_X: CtrlPt[] = [
   [8, 150], [16, 138], [28, 134], [44, 142], [58, 160], [66, 186], [70, 214], [70, 240], [66, 256],
   [52, 258], [34, 252], [18, 244], [12, 224], [10, 196], [8, 172],
 ]
+const AORTIC_ARCH = tube(sampleOpen([[5, 200], [4, 188], [8, 180], [15, 177], [21, 180], [23, 188]], 3), 9)
+const VENA_CAVA = tube([[-11, 204], [-11, 193], [-11, 182]], 8)
 const KIDNEY_LEFT: CtrlPt[] = [[36, 280], [46, 277], [55, 287], [58, 304], [54, 322], [45, 329], [37, 323], [39, 309], [35, 298]]
 
 const COLON = tube(
-  [[-38, 398], [-42, 380], [-44, 352], [-43, 326], [-34, 312], [-12, 314], [12, 310], [36, 306], [47, 316], [50, 342], [48, 370], [40, 390], [22, 400], [8, 404], [2, 418]],
+  sampleOpen([[-38, 398], [-42, 380], [-44, 352], [-43, 326], [-34, 312], [-12, 314], [12, 310], [36, 306], [47, 316], [50, 342], [48, 370], [40, 390], [22, 400], [8, 404], [2, 418]], 3),
   13,
+  2,
 )
 
-type OrganDef = { info: PartInfo; side?: Side; pts: CtrlPt[]; pieces?: Pt[][]; details?: CtrlPt[][] }
+// The small intestine as one coiled tube: rows back and forth inside an oval,
+// joined by U-turns, with a little wobble so it reads as loops of gut.
+const smallIntestineCenter: Pt[] = (() => {
+  const rows = [331, 341, 351, 361, 371, 381]
+  const r = (rows[1] - rows[0]) / 2
+  const halfWidth = (y: number) => 27 * Math.sqrt(Math.max(0.12, 1 - ((y - 356) / 33) ** 2))
+  // Each U-turn sits at the narrower of the two rows it joins.
+  const turnX = rows.slice(1).map((y, i) => Math.min(halfWidth(y), halfWidth(rows[i])))
+  const pts: Pt[] = []
+  rows.forEach((y, i) => {
+    const dir = i % 2 === 0 ? 1 : -1
+    const from = i > 0 ? turnX[i - 1] : halfWidth(y)
+    const to = i < turnX.length ? turnX[i] : halfWidth(y)
+    for (let k = 0; k <= 6; k++) {
+      const x = dir * (-from + ((from + to) * k) / 6)
+      pts.push([x, y + 1.8 * Math.sin((Math.PI * k) / 6) * Math.sin(k * 1.9 + i)])
+    }
+    if (i < turnX.length) {
+      for (const a of [Math.PI / 4, Math.PI / 2, (3 * Math.PI) / 4]) {
+        pts.push([dir * (to + r * Math.sin(a)), y + r - r * Math.cos(a)])
+      }
+    }
+  })
+  return sampleOpen(pts, 3)
+})()
+const SMALL_INTESTINE = tube(smallIntestineCenter, 8.4)
+
+type OrganDef = PartShape & { info: PartInfo }
 
 const ORGANS: OrganDef[] = [
   {
@@ -373,8 +408,9 @@ const ORGANS: OrganDef[] = [
   },
   {
     info: INFO.heart,
-    pts: [[-16, 202], [-10, 190], [-2, 186], [4, 180], [10, 184], [16, 192], [30, 198], [40, 212], [42, 232], [36, 250, 1], [22, 254], [4, 246], [-12, 236], [-20, 220]],
-    details: [[[8, 196], [14, 218], [32, 248]]],
+    pts: [[-20, 222], [-19, 208], [-12, 198], [-2, 194], [6, 196], [12, 193], [22, 194], [33, 200], [41, 212], [44, 229], [38, 249, 1], [24, 255], [8, 250], [-6, 242], [-16, 233]],
+    extra: [AORTIC_ARCH.outline, VENA_CAVA.outline],
+    details: [[[-16, 214], [0, 208], [16, 204], [32, 207]], [[12, 205], [19, 226], [35, 247]]],
   },
   {
     info: INFO.liver,
@@ -410,18 +446,14 @@ const ORGANS: OrganDef[] = [
   },
   {
     info: INFO.smallIntestine,
-    pts: mirrorClosed([[0, 318], [20, 320], [33, 331], [37, 350], [33, 372], [21, 389], [0, 395]]),
-    details: [
-      [[-26, 332], [-10, 328], [4, 336], [20, 330], [30, 340]],
-      [[-32, 350], [-16, 344], [-2, 354], [14, 346], [32, 354]],
-      [[-30, 368], [-14, 362], [2, 372], [18, 364], [30, 372]],
-      [[-20, 384], [-4, 380], [10, 386], [22, 382]],
-    ],
+    pts: SMALL_INTESTINE.outline,
+    details: [smallIntestineCenter],
   },
   {
     info: INFO.largeIntestine,
     pts: COLON.outline,
     pieces: COLON.pieces,
+    details: COLON.rungs,
   },
   {
     info: INFO.bladder,
@@ -432,29 +464,42 @@ const ORGANS: OrganDef[] = [
 // ---------------------------------------------------------------------------
 // Build
 
-function makePart(
-  id: string,
-  info: PartInfo,
-  pts: readonly CtrlPt[],
-  color: string,
-  side?: Side,
-  details?: readonly CtrlPt[][],
-  pieces?: Pt[][],
-): BodyPart {
-  const samples = sampleOutline(pts)
+type PartShape = {
+  pts: readonly CtrlPt[]
+  /** Further outlines filled as part of the same shape (the heart's great vessels). */
+  extra?: readonly CtrlPt[][]
+  side?: Side
+  details?: readonly CtrlPt[][]
+  pieces?: Pt[][]
+}
+
+function makePart(id: string, info: PartInfo, color: string, shape: PartShape): BodyPart {
+  const samples = sampleOutline(shape.pts)
   const { area, centroid } = areaCentroid(samples)
+  const extra = shape.extra ?? []
+  const all = [...samples, ...extra.flatMap((o) => sampleOutline(o))]
   return {
     id,
     info,
-    side,
-    d: smoothPath(pts),
-    details: details?.map(smoothOpenPath).join(''),
+    side: shape.side,
+    // Subpaths with the same winding union cleanly under the nonzero fill rule.
+    d: [shape.pts, ...extra.map((o) => sameWinding(o, samples))].map(smoothPath).join(''),
+    details: shape.details?.map(smoothOpenPath).join(''),
     color,
-    hulls: pieces ?? [convexHull(samples)],
-    bbox: bboxOf(samples),
+    hulls: shape.pieces ?? [convexHull(all)],
+    bbox: bboxOf(all),
     centroid,
     area,
   }
+}
+
+function sameWinding(pts: readonly CtrlPt[], reference: readonly Pt[]): readonly CtrlPt[] {
+  const signed = (poly: readonly (readonly [number, number, ...unknown[]])[]) =>
+    poly.reduce((acc, p, i) => {
+      const q = poly[(i + 1) % poly.length]
+      return acc + p[0] * q[1] - q[0] * p[1]
+    }, 0)
+  return Math.sign(signed(pts)) === Math.sign(signed(reference)) ? pts : [...pts].reverse()
 }
 
 const MUSCLE_COLOR = '#c8453f'
@@ -463,15 +508,19 @@ export function buildBodyModel(): BodyModel {
   const muscles: BodyPart[] = []
   for (const m of MUSCLES) {
     // +x is the figure's left side.
-    muscles.push(makePart(`${m.info.key}-left`, m.info, m.pts, MUSCLE_COLOR, 'left', m.details))
+    muscles.push(makePart(`${m.info.key}-left`, m.info, MUSCLE_COLOR, { pts: m.pts, side: 'left', details: m.details }))
     muscles.push(
-      makePart(`${m.info.key}-right`, m.info, m.pts.map(mirror), MUSCLE_COLOR, 'right', m.details?.map((l) => l.map(mirror))),
+      makePart(`${m.info.key}-right`, m.info, MUSCLE_COLOR, {
+        pts: m.pts.map(mirror),
+        side: 'right',
+        details: m.details?.map((l) => l.map(mirror)),
+      }),
     )
   }
-  muscles.push(makePart('rectusAbdominis', INFO.rectusAbdominis, RECTUS_ABDOMINIS, MUSCLE_COLOR, undefined, RECTUS_DETAILS))
+  muscles.push(makePart('rectusAbdominis', INFO.rectusAbdominis, MUSCLE_COLOR, { pts: RECTUS_ABDOMINIS, details: RECTUS_DETAILS }))
 
   const organs = ORGANS.map((o) =>
-    makePart(o.side && o.info.key === 'kidney' ? `kidney-${o.side}` : o.info.key, o.info, o.pts, ORGAN_COLORS[o.info.key], o.side, o.details, o.pieces),
+    makePart(o.info.key === 'kidney' ? `kidney-${o.side}` : o.info.key, o.info, ORGAN_COLORS[o.info.key], o),
   )
 
   const skinOutlines: CtrlPt[][] = [
@@ -483,7 +532,9 @@ export function buildBodyModel(): BodyModel {
   ]
   const bounds = unionBBox(skinOutlines.map((s) => bboxOf(sampleOutline(s, 3))))
 
-  return { skin: skinOutlines.map(smoothPath), muscles, organs, bounds }
+  const skinDetails = [...FINGER_GAPS, ...FINGER_GAPS.map((l) => l.map(mirror))].map(smoothOpenPath).join('')
+
+  return { skin: skinOutlines.map(smoothPath), skinDetails, muscles, organs, bounds }
 }
 
 /** Display name including the side for paired structures. */

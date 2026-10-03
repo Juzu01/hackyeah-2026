@@ -4,6 +4,8 @@ Soleil, prototyp na HackYeah 2026, kategoria Open Task – Sport & Healthcare.
 
 **Podgląd na żywo:** https://juzu01.github.io/hackyeah-2026/
 
+**Postać (interaktywna mapa ciała):** https://juzu01.github.io/hackyeah-2026/cialo/ — aplikacja Vite z `src/`, opis w [`src/body/README.md`](src/body/README.md). Lokalnie: `npm install && npm run dev`.
+
 **Pomysły zespołu:** https://juzu01.github.io/hackyeah-2026/pomysly/ — każdy pomysł to issue z etykietą `pomysł` (szablon `.github/ISSUE_TEMPLATE/pomysl.yml`), głosujemy reakcją 👍.
 
 **Wysyłanie zmian:** wrzucajcie na własne gałęzie albo prosto na `main`. Co ~5 minut bot scala wszystko w jedną aplikację i publikuje. Zasady w [`INTEGRACJA.md`](INTEGRACJA.md), dziennik w [#1](https://github.com/Juzu01/hackyeah-2026/issues/1).
