@@ -877,11 +877,14 @@ function clerkLocalization(lang) {
 }
 // Clerk 5 navigates with location.href and then waits for the page to unload. Its steps and the way back to our tab change
 // only the part after #, which never unloads the page, so a new account stayed half signed in. Those we do in place.
+// Clerk also drops the trailing slash (/hackyeah-2026/ → /hackyeah-2026): that is still this page.
 const clerkNavigate = replace => (to, meta) => {
-  const url = new URL(to, location.href);
-  if (url.href.split('#')[0] !== location.href.split('#')[0]) return meta && meta.windowNavigate ? meta.windowNavigate(url) : (location.href = url.href);
-  if (replace) location.replace(url.href);
-  else location.href = url.href;
+  const url = new URL(to, location.href), bare = path => path.endsWith('/') ? path.slice(0, -1) : path;
+  const samePage = url.origin === location.origin && bare(url.pathname) === bare(location.pathname) && url.search === location.search;
+  if (!samePage || !url.hash) return meta && meta.windowNavigate ? meta.windowNavigate(url) : (location.href = url.href);
+  const target = location.href.split('#')[0] + url.hash;
+  if (replace) location.replace(target);
+  else location.href = target;
 };
 async function localizeClerk(lang) {
   if (!clerk || !clerk.loaded) return;
