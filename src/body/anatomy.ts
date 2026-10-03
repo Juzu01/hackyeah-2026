@@ -495,3 +495,9 @@ export function partLabel(part: BodyPart): { title: string; subtitle: string } {
     subtitle: [part.info.latin, own ? null : side].filter(Boolean).join(' · '),
   }
 }
+
+/**
+ * Skeleton frames and skin outlines of this figure, shared with other views
+ * (the symptom body map in regions.ts) so everything lines up with the silhouette.
+ */
+export const FIGURE = { upperArm, forearm, hand, thigh, shin, foot, HEAD, EAR, NECK, TORSO, THUMB }

@@ -34,6 +34,19 @@ jobs:
           echo "${{ github.sha }}" > _site/version.txt
           cp -r pomysly _site/pomysly
 
+      # "Gdzie boli?" (the Vite app in src/) is published under /gdzie-boli/.
+      # Relative base, so every asset path is relative (tools/sprawdz.py rejects absolute ones).
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build -- --outDir _site/gdzie-boli
+        env:
+          BASE_PATH: ./
+          VITE_COMMIT_SHA: ${{ github.sha }}
+          VITE_REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+
       # Fallback for the ideas page when the visitor's IP hits GitHub's unauthenticated API limit.
       # Not fatal: a failed snapshot shouldn't block deploying the app.
       - run: |

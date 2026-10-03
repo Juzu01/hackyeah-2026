@@ -1,41 +1,91 @@
-// Set by the deploy workflow; undefined in local dev.
-const commitSha: string | undefined = import.meta.env.VITE_COMMIT_SHA
-const repoUrl: string | undefined = import.meta.env.VITE_REPO_URL
-
-const codeClass = 'rounded bg-slate-200 px-1.5 py-0.5 text-base dark:bg-slate-800'
+import { useCallback, useEffect, useState } from 'react'
+import Footer from './components/Footer.tsx'
+import Header from './components/Header.tsx'
+import { useAccount } from './lib/account.ts'
+import { emptyDraft, loadDraft, saveDraft, type CheckDraft } from './lib/check.ts'
+import type { SavedCheck } from './lib/history.ts'
+import { navigate, useHashRoute } from './lib/router.ts'
+import HelpScreen from './screens/HelpScreen.tsx'
+import HistoryScreen from './screens/HistoryScreen.tsx'
+import InterviewScreen from './screens/InterviewScreen.tsx'
+import ResultsScreen from './screens/ResultsScreen.tsx'
+import StartScreen from './screens/StartScreen.tsx'
 
 function App() {
-  return (
-    <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center gap-6 px-4 py-16">
-        <p className="text-sm font-semibold tracking-wide text-emerald-600 uppercase dark:text-emerald-400">
-          HackYeah 2026 · Sport &amp; Healthcare
-        </p>
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          Prototyp w budowie
-        </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400">
-          Ta strona aktualizuje się automatycznie po każdym pushu na{' '}
-          <code className={codeClass}>main</code>. Podmień zawartość{' '}
-          <code className={codeClass}>src/App.tsx</code> na właściwy prototyp.
-        </p>
-      </main>
+  const path = useHashRoute()
+  const account = useAccount()
+  const [draft, setDraft] = useState<CheckDraft>(loadDraft)
+  const [openedAt, setOpenedAt] = useState<string | undefined>()
+  const [toast, setToast] = useState<string | null>(null)
 
-      <footer className="px-4 py-6 text-center text-sm text-slate-500">
-        {commitSha ? (
-          <>
-            wersja{' '}
-            <a
-              className="font-mono underline hover:text-slate-900 dark:hover:text-slate-100"
-              href={`${repoUrl}/commit/${commitSha}`}
-            >
-              {commitSha.slice(0, 7)}
-            </a>
-          </>
-        ) : (
-          'wersja lokalna (dev)'
-        )}
-      </footer>
+  useEffect(() => saveDraft(draft), [draft])
+  useEffect(() => {
+    if ((path === '/wywiad' || path === '/wynik') && draft.picks.length === 0) navigate('/')
+  }, [path, draft.picks.length])
+  useEffect(() => {
+    if (!toast) return
+    const t = window.setTimeout(() => setToast(null), 3500)
+    return () => window.clearTimeout(t)
+  }, [toast])
+
+  const update = useCallback((patch: Partial<CheckDraft>) => setDraft((d) => ({ ...d, ...patch })), [])
+  const togglePick = useCallback((symptomId: string, regionId?: string) => {
+    setDraft((d) => {
+      const has = d.picks.some((p) => p.symptomId === symptomId)
+      return { ...d, picks: has ? d.picks.filter((p) => p.symptomId !== symptomId) : [...d.picks, { symptomId, regionId }] }
+    })
+  }, [])
+  const restart = () => {
+    setDraft(emptyDraft())
+    setOpenedAt(undefined)
+    navigate('/')
+  }
+  const openSaved = (item: SavedCheck) => {
+    setDraft(item.draft)
+    setOpenedAt(item.createdAt)
+    navigate('/wynik')
+  }
+
+  let screen
+  switch (path) {
+    case '/wywiad':
+      screen = <InterviewScreen draft={draft} update={update} onBack={() => navigate('/')} onDone={() => navigate('/wynik')} />
+      break
+    case '/wynik':
+      screen = <ResultsScreen key={openedAt ?? 'current'} draft={draft} savedAt={openedAt} onRestart={restart} onToast={setToast} />
+      break
+    case '/historia':
+      screen = <HistoryScreen key={account.user?.id ?? 'anon'} onOpen={openSaved} />
+      break
+    case '/pomoc':
+      screen = <HelpScreen />
+      break
+    default:
+      screen = (
+        <StartScreen
+          draft={draft}
+          update={update}
+          togglePick={togglePick}
+          userId={account.user?.id}
+          onNext={() => {
+            setOpenedAt(undefined)
+            update({ answers: {} })
+            navigate('/wywiad')
+          }}
+        />
+      )
+  }
+
+  return (
+    <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
+      <Header path={path} />
+      <main className="flex-1">{screen}</main>
+      <Footer />
+      {toast && (
+        <div role="status" className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-lg">
+          {toast}
+        </div>
+      )}
     </div>
   )
 }
