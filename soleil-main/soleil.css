@@ -1725,6 +1725,31 @@ a {
 .btn-green .ico {
   stroke-width: 2;
 }
+/* The quieter twin of .btn-green, e.g. "Załóż konto" under "Zaloguj się". */
+.btn-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 54px;
+  margin-top: 10px;
+  border: 1px solid var(--green);
+  /* the border along the cut corner */
+  background: linear-gradient(to bottom left, transparent 50%, var(--green) 50% calc(50% + 1.2px), transparent calc(50% + 1.2px)) top right / 14px 14px no-repeat;
+  color: var(--green);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  transition: background-color 160ms var(--ease), transform 160ms var(--ease);
+}
+.btn-line:active {
+  background: var(--green-soft);
+  transform: scale(0.985);
+}
+.btn-line .ico {
+  stroke-width: 2;
+}
 .saved-note {
   min-height: 1.5em;
   margin-top: 10px;
@@ -2334,6 +2359,29 @@ a {
   display: flex;
   justify-content: center;
   margin: 0 -2px;
+}
+/* "Zaloguj się | Załóż konto" above Clerk's form */
+.auth-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin: 0 0 14px;
+  padding: 4px;
+  border: 1px solid var(--line-2);
+  background: var(--s1);
+}
+.auth-switch button {
+  min-height: 44px;
+  padding: 0 8px;
+  color: var(--ink-2);
+  font-size: 1rem;
+  font-weight: 750;
+  line-height: 1.15;
+  transition: background-color 160ms var(--ease), color 160ms var(--ease);
+}
+.auth-switch button.active {
+  background: var(--green);
+  color: var(--green-ink);
 }
 
 .user-menu {

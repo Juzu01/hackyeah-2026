@@ -20,7 +20,7 @@
       more: 'Więcej', guest: 'Piszesz bez konta.', user: (n) => `Zalogowano: ${n}`, someone: 'konto Doco',
       whyGuest: 'Z kontem Doco zapamięta rozmowy, a słuchawka połączy Cię z Doco głosem.',
       whyUser: 'Doco pamięta Twoje rozmowy, a słuchawka łączy Cię z Doco głosem.',
-      login: 'Zaloguj się', logout: 'Wyloguj się', language: 'Język', voice: 'Głos Doco w rozmowie telefonicznej', install: 'Dodaj do ekranu głównego',
+      login: 'Zaloguj się', register: 'Załóż konto', logout: 'Wyloguj się', language: 'Język', voice: 'Głos Doco w rozmowie telefonicznej', install: 'Dodaj do ekranu głównego',
       fine: `Doco nie jest lekarzem ani terapeutą. W nagłej sytuacji dzwoń pod ${CRISIS.a112}, a w kryzysie psychicznym pod ${CRISIS.line} (całą dobę).`,
       installed: 'Doco jest już na ekranie głównym tego urządzenia.', installText: 'Doco działa jak aplikacja, bez sklepu i bez instalowania czegokolwiek.',
       iosSteps: '<li>Otwórz tę stronę w <strong>Safari</strong>.</li><li>Stuknij <strong>Udostępnij</strong> (kwadrat ze strzałką w górę).</li><li>Wybierz <strong>Do ekranu początkowego</strong>, potem <strong>Dodaj</strong>.</li>',
@@ -39,7 +39,7 @@
       more: 'More', guest: 'You\'re writing without an account.', user: (n) => `Signed in: ${n}`, someone: 'Doco account',
       whyGuest: 'With an account, Doco remembers your conversations, and the phone connects you to Doco by voice.',
       whyUser: 'Doco remembers your conversations, and the phone connects you to Doco by voice.',
-      login: 'Sign in', logout: 'Sign out', language: 'Language', voice: 'Doco\'s voice for calls', install: 'Add to home screen',
+      login: 'Sign in', register: 'Create account', logout: 'Sign out', language: 'Language', voice: 'Doco\'s voice for calls', install: 'Add to home screen',
       fine: `Doco is not a doctor or a therapist. In an emergency call ${CRISIS.a112}; in a mental health crisis call ${CRISIS.line} (24/7, Poland).`,
       installed: 'Doco is already on this device\'s home screen.', installText: 'Doco works like an app, with no store and nothing to install.',
       iosSteps: '<li>Open this page in <strong>Safari</strong>.</li><li>Tap <strong>Share</strong> (the square with an up arrow).</li><li>Choose <strong>Add to Home Screen</strong>, then <strong>Add</strong>.</li>',
@@ -58,7 +58,7 @@
       more: 'Більше', guest: 'Ти пишеш без облікового запису.', user: (n) => `Обліковий запис: ${n}`, someone: 'Doco',
       whyGuest: 'З обліковим записом Doco пам\'ятатиме розмови, а слухавка з\'єднає тебе з Doco голосом.',
       whyUser: 'Doco пам\'ятає твої розмови, а слухавка з\'єднує тебе з Doco голосом.',
-      login: 'Увійти', logout: 'Вийти', language: 'Мова', voice: 'Голос Doco для дзвінків', install: 'Додати на головний екран',
+      login: 'Увійти', register: 'Створити акаунт', logout: 'Вийти', language: 'Мова', voice: 'Голос Doco для дзвінків', install: 'Додати на головний екран',
       fine: `Doco не є лікарем чи терапевтом. У надзвичайній ситуації телефонуй на ${CRISIS.a112}, а в психологічній кризі — на ${CRISIS.line} (цілодобово, Польща).`,
       installed: 'Doco уже є на головному екрані цього пристрою.', installText: 'Doco працює як застосунок — без магазину й без встановлення.',
       iosSteps: '<li>Відкрий цю сторінку в <strong>Safari</strong>.</li><li>Натисни <strong>Поділитися</strong> (квадрат зі стрілкою вгору).</li><li>Обери <strong>На початковий екран</strong>, потім <strong>Додати</strong>.</li>',
@@ -77,7 +77,7 @@
       more: 'Mehr', guest: 'Du schreibst ohne Konto.', user: (n) => `Angemeldet: ${n}`, someone: 'Doco-Konto',
       whyGuest: 'Mit einem Konto merkt sich Doco eure Gespräche, und der Hörer verbindet dich per Stimme mit Doco.',
       whyUser: 'Doco merkt sich eure Gespräche, und der Hörer verbindet dich per Stimme mit Doco.',
-      login: 'Anmelden', logout: 'Abmelden', language: 'Sprache', voice: 'Docos Stimme für Anrufe', install: 'Zum Startbildschirm hinzufügen',
+      login: 'Anmelden', register: 'Konto erstellen', logout: 'Abmelden', language: 'Sprache', voice: 'Docos Stimme für Anrufe', install: 'Zum Startbildschirm hinzufügen',
       fine: `Doco ist weder Arzt noch Therapeut. Im Notfall wähle ${CRISIS.a112}, in einer psychischen Krise ${CRISIS.line} (rund um die Uhr, Polen).`,
       installed: 'Doco ist schon auf dem Startbildschirm dieses Geräts.', installText: 'Doco funktioniert wie eine App – ohne Store und ohne Installation.',
       iosSteps: '<li>Öffne diese Seite in <strong>Safari</strong>.</li><li>Tippe auf <strong>Teilen</strong> (Quadrat mit Pfeil nach oben).</li><li>Wähle <strong>Zum Home-Bildschirm</strong> und dann <strong>Hinzufügen</strong>.</li>',
@@ -96,7 +96,7 @@
       more: 'Más', guest: 'Escribes sin cuenta.', user: (n) => `Sesión iniciada: ${n}`, someone: 'cuenta de Doco',
       whyGuest: 'Con una cuenta, Doco recuerda tus conversaciones y el teléfono te conecta con Doco por voz.',
       whyUser: 'Doco recuerda tus conversaciones y el teléfono te conecta con Doco por voz.',
-      login: 'Iniciar sesión', logout: 'Cerrar sesión', language: 'Idioma', voice: 'Voz de Doco en las llamadas', install: 'Añadir a la pantalla de inicio',
+      login: 'Iniciar sesión', register: 'Crear cuenta', logout: 'Cerrar sesión', language: 'Idioma', voice: 'Voz de Doco en las llamadas', install: 'Añadir a la pantalla de inicio',
       fine: `Doco no es médico ni terapeuta. En una emergencia llama al ${CRISIS.a112}; en una crisis de salud mental, al ${CRISIS.line} (24 h, Polonia).`,
       installed: 'Doco ya está en la pantalla de inicio de este dispositivo.', installText: 'Doco funciona como una app, sin tienda y sin instalar nada.',
       iosSteps: '<li>Abre esta página en <strong>Safari</strong>.</li><li>Toca <strong>Compartir</strong> (el cuadrado con la flecha hacia arriba).</li><li>Elige <strong>Añadir a pantalla de inicio</strong> y luego <strong>Añadir</strong>.</li>',
@@ -296,6 +296,8 @@
     btn.querySelector('span').textContent = user ? T().logout : T().login;
     btn.querySelector('use').setAttribute('href', user ? '#i-logout' : '#i-login');
     btn.onclick = user ? () => window.signOut() : () => window.openAuth();
+    $('hyRegisterBtn').hidden = !!user;
+    $('hyRegisterBtn').querySelector('span').textContent = T().register;
     $('hyLangValue').textContent = LANG_NAMES[lang$()] || LANG_NAMES.pl;
     $('hyNameRowItem').hidden = !user;
     $('hyNameValue').textContent = window.hyUserName() || T().nameNone;

@@ -6,7 +6,7 @@ Soleil, prototyp na HackYeah 2026, kategoria Open Task – Sport & Healthcare.
 
 **Postać (interaktywna mapa ciała):** https://juzu01.github.io/hackyeah-2026/cialo/ — aplikacja Vite z `src/`, opis w [`src/body/README.md`](src/body/README.md). Lokalnie: `npm install && npm run dev`.
 
-**Dziennik:** Więcej → Dziennik (po zalogowaniu): samopoczucie (te same twarze co w Nastroju) i ból na jednym ekranie, ze statystykami z 30 dni i kafelkami od najstarszego wpisu. Ból dodaje się w „Gdzie boli?” przyciskiem „Dodaj wpis do dziennika”. Wpisy należą do konta i zapisują się na urządzeniu. Kod w `soleil-main/diary.js`, `diary.css` i `src/lib/diary.ts`.
+**Dziennik:** zakładka Dziennik na dolnym pasku (po zalogowaniu): samopoczucie (te same twarze co w Nastroju) i ból na jednym ekranie, ze statystykami z 30 dni i kafelkami od najstarszego wpisu. Ból dodaje się w „Gdzie boli?” przyciskiem „Dodaj wpis do dziennika”. Wpisy należą do konta i zapisują się na urządzeniu. Kod w `soleil-main/diary.js`, `diary.css` i `src/lib/diary.ts`.
 
 **Rozmowa głosowa:** słuchawka na pasku pisania w Soleil (obok wysyłania) otwiera rozmowę głosową z Soleil, dla zalogowanych. Na razie wersja testowa na darmowej licencji, szczegóły i limity w sekcji [Rozmowa głosowa](#rozmowa-głosowa).
 

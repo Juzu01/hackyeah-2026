@@ -35,7 +35,7 @@
   src="https://awaited-mink-45.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
   type="text/javascript"
 ></script>
-<link rel="stylesheet" href="soleil.css?v=7">
+<link rel="stylesheet" href="soleil.css?v=8">
 <link rel="stylesheet" href="voice.css">
 <link rel="stylesheet" href="diary.css?v=2">
 </head>
@@ -93,7 +93,11 @@
   <div class="popup">
     <button class="popup-close" onclick="closeAuth()">✕</button>
     <h2>Witaj w Doco</h2>
-    <p>Zaloguj się żeby Doco pamiętał Twoje rozmowy i nastroje.</p>
+    <p>Zaloguj się, żeby Doco pamiętał Twoje rozmowy i nastroje.</p>
+    <div class="auth-switch" role="tablist">
+      <button type="button" role="tab" id="authTabSignIn" class="active" aria-selected="true" onclick="setAuthMode('signIn')">Zaloguj się</button>
+      <button type="button" role="tab" id="authTabSignUp" aria-selected="false" onclick="setAuthMode('signUp')">Załóż konto</button>
+    </div>
     <div id="clerk-sign-in"></div>
   </div>
 </div>
@@ -356,6 +360,7 @@
           <p class="account-who" id="hyAccountWho">Piszesz bez konta.</p>
           <p class="page-lead" id="hyAccountWhy">Z kontem Doco zapamięta rozmowy, a słuchawka połączy Cię z Doco głosem.</p>
           <button type="button" class="btn-green" id="hyAccountBtn" onclick="openAuth()"><svg class="ico"><use href="#i-login"/></svg><span>Zaloguj się</span></button>
+          <button type="button" class="btn-line" id="hyRegisterBtn" onclick="openAuth('signUp')"><svg class="ico"><use href="#i-user"/></svg><span>Załóż konto</span></button>
         </div>
 
         <ul class="rows">
@@ -501,7 +506,11 @@ const translations = {
     signOut: 'Wyloguj się',
     premiumMenu: 'Przejdź na Premium',
     authTitle: 'Witaj w Doco',
-    authDesc: 'Zaloguj się żeby Doco pamiętał Twoje rozmowy i nastroje.',
+    authDesc: 'Zaloguj się, żeby Doco pamiętał Twoje rozmowy i nastroje.',
+    authSignIn: 'Zaloguj się',
+    authSignUp: 'Załóż konto',
+    authSignUpTitle: 'Załóż konto w Doco',
+    authSignUpDesc: 'Wystarczy e-mail i hasło. Imię jest opcjonalne, Doco będzie się tak do Ciebie zwracać.',
     moodTitle: 'Jak się dziś czujesz?',
     moodDesc: 'Codzienne śledzenie nastroju pomaga Doco lepiej Cię zrozumieć.',
     saveMood: 'Zapisz nastrój',
@@ -543,6 +552,10 @@ const translations = {
     premiumMenu: 'Go Premium',
     authTitle: 'Welcome to Doco',
     authDesc: 'Sign in so Doco can remember your conversations and moods.',
+    authSignIn: 'Sign in',
+    authSignUp: 'Create account',
+    authSignUpTitle: 'Create your Doco account',
+    authSignUpDesc: 'All you need is an email and a password. Your first name is optional, Doco will use it to address you.',
     moodTitle: 'How are you feeling today?',
     moodDesc: 'Daily mood tracking helps Doco understand you better.',
     saveMood: 'Save mood',
@@ -584,6 +597,10 @@ const translations = {
     premiumMenu: 'Перейти на Premium',
     authTitle: 'Ласкаво просимо до Doco',
     authDesc: 'Увійди, щоб Doco пам\'ятав твої розмови та настрої.',
+    authSignIn: 'Увійти',
+    authSignUp: 'Створити акаунт',
+    authSignUpTitle: 'Створи акаунт у Doco',
+    authSignUpDesc: 'Потрібні лише e-mail і пароль. Ім’я за бажанням, Doco звертатиметься до тебе так.',
     moodTitle: 'Як ти себе почуваєш сьогодні?',
     moodDesc: 'Щоденне відстеження настрою допомагає Doco краще тебе розуміти.',
     saveMood: 'Зберегти настрій',
@@ -625,6 +642,10 @@ const translations = {
     premiumMenu: 'Zu Premium wechseln',
     authTitle: 'Willkommen bei Doco',
     authDesc: 'Melde dich an, damit Doco sich an deine Gespräche und Stimmungen erinnert.',
+    authSignIn: 'Anmelden',
+    authSignUp: 'Konto erstellen',
+    authSignUpTitle: 'Erstelle dein Doco-Konto',
+    authSignUpDesc: 'Du brauchst nur E-Mail und Passwort. Der Vorname ist optional, Doco spricht dich damit an.',
     moodTitle: 'Wie fühlst du dich heute?',
     moodDesc: 'Tägliches Stimmungs-Tracking hilft Doco, dich besser zu verstehen.',
     saveMood: 'Stimmung speichern',
@@ -666,6 +687,10 @@ const translations = {
     premiumMenu: 'Ir a Premium',
     authTitle: 'Bienvenido a Doco',
     authDesc: 'Inicia sesión para que Doco recuerde tus conversaciones y estados de ánimo.',
+    authSignIn: 'Iniciar sesión',
+    authSignUp: 'Crear cuenta',
+    authSignUpTitle: 'Crea tu cuenta de Doco',
+    authSignUpDesc: 'Solo necesitas un correo y una contraseña. El nombre es opcional, Doco lo usará para dirigirse a ti.',
     moodTitle: '¿Cómo te sientes hoy?',
     moodDesc: 'El seguimiento diario del estado de ánimo ayuda a Doco a entenderte mejor.',
     saveMood: 'Guardar estado de ánimo',
@@ -720,8 +745,8 @@ function updateInterfaceLanguage(lang) {
   const premBtn = document.getElementById('premiumMenuBtn');
   if (premBtn) premBtn.textContent = t.premiumMenu;
   // Auth popup
-  document.querySelector('#authOverlay h2').textContent = t.authTitle;
-  document.querySelector('#authOverlay p').textContent = t.authDesc;
+  renderAuthTexts();
+  localizeClerk(lang);
   // Mood popup
   document.querySelector('#moodOverlay h2').textContent = t.moodTitle;
   document.querySelector('#moodOverlay p').textContent = t.moodDesc;
@@ -835,13 +860,44 @@ window.addEventListener('popstate', () => {
 });
 
 // CLERK
+// Clerk's form speaks the app's language and says "Doco": the Clerk instance itself is still named Soleil.
+// The translations match clerk-js 5.128.0; if they don't load in time, the form stays in English.
+const CLERK_LOCALES = { pl: 'pl-PL', en: 'en-US', uk: 'uk-UA', de: 'de-DE', es: 'es-ES' };
+const clerkLocales = {};
+function clerkLocalization(lang) {
+  const code = CLERK_LOCALES[lang] || CLERK_LOCALES.pl;
+  return clerkLocales[code] = clerkLocales[code] || import(`https://cdn.jsdelivr.net/npm/@clerk/localizations@3.37.9/dist/${code}.mjs`).then(m => {
+    const loc = structuredClone(m[code.replace('-', '')]);
+    const rename = o => { for (const k in o) { if (typeof o[k] === 'string') o[k] = o[k].split('{{applicationName}}').join('Doco'); else if (o[k] && typeof o[k] === 'object') rename(o[k]); } };
+    rename(loc);
+    // The popup has its own "Zaloguj się / Załóż konto" switch, so the sign-in form is simply titled "Zaloguj się"
+    if (loc.signIn && loc.signIn.start) loc.signIn.start.titleCombined = loc.signIn.start.title;
+    return loc;
+  }).catch(() => { delete clerkLocales[code]; });
+}
+// Clerk 5 navigates with location.href and then waits for the page to unload. Its steps and the way back to our tab change
+// only the part after #, which never unloads the page, so a new account stayed half signed in. Those we do in place.
+const clerkNavigate = replace => (to, meta) => {
+  const url = new URL(to, location.href);
+  if (url.href.split('#')[0] !== location.href.split('#')[0]) return meta && meta.windowNavigate ? meta.windowNavigate(url) : (location.href = url.href);
+  if (replace) location.replace(url.href);
+  else location.href = url.href;
+};
+async function localizeClerk(lang) {
+  if (!clerk || !clerk.loaded) return;
+  const localization = await clerkLocalization(lang);
+  if (localization && lang === currentLanguage) try { clerk.__unstable__updateProps({ options: { localization } }); } catch (e) {}
+}
+
 let clerkInitStarted = false; // initClerk is wired to both the script's onload and a timer; run it once
 async function initClerk() {
   if (clerkInitStarted || !window.Clerk) return;
   clerkInitStarted = true;
   try {
     clerk = window.Clerk;
-    await clerk.load(); // Clerk 5: the key comes from the script's data-clerk-publishable-key
+    const localization = await Promise.race([clerkLocalization(currentLanguage), new Promise(r => setTimeout(r, 3000))]);
+    // Clerk 5: the key comes from the script's data-clerk-publishable-key
+    await clerk.load({ ...(localization ? { localization } : {}), routerPush: clerkNavigate(false), routerReplace: clerkNavigate(true) });
     // "Zaloguj się" clicked while Clerk was still loading: show the form now
     if (document.getElementById('authOverlay').classList.contains('visible')) mountClerkSignIn();
     // Back from Google mid sign-in (#/sso-callback…): the sign-in form has to be open to finish it
@@ -946,13 +1002,50 @@ function updateAuthUI(user) {
 
 // Po zalogowaniu wracamy na bieżącą stronę i zakładkę: w panelu Clerka adres powrotu to główna domena, a na GitHub Pages
 // Soleil żyje pod /hackyeah-2026/ (bez tego 404). Różni się najwyżej #, więc Clerk nie przeładowuje strony i rozmowa zostaje.
-// withSignUp: rejestracja w tym samym okienku (bez tego „Sign up” wyprowadza na stronę Clerka, która wraca na 404).
+// Rejestracja zostaje w tym samym okienku (bez tego „Sign up” wyprowadza na stronę Clerka, która wraca na 404):
+// przełącznik „Zaloguj się / Załóż konto” podmienia formularz, a logowanie i tak przyjmuje nowy e-mail (withSignUp).
 const authReturnUrl = () => location.href.split('#')[0] + '#' + (document.getElementById('app')?.dataset.view || 'rozmowa');
-function openAuth() { pushOverlayState('authOverlay'); document.getElementById('authOverlay').classList.add('visible'); if (clerk && clerk.loaded) mountClerkSignIn(); }
-function mountClerkSignIn() { clerk.mountSignIn(document.getElementById('clerk-sign-in'), { routing: 'virtual', withSignUp: true, forceRedirectUrl: authReturnUrl(), signUpForceRedirectUrl: authReturnUrl(), appearance: { variables: { colorPrimary: '#a6e8c4', colorTextOnPrimaryBackground: '#04140c', colorBackground: '#08110d', colorInputBackground: '#0f1a15', colorInputText: '#eef6f1', colorText: '#eef6f1', colorTextSecondary: '#9fb3a8', colorNeutral: '#eef6f1', colorDanger: '#ff7a6b', borderRadius: '0px', fontFamily: "'Nunito', system-ui, sans-serif", fontSize: '1rem' }, elements: { rootBox: { width: '100%' }, cardBox: { width: '100%', boxShadow: 'none', border: '1px solid rgba(190,240,215,0.18)' }, card: { boxShadow: 'none' } } } }); }
+let authMode = 'signIn';
+function renderAuthTexts() {
+  const t = translations[currentLanguage] || translations.pl, signUp = authMode === 'signUp';
+  document.querySelector('#authOverlay h2').textContent = signUp ? t.authSignUpTitle : t.authTitle;
+  document.querySelector('#authOverlay p').textContent = signUp ? t.authSignUpDesc : t.authDesc;
+  [['authTabSignIn', 'signIn', t.authSignIn], ['authTabSignUp', 'signUp', t.authSignUp]].forEach(([id, mode, label]) => {
+    const tab = document.getElementById(id);
+    tab.textContent = label;
+    tab.classList.toggle('active', mode === authMode);
+    tab.setAttribute('aria-selected', mode === authMode);
+  });
+}
+function setAuthMode(mode) {
+  if (mode === authMode) return;
+  authMode = mode;
+  renderAuthTexts();
+  if (isClerkRoute()) history.replaceState(history.state, '', authReturnUrl()); // the other form starts from its first step
+  if (clerk && clerk.loaded && document.getElementById('authOverlay').classList.contains('visible')) mountClerkSignIn();
+}
+function openAuth(mode) {
+  authMode = mode === 'signUp' ? 'signUp' : 'signIn';
+  renderAuthTexts();
+  pushOverlayState('authOverlay');
+  document.getElementById('authOverlay').classList.add('visible');
+  if (clerk && clerk.loaded) mountClerkSignIn();
+}
+const clerkAppearance = { variables: { colorPrimary: '#a6e8c4', colorTextOnPrimaryBackground: '#04140c', colorBackground: '#08110d', colorInputBackground: '#0f1a15', colorInputText: '#eef6f1', colorText: '#eef6f1', colorTextSecondary: '#9fb3a8', colorNeutral: '#eef6f1', colorDanger: '#ff7a6b', borderRadius: '0px', fontFamily: "'Nunito', system-ui, sans-serif", fontSize: '1rem' }, elements: { rootBox: { width: '100%' }, cardBox: { width: '100%', boxShadow: 'none', border: '1px solid rgba(190,240,215,0.18)' }, card: { boxShadow: 'none' } } };
+function mountClerkSignIn() {
+  const el = document.getElementById('clerk-sign-in'), back = authReturnUrl();
+  clerk.unmountSignIn(el);
+  clerk.unmountSignUp(el);
+  if (authMode === 'signUp') clerk.mountSignUp(el, { routing: 'virtual', forceRedirectUrl: back, signInForceRedirectUrl: back, appearance: clerkAppearance });
+  else clerk.mountSignIn(el, { routing: 'virtual', withSignUp: true, forceRedirectUrl: back, signUpForceRedirectUrl: back, appearance: clerkAppearance });
+}
+// In "Załóż konto", Clerk's "Masz już konto? Zaloguj się" would leave for Clerk's own page: switch the popup instead
+document.getElementById('authOverlay').addEventListener('click', e => {
+  if (authMode === 'signUp' && e.target.closest('#clerk-sign-in .cl-footerActionLink')) { e.preventDefault(); e.stopPropagation(); setAuthMode('signIn'); }
+}, true);
 function closeAuth() {
   document.getElementById('authOverlay').classList.remove('visible');
-  if (clerk) clerk.unmountSignIn(document.getElementById('clerk-sign-in'));
+  if (clerk) { clerk.unmountSignIn(document.getElementById('clerk-sign-in')); clerk.unmountSignUp(document.getElementById('clerk-sign-in')); }
   // Leave Clerk's step out of the address, so the next sign-in starts from the beginning
   if (isClerkRoute()) history.replaceState(history.state, '', authReturnUrl());
 }
@@ -2093,7 +2186,7 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
 <script src="offline-companion.js?v=4"></script>
 <script src="voice.js?v=3"></script>
 <script src="diary.js?v=2"></script>
-<script src="app.js?v=6"></script>
+<script src="app.js?v=7"></script>
 <script src="quotes.js?v=5"></script>
 <script src="art.js?v=4"></script>
 <script src="chat.js?v=6"></script>
