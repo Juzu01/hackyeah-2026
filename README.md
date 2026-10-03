@@ -6,6 +6,8 @@ Soleil, prototyp na HackYeah 2026, kategoria Open Task – Sport & Healthcare.
 
 **Pomysły zespołu:** https://juzu01.github.io/hackyeah-2026/pomysly/ — każdy pomysł to issue z etykietą `pomysł` (szablon `.github/ISSUE_TEMPLATE/pomysl.yml`), głosujemy reakcją 👍.
 
+**Wysyłanie zmian:** wrzucajcie na własne gałęzie albo prosto na `main`. Co ~15 minut bot scala wszystko w jedną aplikację i publikuje. Zasady w [`INTEGRACJA.md`](INTEGRACJA.md), dziennik w [#1](https://github.com/Juzu01/hackyeah-2026/issues/1).
+
 ## Uruchomienie lokalnie
 
 Sam frontend:
