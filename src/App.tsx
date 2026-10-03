@@ -1,9 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { PartInfo } from './anatomy/content.ts'
 import type { LayerName } from './anatomy/depth.ts'
 import { search } from './anatomy/search.ts'
 import { mountAnatomyViewer, type AnatomyViewer, type ViewerState } from './anatomy/viewer.ts'
 import { isTouchDevice, memory, tick } from './atlas/device.ts'
+import type { Act } from './atlas/chat/assistant.ts'
+import Chat from './atlas/chat/Chat.tsx'
+import { useConversation } from './atlas/chat/useConversation.ts'
 import InfoSheet from './atlas/InfoSheet.tsx'
 import { LAYERS } from './atlas/layers.tsx'
 import LayerSwitch from './atlas/LayerSwitch.tsx'
@@ -12,6 +15,7 @@ import { usePresence } from './atlas/presence.ts'
 import SearchSheet from './atlas/SearchSheet.tsx'
 import Sheet from './atlas/Sheet.tsx'
 import TopBar from './atlas/TopBar.tsx'
+import VoiceDock from './atlas/VoiceDock.tsx'
 import './atlas/ui.css'
 import WelcomeSheet from './atlas/WelcomeSheet.tsx'
 import { clearDemoHistory, seedDemoHistory } from './lib/painReports.ts'
@@ -56,13 +60,37 @@ function App() {
   const [welcome, setWelcome] = useState(() => memory.get(WELCOMED) !== '1' && !params.has('noonboard'))
   const [tapped, setTapped] = useState(() => memory.get(TAPPED) === '1' || params.has('nohint'))
   const [caption, setCaption] = useState<string | null>(null)
+  // The conversation takes the sheet's place while it's open; the selection stays underneath.
+  const [chat, setChat] = useState(false)
+  // The part the conversation just asked the viewer to show, so its selection isn't taken for a tap.
+  const chatFocus = useRef<string | null>(null)
   // Bumped when the history changes outside the panel, so an open panel reloads it.
   const [dataVersion, setDataVersion] = useState(0)
   const [notice, setNotice] = useState<string | null>(null)
   const wide = useMediaQuery('(min-width: 900px)')
   const [touch] = useState(isTouchDevice)
 
+  const act = useCallback((a: Act) => {
+    const v = viewer.current
+    if (!v) return
+    if (a.layer) v.setLayer(a.layer)
+    if (a.flip) v.flip()
+    if (a.focus) {
+      chatFocus.current = a.focus
+      v.focus(a.focus)
+    }
+  }, [])
+  const talk = useConversation({ selectedId: selected?.id ?? null, act })
+  // For the viewer's callbacks, which outlive a render.
+  const chatOpen = useRef(chat)
+  const talkRef = useRef(talk)
+  useLayoutEffect(() => {
+    chatOpen.current = chat
+    talkRef.current = talk
+  })
+
   const [part, closing] = usePresence(selected)
+  const [chatShown, chatClosing] = usePresence(chat ? true : null)
   const [infoShown, infoClosing] = usePresence(info ? true : null)
   const [searchShown, searchClosing] = usePresence(searching)
   const [welcomeShown, welcomeClosing] = usePresence(welcome ? true : null)
@@ -79,6 +107,12 @@ function App() {
         tick()
         setTapped(true)
         memory.set(TAPPED, '1')
+        if (p.id === chatFocus.current) {
+          chatFocus.current = null
+          return
+        }
+        // "Where does it hurt?" answered with a finger.
+        if (chatOpen.current && talkRef.current.awaitingPart()) talkRef.current.send(p.name)
       },
       onChange: setView,
     })
@@ -95,6 +129,15 @@ function App() {
   const sheetRef = useCallback((el: HTMLElement | null) => viewer.current?.setOccluder(el), [])
 
   const deselect = () => viewer.current?.select(null)
+  const closeChat = () => {
+    talk.stopListening()
+    setChat(false)
+  }
+  const pressVoice = () => {
+    if (talk.listening) return talk.stopListening()
+    setChat(true)
+    if (talk.canListen) talk.listen()
+  }
   const dismiss = () => {
     if (mode === 'pain') setMode('card')
     else if (expanded) setExpanded(false)
@@ -162,14 +205,32 @@ function App() {
         onFlip={() => viewer.current?.flip()}
         onInfo={() => setInfo(true)}
       />
-      <LayerSwitch value={view.layer} onChange={pickLayer} hidden={!!selected && !wide} />
-      {caption && !selected && (
+      <VoiceDock
+        listening={talk.listening}
+        canListen={talk.canListen}
+        hidden={chat || (!!selected && !wide)}
+        onPress={pressVoice}
+      />
+      <LayerSwitch value={view.layer} onChange={pickLayer} hidden={(!!selected || chat) && !wide} />
+      {caption && !selected && !chat && (
         <p className="layer-caption" role="status">
           {caption}
         </p>
       )}
 
-      {part && (
+      {chatShown && (
+        <Sheet
+          ref={chatClosing ? undefined : sheetRef}
+          label="Rozmowa"
+          closing={chatClosing}
+          onDismiss={closeChat}
+          className="sheet-chat"
+        >
+          <Chat talk={talk} onFocus={(id) => act({ focus: id })} onClose={closeChat} />
+        </Sheet>
+      )}
+
+      {part && !chatShown && (
         <Sheet
           ref={closing ? undefined : sheetRef}
           label={mode === 'pain' ? `Zgłoś ból: ${part.name}` : part.name}

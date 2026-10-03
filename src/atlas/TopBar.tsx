@@ -1,4 +1,5 @@
-// The title bar: the app's name and three round buttons: search, turn the body round, info.
+// The title bar: the app's name and its buttons: search, turn the body round
+// (a pill that says which side you'll see, so nobody has to guess the icon), info.
 
 import { FlipIcon, InfoIcon, SearchIcon } from './icons.tsx'
 
@@ -18,8 +19,9 @@ export default function TopBar({ back, onSearch, onFlip, onInfo }: Props) {
         <button type="button" className="round-btn" aria-label="Szukaj części ciała" title="Szukaj" onClick={onSearch}>
           <SearchIcon />
         </button>
-        <button type="button" className="round-btn" aria-label={flipLabel} title={flipLabel} onClick={onFlip}>
+        <button type="button" className="pill-btn" aria-label={flipLabel} title={flipLabel} onClick={onFlip}>
           <FlipIcon />
+          {back ? 'Przód' : 'Tył'}
         </button>
         <button type="button" className="round-btn" aria-label="Jak korzystać i informacje" title="Informacje" onClick={onInfo}>
           <InfoIcon />

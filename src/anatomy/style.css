@@ -1,37 +1,46 @@
 /* Atlas: tokens and the viewer's own overlays. The tokens live on :root so the
    app's chrome (src/atlas/ui.css) and the pain form share them. */
 
+/* Revision 3, "operating theatre": the body lies on surgical green under a warm lamp.
+   Green because it is red's complement (the reason scrubs are green), so the tissue
+   reads cleanly against it; the lamp's warm light is the one accent. */
 :root {
-  --bg-0: #04060a;
-  --bg-1: #0a1017;
-  --ink-1: #e9eef3;
-  --ink-2: #a3aebb;
-  --ink-3: #6b7784;
-  --hair: rgb(190 215 235 / 0.14);
-  --hair-strong: rgb(190 215 235 / 0.26);
-  --accent: #5be3cf;
-  --accent-ink: #04201c;
-  --glass: #bfddf5;
-  /* Raised surfaces: sheets, the layer switch, round buttons. */
-  --surface: rgb(17 23 31 / 0.92);
-  --surface-2: rgb(255 255 255 / 0.06);
-  --surface-3: rgb(255 255 255 / 0.1);
-  --font-sans: 'Inter Variable', 'Inter', system-ui, sans-serif;
+  --bg-0: #061412;
+  --bg-1: #0f2925;
+  --ink-1: #eef5f1;
+  --ink-2: #a8c1b9;
+  --ink-3: #6f8d85;
+  --hair: rgb(196 232 218 / 0.13);
+  --hair-strong: rgb(196 232 218 / 0.26);
+  /* The operating lamp: selection, the active layer, the primary action, the voice button. */
+  --accent: #f3d488;
+  --accent-ink: #1d1706;
+  --accent-soft: rgb(243 212 136 / 0.14);
+  --glass: #cfe9dd;
+  /* Raised surfaces: sheets (solid), floating controls (glass). */
+  --surface: rgb(16 44 39 / 0.86);
+  --surface-solid: #0f2a26;
+  --surface-2: rgb(214 242 230 / 0.06);
+  --surface-3: rgb(214 242 230 / 0.11);
+  /* Atkinson Hyperlegible: drawn for readers with low vision, so every letter is unmistakable. */
+  --font-sans: 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif;
+  /* Newsreader: the names, as on an anatomical plate; italic for Latin. */
+  --font-serif: 'Newsreader Variable', Georgia, serif;
   --gutter: 16px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  /* The bands the title bar and the layer switch cover; the viewer reads them from its host's padding. */
+  /* The bands the title bar and the voice dock cover; the viewer reads them from its host's padding. */
   --chrome-top: calc(var(--safe-top) + 64px);
-  --chrome-bottom: calc(var(--safe-bottom) + 76px);
+  --chrome-bottom: calc(var(--safe-bottom) + 118px);
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   color-scheme: dark;
 }
 
 @media (min-width: 900px) {
   :root {
-    --gutter: 24px;
-    --chrome-top: calc(var(--safe-top) + 72px);
-    --chrome-bottom: calc(var(--safe-bottom) + 84px);
+    --gutter: 28px;
+    --chrome-top: calc(var(--safe-top) + 76px);
+    --chrome-bottom: calc(var(--safe-bottom) + 124px);
   }
 }
 
@@ -58,8 +67,8 @@ body {
   -webkit-touch-callout: none;
   overscroll-behavior: none;
   background:
-    radial-gradient(70% 55% at 50% 42%, rgb(80 120 160 / 0.08), transparent 70%),
-    radial-gradient(120% 90% at 50% 42%, var(--bg-1) 0%, #070b10 55%, var(--bg-0) 100%);
+    radial-gradient(42% 30% at 50% 36%, rgb(243 212 136 / 0.07), transparent 100%),
+    radial-gradient(110% 80% at 50% 40%, var(--bg-1) 0%, #0a1d1a 55%, var(--bg-0) 100%);
 }
 
 .atlas-canvas {
@@ -100,7 +109,7 @@ body {
   stroke-width: 1.5;
 }
 .atlas-marker-ring {
-  fill: rgb(91 227 207 / 0.12);
+  fill: rgb(243 212 136 / 0.14);
   stroke: var(--accent);
   stroke-width: 1.25;
   stroke-opacity: 0.7;
@@ -115,7 +124,7 @@ body {
   padding: 5px 9px 6px;
   border: 1px solid var(--hair);
   border-radius: 8px;
-  background: rgb(10 14 20 / 0.92);
+  background: rgb(10 32 28 / 0.94);
   color: var(--ink-1);
   font-size: 0.8125rem;
   font-weight: 500;

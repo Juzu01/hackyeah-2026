@@ -1,9 +1,10 @@
-// The first visit: what the atlas is for, three tiny tips and a big "Zaczynamy".
+// The first visit: what the atlas is for, four tiny tips and a big "Zaczynamy".
 // Shown once (re-openable from "i"); closing it any way counts as seen.
 
 import { useEffect, useRef } from 'react'
+import { canListen } from './chat/speech.ts'
 import { LAYERS } from './layers.tsx'
-import { CloseIcon, TapIcon } from './icons.tsx'
+import { CloseIcon, MicIcon, TapIcon } from './icons.tsx'
 
 interface Props {
   touch: boolean
@@ -50,6 +51,22 @@ export default function WelcomeSheet({ touch, onDone }: Props) {
           </span>
           <span>
             <strong>Zgłoś ból</strong> w wybranym miejscu i śledź, jak się zmienia.
+          </span>
+        </li>
+        <li>
+          <span className="onboard-art onboard-art-voice" aria-hidden="true">
+            <MicIcon size={20} />
+          </span>
+          <span>
+            {canListen ? (
+              <>
+                <strong>Powiedz, co boli</strong>: okrągły przycisk na dole słucha i sam pokaże to miejsce.
+              </>
+            ) : (
+              <>
+                <strong>Napisz, co boli</strong>: okrągły przycisk na dole otwiera rozmowę i sam pokaże to miejsce.
+              </>
+            )}
           </span>
         </li>
       </ol>

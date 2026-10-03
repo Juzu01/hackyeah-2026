@@ -17,9 +17,9 @@ import {
 } from 'three'
 import type { CatalogEntry } from './content.ts'
 
-export const ACCENT = new Color('#5BE3CF')
-export const GLASS = new Color('#BFDDF5')
-export const HAIR = new Color('#BED7EB')
+export const ACCENT = new Color('#F3D488')
+export const GLASS = new Color('#CFE9DD')
+export const HAIR = new Color('#C4E8DA')
 
 /**
  * A calm anatomical model rather than raw tissue: warm, desaturated rose and

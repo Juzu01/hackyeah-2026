@@ -47,7 +47,10 @@ export default function PartCard({ part, expanded, onToggle, onReport, onClose }
     <div className="card">
       <header className="card-head">
         <div className="card-titles">
-          <p className="tag card-where">{plain.where}</p>
+          <p className="tag card-where" data-system={part.system}>
+            <span className="swatch" aria-hidden="true" />
+            {plain.where}
+          </p>
           <h2 className="card-name">{part.name}</h2>
         </div>
         <button type="button" className="icon-btn" aria-label="Zamknij" onClick={onClose}>

@@ -4,6 +4,8 @@ The art direction and engineering contract for `src/anatomy/` and its app chrome
 
 *Revision 2 (phone first):* the first version's workstation HUD (depth ladder, zoom readout, P/L letters, scale bar, view name, floating callout with a leader line) was too busy on a phone. §6 now describes the simpler app chrome that replaced it.
 
+*Revision 4 (its own look, and a voice):* the near-black-and-mint look read like every other dark app. The atlas is now an **operating theatre**: the body lies on surgical green (red's complement, which is why scrubs are green, so tissue reads cleanly) under a warm lamp, the one accent. Names are set like an anatomical plate (Newsreader, Latin in italic); everything people read and tap is Atkinson Hyperlegible, a face drawn for low vision. The layer switch became a depth gauge at the top left, and the bottom belongs to a voice button shaped like a stethoscope's chest piece: say what hurts and the body shows it (§6).
+
 ## 1. Principles
 
 1. **Clinical restraint.** Near-black canvas and cool neutral hairlines. Colour appears only where it means something: tissue colour on the active layer, plus one accent for "selected / active".
@@ -23,20 +25,21 @@ The art direction and engineering contract for `src/anatomy/` and its app chrome
 
 | token | value | use |
 |---|---|---|
-| `--bg-0` | `#04060A` | page edge |
-| `--bg-1` | `#0A1017` | canvas centre (radial, slightly above body centre) |
-| `--ink-1` | `#E9EEF3` | primary text |
-| `--ink-2` | `#A3AEBB` | secondary text |
-| `--ink-3` | `#6B7784` | tertiary |
-| `--hair` | `rgba(190,215,235,0.14)` | hairlines, borders |
-| `--accent` | `#5BE3CF` | selection, active layer, primary action (clinical mint-teal) |
-| `--glass` | `#BFDDF5` | skin shell rim |
-| `--surface` | `rgba(17,23,31,0.92)` | sheets, the layer switch, round buttons |
+| `--bg-0` | `#061412` | page edge (surgical green, deep) |
+| `--bg-1` | `#0F2925` | canvas centre, under a faint warm lamp pool |
+| `--ink-1` | `#EEF5F1` | primary text |
+| `--ink-2` | `#A8C1B9` | secondary text |
+| `--ink-3` | `#6F8D85` | tertiary |
+| `--hair` | `rgba(196,232,218,0.13)` | hairlines, borders |
+| `--accent` | `#F3D488` | the lamp: selection, active layer, primary action, voice button |
+| `--glass` | `#CFE9DD` | skin shell rim |
+| `--surface-solid` | `#0F2A26` | sheets |
+| `--surface` | `rgba(16,44,39,0.86)` | floating buttons (blurred) |
 
 Tissue palette (desaturated atlas colours, linear-workflow friendly; tune by eye under the final lighting):
 muscle `#B66F66` · bone `#D3C8B4` (revision 3: the whole palette softened towards a calm anatomical model; see `materials.ts`) · brain `#C9A2A5` · heart `#A9323A` · aorta `#B23B40` · lungs `#C98E8B` · trachea `#B8C3C8` · esophagus `#B97870` · thyroid `#9C3E4E` · liver `#6D2923` · gallbladder `#4D6B46` · stomach `#C28E78` · spleen `#5D2D40` · pancreas `#CDA87A` · kidneys `#7E342F` · small intestine `#C9928A` · large intestine `#A97965` · urinary bladder `#C8AF7A`.
 
-Typography: **Inter** (variable), bundled via `@fontsource` (no network fonts); tabular figures for numbers. On phones body copy is 15–16px with 1.5 line-height, names 21px, the title 18px. One uppercase tag style (12px, 600, tracking 0.08em, accent); everything else is sentence case. Radii: sheets 22px, buttons 14px, chips and round buttons fully round.
+Typography, bundled via `@fontsource` (no network fonts): **Atkinson Hyperlegible Next** for all UI text (16–17px body on phones, 1.5 line-height; tabular figures for numbers) and **Newsreader** only for names: the app's title (25px), a part's name (30px), Latin (italic), and your own words in the conversation (italic, in „quotes”). No uppercase labels: what a part is goes above its name in plain words with a swatch of its tissue colour (`Układ mięśniowy, strona lewa`). Radii by role: sheets 26px, primary buttons fully round (pill), chips and cards 12–18px.
 
 ## 4. Rendering
 
@@ -71,12 +74,14 @@ Typography: **Inter** (variable), bundled via `@fontsource` (no network fonts); 
 
 ## 6. App chrome (Polish copy, phone first)
 
-- **Title bar** (top, below the safe area, no background beyond a soft fade): `Atlas ciała` (18px, 650, sentence case) and two 44px round buttons: turn round (front ↔ back, animated) and `i` (info sheet). The bar lets gestures through except on its buttons.
-- **Layer switch** (bottom, above the safe area, ≥ 44px tall, thumb reach): a segmented control `Mięśnie · Narządy · Rozsunięte`. Tapping animates the camera to that layer's depth: muscles = the whole body; organs = the torso with organs and bones in place; exploded = the torso fully exploded, front view. It mirrors the depth live while pinching. The skin is not a layer.
-- **Selection sheet.** Tapping a part opens a bottom sheet (phone) or a card on the right (≥ 900px): drag handle, the tag (`UKŁAD KRĄŻENIA · STRONA LEWA`, the one tag style: 12px, 600, uppercase, accent), the name (21px), the Latin (italic), a 3-line description, `Więcej` for the rest (muscles: action and exercises; organs: fact and sport; bones: fact), and a full-width `Zgłoś ból`. The part keeps a small accent ring on it, and the view shifts so it stays in the free area above the sheet. On phones the layer switch steps aside while the sheet is open.
-- **Pain report** replaces the card inside the same sheet (cross-fade, height animates), with a back button to the card: intensity 1–10 (green → red), pain types, save, recent history.
-- **Info sheet** (`i`): how to use it (drag, pinch, tap, double tap), installing it (`Zainstaluj aplikację` via `beforeinstallprompt`; on iOS: Udostępnij → Do ekranu początkowego), the model's attribution, and the build.
-- **For people new to anatomy** (revision 3): a one-time **welcome** sheet ("Poznaj swoje ciało i zapisz, co cię boli", three tips, `Zaczynamy`; skippable, re-openable from `i`), then a **pulsing hint** on the chest (`Dotknij dowolnego miejsca`) until the first tap. A **search** button opens a sheet for everyday words ("kolano", "lewa łydka") with suggestion chips and big result rows (name, where, mięsień/narząd/kość); picking one flies there and opens the card. The card leads with **where** the part is and **one plain sentence** (`data/plain.pl.json`); Latin, the clinical description, action, exercises, fact, sport and the system go under `Więcej`. Layer buttons have icons (`Mięśnie · Narządy · Osobno`) and a tap shows a one-line caption for ~2 s. The pain scale is grouped in words (lekki, umiarkowany, silny, bardzo silny) with faces; after saving it says `Zapisano`, lists the latest entries and offers `Wróć do ciała`. A short vibration confirms a selection; text is rem-based, at least 16px for body copy on phones. `?noonboard` and `?nohint` turn the welcome and the hint off for screenshots.
+- **Title bar** (top, below the safe area, a soft fade): `Atlas ciała` in Newsreader, and on the right: search (magnifier), a pill that says which side you'll see (`Tył` / `Przód`, turns the body round) and `i` (info sheet). The bar lets gestures through except on its buttons.
+- **Depth gauge** (top left, under the title): `Mięśnie → Narządy → Osobno`, top to bottom, each with its icon, on a thin vertical line like a probe going in; a lamp-lit bead slides to the layer in view. Tapping animates the camera to that depth (muscles = the whole body; organs = the torso with organs and bones in place; apart = the torso fully exploded) and shows a one-line caption above the dock for ~2 s. It mirrors the depth live while pinching. Hidden on phones while a sheet is open.
+- **Voice dock** (bottom centre, thumb reach): a 70px lamp-coloured disc with a fine rim, a stethoscope's chest piece, labelled `Powiedz, co boli`. One tap opens the conversation and starts listening (Web Speech API, pl-PL); rings travel out from the rim while it listens. Where the browser can't listen it says `Napisz, co boli` and opens the conversation for typing.
+- **Conversation** (the sheet, in place of the part card): a transcript, not bubbles. Your words on the right, quoted, in Newsreader italic; the atlas's answers on the left on a lamp-coloured margin rule. Answers come from `src/atlas/chat/` offline: `understand.ts` turns everyday Polish ("boli mnie lewe kolano, tak na 6, kłuje") into an intent, `assistant.ts` answers it and moves the body (focus a part, change layer, turn round). A pain report is drafted in place (intensity 1–10, types) to check and save; "where does it hurt?" can be answered by tapping the body. Red flags (chest pain, breathlessness, stroke signs, suicidal thoughts) answer with a call button (112, Centrum Wsparcia 800 70 2222) instead. Answers can be read aloud (speaker toggle, remembered). Questions it can't answer go to `VITE_CHAT_URL` when set (`remote.ts`).
+- **Selection sheet.** Tapping a part opens a bottom sheet (phone) or a card on the right (≥ 900px): drag handle, **where** the part is in plain words with a swatch of its tissue colour, the name (Newsreader 30px), **one plain sentence** (`data/plain.pl.json`), `Więcej` for the atlas detail (Latin, the clinical description, action, exercises, fact, sport, the system), and a full-width `Zgłoś ból` pill. The part keeps a lamp-coloured ring and the view shifts so it stays in the free area above the sheet.
+- **Pain report** replaces the card inside the same sheet (cross-fade, height animates), with a back button to the card: the scale grouped in words (lekki, umiarkowany, silny, bardzo silny) with faces, pain types, save; then `Zapisano`, the latest entries and `Wróć do ciała`.
+- **For people new to anatomy:** a one-time **welcome** sheet ("Poznaj swoje ciało i zapisz, co cię boli", three tips, `Zaczynamy`; skippable, re-openable from `i`), then a **pulsing hint** on the chest (`Dotknij dowolnego miejsca`) until the first tap. **Search** opens a sheet for everyday words ("kolano", "lewa łydka") with suggestion chips and big result rows (name, where, mięsień/narząd/kość); picking one flies there and opens the card. A short vibration confirms a selection; text is rem-based, at least 16px for body copy on phones. `?noonboard` and `?nohint` turn the welcome and the hint off for screenshots.
+- **Info sheet** (`i`): how to use it, installing it (`Zainstaluj aplikację` via `beforeinstallprompt`; on iOS: Udostępnij → Do ekranu początkowego), the model's attribution, and the build.
 - **Hover** (mouse only): a small name tag by the cursor.
 - **Loading:** a 160px progress bar and `Wczytywanie modelu · 42%`, with the model's credit at the bottom; then a cross-fade into the scene and the scan sweep. **No WebGL:** a calm centred message.
 - **Installable:** `public/manifest.webmanifest` (standalone, portrait), icons from `tools/icons/`, and `public/sw.js` (network-first pages, cache-first assets and the model, one cache per build).

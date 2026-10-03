@@ -38,7 +38,6 @@ export default function InfoSheet({ touch, build, onClose, onWelcome }: Props) {
     <div className="info">
       <header className="card-head">
         <div className="card-titles">
-          <p className="tag">O aplikacji</p>
           <h2 className="card-name">Atlas ciała</h2>
         </div>
         <button ref={close} type="button" className="icon-btn" aria-label="Zamknij" onClick={onClose}>
@@ -60,8 +59,9 @@ export default function InfoSheet({ touch, build, onClose, onWelcome }: Props) {
         ))}
       </ul>
       <p className="info-note">
-        Przyciski warstw pokazują mięśnie, narządy z kośćmi albo narządy rozsunięte osobno, żeby łatwo je wybrać. Lupa
-        na górze znajduje część ciała po nazwie, np. „kolano”.
+        Lista w lewym górnym rogu przełącza warstwy: mięśnie, narządy z kośćmi albo narządy rozsunięte osobno, żeby łatwo
+        je wybrać. Lupa na górze znajduje część ciała po nazwie, np. „kolano”. Okrągły przycisk na dole pozwala po
+        prostu powiedzieć, co boli.
       </p>
       <button type="button" className="more-toggle" onClick={onWelcome}>
         Pokaż wprowadzenie jeszcze raz

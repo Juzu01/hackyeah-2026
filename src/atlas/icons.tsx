@@ -148,3 +148,35 @@ export const PainFace = ({ level }: { level: 0 | 1 | 2 | 3 }) => {
     </Icon>
   )
 }
+/** The voice button's microphone: heavier, it sits on the lamp-lit disc. */
+export const MicIcon = ({ size = 28 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+    <rect x="9" y="3" width="6" height="11.5" rx="3" fill="currentColor" stroke="none" />
+    <path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3" />
+  </svg>
+)
+
+export const StopIcon = ({ size = 22 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true">
+    <rect x="6" y="6" width="12" height="12" rx="2.5" fill="currentColor" />
+  </svg>
+)
+
+export const SendIcon = () => (
+  <Icon size={20}>
+    <path d="M12 19V5M6 11l6-6 6 6" strokeWidth="2" />
+  </Icon>
+)
+
+export const SpeakerIcon = ({ off = false }: { off?: boolean }) => (
+  <Icon size={20}>
+    <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" />
+    {off ? <path d="m16 9.5 5 5M21 9.5l-5 5" /> : <path d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11" />}
+  </Icon>
+)
+
+export const PhoneIcon = () => (
+  <Icon size={20}>
+    <path d="M6.5 3.5h3l1.5 4-2 1.5a11 11 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5.5a2 2 0 0 1 2-2z" />
+  </Icon>
+)
