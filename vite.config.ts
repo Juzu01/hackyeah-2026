@@ -4,7 +4,8 @@ import { defineConfig, type Plugin } from 'vite'
 
 // src/ holds two apps and deploy.yml builds it twice: the body map (src/main.tsx) for /cialo/ and,
 // with VITE_APP=gdzie-boli, the "Gdzie boli?" symptom checker (src/gdzie-boli.tsx) for /gdzie-boli/.
-// index.html is the body map's; for the second build this swaps in its entry, title, colour and description.
+// index.html is the body map's; for the second build this swaps in its entry, title, colour and description,
+// and drops the atlas's install metadata (manifest, icons; its service worker is registered from src/main.tsx).
 const gdzieBoliPage: Plugin = {
   name: 'gdzie-boli-page',
   transformIndexHtml: {
@@ -13,6 +14,7 @@ const gdzieBoliPage: Plugin = {
       process.env.VITE_APP !== 'gdzie-boli'
         ? html
         : html
+            .replace(/\s*<!-- atlas-pwa[\s\S]*?<!-- \/atlas-pwa -->/, '')
             .replace('/src/main.tsx', '/src/gdzie-boli.tsx')
             .replace(/(name="theme-color" content=")[^"]*/, '$1#0f766e')
             .replace(

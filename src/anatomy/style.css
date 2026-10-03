@@ -1,52 +1,65 @@
-/* Atlas: tokens and overlay styles (DESIGN.md §3 and §6). The tokens live on
-   :root so the pain sheet and other hosts can share them. */
+/* Atlas: tokens and the viewer's own overlays. The tokens live on :root so the
+   app's chrome (src/atlas/ui.css) and the pain form share them. */
 
 :root {
   --bg-0: #04060a;
   --bg-1: #0a1017;
   --ink-1: #e9eef3;
-  --ink-2: #9da9b5;
-  --ink-3: #5f6b77;
-  --hair: rgb(190 215 235 / 0.16);
-  --hair-strong: rgb(190 215 235 / 0.28);
+  --ink-2: #a3aebb;
+  --ink-3: #6b7784;
+  --hair: rgb(190 215 235 / 0.14);
+  --hair-strong: rgb(190 215 235 / 0.26);
   --accent: #5be3cf;
-  --accent-dim: rgb(91 227 207 / 0.42);
+  --accent-ink: #04201c;
   --glass: #bfddf5;
-  --panel: rgb(7 10 15 / 0.96);
+  /* Raised surfaces: sheets, the layer switch, round buttons. */
+  --surface: rgb(17 23 31 / 0.92);
+  --surface-2: rgb(255 255 255 / 0.06);
+  --surface-3: rgb(255 255 255 / 0.1);
   --font-sans: 'Inter Variable', 'Inter', system-ui, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
   --gutter: 16px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  /* The bands the title bar and the layer switch cover; the viewer reads them from its host's padding. */
+  --chrome-top: calc(var(--safe-top) + 64px);
+  --chrome-bottom: calc(var(--safe-bottom) + 76px);
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  color-scheme: dark;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 900px) {
   :root {
-    --gutter: 28px;
+    --gutter: 24px;
+    --chrome-top: calc(var(--safe-top) + 72px);
+    --chrome-bottom: calc(var(--safe-bottom) + 84px);
   }
 }
 
 html,
 body {
   background: var(--bg-0);
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
 }
 
 .atlas {
   position: fixed;
   inset: 0;
+  box-sizing: border-box;
+  padding: var(--chrome-top) 0 var(--chrome-bottom);
   overflow: hidden;
   color: var(--ink-1);
   font-family: var(--font-sans);
-  font-feature-settings: 'cv11', 'ss01';
   -webkit-font-smoothing: antialiased;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-  -webkit-tap-highlight-color: transparent;
   overscroll-behavior: none;
   background:
-    radial-gradient(70% 55% at 50% 40%, rgb(80 120 160 / 0.07), transparent 70%),
-    radial-gradient(120% 90% at 50% 40%, var(--bg-1) 0%, #070b10 55%, var(--bg-0) 100%);
+    radial-gradient(70% 55% at 50% 42%, rgb(80 120 160 / 0.08), transparent 70%),
+    radial-gradient(120% 90% at 50% 42%, var(--bg-1) 0%, #070b10 55%, var(--bg-0) 100%);
 }
 
 .atlas-canvas {
@@ -66,9 +79,9 @@ body {
   cursor: grabbing;
 }
 
-/* ── Selection callout ─────────────────────────────────────────────── */
+/* ── Selection marker ──────────────────────────────────────────────── */
 
-.atlas-leader {
+.atlas-marker {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -78,166 +91,33 @@ body {
   opacity: 0;
   transition: opacity 180ms var(--ease-out);
 }
-.atlas-leader.is-on {
+.atlas-marker.is-on {
   opacity: 1;
 }
-.atlas-leader polyline {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 1;
-  stroke-opacity: 0.85;
-  vector-effect: non-scaling-stroke;
-}
-.atlas-leader-dot {
+.atlas-marker-dot {
   fill: var(--accent);
+  stroke: var(--bg-0);
+  stroke-width: 1.5;
 }
-.atlas-leader-ring {
-  fill: none;
+.atlas-marker-ring {
+  fill: rgb(91 227 207 / 0.12);
   stroke: var(--accent);
-  stroke-width: 1;
-  stroke-opacity: 0.45;
-}
-.atlas-leader.no-anchor polyline,
-.atlas-leader.no-anchor circle {
-  display: none;
+  stroke-width: 1.25;
+  stroke-opacity: 0.7;
 }
 
-.atlas-callout {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: max-content;
-  max-width: min(260px, calc(100vw - 2 * var(--gutter)));
-  pointer-events: none;
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 180ms var(--ease-out),
-    visibility 0s linear 180ms;
-  /* Type set straight on the canvas: a soft halo keeps it legible over tissue. */
-  text-shadow:
-    0 0 12px rgb(4 6 10 / 0.95),
-    0 0 3px rgb(4 6 10 / 0.9);
-}
-/* Not a card: a feathered shade, only noticeable over bright bone. */
-.atlas-callout::before {
-  content: '';
-  position: absolute;
-  inset: -26px -34px;
-  z-index: -1;
-  background: rgb(4 6 10 / 0.62);
-  mask-image:
-    linear-gradient(to right, transparent, #000 34px, #000 calc(100% - 34px), transparent),
-    linear-gradient(to bottom, transparent, #000 26px, #000 calc(100% - 26px), transparent);
-  mask-composite: intersect;
-  pointer-events: none;
-}
-.atlas-callout.is-on {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 180ms var(--ease-out);
-}
-
-.callout-tag {
-  padding-bottom: 7px;
-  margin-bottom: 9px;
-  border-bottom: 1px solid var(--hair);
-  color: var(--accent);
-  font-size: 10.5px;
-  font-weight: 550;
-  letter-spacing: 0.16em;
-  line-height: 1.3;
-  text-transform: uppercase;
-}
-.callout-name {
-  color: var(--ink-1);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.012em;
-  line-height: 1.15;
-  text-wrap: balance;
-}
-.callout-latin {
-  margin-top: 3px;
-  color: var(--ink-2);
-  font-size: 13px;
-  font-style: italic;
-  line-height: 1.35;
-}
-.callout-desc {
-  display: -webkit-box;
-  margin: 9px 0 0;
-  overflow: hidden;
-  color: var(--ink-2);
-  font-size: 13px;
-  line-height: 1.45;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-}
-
-.callout-action {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 13px;
-  padding: 7px 11px 7px 12px;
-  border: 1px solid var(--accent-dim);
-  border-radius: 2px;
-  background: rgb(91 227 207 / 0.06);
-  color: var(--accent);
-  font: inherit;
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  line-height: 1;
-  text-shadow: none;
-  text-transform: uppercase;
-  cursor: pointer;
-  pointer-events: auto;
-  transition:
-    background-color 160ms var(--ease-out),
-    border-color 160ms var(--ease-out);
-}
-/* A finger-sized hit area around a quiet-looking control. */
-.callout-action::after {
-  content: '';
-  position: absolute;
-  inset: -8px -6px;
-}
-.callout-action:hover {
-  border-color: var(--accent);
-  background: rgb(91 227 207 / 0.12);
-}
-.callout-action:focus-visible {
-  outline: 1px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.atlas-callout.is-on.is-compact {
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 180ms var(--ease-out),
-    visibility 0s linear 180ms;
-}
-.atlas-leader.is-compact polyline {
-  opacity: 0;
-}
-
-/* ── Hover tag (fine pointers) ─────────────────────────────────────── */
+/* ── Hover tag (mouse) ─────────────────────────────────────────────── */
 
 .atlas-hover {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 4px 8px 5px;
+  padding: 5px 9px 6px;
   border: 1px solid var(--hair);
-  border-radius: 2px;
-  background: rgb(6 9 14 / 0.88);
+  border-radius: 8px;
+  background: rgb(10 14 20 / 0.92);
   color: var(--ink-1);
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 500;
   white-space: nowrap;
   pointer-events: none;
@@ -257,255 +137,49 @@ body {
   white-space: nowrap;
 }
 
-/* ── HUD ───────────────────────────────────────────────────────────── */
+/* ── First-run hint, above the layer switch ────────────────────────── */
 
-.atlas-hud {
+.atlas-hint {
   position: absolute;
-  inset: 0;
-  padding: max(var(--gutter), env(safe-area-inset-top)) max(var(--gutter), env(safe-area-inset-right))
-    max(var(--gutter), env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
-  color: var(--ink-3);
-  font-size: 11px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 700ms var(--ease-out) 150ms;
-}
-.atlas-hud.is-ready {
-  opacity: 1;
-}
-/* A sheet covers the bottom of the view: the rows it would sit on step back. */
-.hud-scale,
-.hud-credit,
-.hud-hint {
-  transition: opacity 200ms var(--ease-out);
-}
-.atlas.has-sheet :is(.hud-scale, .hud-credit, .hud-orient, .hud-hint) {
-  opacity: 0 !important;
-}
-
-/* Shade under the HUD rows, for when the body fills the screen. */
-.atlas-hud::before,
-.atlas-hud::after {
-  content: '';
-  position: absolute;
-  inset-inline: 0;
-  pointer-events: none;
-}
-.atlas-hud::before {
-  top: 0;
-  height: calc(max(var(--gutter), env(safe-area-inset-top)) + 118px);
-  background: linear-gradient(rgb(4 6 10 / 0.78), rgb(4 6 10 / 0.42) 55%, transparent);
-}
-.atlas-hud::after {
-  bottom: 0;
-  height: calc(max(var(--gutter), env(safe-area-inset-bottom)) + 72px);
-  background: linear-gradient(transparent, rgb(4 6 10 / 0.5) 45%, rgb(4 6 10 / 0.8));
-}
-.atlas-hud > * {
-  z-index: 1;
-  text-shadow: 0 0 10px rgb(4 6 10 / 0.9);
-}
-
-.hud-title {
-  position: absolute;
-  top: max(var(--gutter), env(safe-area-inset-top));
-  left: max(var(--gutter), env(safe-area-inset-left));
-}
-.hud-brand {
-  color: var(--ink-1);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  line-height: 1.3;
-  text-transform: uppercase;
-}
-.hud-view {
-  margin-top: 5px;
-  color: var(--ink-3);
-  font-size: 11px;
-  letter-spacing: 0.02em;
-}
-
-.hud-depth {
-  position: absolute;
-  top: max(var(--gutter), env(safe-area-inset-top));
-  right: max(var(--gutter), env(safe-area-inset-right));
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-.hud-ladder {
-  position: relative;
-  margin: 0;
-  padding: 0 13px 0 0;
-  list-style: none;
-  border-right: 1px solid var(--hair);
-}
-.hud-ladder li {
-  position: relative;
-  color: var(--ink-3);
-  font-size: 9.5px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  line-height: 17px;
-  text-align: right;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: color 220ms var(--ease-out);
-}
-/* Ticks on the ladder's rail. */
-.hud-ladder li::after {
-  content: '';
-  position: absolute;
-  top: 8px;
-  right: -13px;
-  width: 6px;
-  height: 1px;
-  background: var(--hair-strong);
-}
-.hud-ladder li.is-on {
-  color: var(--accent);
-}
-.hud-marker {
-  position: absolute;
-  top: 8px;
-  right: -1px;
-  width: 13px;
-  height: 1px;
-  background: var(--accent);
-  transition: transform 260ms var(--ease-out);
-}
-.hud-marker::after {
-  content: '';
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-.hud-zoom {
-  margin-top: 9px;
-  padding-right: 14px;
-  color: var(--ink-2);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
-}
-
-.hud-orient {
-  position: absolute;
-  top: 50%;
-  color: var(--ink-3);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  transform: translateY(-50%);
-  transition: opacity 200ms linear;
-}
-.hud-orient-l {
-  left: max(calc(var(--gutter) - 4px), env(safe-area-inset-left));
-}
-.hud-orient-r {
-  right: max(calc(var(--gutter) - 4px), env(safe-area-inset-right));
-}
-
-.hud-scale {
-  position: absolute;
-  bottom: max(var(--gutter), env(safe-area-inset-bottom));
-  left: max(var(--gutter), env(safe-area-inset-left));
-}
-.hud-scale-text {
-  margin-bottom: 5px;
-  color: var(--ink-2);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.04em;
-}
-.hud-scale-bar {
-  height: 5px;
-  border: 1px solid var(--ink-3);
-  border-top: 0;
-  transition: width 160ms var(--ease-out);
-}
-
-.hud-credit {
-  position: absolute;
-  right: max(var(--gutter), env(safe-area-inset-right));
-  bottom: max(var(--gutter), env(safe-area-inset-bottom));
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  max-width: 60%;
-  color: var(--ink-3);
-  font-size: 9.5px;
-  letter-spacing: 0.02em;
-  line-height: 1.45;
-  text-align: right;
-}
-.hud-credit > span {
-  white-space: pre;
-}
-.hud-build {
-  flex-basis: 100%;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  opacity: 0.7;
-}
-@media (max-width: 639px) {
-  .hud-credit .hud-sep {
-    display: none;
-  }
-  .hud-credit > span {
-    flex-basis: 100%;
-  }
-}
-
-.hud-hint {
-  position: absolute;
-  bottom: calc(max(var(--gutter), env(safe-area-inset-bottom)) + 52px);
+  bottom: calc(var(--chrome-bottom) + 6px);
   left: 50%;
   display: flex;
   align-items: center;
   gap: 10px;
+  width: max-content;
   max-width: calc(100% - 2 * var(--gutter));
+  padding: 9px 14px 9px 11px;
+  border-radius: 999px;
+  background: rgb(10 14 20 / 0.72);
   color: var(--ink-2);
-  font-size: 11.5px;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
+  font-size: 13.5px;
+  line-height: 1.3;
+  pointer-events: none;
   opacity: 0;
   transform: translate(-50%, 6px);
   transition:
     opacity 500ms var(--ease-out),
     transform 500ms var(--ease-out);
 }
-.hud-hint svg {
+.atlas-hint svg {
   flex: none;
   color: var(--accent);
 }
-.hud-hint.is-on {
+.atlas-hint.is-on {
   opacity: 1;
   transform: translate(-50%, 0);
-}
-@media (min-width: 640px) {
-  .hud-hint {
-    bottom: calc(var(--gutter) + 8px);
-  }
 }
 
 /* ── Loading and fallback ──────────────────────────────────────────── */
 
 .atlas-loading {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 12px;
-  transform: translate(-50%, -50%);
   pointer-events: none;
   transition: opacity 500ms var(--ease-out);
 }
@@ -514,9 +188,10 @@ body {
 }
 .loading-track {
   position: relative;
-  width: 140px;
-  height: 1px;
+  width: 160px;
+  height: 2px;
   overflow: hidden;
+  border-radius: 2px;
   background: var(--hair);
 }
 .loading-bar {
@@ -541,11 +216,15 @@ body {
   }
 }
 .loading-text {
+  color: var(--ink-2);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.loading-credit {
+  position: absolute;
+  bottom: calc(var(--chrome-bottom) + 10px);
   color: var(--ink-3);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 11px;
 }
 
 .atlas-fallback {
@@ -556,15 +235,20 @@ body {
   text-align: center;
   transform: translate(-50%, -50%);
 }
+.atlas-fallback h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
 .atlas-fallback p {
-  margin: 14px 0 0;
+  margin: 12px 0 0;
   color: var(--ink-2);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.45;
 }
 .atlas-fallback .atlas-fallback-hint {
   color: var(--ink-3);
-  font-size: 12px;
+  font-size: 13.5px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -573,24 +257,5 @@ body {
   .atlas *::after {
     transition-duration: 0ms !important;
     animation-duration: 0ms !important;
-  }
-}
-
-/* ── Sheets hosted next to the atlas (the pain report) ─────────────── */
-
-.atlas-sheet {
-  animation: atlas-sheet-in 260ms var(--ease-out);
-  scrollbar-width: thin;
-  scrollbar-color: var(--hair-strong) transparent;
-}
-@keyframes atlas-sheet-in {
-  from {
-    transform: translateY(24px);
-    opacity: 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .atlas-sheet {
-    animation: none;
   }
 }

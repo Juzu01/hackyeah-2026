@@ -1,21 +1,23 @@
 # Atlas: spec for the 3D anatomy viewer
 
-The art direction and engineering contract for `src/anatomy/`. The goal: **extraordinary, simple, and genuinely clinical**. It should feel like a premium medical-imaging workstation crossed with a modern anatomy atlas, not a game or a children's illustration. Every pixel earns its place.
+The art direction and engineering contract for `src/anatomy/` and its app chrome in `src/atlas/`. The goal: **extraordinary, simple, and genuinely clinical**, and since people install it on their phones, an app that is pleasant to hold: it should feel like a premium medical-imaging workstation crossed with a modern anatomy atlas, not a game or a children's illustration. Every pixel earns its place.
+
+*Revision 2 (phone first):* the first version's workstation HUD (depth ladder, zoom readout, P/L letters, scale bar, view name, floating callout with a leader line) was too busy on a phone. §6 now describes the simpler app chrome that replaced it.
 
 ## 1. Principles
 
 1. **Clinical restraint.** Near-black canvas and cool neutral hairlines. Colour appears only where it means something: tissue colour on the active layer, plus one accent for "selected / active".
-2. **Precision language.** Thin 1px lines, small-caps tracked labels, a real metric scale bar (the model is in real millimetres), patient-orientation markers, Latin terminology. This is how medical software speaks.
-3. **Zoom is depth.** No buttons. Zooming in goes deeper: skin → muscles → organs and bones → organs pulled apart (exploded view). The UI only *tells* you where you are (depth ladder).
+2. **Precision language, app manners.** Latin terminology, thin hairlines, one tag style; but touch targets ≥ 44 px, 15–16 px body text on phones, sentence case, and the safe areas respected.
+3. **Zoom is depth.** Zooming in goes deeper: skin → muscles → organs and bones → organs pulled apart (exploded view). A three-way layer switch is a shortcut to the same depths and mirrors the zoom live.
 4. **Calm motion.** Critically damped easing, 200–600 ms, no bounce, no wobble. Inertia on rotation. Respect `prefers-reduced-motion`.
-5. **One hero.** The body is the whole show. The HUD is quiet, peripheral, ≤ 11px, and never covers the figure on a phone.
+5. **One hero.** The body is the whole show. The chrome is a title bar and a bottom control; a selected part always stays visible above (or beside) its sheet.
 
 ## 2. Data contract
 
 - `public/anatomy/body.glb` holds one mesh node per catalog entry; **node name = catalog `id`**. Units are metres, +Y up, soles at y = 0, midline x = 0, the patient faces +Z (towards the default camera), and the **patient's left is +X**. Node `extras`: `{ system, layer, side, explode, group }`, copied from the catalog. Geometry is meshopt-compressed and quantized; load it with `GLTFLoader` + `MeshoptDecoder`, using the relative URL `./anatomy/body.glb` (the site lives under a sub-path).
 - `src/anatomy/data/catalog.json` is the list of structures (system, layer, side, explode, group).
 - `src/anatomy/data/content.pl.json` is the Polish copy per id: `{ name, latin, description, … }`, plus a `groups` map for system labels such as `circulatory → "Układ krążenia"`.
-- Attribution is required (CC BY-SA 2.1 JP): "BodyParts3D © The Database Center for Life Science, CC BY-SA 2.1 JP". Show it in the HUD credit line.
+- Attribution is required (CC BY-SA 2.1 JP): "BodyParts3D © The Database Center for Life Science, CC BY-SA 2.1 JP". Show it on the loading screen and in the info sheet.
 
 ## 3. Visual tokens
 
@@ -24,16 +26,17 @@ The art direction and engineering contract for `src/anatomy/`. The goal: **extra
 | `--bg-0` | `#04060A` | page edge |
 | `--bg-1` | `#0A1017` | canvas centre (radial, slightly above body centre) |
 | `--ink-1` | `#E9EEF3` | primary text |
-| `--ink-2` | `#9DA9B5` | secondary text |
-| `--ink-3` | `#5F6B77` | tertiary, HUD |
-| `--hair` | `rgba(190,215,235,0.16)` | hairlines, ticks |
-| `--accent` | `#5BE3CF` | selection, active depth, leader lines (clinical mint-teal) |
+| `--ink-2` | `#A3AEBB` | secondary text |
+| `--ink-3` | `#6B7784` | tertiary |
+| `--hair` | `rgba(190,215,235,0.14)` | hairlines, borders |
+| `--accent` | `#5BE3CF` | selection, active layer, primary action (clinical mint-teal) |
 | `--glass` | `#BFDDF5` | skin shell rim |
+| `--surface` | `rgba(17,23,31,0.92)` | sheets, the layer switch, round buttons |
 
 Tissue palette (desaturated atlas colours, linear-workflow friendly; tune by eye under the final lighting):
-muscle `#9C4A44` · bone `#D8D0C0` · brain `#C9A2A5` · heart `#A9323A` · aorta `#B23B40` · lungs `#C98E8B` · trachea `#B8C3C8` · esophagus `#B97870` · thyroid `#9C3E4E` · liver `#6D2923` · gallbladder `#4D6B46` · stomach `#C28E78` · spleen `#5D2D40` · pancreas `#CDA87A` · kidneys `#7E342F` · small intestine `#C9928A` · large intestine `#A97965` · urinary bladder `#C8AF7A`.
+muscle `#8E3F3A` · bone `#C2B9A8` · brain `#C9A2A5` · heart `#A9323A` · aorta `#B23B40` · lungs `#C98E8B` · trachea `#B8C3C8` · esophagus `#B97870` · thyroid `#9C3E4E` · liver `#6D2923` · gallbladder `#4D6B46` · stomach `#C28E78` · spleen `#5D2D40` · pancreas `#CDA87A` · kidneys `#7E342F` · small intestine `#C9928A` · large intestine `#A97965` · urinary bladder `#C8AF7A`.
 
-Typography: **Inter** (variable) for text and **IBM Plex Mono** for numbers and measurements, bundled via `@fontsource` (no network fonts). HUD labels are uppercase, 10–11px, letter-spacing 0.14–0.18em. Body copy is 13px with 1.45 line-height.
+Typography: **Inter** (variable), bundled via `@fontsource` (no network fonts); tabular figures for numbers. On phones body copy is 15–16px with 1.5 line-height, names 21px, the title 18px. One uppercase tag style (12px, 600, tracking 0.08em, accent); everything else is sentence case. Radii: sheets 22px, buttons 14px, chips and round buttons fully round.
 
 ## 4. Rendering
 
@@ -59,60 +62,55 @@ Typography: **Inter** (variable) for text and **IBM Plex Mono** for numbers and 
   - `z < 1.35`: **Muscles** layer active and solid; deep layer ghosted; skin shell visible.
   - `1.35 → 2.0`: muscles cross-fade to ghost while organs and bones cross-fade to solid. Pickability switches at the midpoint.
   - `≥ 2.0`: **Organs and bones** active.
-  - `2.3 → 3.6`: **Exploded view.** Organs (catalog `explode: true`) slide along precomputed offsets so that, seen from the front, no two organs overlap. Each one shows a hairline tether back to its anatomical origin, with a tiny dot at the origin. Bones stay in place.
+  - `2.2 → 2.9`: **Exploded view.** Organs (catalog `explode: true`) slide along precomputed offsets so that, seen from the front, no two organs overlap. Each one shows a hairline tether back to its anatomical origin, with a tiny dot at the origin. Bones stay in place.
   - The skin shell rim fades slightly as you go deeper (it's context, not content).
 - **Explode solver.** Project each organ's vertices onto the frontal (XY) plane, take convex hulls, spread each touching cluster about its area-weighted centre (×1.25 in X, ×1.1 in Y), then relax pairwise with SAT pushes (smaller organs move more) until every pair is ≥ 12 mm apart. Solve once at load (cache per session). The previous 2D solver in git history (`src/body/layout.ts`, `src/body/geometry.ts`: `convexHull`, `satAxes`, `satPush`, `solveExplode`) does exactly this; port it.
 - **Tap** selects the top-most pickable part under the finger (raycast against the active layer only). If the centre ray misses, sample a ring of rays (≤ 18 px radius) and take the nearest hit, so fingers don't have to be surgical. Tapping empty space, or the selected part again, deselects.
 - **Double tap** on a part focuses it: animate the target and distance so the part is framed, deep enough for its layer to be active (organs: fully exploded). Double tap on empty space resets the view.
-- **Keyboard:** `Esc` deselects, `0` resets, arrow keys rotate, `+`/`-` zoom.
+- **Keyboard:** `Esc` deselects, `0` resets, `1`/`2`/`3` pick a layer, `f` turns the body round, arrow keys rotate, `+`/`-` zoom.
 
-## 6. Labels and HUD (Polish copy)
+## 6. App chrome (Polish copy, phone first)
 
-**Selection callout.** An anchor dot on the part, a 1px accent leader line, then a text block with no card or box (just type on the dark canvas, with a hairline under the tag):
-
-```
-UKŁAD KRĄŻENIA · STRONA LEWA      ← 10.5px, tracking .16em, accent
-Serce                             ← 22px, 600, ink-1
-cor                               ← 13px italic, ink-2
-Mięśniowa pompa, która…           ← 13px, ink-2, max 2–3 lines, max-width 260px
-```
-
-- **Desktop / wide:** the text block sits in the side margin nearer to the part, with an elbow leader (horizontal then diagonal), like an atlas callout.
-- **Phone (< 640px):** the text block docks bottom-left above the HUD, with the leader running from the part to the block's top edge. It must never cover the selected part. If the part is low on screen, dock the block top-left instead.
-- The block re-anchors every frame (it follows rotation and explode), fades in over 180 ms, and is announced via an `aria-live="polite"` region.
-- **Hover** (fine pointers only): a tiny name-only tag next to the cursor.
-
-**HUD** (quiet, peripheral, pointer-events none):
-- **Top-left:** `ATLAS ANATOMICZNY` (11px, 600, tracking .18em, ink-1); below it `Widok przedni` / `Widok boczny lewy` / `Widok tylny` / `Widok boczny prawy`, chosen from the azimuth (ink-3).
-- **Top-right:** the **depth ladder**, four rows with tick marks: `SKÓRA`, `MIĘŚNIE`, `NARZĄDY I KOŚCI`, `ROZWARSTWIENIE`. The current depth row is accent and the others ink-3. Under it, the zoom readout in mono (`2.4×`).
-- **Left and right edge, mid-height:** patient-orientation letters `P` (patient's right) and `L` (patient's left), in mono and ink-3. They follow rotation: in the front view P is on the screen's left (radiological convention), and they swap for the back view. Within ±25° of a pure side view, fade both out, because left and right are ambiguous there.
-- **Bottom-left:** a metric **scale bar**, a hairline with end ticks whose length on screen equals 5 / 10 / 20 / 50 cm (pick the largest that fits ≤ 120px), labelled in mono (`10 cm`). It updates live with zoom.
-- **Bottom-right:** the credit `BodyParts3D © DBCLS · CC BY-SA 2.1 JP` (9.5px, ink-3).
-- **First-run hint** (bottom-centre): a thin line icon of two fingers spreading, plus `Rozsuń palce, aby zajrzeć głębiej` (touch) or `Przewiń, aby zajrzeć głębiej · przeciągnij, aby obrócić` (mouse). It fades out after the first zoom/rotate or after 7 s. A `?nohint` param disables it.
-- **Loading:** a centred 140px hairline progress bar plus `WCZYTYWANIE MODELU · 42%` (mono), then a cross-fade into the scene and the scan sweep.
-- **No WebGL:** a calm centred message in the same type style.
+- **Title bar** (top, below the safe area, no background beyond a soft fade): `Atlas ciała` (18px, 650, sentence case) and two 44px round buttons: turn round (front ↔ back, animated) and `i` (info sheet). The bar lets gestures through except on its buttons.
+- **Layer switch** (bottom, above the safe area, ≥ 44px tall, thumb reach): a segmented control `Mięśnie · Narządy · Rozsunięte`. Tapping animates the camera to that layer's depth: muscles = the whole body; organs = the torso with organs and bones in place; exploded = the torso fully exploded, front view. It mirrors the depth live while pinching. The skin is not a layer.
+- **Selection sheet.** Tapping a part opens a bottom sheet (phone) or a card on the right (≥ 900px): drag handle, the tag (`UKŁAD KRĄŻENIA · STRONA LEWA`, the one tag style: 12px, 600, uppercase, accent), the name (21px), the Latin (italic), a 3-line description, `Więcej` for the rest (muscles: action and exercises; organs: fact and sport; bones: fact), and a full-width `Zgłoś ból`. The part keeps a small accent ring on it, and the view shifts so it stays in the free area above the sheet. On phones the layer switch steps aside while the sheet is open.
+- **Pain report** replaces the card inside the same sheet (cross-fade, height animates), with a back button to the card: intensity 1–10 (green → red), pain types, save, recent history.
+- **Info sheet** (`i`): how to use it (drag, pinch, tap, double tap), installing it (`Zainstaluj aplikację` via `beforeinstallprompt`; on iOS: Udostępnij → Do ekranu początkowego), the model's attribution, and the build.
+- **First-run hint** above the layer switch: `Dotknij mięśnia lub narządu, aby go poznać`. It fades after the first interaction or 7 s; `?nohint` disables it.
+- **Hover** (mouse only): a small name tag by the cursor.
+- **Loading:** a 160px progress bar and `Wczytywanie modelu · 42%`, with the model's credit at the bottom; then a cross-fade into the scene and the scan sweep. **No WebGL:** a calm centred message.
+- **Installable:** `public/manifest.webmanifest` (standalone, portrait), icons from `tools/icons/`, and `public/sw.js` (network-first pages, cache-first assets and the model, one cache per build).
 
 ## 7. Engine API and test hooks
 
 ```ts
-mountAnatomyViewer(host: HTMLElement, opts?: { onSelect?(part: PartInfo | null): void }): {
+mountAnatomyViewer(host: HTMLElement, opts?: {
+  onSelect?(part: PartInfo | null): void
+  onChange?(state: { layer: 'muscles' | 'organs' | 'exploded'; back: boolean }): void  // live, for the chrome
+}): {
   select(id: string | null): void
   focus(id: string): void      // animate to the part (deep enough to reveal it) and select it
+  setLayer(layer): void        // what the layer switch does
+  flip(): void                 // front ↔ back
   reset(): void
+  setOccluder(el: HTMLElement | null): void  // the sheet: the view keeps the selection clear of it
   destroy(): void
 }
 ```
 
 `window.__atlas` (always present, used by automated QA):
-- `state()` → `{ ready, zoom, depth: 'skin'|'muscles'|'deep'|'exploded', explode: 0..1, azimuthDeg, selected, fps }`
+- `state()` → `{ ready, zoom, depth: 'skin'|'muscles'|'deep'|'exploded', layer, explode: 0..1, azimuthDeg, back, selected, fps, source }`
 - `parts()` → `[{ id, system, layer, side, explode, visible, pickable }]`
-- `project(id)` → `{ x, y, onScreen }`: the part's current (exploded) centre in CSS pixels
+- `project(id)` → `{ x, y, onScreen }`: the part's current (exploded) anchor in CSS pixels
 - `pick(x, y)` → id | null: the same picking a tap uses
 - `setView({ zoom?, azimuthDeg?, polarDeg?, target?: [x, y, z] | id })`: jump instantly, no animation
-- `labelRect()` → DOMRect of the callout block, or null
+- `labelRect()` → DOMRect of the selection sheet, or null
+- `select(id)`, `focus(id)`, `setLayer(layer)`, `flip()`, `reset()`
 
-URL params (for deep links and screenshots): `?zoom=2.5&az=0&sel=heart&focus=heart&nohint&noscan`.
+URL params (for deep links and screenshots): `?zoom=2.5&az=0&layer=organs&sel=heart&focus=heart&nohint&noscan`.
 
 ## 8. Code layout
 
-`src/anatomy/`: `viewer.ts` (mount, loop, state), `scene.ts` (renderer, lights, environment, floor), `materials.ts` (glass shell, ghost, tissue, selection rim), `controls.ts` (gestures, inertia, zoom-to-point), `depth.ts` (zoom → layer weights), `explode.ts` (solver), `picking.ts`, `labels.ts`, `hud.ts`, `placeholder.ts` (procedural stand-ins built from the catalog when the GLB is missing), `style.css`, `README.md`. `src/App.tsx` only mounts it. Framework-free TypeScript inside; React is just the host.
+`src/anatomy/` (framework-free): `viewer.ts` (mount, loop, state, API), `scene.ts` (renderer, lights, environment, floor), `materials.ts` (glass shell, ghost, tissue, selection rim), `controls.ts` (gestures, inertia, zoom-to-point), `depth.ts` (zoom → layer weights, layer presets), `explode.ts` (solver), `picking.ts`, `labels.ts` (selection marker, hover tag, announcer), `hud.ts` (hint, loading, no-WebGL), `placeholder.ts` (procedural stand-ins built from the catalog when the GLB is missing), `style.css`, `README.md`.
+
+`src/atlas/` (React chrome): `TopBar`, `LayerSwitch`, `Sheet` (bottom sheet / side card), `PartCard`, `InfoSheet`, `install.ts`, `ui.css`. `src/App.tsx` composes them with the viewer and `src/pain/PainPanel.tsx`.

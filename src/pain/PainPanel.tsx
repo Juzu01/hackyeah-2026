@@ -1,9 +1,9 @@
-// Bottom sheet for the selected part: rate the pain 1–10, pick its types, save to Supabase.
-// Rendered outside the atlas host, so taps here never reach the viewer's gestures; the viewer
-// is told about the sheet (via `ref`) and keeps the selected part visible above it.
+// Reporting pain in the selected part: rate it 1–10, pick its types, save to Supabase.
+// Shown in the atlas's sheet in place of the part's card; "back" returns to the card.
 
-import { useEffect, useState, type Ref } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import type { PartInfo } from '../anatomy/content.ts'
+import { BackIcon } from '../atlas/icons.tsx'
 import { fetchPainHistory, fetchPainTypes, savePainReport, type PainEntry, type PainType } from '../lib/painReports.ts'
 import { supabase } from '../lib/supabase.ts'
 import { painId } from './painId.ts'
@@ -12,6 +12,8 @@ const LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 /** Green (1) → red (10). */
 const levelColor = (n: number) => `hsl(${120 - ((n - 1) * 120) / 9} 70% 42%)`
+/** Text on a level's colour: dark on the bright greens to oranges, white on the reds (better contrast either way). */
+const levelInk = (n: number) => (n >= 9 ? '#fff' : '#0b0f14')
 
 const dateFormat = new Intl.DateTimeFormat('pl-PL', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
 
@@ -23,15 +25,12 @@ function subtitleOf(part: PartInfo): string {
   return [part.latin, sideInName ? null : part.sideLabel].filter(Boolean).join(' · ')
 }
 
-const heading = 'mb-2.5 text-[10px] font-medium tracking-[0.16em] text-(--ink-3) uppercase'
-
 interface Props {
   part: PartInfo
-  onClose: () => void
-  ref?: Ref<HTMLElement>
+  onBack: () => void
 }
 
-export default function PainPanel({ part, onClose, ref }: Props) {
+export default function PainPanel({ part, onBack }: Props) {
   const bodyPartId = painId(part.id)
   const subtitle = subtitleOf(part)
   const [painTypes, setPainTypes] = useState<PainType[]>([])
@@ -76,40 +75,27 @@ export default function PainPanel({ part, onClose, ref }: Props) {
   }
 
   return (
-    <section
-      ref={ref}
-      aria-label={`Ból: ${part.name}`}
-      className="atlas-sheet fixed inset-x-0 bottom-0 z-20 mx-auto max-h-[62dvh] w-full max-w-md overflow-y-auto overscroll-contain rounded-t-[6px] border border-b-0 border-(--hair) bg-(--panel) px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] font-(family-name:--font-sans) text-(--ink-1) shadow-[0_-12px_40px_rgb(0_0_0/0.5)] backdrop-blur-xl sm:px-5"
-    >
-      <header className="mb-5 flex items-start justify-between gap-3 border-b border-(--hair) pb-3.5">
-        <div className="min-w-0">
-          <p className="mb-1.5 text-[10px] font-semibold tracking-[0.16em] text-(--accent) uppercase">Zgłoszenie bólu</p>
-          <h2 className="text-[18px] leading-tight font-semibold tracking-[-0.01em]">{part.name}</h2>
-          {subtitle && <p className="mt-0.5 text-[12.5px] text-(--ink-2) italic">{subtitle}</p>}
-        </div>
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Zamknij"
-          className="grid size-9 shrink-0 place-items-center rounded-[3px] border border-(--hair) text-(--ink-2) transition-colors hover:border-(--hair-strong) hover:text-(--ink-1)"
-        >
-          <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true">
-            <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" strokeWidth="1.2" />
-          </svg>
+    <div className="pain">
+      <header className="pain-head">
+        <button type="button" className="icon-btn" aria-label="Wróć do opisu" onClick={onBack}>
+          <BackIcon />
         </button>
+        <div className="card-titles">
+          <p className="tag">Zgłoś ból</p>
+          <h2 className="card-name">{part.name}</h2>
+          {subtitle && <p className="card-latin">{subtitle}</p>}
+        </div>
       </header>
 
       {!supabase ? (
-        <p className="mb-1 text-[13px] leading-[1.45] text-(--ink-2)">
-          Zapisywanie bólu jest wyłączone: brak konfiguracji Supabase. Skopiuj{' '}
-          <code className="font-(family-name:--font-mono) text-[12px] text-(--ink-1)">.env.example</code> do{' '}
-          <code className="font-(family-name:--font-mono) text-[12px] text-(--ink-1)">.env.local</code> i uruchom ponownie{' '}
-          <code className="font-(family-name:--font-mono) text-[12px] text-(--ink-1)">npm run dev</code>.
+        <p className="pain-off">
+          Zapisywanie bólu jest wyłączone: brak konfiguracji Supabase. Skopiuj <code>.env.example</code> do{' '}
+          <code>.env.local</code> i uruchom ponownie <code>npm run dev</code>.
         </p>
       ) : (
         <>
-          <h3 className={heading}>Jak mocno boli?</h3>
-          <div className="mb-1.5 grid grid-cols-10 gap-1">
+          <h3 className="pain-q">Jak mocno boli?</h3>
+          <div className="pain-levels" role="group" aria-label="Natężenie bólu od 1 do 10">
             {LEVELS.map((n) => {
               const on = intensity === n
               return (
@@ -118,85 +104,53 @@ export default function PainPanel({ part, onClose, ref }: Props) {
                   type="button"
                   aria-pressed={on}
                   onClick={() => setIntensity(n)}
-                  style={on ? { backgroundColor: levelColor(n), borderColor: levelColor(n) } : undefined}
-                  className={`relative h-10 overflow-hidden rounded-[3px] border font-(family-name:--font-mono) text-[13px] tabular-nums transition-colors ${
-                    on ? 'font-medium text-white' : 'border-(--hair) text-(--ink-2) hover:border-(--hair-strong) hover:text-(--ink-1)'
-                  }`}
+                  style={{ '--level': levelColor(n), '--level-ink': levelInk(n) } as CSSProperties}
+                  className="pain-level"
                 >
                   {n}
-                  {!on && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-x-0 bottom-0 h-0.5 opacity-70"
-                      style={{ backgroundColor: levelColor(n) }}
-                    />
-                  )}
                 </button>
               )
             })}
           </div>
-          <div className="mb-5 flex justify-between text-[10.5px] text-(--ink-3)">
-            <span>lekki</span>
-            <span>nie do zniesienia</span>
-          </div>
+          <p className="pain-scale">
+            <span>1 · lekki</span>
+            <span>10 · nie do zniesienia</span>
+          </p>
 
-          <h3 className={heading}>Jaki to ból?</h3>
-          <div className="mb-5 flex flex-wrap gap-1.5">
-            {painTypes.length === 0 && status.kind !== 'error' && (
-              <span className="text-[13px] text-(--ink-3)">Ładowanie…</span>
-            )}
+          <h3 className="pain-q">Jaki to ból?</h3>
+          <div className="pain-types">
+            {painTypes.length === 0 && status.kind !== 'error' && <span className="pain-muted">Ładowanie…</span>}
             {painTypes.map((t) => {
               const on = selectedTypes.includes(t.id)
               return (
-                <button
-                  key={t.id}
-                  type="button"
-                  aria-pressed={on}
-                  onClick={() => toggleType(t.id)}
-                  className={`rounded-[3px] border px-3 py-1.5 text-[13px] transition-colors ${
-                    on
-                      ? 'border-(--accent) bg-(--accent)/10 text-(--ink-1)'
-                      : 'border-(--hair) text-(--ink-2) hover:border-(--hair-strong) hover:text-(--ink-1)'
-                  }`}
-                >
+                <button key={t.id} type="button" aria-pressed={on} onClick={() => toggleType(t.id)} className="chip">
                   {t.name_pl}
                 </button>
               )
             })}
           </div>
 
-          <button
-            type="button"
-            disabled={!canSave}
-            onClick={save}
-            className="h-11 w-full rounded-[3px] bg-(--accent) text-[11px] font-semibold tracking-[0.16em] text-(--bg-0) uppercase transition-opacity disabled:opacity-35"
-          >
-            {status.kind === 'saving' ? 'Zapisuję…' : 'Zapisz'}
-          </button>
-
-          <p role="status" className="mt-2 min-h-5 text-center text-[13px]">
-            {status.kind === 'saved' && <span className="text-(--accent)">Zapisano.</span>}
-            {status.kind === 'error' && <span className="text-rose-400">{status.message}</span>}
-          </p>
+          <div className="sheet-actions">
+            <button type="button" disabled={!canSave} onClick={save} className="btn-primary">
+              {status.kind === 'saving' ? 'Zapisuję…' : 'Zapisz'}
+            </button>
+            <p role="status" className="pain-status">
+              {status.kind === 'saved' && <span className="is-ok">Zapisano.</span>}
+              {status.kind === 'error' && <span className="is-error">{status.message}</span>}
+            </p>
+          </div>
 
           {history.length > 0 && (
-            <div className="mt-2 border-t border-(--hair) pt-4">
-              <h3 className={heading}>Twoja historia</h3>
-              <ul className="space-y-2">
+            <div className="pain-history">
+              <h3 className="pain-q">Twoja historia</h3>
+              <ul>
                 {history.map((h) => (
-                  <li key={h.id} className="flex items-center gap-3 text-[13px]">
-                    <span
-                      className="w-7 shrink-0 rounded-[2px] py-0.5 text-center font-(family-name:--font-mono) text-[12px] font-medium text-white tabular-nums"
-                      style={{ backgroundColor: levelColor(h.intensity) }}
-                    >
+                  <li key={h.id}>
+                    <span className="pain-badge" style={{ backgroundColor: levelColor(h.intensity), color: levelInk(h.intensity) }}>
                       {h.intensity}
                     </span>
-                    <span className="min-w-0 flex-1 truncate text-(--ink-2)">
-                      {h.types.map((t) => t.name_pl.toLowerCase()).join(', ')}
-                    </span>
-                    <span className="shrink-0 font-(family-name:--font-mono) text-[11px] text-(--ink-3)">
-                      {dateFormat.format(h.reportedAt)}
-                    </span>
+                    <span className="pain-types-text">{h.types.map((t) => t.name_pl.toLowerCase()).join(', ')}</span>
+                    <span className="pain-date">{dateFormat.format(h.reportedAt)}</span>
                   </li>
                 ))}
               </ul>
@@ -204,6 +158,6 @@ export default function PainPanel({ part, onClose, ref }: Props) {
           )}
         </>
       )}
-    </section>
+    </div>
   )
 }

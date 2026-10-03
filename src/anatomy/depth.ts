@@ -9,8 +9,8 @@ export const ZOOM_MAX = 9
 export const DEPTH = {
   /** Muscles cross-fade to ghost, organs and bones to solid. */
   reveal: [1.35, 2.0],
-  /** Organs slide out along their precomputed offsets. */
-  explode: [2.3, 3.6],
+  /** Organs slide out along their precomputed offsets (early enough that a phone's narrow view still shows several). */
+  explode: [2.2, 2.9],
   /** Below this zoom the ladder reads "skin" (zoomed out past the full figure). */
   skin: 0.92,
 } as const
@@ -19,8 +19,18 @@ export const DEPTH = {
 export const FOCUS_ZOOM = {
   muscles: [1.0, 1.3],
   bones: [2.05, 2.25],
-  organs: [3.75, ZOOM_MAX],
+  organs: [3.0, ZOOM_MAX],
 } as const
+
+/** The three layers the bottom switch offers. The skin is context, not a layer. */
+export type LayerName = 'muscles' | 'organs' | 'exploded'
+export const LAYER_NAMES: readonly LayerName[] = ['muscles', 'organs', 'exploded']
+
+/** Zoom each layer button goes to: inside its band, clear of the next transition. */
+export const LAYER_ZOOM: Record<LayerName, number> = { muscles: 1, organs: 2.08, exploded: 2.95 }
+
+export const layerOf = (depth: DepthName): LayerName =>
+  depth === 'exploded' ? 'exploded' : depth === 'deep' ? 'organs' : 'muscles'
 
 export type DepthName = 'skin' | 'muscles' | 'deep' | 'exploded'
 export const DEPTH_NAMES: readonly DepthName[] = ['skin', 'muscles', 'deep', 'exploded']

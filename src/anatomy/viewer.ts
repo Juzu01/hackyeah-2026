@@ -1,39 +1,49 @@
 // The atlas viewer: mounts the canvas and its overlays into a host element,
 // loads the model, and renders on demand, only while input, inertia, an
-// animation or loading is changing something. Framework-free; React only hosts it.
+// animation or loading is changing something. Framework-free: the app's chrome
+// (title bar, layer switch, sheets) talks to it through the returned handle.
 
 import '@fontsource-variable/inter'
 import '@fontsource-variable/inter/wght-italic.css'
-import '@fontsource/ibm-plex-mono/400.css'
-import '@fontsource/ibm-plex-mono/500.css'
 import './style.css'
 
 import { Box3, Group, MathUtils, Mesh, Plane, Ray, SphereGeometry, Vector3, type Material } from 'three'
 import type { PartInfo } from './content.ts'
 import { attachGestures, CameraRig, type View } from './controls.ts'
-import { createDepthState, depthAt, FOCUS_ZOOM, type DepthName } from './depth.ts'
+import { createDepthState, depthAt, FOCUS_ZOOM, LAYER_ZOOM, layerOf, type DepthName, type LayerName } from './depth.ts'
 import { Hud } from './hud.ts'
-import { Announcer, Callout, HoverTag, type CalloutAction, type CalloutLayout, type Rect } from './labels.ts'
+import { Announcer, HoverTag, Marker } from './labels.ts'
 import { AtlasMaterials, ORDER, setGhostWeight, setSolidWeight } from './materials.ts'
 import { buildAtlas, loadModel, type Atlas, type Part } from './model.ts'
 import { PICK_RADIUS, Picker, type Hit } from './picking.ts'
 import { createRenderer, createStage, FOV, type Stage } from './scene.ts'
 import { Tethers } from './tethers.ts'
 
+/** What the chrome mirrors: the layer the depth is at, and whether we're looking at the back. */
+export interface ViewerState {
+  layer: LayerName
+  back: boolean
+}
+
 export interface ViewerOptions {
   onSelect?(part: PartInfo | null): void
-  /** One quiet action in the selection callout, e.g. "Zgłoś ból". */
-  action?: CalloutAction
-  /** Deployed commit; its short hash sits discreetly in the credit line. */
-  build?: string
+  /** Called when the layer or the front/back side changes (live, while zooming and rotating). */
+  onChange?(state: ViewerState): void
 }
 
 export interface AnatomyViewer {
   select(id: string | null): void
   /** Animates to the part (deep enough to reveal it) and selects it. */
   focus(id: string): void
+  /** Animates to a layer's depth: the whole body for muscles, the torso for organs and the exploded view. */
+  setLayer(layer: LayerName): void
+  /** Turns the body round: front ↔ back. */
+  flip(): void
   reset(): void
-  /** An element covering the bottom of the view (a sheet): the selection stays visible above it. */
+  /**
+   * A sheet covering the bottom of the view (or a card on its right edge): the
+   * picture shifts to the free area and the selection stays visible in it.
+   */
   setOccluder(el: HTMLElement | null): void
   destroy(): void
 }
@@ -51,8 +61,10 @@ export interface AtlasHooks {
     ready: boolean
     zoom: number
     depth: DepthName
+    layer: LayerName
     explode: number
     azimuthDeg: number
+    back: boolean
     selected: string | null
     fps: number
     source: 'glb' | 'placeholder' | null
@@ -61,9 +73,12 @@ export interface AtlasHooks {
   project(id: string): { x: number; y: number; onScreen: boolean } | null
   pick(x: number, y: number): string | null
   setView(view: ViewSpec): void
+  /** The selection card (the occluding sheet), or null. */
   labelRect(): DOMRect | null
   select(id: string | null): void
   focus(id: string): void
+  setLayer(layer: LayerName): void
+  flip(): void
   reset(): void
 }
 
@@ -80,9 +95,13 @@ const BONE_DIM = 0.38
 const SCAN_MS = 1600
 const SCAN_DELAY = 280
 const FOCUS_MS = 700
+const LAYER_MS = 650
+const FLIP_MS = 700
 const KEY_STEP = MathUtils.degToRad(15)
 /** Placeholder bounds until the model is in: a 1.75 m figure. */
 const BODY = new Box3(new Vector3(-0.3, 0, -0.15), new Vector3(0.3, 1.75, 0.15))
+/** Organs left out of the torso framing of the organ layers (the head is its own region). */
+const NOT_TORSO = new Set(['brain'])
 
 const tmp = new Vector3()
 const tmp2 = new Vector3()
@@ -91,14 +110,12 @@ const plane = new Plane()
 const ray = new Ray()
 const screen = { x: 0, y: 0 }
 
-const NO_HUD = { top: 72, bottom: 56, avoid: [] as Rect[] }
-
 class Viewer implements AnatomyViewer {
   private readonly host: HTMLElement
   private readonly options: ViewerOptions
   private readonly canvas = document.createElement('canvas')
   private readonly hud: Hud
-  private readonly callout: Callout
+  private readonly marker: Marker
   private readonly hover: HoverTag
   private readonly announcer: Announcer
   private readonly renderer
@@ -120,24 +137,35 @@ class Viewer implements AnatomyViewer {
   private outlines: Mesh[] = []
   private ready = false
   private destroyed = false
+  /** Where the organ layers look: the torso at rest, and the torso's organs fully exploded. */
+  private readonly torso = new Vector3(0, 1.1, 0)
+  private readonly torsoExploded = new Vector3(0, 1.1, 0)
 
   private width = 1
   private height = 1
-  private bands = NO_HUD
+  /** Bands the app's chrome covers at the top and bottom (the host's padding). */
+  private chrome = { top: 0, bottom: 0 }
   private frame = 0
   private lastTick = 0
   private fps = 0
   private lastExplode = -1
   private desat = 0
-  private inset = 0
-  private insetTarget = 0
+  /** Sheet insets (bottom and right), eased towards their targets. */
+  private insetB = 0
+  private insetR = 0
+  private targetB = 0
+  private targetR = 0
   private sheet: HTMLElement | null = null
   private occluder: ResizeObserver | null = null
   private scanStart = -1
   private hoverFrame = 0
   private hoverAt: { x: number; y: number } | null = null
   private pinchPoint = new Vector3()
+  private lastTap: { part: Part | null; time: number } | null = null
   private dragging = false
+  /** The layer a layer button is animating to; reported instead of the in-between depths. */
+  private layerGoal: LayerName | null = null
+  private reported = ''
 
   constructor(host: HTMLElement, options: ViewerOptions) {
     this.host = host
@@ -150,10 +178,10 @@ class Viewer implements AnatomyViewer {
       'Model 3D ciała człowieka. Przybliżanie odsłania głębsze warstwy: mięśnie, narządy i kości.',
     )
     host.append(this.canvas)
-    this.callout = new Callout(host, options.action)
+    this.marker = new Marker(host)
     this.hover = new HoverTag(host)
     const touch = matchMedia('(pointer: coarse)').matches || (!matchMedia('(pointer: fine)').matches && navigator.maxTouchPoints > 0)
-    this.hud = new Hud(host, { touch, hint: !this.params.has('nohint'), build: options.build })
+    this.hud = new Hud(host, { touch, hint: !this.params.has('nohint') })
     this.announcer = new Announcer(host)
 
     this.renderer = createRenderer(this.canvas)
@@ -176,11 +204,6 @@ class Viewer implements AnatomyViewer {
     const onRestored = () => this.requestRender()
     this.canvas.addEventListener('webglcontextlost', onLost)
     this.canvas.addEventListener('webglcontextrestored', onRestored)
-    document.fonts?.ready.then(() => {
-      if (this.destroyed) return
-      this.callout.measure()
-      this.measureHud()
-    })
 
     void this.load()
   }
@@ -213,6 +236,7 @@ class Viewer implements AnatomyViewer {
     shadow.position.set(centre.x, atlas.bounds.min.y + 0.001, centre.z)
     shadow.scale.set(size.x * 1.25, size.z * 2.4, 1)
     this.rig.bounds.copy(atlas.reach).expandByScalar(0.04)
+    this.frameTorso(atlas)
     this.fit()
     this.rig.target.copy(this.rig.home)
     this.rig.distance = this.rig.fitDistance
@@ -227,6 +251,21 @@ class Viewer implements AnatomyViewer {
     // The sweep starts once the canvas has mostly faded in.
     if (!this.reducedMotion.matches && !this.params.has('noscan')) this.scanStart = performance.now() + SCAN_DELAY
     this.requestRender()
+  }
+
+  /** Centres of the torso's organs, at rest and exploded: where the organ layers look. */
+  private frameTorso(atlas: Atlas) {
+    const rest = new Box3()
+    const exploded = new Box3()
+    const box = new Box3()
+    for (const p of atlas.parts) {
+      if (p.entry.system !== 'organ' || NOT_TORSO.has(p.id)) continue
+      rest.union(p.box)
+      exploded.union(box.copy(p.box).translate(p.offset))
+    }
+    if (rest.isEmpty()) return
+    rest.getCenter(this.torso)
+    exploded.getCenter(this.torsoExploded)
   }
 
   /** Compiles every material variant now (solid and cross-fading), so zooming never stalls on a shader. */
@@ -260,12 +299,14 @@ class Viewer implements AnatomyViewer {
     this.picker?.compile(camera)
   }
 
-  /** ?zoom=2.5&az=0&polar=5&sel=heart&focus=heart (plus ?nohint and ?noscan, read elsewhere). */
+  /** ?zoom=2.5&az=0&polar=5&layer=organs&sel=heart&focus=heart (plus ?nohint and ?noscan, read elsewhere). */
   private applyParams() {
     const num = (k: string) => {
       const v = Number.parseFloat(this.params.get(k) ?? '')
       return Number.isFinite(v) ? v : undefined
     }
+    const layer = this.params.get('layer') as LayerName | null
+    if (layer && layer in LAYER_ZOOM) this.setView({ zoom: LAYER_ZOOM[layer], target: this.layerTarget(layer).toArray() })
     const sel = this.params.get('sel')
     const zoom = num('zoom')
     const view: ViewSpec = { zoom, azimuthDeg: num('az'), polarDeg: num('polar') }
@@ -298,20 +339,23 @@ class Viewer implements AnatomyViewer {
     this.applyDepth()
     this.renderer!.render(this.stage!.scene, this.stage!.camera)
     this.updateOverlay()
+    if (!this.rig.animating) this.layerGoal = null
+    this.report()
     if (busy) this.requestRender()
   }
 
-  /** Eases the selection's desaturation and the sheet inset; true while still moving. */
+  /** Eases the selection's desaturation and the sheet insets; true while still moving. */
   private ease(dt: number): boolean {
-    const instant = this.reducedMotion.matches
-    const k = instant ? 1 : 1 - Math.exp(-dt / 0.09)
+    const k = this.reducedMotion.matches ? 1 : 1 - Math.exp(-dt / 0.09)
     const desat = this.selected ? DESAT : 0
     this.desat += (desat - this.desat) * k
     if (Math.abs(desat - this.desat) < 0.003) this.desat = desat
     this.materials.desat.value = this.desat
-    this.inset += (this.insetTarget - this.inset) * k
-    if (Math.abs(this.insetTarget - this.inset) < 0.5) this.inset = this.insetTarget
-    return this.desat !== desat || this.inset !== this.insetTarget
+    this.insetB += (this.targetB - this.insetB) * k
+    this.insetR += (this.targetR - this.insetR) * k
+    if (Math.abs(this.targetB - this.insetB) < 0.5) this.insetB = this.targetB
+    if (Math.abs(this.targetR - this.insetR) < 0.5) this.insetR = this.targetR
+    return this.desat !== desat || this.insetB !== this.targetB || this.insetR !== this.targetR
   }
 
   /** The one-time scan sweep: a band of brighter rim light travelling from crown to soles. */
@@ -332,11 +376,16 @@ class Viewer implements AnatomyViewer {
     return true
   }
 
-  /** Places the camera, shifting the projection centre up while a sheet covers the bottom. */
+  /** Places the camera, shifting the projection centre into the area a sheet leaves free. */
   private applyView() {
     const camera = this.stage!.camera
-    if (this.inset > 0.5) camera.setViewOffset(this.width, this.height, 0, this.inset / 2, this.width, this.height)
-    else if (camera.view?.enabled) camera.clearViewOffset()
+    if (this.insetB > 0.5 || this.insetR > 0.5) {
+      // Centre on the area between the title bar and the sheet (blending in the bar as the sheet rises).
+      const y = (this.insetB - Math.min(this.insetB, this.chrome.top)) / 2
+      camera.setViewOffset(this.width, this.height, this.insetR / 2, y, this.width, this.height)
+    } else if (camera.view?.enabled) {
+      camera.clearViewOffset()
+    }
     this.rig.apply(camera)
   }
 
@@ -375,7 +424,21 @@ class Viewer implements AnatomyViewer {
     this.stage.scene.updateMatrixWorld()
   }
 
-  // ── Overlay ────────────────────────────────────────────────────────────
+  private currentState(): ViewerState {
+    return { layer: this.layerGoal ?? layerOf(this.depth.name), back: Math.cos(this.rig.azimuth) < 0 }
+  }
+
+  /** Tells the chrome when the layer or side changed. */
+  private report() {
+    if (!this.ready) return
+    const s = this.currentState()
+    const key = `${s.layer}:${s.back}`
+    if (key === this.reported) return
+    this.reported = key
+    this.options.onChange?.(s)
+  }
+
+  // ── Layout and overlay ─────────────────────────────────────────────────
 
   private resize() {
     const w = Math.max(1, this.host.clientWidth)
@@ -385,44 +448,76 @@ class Viewer implements AnatomyViewer {
     this.width = w
     this.height = h
     this.renderer!.setSize(w, h, false)
-    const camera = this.stage!.camera
-    camera.aspect = w / h
+    this.stage!.camera.aspect = w / h
     this.materials.outline.uniforms.uResolution.value = [w, h]
-    this.measureHud()
+    const cs = getComputedStyle(this.host)
+    this.chrome = { top: Number.parseFloat(cs.paddingTop) || 0, bottom: Number.parseFloat(cs.paddingBottom) || 0 }
     this.fit()
     this.rig.distance = this.rig.fitDistance / zoom
     this.rig.clamp()
-    this.callout.measure()
     this.measureInset()
     this.requestRender()
   }
 
-  /** Distance at which the whole body fits between the HUD rows, in portrait and landscape. */
+  /** Distance at which the whole body fits between the chrome bands, in portrait and landscape. */
   private fit() {
     const box = this.atlas?.bounds ?? BODY
     const size = box.getSize(tmp)
     const t = Math.tan(MathUtils.degToRad(FOV / 2))
-    const phone = this.width < 640
-    const usable = Math.max(0.5, (this.height - (phone ? 150 : 120)) / this.height)
-    const dV = size.y / (2 * t * usable)
-    const dH = (size.x * 1.25) / (2 * t * (this.width / this.height))
+    const free = Math.max(this.height * 0.5, this.height - this.chrome.top - this.chrome.bottom - 24)
+    const dV = size.y / (2 * t * (free / this.height))
+    const dH = (size.x * 1.2) / (2 * t * (this.width / this.height))
     this.rig.fitDistance = Math.max(dV, dH) + size.z / 2
-    // Centre the body in the free band: the HUD's top row is taller than its bottom row.
-    const shift = phone ? ((this.bands.top - this.bands.bottom) / 2 / this.height) * size.y / usable : 0
+    // Centre the body in the free band, not the screen: the bands differ in height.
+    const metresPerPx = (2 * this.rig.fitDistance * t) / this.height
     box.getCenter(this.rig.home)
-    this.rig.home.y += shift
+    this.rig.home.y += ((this.chrome.top - this.chrome.bottom) / 2) * metresPerPx
   }
 
-  private measureHud() {
-    this.bands = this.hud.bands(this.host.getBoundingClientRect())
-  }
-
+  /** The sheet's size: a full-width sheet covers the bottom, a narrower card the right edge. */
   private measureInset() {
-    // offsetHeight ignores transforms, so a sheet sliding in reports its final size.
-    this.insetTarget = this.sheet ? Math.min(this.height * 0.85, this.sheet.offsetHeight) : 0
-    if (this.reducedMotion.matches) this.inset = this.insetTarget
-    this.callout.setCompact(this.insetTarget > 0)
-    this.host.classList.toggle('has-sheet', this.insetTarget > 0)
+    const el = this.sheet
+    let bottom = 0
+    let right = 0
+    if (el) {
+      const cs = getComputedStyle(el)
+      // offsetWidth/Height ignore transforms, so a sheet sliding in reports its final size.
+      if (el.offsetWidth >= this.width * 0.7) bottom = el.offsetHeight + (Number.parseFloat(cs.bottom) || 0)
+      else right = el.offsetWidth + (Number.parseFloat(cs.right) || 0) + 8
+    }
+    const grew = bottom > this.targetB + 24 || right > this.targetR + 24
+    this.targetB = Math.min(this.height * 0.85, bottom)
+    this.targetR = Math.min(this.width * 0.6, right)
+    if (this.reducedMotion.matches) {
+      this.insetB = this.targetB
+      this.insetR = this.targetR
+    }
+    if (grew && this.selected) this.keepInView(this.selected)
+    this.requestRender()
+  }
+
+  /** If the part would end up hidden (under a sheet or off screen), glides it into the free area. */
+  private keepInView(part: Part) {
+    // A focus or layer move already frames the part; don't fight it.
+    if (!this.stage || this.rig.animating) return
+    const [b, r] = [this.insetB, this.insetR]
+    this.insetB = this.targetB
+    this.insetR = this.targetR
+    this.sync()
+    const inFront = this.toScreen(this.anchorOf(part, tmp2), screen)
+    this.insetB = b
+    this.insetR = r
+    this.sync()
+    const m = 40
+    const inside =
+      inFront &&
+      screen.x > m &&
+      screen.x < this.width - this.targetR - m &&
+      screen.y > this.chrome.top + m / 2 &&
+      screen.y < this.height - this.targetB - m
+    if (inside) return
+    const v = this.rig.view()
+    this.rig.animateTo({ ...v, target: this.centreOf(part, new Vector3()) }, this.reducedMotion.matches ? 0 : 450)
     this.requestRender()
   }
 
@@ -434,75 +529,33 @@ class Viewer implements AnatomyViewer {
     return tmp.z < 1
   }
 
-  /** Where a part currently is (explode applied): its label anchor on the surface facing the camera. */
+  /** Where a part currently is (explode applied): its anchor on the surface facing the camera. */
   private anchorOf(part: Part, out: Vector3): Vector3 {
     out.copy(Math.cos(this.rig.azimuth) < 0 ? part.anchorBack : part.anchor)
     if (part.entry.explode) out.addScaledVector(part.offset, this.depth.explode)
     return out
   }
 
-  private readonly partRect: Rect = { left: 0, top: 0, right: 0, bottom: 0 }
+  /** The part's current centre (explode applied). */
+  private centreOf(part: Part, out: Vector3): Vector3 {
+    part.box.getCenter(out)
+    if (part.entry.explode) out.addScaledVector(part.offset, this.depth.explode)
+    return out
+  }
+
   private readonly anchorPx = { x: 0, y: 0 }
-  private readonly corner = { x: 0, y: 0 }
 
   private updateOverlay() {
     const sel = this.selected
-    if (sel && this.callout.shown) {
-      const r = this.screenRect(sel.box, sel.offset, this.partRect, sel.entry.explode ? this.depth.explode : 0)
+    let at: { x: number; y: number } | null = null
+    if (sel) {
       const inFront = this.toScreen(this.anchorOf(sel, tmp2), this.anchorPx)
       const { x, y } = this.anchorPx
-      const visible = inFront && x >= 0 && y >= 0 && x <= this.width && y <= this.height - this.inset
-      this.callout.update(visible ? this.anchorPx : null, r, this.layout())
+      if (inFront && x >= 0 && y >= this.chrome.top * 0.6 && x <= this.width - this.insetR && y <= this.height - this.insetB - 6) {
+        at = this.anchorPx
+      }
     }
-    const camera = this.stage!.camera
-    this.hud.update({
-      zoom: this.rig.zoom,
-      depth: this.depth.name,
-      azimuth: this.rig.azimuth,
-      pxPerMetre: this.height / (2 * this.rig.distance * Math.tan(MathUtils.degToRad(camera.fov) / 2)),
-    })
-  }
-
-  private readonly calloutLayout: CalloutLayout = {
-    width: 1,
-    height: 1,
-    phone: true,
-    gutter: 16,
-    top: 0,
-    bottom: 0,
-    avoid: [],
-    body: { left: 0, top: 0, right: 0, bottom: 0 },
-  }
-
-  private layout(): CalloutLayout {
-    const l = this.calloutLayout
-    l.width = this.width
-    l.height = this.height
-    l.phone = this.width < 640
-    // Wide screens keep the block clear of the orientation letters at the edges.
-    l.gutter = l.phone ? 16 : 56
-    l.top = this.bands.top
-    l.bottom = this.bands.bottom
-    l.avoid = this.bands.avoid
-    this.screenRect(this.atlas!.bounds, null, l.body)
-    return l
-  }
-
-  /** Screen rect (CSS px) of a world box, shifted by `offset` if given. */
-  private screenRect(box: Box3, offset: Vector3 | null, r: Rect, shift = 0): Rect {
-    r.left = r.top = Infinity
-    r.right = r.bottom = -Infinity
-    const { min, max } = box
-    for (let i = 0; i < 8; i++) {
-      tmp2.set(i & 1 ? max.x : min.x, i & 2 ? max.y : min.y, i & 4 ? max.z : min.z)
-      if (offset) tmp2.addScaledVector(offset, shift)
-      this.toScreen(tmp2, this.corner)
-      r.left = Math.min(r.left, this.corner.x)
-      r.right = Math.max(r.right, this.corner.x)
-      r.top = Math.min(r.top, this.corner.y)
-      r.bottom = Math.max(r.bottom, this.corner.y)
-    }
-    return r
+    this.marker.update(at)
   }
 
   // ── Picking ────────────────────────────────────────────────────────────
@@ -547,6 +600,7 @@ class Viewer implements AnatomyViewer {
     return {
       begin: () => {
         this.rig.stop()
+        this.layerGoal = null
         this.dragging = true
         this.hover.show(null)
         this.canvas.classList.add('is-dragging')
@@ -573,6 +627,7 @@ class Viewer implements AnatomyViewer {
         interacted()
       },
       wheel: (factor: number, x: number, y: number) => {
+        this.layerGoal = null
         this.rig.zoomAt(factor, this.pointAt(x, y, tmp2))
         interacted()
       },
@@ -584,12 +639,17 @@ class Viewer implements AnatomyViewer {
       },
       tap: (x: number, y: number) => {
         const hit = this.pickAt(x, y, PICK_RADIUS)
+        this.lastTap = { part: hit?.part ?? null, time: performance.now() }
         const id = hit?.part.id ?? null
         this.select(id === this.selected?.id ? null : id)
       },
       doubleTap: (x: number, y: number) => {
-        const hit = this.pickAt(x, y, PICK_RADIUS)
-        if (hit) this.focus(hit.part.id)
+        // The first tap opened the card, which shifts the picture: the second tap
+        // means whatever the first one hit, not what is under the finger now.
+        const first = this.lastTap && performance.now() - this.lastTap.time < 600 ? this.lastTap : null
+        const part = first ? first.part : (this.pickAt(x, y, PICK_RADIUS)?.part ?? null)
+        this.lastTap = null
+        if (part) this.focus(part.id)
         else this.reset()
       },
       // Only mouse pointers hover (see attachGestures), so touch screens never show the tag.
@@ -612,13 +672,21 @@ class Viewer implements AnatomyViewer {
       if (this.selected) this.select(null)
       return
     }
-    // Other keys only when focus isn't in some other control (e.g. the pain sheet).
+    // Other keys only when focus isn't in some other control (e.g. a sheet).
     if (t instanceof Element && t !== document.body && t !== document.documentElement && !this.host.contains(t)) return
     const v = this.rig.view()
     const ms = this.reducedMotion.matches ? 0 : 260
     switch (e.key) {
       case '0':
         this.reset()
+        break
+      case '1':
+      case '2':
+      case '3':
+        this.setLayer((['muscles', 'organs', 'exploded'] as const)[Number(e.key) - 1])
+        break
+      case 'f':
+        this.flip()
         break
       case 'ArrowLeft':
         this.rig.animateTo({ ...v, azimuth: v.azimuth + KEY_STEP }, ms)
@@ -680,15 +748,17 @@ class Viewer implements AnatomyViewer {
         next.pivot.add(o)
         return o
       })
+      // The sheet may already be open (another part was selected): keep this one in view too.
+      if (this.sheet) this.keepInView(next)
     }
     const info = next?.info ?? null
-    this.callout.show(info)
     if (info) {
       const where = [info.groupLabel, info.sideLabel].filter(Boolean).join(', ')
       this.announcer.say(`${info.name}. ${where}. ${info.description}`)
     } else {
       this.announcer.say('')
     }
+    this.hud.dismissHint()
     this.options.onSelect?.(info)
     this.requestRender()
   }
@@ -713,6 +783,7 @@ class Viewer implements AnatomyViewer {
     const facing = kind === 'organs' || target.z >= bodyZ - 0.02 ? 0 : Math.PI
     const az = this.rig.azimuth
     const keep = kind !== 'organs' && Math.cos(az - facing) > 0.5
+    this.layerGoal = null
     this.rig.animateTo(
       {
         target,
@@ -723,11 +794,47 @@ class Viewer implements AnatomyViewer {
       this.reducedMotion.matches ? 0 : FOCUS_MS,
     )
     this.select(id)
+    this.requestRender()
+  }
+
+  /** Where each layer button points the camera. */
+  private layerTarget(layer: LayerName): Vector3 {
+    if (layer === 'muscles') return this.rig.home.clone()
+    return (layer === 'organs' ? this.torso : this.torsoExploded).clone()
+  }
+
+  setLayer(layer: LayerName) {
+    if (!this.ready) return
+    const v = this.rig.view()
+    // The exploded layout is solved for the front view.
+    const front = layer === 'exploded'
+    this.layerGoal = layer
+    this.rig.animateTo(
+      {
+        target: this.layerTarget(layer),
+        distance: this.rig.fitDistance / LAYER_ZOOM[layer],
+        azimuth: front ? 0 : v.azimuth,
+        polar: front ? 0 : v.polar,
+      },
+      this.reducedMotion.matches ? 0 : LAYER_MS,
+    )
+    this.hud.dismissHint()
+    this.report()
+    this.requestRender()
+  }
+
+  flip() {
+    if (!this.ready) return
+    const v = this.rig.view()
+    // Snap to the nearest pure front or back view, then turn half way round.
+    const back = Math.cos(v.azimuth) < 0
+    this.rig.animateTo({ ...v, azimuth: back ? 0 : Math.PI, polar: 0 }, this.reducedMotion.matches ? 0 : FLIP_MS)
     this.hud.dismissHint()
     this.requestRender()
   }
 
   reset() {
+    this.layerGoal = null
     this.rig.animateTo(
       { target: this.rig.home.clone(), distance: this.rig.fitDistance, azimuth: 0, polar: 0 },
       this.reducedMotion.matches ? 0 : 600,
@@ -740,25 +847,13 @@ class Viewer implements AnatomyViewer {
     this.occluder?.disconnect()
     this.occluder = null
     this.sheet = el
+    this.targetB = this.targetR = 0
     if (el) {
       this.occluder = new ResizeObserver(() => this.measureInset())
       this.occluder.observe(el)
     }
     this.measureInset()
-    // Keep the selection in view: centre it in the band above the sheet.
-    if (el && this.selected) {
-      this.sync()
-      const v = this.rig.view()
-      this.rig.animateTo({ ...v, target: this.centreOf(this.selected, new Vector3()) }, this.reducedMotion.matches ? 0 : 450)
-    }
     this.requestRender()
-  }
-
-  /** The part's current centre (explode applied). */
-  private centreOf(part: Part, out: Vector3): Vector3 {
-    part.box.getCenter(out)
-    if (part.entry.explode) out.addScaledVector(part.offset, this.depth.explode)
-    return out
   }
 
   /** Jumps without animation (tests and deep links). */
@@ -777,6 +872,7 @@ class Viewer implements AnatomyViewer {
       }
     }
     this.rig.stop()
+    this.layerGoal = null
     this.rig.set(view)
     this.sync()
     this.requestRender()
@@ -786,16 +882,21 @@ class Viewer implements AnatomyViewer {
 
   hooks(): AtlasHooks {
     return {
-      state: () => ({
-        ready: this.ready,
-        zoom: round(this.rig.zoom, 3),
-        depth: this.depth.name,
-        explode: round(this.depth.explode, 3),
-        azimuthDeg: round(MathUtils.radToDeg(this.rig.azimuth), 1),
-        selected: this.selected?.id ?? null,
-        fps: Math.round(this.fps),
-        source: this.source,
-      }),
+      state: () => {
+        const { layer, back } = this.currentState()
+        return {
+          ready: this.ready,
+          zoom: round(this.rig.zoom, 3),
+          depth: this.depth.name,
+          layer,
+          explode: round(this.depth.explode, 3),
+          azimuthDeg: round(MathUtils.radToDeg(this.rig.azimuth), 1),
+          back,
+          selected: this.selected?.id ?? null,
+          fps: Math.round(this.fps),
+          source: this.source,
+        }
+      },
       parts: () => {
         this.sync()
         return (this.atlas?.parts ?? []).map((p) => {
@@ -821,9 +922,11 @@ class Viewer implements AnatomyViewer {
       },
       pick: (x, y) => this.pickAt(x, y, PICK_RADIUS)?.part.id ?? null,
       setView: (view) => this.setView(view),
-      labelRect: () => this.callout.rect(),
+      labelRect: () => this.sheet?.getBoundingClientRect() ?? null,
       select: (id) => this.select(id),
       focus: (id) => this.focus(id),
+      setLayer: (layer) => this.setLayer(layer),
+      flip: () => this.flip(),
       reset: () => this.reset(),
     }
   }
@@ -859,6 +962,8 @@ export function mountAnatomyViewer(host: HTMLElement, options: ViewerOptions = {
   return {
     select: (id) => viewer.select(id),
     focus: (id) => viewer.focus(id),
+    setLayer: (layer) => viewer.setLayer(layer),
+    flip: () => viewer.flip(),
     reset: () => viewer.reset(),
     setOccluder: (el) => viewer.setOccluder(el),
     destroy: () => {

@@ -56,6 +56,11 @@ export class CameraRig {
     return this.anim !== null || this.velAz !== 0 || this.velPolar !== 0
   }
 
+  /** True while an `animateTo` is running (not inertia). */
+  get animating() {
+    return this.anim !== null
+  }
+
   /** Places the camera; call before rendering or projecting. */
   apply(camera: PerspectiveCamera) {
     const c = Math.cos(this.polar)

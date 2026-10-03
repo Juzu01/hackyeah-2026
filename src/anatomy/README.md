@@ -2,7 +2,7 @@
 
 A full-screen human figure built from BodyParts3D, segmented into 105 tappable structures (plus the glass skin). Zooming in goes deeper: muscles → organs and bones → organs pulled apart so each one can be tapped on its own. [DESIGN.md](DESIGN.md) is the spec (art direction, data contract, behaviour); this file is the map of the code.
 
-Framework-free TypeScript on three.js. `src/App.tsx` only mounts it and hosts the pain-report sheet.
+The engine here is framework-free TypeScript on three.js. The app around it (title bar, layer switch, the selection sheet with the pain report, the info sheet) is React in `src/atlas/`, composed in `src/App.tsx`. It installs as an app: `public/manifest.webmanifest`, `public/sw.js`, icons from `tools/icons/`.
 
 ## Files
 
@@ -14,15 +14,17 @@ Framework-free TypeScript on three.js. `src/App.tsx` only mounts it and hosts th
 | `model.ts` | GLB loading with progress (placeholder fallback), parts, anchors, explode offsets |
 | `footprint.ts` | frontal occupancy grids: explode silhouettes, label anchors, the skeleton's depth |
 | `explode.ts` | the explode solver (convex hulls + SAT, ported from the 2D map) |
-| `depth.ts` | zoom → layer weights, explode amount, depth name |
+| `depth.ts` | zoom → layer weights, explode amount, depth name; the layer switch's presets |
 | `controls.ts` | orbit rig (inertia, zoom-to-point, animations) and pointer gestures |
 | `picking.ts` | GPU picking with the fat-finger radius |
 | `tethers.ts` | hairlines from exploded organs back to where they sit |
-| `labels.ts` | selection callout (with the "Zgłoś ból" action), hover tag, aria-live announcer |
-| `hud.ts` | title and view, depth ladder, P/L letters, scale bar, credit, hint, loading, no-WebGL |
+| `labels.ts` | selection marker (ring on the part), hover tag, aria-live announcer |
+| `hud.ts` | first-run hint, loading (with the model's credit), no-WebGL |
 | `content.ts` | catalog + Polish copy → `PartInfo` |
 | `placeholder.ts` | procedural stand-ins while `public/anatomy/body.glb` is missing |
-| `style.css` | tokens (on `:root`, shared with the pain sheet) and overlay styles |
+| `style.css` | tokens (on `:root`, shared with `src/atlas/ui.css`) and the viewer's overlays |
+
+And in `src/atlas/`: `TopBar.tsx`, `LayerSwitch.tsx`, `Sheet.tsx` (bottom sheet on phones, card on the right from 900px; drag handle, animated height), `PartCard.tsx`, `InfoSheet.tsx`, `install.ts` (install prompt / iOS instructions), `presence.ts` (exit animations), `ui.css`.
 
 Data: `data/catalog.json` (structures; id = GLB node name) and `data/content.pl.json` (copy).
 
@@ -30,22 +32,23 @@ Data: `data/catalog.json` (structures; id = GLB node name) and `data/content.pl.
 
 ```ts
 const viewer = mountAnatomyViewer(host, {
-  onSelect(part) {},                                  // PartInfo | null
-  action: { label: 'Zgłoś ból', run(part) {} },       // one quiet button in the callout
-  build: import.meta.env.VITE_COMMIT_SHA,             // short hash in the credit line
+  onSelect(part) {},             // PartInfo | null
+  onChange({ layer, back }) {},  // live: which layer the depth is at, front or back
 })
-viewer.select(id | null); viewer.focus(id); viewer.reset()
-viewer.setOccluder(sheetElement | null)  // keeps the selection visible above a bottom sheet
+viewer.select(id | null); viewer.focus(id); viewer.setLayer('organs'); viewer.flip(); viewer.reset()
+viewer.setOccluder(sheetElement | null)  // keeps the selection visible above (or beside) a sheet
 viewer.destroy()
 ```
+
+The host element's padding tells the viewer how much the chrome covers at the top and bottom (`--chrome-top`, `--chrome-bottom` in `style.css`), so the body is framed between them.
 
 Pain reports store `painId(part.id)` (`src/pain/painId.ts`), not the atlas id: the database only accepts `^[a-zA-Z]+(-(left|right))?$` and keeps the 2D map's ids for parts it already had. `src/pain/painId.test.ts` checks both.
 
 ## Deep links and QA hooks
 
-URL params: `?zoom=2.5&az=0&polar=5&sel=heart&focus=heart&nohint&noscan`. With `sel` and a zoom above 1, the view centres on that part.
+URL params: `?zoom=2.5&az=0&polar=5&layer=organs&sel=heart&focus=heart&nohint&noscan`. With `sel` and a zoom above 1, the view centres on that part.
 
-`window.__atlas`: `state()`, `parts()`, `project(id)`, `pick(x, y)`, `setView({ zoom, azimuthDeg, polarDeg, target })`, `labelRect()`, plus `select`, `focus`, `reset`. See DESIGN.md §7.
+`window.__atlas`: `state()`, `parts()`, `project(id)`, `pick(x, y)`, `setView({ zoom, azimuthDeg, polarDeg, target })`, `labelRect()` (the sheet), plus `select`, `focus`, `setLayer`, `flip`, `reset`. See DESIGN.md §7.
 
 Real WebGL screenshots and trusted touch input in headless Firefox:
 
@@ -59,6 +62,7 @@ node tools/browser/shot.mjs 'http://localhost:5181/?noscan&nohint&zoom=3.8&sel=h
 ## Notes
 
 - Render on demand: a frame is drawn only while input, inertia, an animation, the scan sweep or a sheet transition is running. `state().fps` measures consecutive frames only.
+- Service worker: production builds register `sw.js?v=<commit>` with the app's scope. Pages are network-first, hashed assets, icons and the model cache-first, all in one cache per build (older ones are deleted on activate). After registering, the page sends the worker what it already loaded, so the model is cached from the first visit. Cross-origin requests (Supabase) are never touched. Not registered in dev, nor in the gdzie-boli build (its `index.html` also drops the manifest).
 - Label anchors sit on the part's visible surface, separately for the front and the back (a muscle's footprint is often partly under its neighbours). A muscle hidden from one side (the brachialis under the biceps from the front) is tapped from the other.
 - BodyParts3D's external oblique includes its aponeurosis, which covers the rectus abdominis from the front, so the "six-pack" taps as the external oblique.
 - `vite.config.ts` limits dependency scanning to the two app entries; otherwise `tools/anatomy/preview.html` pulls in a second copy of three in dev.
