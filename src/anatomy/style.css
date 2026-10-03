@@ -6,7 +6,7 @@
    button). Shares its palette with Soleil, the app around it. */
 :root {
   --bg-0: #000000;
-  --bg-1: #08140f;
+  --bg-1: #0d130a;
   --ink-1: #f2f5ed;
   --ink-2: #a8b1a1;
   --ink-3: #6b7364;
@@ -31,7 +31,7 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   /* The bands the title bar and the voice dock cover; the viewer reads them from its host's padding. */
   --chrome-top: calc(var(--safe-top) + 64px);
-  --chrome-bottom: calc(var(--safe-bottom) + 118px);
+  --chrome-bottom: calc(var(--safe-bottom) + 98px);
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   color-scheme: dark;
 }
@@ -40,8 +40,15 @@
   :root {
     --gutter: 28px;
     --chrome-top: calc(var(--safe-top) + 76px);
-    --chrome-bottom: calc(var(--safe-bottom) + 124px);
+    --chrome-bottom: calc(var(--safe-bottom) + 104px);
   }
+}
+
+/* Inside Doco (src/shell.ts) the frame's bottom runs under the tab bar's slanted top edge, up to
+   18px deep on a phone: everything pinned to the bottom (the dock, the sheets, the message bar)
+   keeps clear of it. */
+:root.in-doco {
+  --safe-bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
 }
 
 html,
