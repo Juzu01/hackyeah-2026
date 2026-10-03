@@ -21,27 +21,29 @@ export const ACCENT = new Color('#5BE3CF')
 export const GLASS = new Color('#BFDDF5')
 export const HAIR = new Color('#BED7EB')
 
+/**
+ * A calm anatomical model rather than raw tissue: warm, desaturated rose and
+ * terracotta for muscle, ivory bone, and organs in the same soft family.
+ */
 const TISSUE_COLORS: Record<string, string> = {
-  // A shade deeper than DESIGN.md's #9C4A44, which reads salmon under the final lighting.
-  muscle: '#8E3F3A',
-  // DESIGN.md's ivory #D8D0C0, a step darker so ACES doesn't clip it to white under the key light.
-  bone: '#C2B9A8',
-  brain: '#C9A2A5',
-  heart: '#A9323A',
-  aorta: '#B23B40',
-  lungs: '#C98E8B',
-  trachea: '#B8C3C8',
-  esophagus: '#B97870',
-  thyroid: '#9C3E4E',
-  liver: '#6D2923',
-  gallbladder: '#4D6B46',
-  stomach: '#C28E78',
-  spleen: '#5D2D40',
-  pancreas: '#CDA87A',
-  kidneys: '#7E342F',
-  'small-intestine': '#C9928A',
-  'large-intestine': '#A97965',
-  'urinary-bladder': '#C8AF7A',
+  muscle: '#B66F66',
+  bone: '#D3C8B4',
+  brain: '#D8B4B2',
+  heart: '#B9575B',
+  aorta: '#BE6064',
+  lungs: '#DDA9A4',
+  trachea: '#C9D3D6',
+  esophagus: '#C9918A',
+  thyroid: '#B5676F',
+  liver: '#9C5A50',
+  gallbladder: '#86A07A',
+  stomach: '#D8AA93',
+  spleen: '#8F6274',
+  pancreas: '#DDC198',
+  kidneys: '#A9625C',
+  'small-intestine': '#DDAAA1',
+  'large-intestine': '#C49783',
+  'urinary-bladder': '#D9C291',
 }
 
 /**

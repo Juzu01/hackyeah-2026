@@ -54,7 +54,7 @@ export default function Sheet({ label, children, onDismiss, onExpand, closing, m
         role={modal ? 'dialog' : 'region'}
         aria-modal={modal || undefined}
         onKeyDown={onKeyDown}
-        className={`sheet ${closing ? 'is-closing' : ''} ${drag ? 'is-dragging' : ''} ${className}`}
+        className={`sheet ${modal ? 'sheet-modal' : ''} ${closing ? 'is-closing' : ''} ${drag ? 'is-dragging' : ''} ${className}`}
         style={drag ? { transform: `translateY(${drag > 0 ? drag : drag * 0.25}px)` } : undefined}
       >
         <div

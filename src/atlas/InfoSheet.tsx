@@ -10,9 +10,11 @@ interface Props {
   touch: boolean
   build?: string
   onClose(): void
+  /** Opens the first-visit welcome again. */
+  onWelcome(): void
 }
 
-export default function InfoSheet({ touch, build, onClose }: Props) {
+export default function InfoSheet({ touch, build, onClose, onWelcome }: Props) {
   const state = useInstallState()
   const [declined, setDeclined] = useState(false)
   const close = useRef<HTMLButtonElement>(null)
@@ -58,9 +60,12 @@ export default function InfoSheet({ touch, build, onClose }: Props) {
         ))}
       </ul>
       <p className="info-note">
-        Przyciski na dole przełączają warstwy: mięśnie, narządy z kośćmi i rozsunięte narządy, które łatwo wybrać
-        osobno.
+        Przyciski warstw pokazują mięśnie, narządy z kośćmi albo narządy rozsunięte osobno, żeby łatwo je wybrać. Lupa
+        na górze znajduje część ciała po nazwie, np. „kolano”.
       </p>
+      <button type="button" className="more-toggle" onClick={onWelcome}>
+        Pokaż wprowadzenie jeszcze raz
+      </button>
 
       <h3 className="info-heading">Aplikacja na telefonie</h3>
       {state === 'installed' && <p className="info-text">Atlas jest zainstalowany na tym urządzeniu.</p>}

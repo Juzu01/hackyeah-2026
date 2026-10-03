@@ -99,3 +99,52 @@ export const InstallIcon = () => (
     <path d="M5 19h14" />
   </Icon>
 )
+
+export const SearchIcon = () => (
+  <Icon>
+    <circle cx="10.5" cy="10.5" r="6.5" />
+    <path d="m15.5 15.5 5 5" />
+  </Icon>
+)
+
+export const CheckIcon = () => (
+  <Icon size={28}>
+    <path d="M5 12.5l4.5 4.5L19 7.5" strokeWidth="2" />
+  </Icon>
+)
+
+/** Layer icons: a muscle's spindle of fibres, a heart, and pieces set apart. */
+export const MuscleIcon = () => (
+  <Icon size={18}>
+    <path d="M12 3c3.2 3 3.2 15 0 18-3.2-3-3.2-15 0-18z" />
+    <path d="M12 6v12M10 8.5c.6 2.5.6 4.5 0 7M14 8.5c-.6 2.5-.6 4.5 0 7" opacity="0.7" />
+  </Icon>
+)
+
+export const OrganIcon = () => (
+  <Icon size={18}>
+    <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.7-7 10-7 10z" />
+  </Icon>
+)
+
+export const ApartIcon = () => (
+  <Icon size={18}>
+    <rect x="3" y="3" width="7" height="7" rx="2" />
+    <rect x="14" y="3" width="7" height="7" rx="2" />
+    <rect x="8.5" y="14" width="7" height="7" rx="2" />
+  </Icon>
+)
+
+/** Faces for the pain scale: at ease, uneasy, hurting, hurting a lot. */
+export const PainFace = ({ level }: { level: 0 | 1 | 2 | 3 }) => {
+  const mouth = ['M8.5 14.5c2 2 5 2 7 0', 'M9 15h6', 'M8.5 16c2-2 5-2 7 0', 'M8.5 16.5c2-3 5-3 7 0'][level]
+  const brows = level >= 2 ? <path d="M7.5 8.5l2.5 1M16.5 8.5l-2.5 1" /> : null
+  return (
+    <Icon size={24}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.5 10.5v.1M14.5 10.5v.1" strokeWidth="2.2" />
+      {brows}
+      <path d={mouth} />
+    </Icon>
+  )
+}

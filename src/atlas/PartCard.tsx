@@ -1,9 +1,11 @@
-// The selected part, in the sheet: what it is, a short description, "Więcej"
-// for how it works (muscles: action and exercises; organs and bones: a fact,
-// and how sport affects it), and the way into reporting pain.
+// The selected part, in plain words first: where it is ("Lewe udo, z przodu"),
+// its name and one simple sentence, and the big "Zgłoś ból". "Więcej" holds the
+// atlas detail for the curious: Latin, the clinical description, what it does,
+// exercises, a fact, how sport affects it, and the body system.
 
 import { useId, type ReactNode } from 'react'
 import type { PartInfo } from '../anatomy/content.ts'
+import { plainOf } from '../anatomy/plain.ts'
 import { ChevronIcon, CloseIcon } from './icons.tsx'
 
 interface Props {
@@ -16,6 +18,8 @@ interface Props {
 
 function moreOf(part: PartInfo): { title: string; body: ReactNode }[] {
   const out: { title: string; body: ReactNode }[] = []
+  if (part.latin) out.push({ title: 'Nazwa łacińska', body: <p lang="la">{part.latin}</p> })
+  if (part.description) out.push({ title: 'Opis', body: <p>{part.description}</p> })
   if (part.action) out.push({ title: 'Działanie', body: <p>{part.action}</p> })
   if (part.exercises?.length) {
     out.push({
@@ -31,47 +35,40 @@ function moreOf(part: PartInfo): { title: string; body: ReactNode }[] {
   }
   if (part.fact) out.push({ title: 'Ciekawostka', body: <p>{part.fact}</p> })
   if (part.sport) out.push({ title: 'Ruch i zdrowie', body: <p>{part.sport}</p> })
+  out.push({ title: 'Układ', body: <p>{part.groupLabel}</p> })
   return out
 }
 
 export default function PartCard({ part, expanded, onToggle, onReport, onClose }: Props) {
+  const plain = plainOf(part)
   const more = moreOf(part)
   const moreId = useId()
   return (
     <div className="card">
       <header className="card-head">
         <div className="card-titles">
-          <p className="tag">{[part.groupLabel, part.sideLabel].filter(Boolean).join(' · ')}</p>
+          <p className="tag card-where">{plain.where}</p>
           <h2 className="card-name">{part.name}</h2>
-          {part.latin && (
-            <p className="card-latin" lang="la">
-              {part.latin}
-            </p>
-          )}
         </div>
         <button type="button" className="icon-btn" aria-label="Zamknij" onClick={onClose}>
           <CloseIcon />
         </button>
       </header>
 
-      {part.description && <p className={`card-desc ${expanded ? '' : 'is-clamped'}`}>{part.description}</p>}
+      {plain.simple && <p className="card-desc card-simple">{plain.simple}</p>}
 
-      {more.length > 0 && (
-        <>
-          <div id={moreId} className="card-more" hidden={!expanded}>
-            {more.map((s) => (
-              <section key={s.title}>
-                <h3>{s.title}</h3>
-                {s.body}
-              </section>
-            ))}
-          </div>
-          <button type="button" className="more-toggle" aria-expanded={expanded} aria-controls={moreId} onClick={onToggle}>
-            {expanded ? 'Mniej' : 'Więcej'}
-            <ChevronIcon up={expanded} />
-          </button>
-        </>
-      )}
+      <div id={moreId} className="card-more" hidden={!expanded}>
+        {more.map((s) => (
+          <section key={s.title}>
+            <h3>{s.title}</h3>
+            {s.body}
+          </section>
+        ))}
+      </div>
+      <button type="button" className="more-toggle" aria-expanded={expanded} aria-controls={moreId} onClick={onToggle}>
+        {expanded ? 'Mniej' : 'Więcej'}
+        <ChevronIcon up={expanded} />
+      </button>
 
       <div className="sheet-actions">
         <button type="button" className="btn-primary" onClick={onReport}>

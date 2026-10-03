@@ -1,13 +1,9 @@
-// The bottom segmented control: which layer of the body to look at. It mirrors
-// the depth live (pinching changes it too) and moves the camera when tapped.
+// The layer control: which layer of the body to look at. It mirrors the depth
+// live (pinching changes it too) and moves the camera when tapped. One button
+// per layer; the short caption a tap shows is App's separate .layer-caption.
 
 import { LAYER_NAMES, type LayerName } from '../anatomy/depth.ts'
-
-const LABELS: Record<LayerName, string> = {
-  muscles: 'Mięśnie',
-  organs: 'Narządy',
-  exploded: 'Rozsunięte',
-}
+import { LAYERS } from './layers.tsx'
 
 interface Props {
   value: LayerName
@@ -31,7 +27,8 @@ export default function LayerSwitch({ value, onChange, hidden }: Props) {
           className="layers-btn"
           onClick={() => onChange(layer)}
         >
-          {LABELS[layer]}
+          {LAYERS[layer].icon}
+          <span>{LAYERS[layer].label}</span>
         </button>
       ))}
     </div>

@@ -1,0 +1,1340 @@
+{
+  "parts": {
+    "sternocleidomastoid-left": {
+      "where": "Lewa strona szyi",
+      "simple": "Mięsień z boku szyi, dzięki któremu obracasz głowę na boki i pochylasz ją do przodu.",
+      "aliases": [
+        "szyja",
+        "bok szyi",
+        "kręcz szyi",
+        "sztywna szyja"
+      ]
+    },
+    "sternocleidomastoid-right": {
+      "where": "Prawa strona szyi",
+      "simple": "Mięsień z boku szyi, dzięki któremu obracasz głowę na boki i pochylasz ją do przodu.",
+      "aliases": [
+        "szyja",
+        "bok szyi",
+        "kręcz szyi",
+        "sztywna szyja"
+      ]
+    },
+    "trapezius-left": {
+      "where": "Lewa strona karku i pleców",
+      "simple": "Duży, płaski mięsień karku i pleców: unosi barki, jak przy wzruszaniu ramionami, i ściąga łopatki do tyłu.",
+      "aliases": [
+        "kark",
+        "plecy",
+        "bark",
+        "barki",
+        "góra pleców",
+        "między łopatkami",
+        "sztywny kark",
+        "czworoboczny",
+        "kaptury"
+      ]
+    },
+    "trapezius-right": {
+      "where": "Prawa strona karku i pleców",
+      "simple": "Duży, płaski mięsień karku i pleców: unosi barki, jak przy wzruszaniu ramionami, i ściąga łopatki do tyłu.",
+      "aliases": [
+        "kark",
+        "plecy",
+        "bark",
+        "barki",
+        "góra pleców",
+        "między łopatkami",
+        "sztywny kark",
+        "czworoboczny",
+        "kaptury"
+      ]
+    },
+    "deltoid-left": {
+      "where": "Lewy bark",
+      "simple": "Mięsień, który okrywa bark jak czapka i pozwala unieść rękę przed siebie albo w bok.",
+      "aliases": [
+        "bark",
+        "barki",
+        "ramię",
+        "staw barkowy",
+        "naramienny",
+        "podnoszenie ręki"
+      ]
+    },
+    "deltoid-right": {
+      "where": "Prawy bark",
+      "simple": "Mięsień, który okrywa bark jak czapka i pozwala unieść rękę przed siebie albo w bok.",
+      "aliases": [
+        "bark",
+        "barki",
+        "ramię",
+        "staw barkowy",
+        "naramienny",
+        "podnoszenie ręki"
+      ]
+    },
+    "pectoralis-major-left": {
+      "where": "Lewa strona klatki piersiowej",
+      "simple": "Duży mięsień z przodu klatki piersiowej: przyciąga rękę do tułowia, np. gdy kogoś przytulasz.",
+      "aliases": [
+        "klatka piersiowa",
+        "klata",
+        "pierś",
+        "pacha",
+        "piersiowy"
+      ]
+    },
+    "pectoralis-major-right": {
+      "where": "Prawa strona klatki piersiowej",
+      "simple": "Duży mięsień z przodu klatki piersiowej: przyciąga rękę do tułowia, np. gdy kogoś przytulasz.",
+      "aliases": [
+        "klatka piersiowa",
+        "klata",
+        "pierś",
+        "pacha",
+        "piersiowy"
+      ]
+    },
+    "serratus-anterior-left": {
+      "where": "Lewy bok, pod pachą",
+      "simple": "Mięsień na żebrach z boku tułowia: dociska łopatkę do żeber i pomaga sięgnąć ręką daleko przed siebie.",
+      "aliases": [
+        "bok",
+        "żebra",
+        "bok klatki piersiowej",
+        "pacha",
+        "pod pachą",
+        "łopatka",
+        "zębaty"
+      ]
+    },
+    "serratus-anterior-right": {
+      "where": "Prawy bok, pod pachą",
+      "simple": "Mięsień na żebrach z boku tułowia: dociska łopatkę do żeber i pomaga sięgnąć ręką daleko przed siebie.",
+      "aliases": [
+        "bok",
+        "żebra",
+        "bok klatki piersiowej",
+        "pacha",
+        "pod pachą",
+        "łopatka",
+        "zębaty"
+      ]
+    },
+    "latissimus-dorsi-left": {
+      "where": "Plecy po lewej, od pachy w dół",
+      "simple": "Najszerszy mięsień pleców: ściąga rękę w dół i do tyłu, np. gdy ciągniesz coś do siebie albo się podciągasz.",
+      "aliases": [
+        "plecy",
+        "dół pleców",
+        "krzyż",
+        "lędźwie",
+        "bok",
+        "pacha",
+        "najszerszy"
+      ]
+    },
+    "latissimus-dorsi-right": {
+      "where": "Plecy po prawej, od pachy w dół",
+      "simple": "Najszerszy mięsień pleców: ściąga rękę w dół i do tyłu, np. gdy ciągniesz coś do siebie albo się podciągasz.",
+      "aliases": [
+        "plecy",
+        "dół pleców",
+        "krzyż",
+        "lędźwie",
+        "bok",
+        "pacha",
+        "najszerszy"
+      ]
+    },
+    "rectus-abdominis-left": {
+      "where": "Przód brzucha, lewa połowa",
+      "simple": "Mięsień z przodu brzucha, zwany „kaloryferem”: pochyla tułów do przodu, np. gdy siadasz z leżenia.",
+      "aliases": [
+        "brzuch",
+        "mięśnie brzucha",
+        "sześciopak",
+        "kaloryfer",
+        "brzuszki",
+        "pępek",
+        "prosty brzucha"
+      ]
+    },
+    "rectus-abdominis-right": {
+      "where": "Przód brzucha, prawa połowa",
+      "simple": "Mięsień z przodu brzucha, zwany „kaloryferem”: pochyla tułów do przodu, np. gdy siadasz z leżenia.",
+      "aliases": [
+        "brzuch",
+        "mięśnie brzucha",
+        "sześciopak",
+        "kaloryfer",
+        "brzuszki",
+        "pępek",
+        "prosty brzucha"
+      ]
+    },
+    "external-oblique-left": {
+      "where": "Lewy bok brzucha",
+      "simple": "Mięsień na boku brzucha: pozwala skręcić i przechylić tułów, np. gdy sięgasz po coś za siebie.",
+      "aliases": [
+        "brzuch",
+        "bok",
+        "bok brzucha",
+        "talia",
+        "boczki",
+        "mięśnie brzucha",
+        "skośne"
+      ]
+    },
+    "external-oblique-right": {
+      "where": "Prawy bok brzucha",
+      "simple": "Mięsień na boku brzucha: pozwala skręcić i przechylić tułów, np. gdy sięgasz po coś za siebie.",
+      "aliases": [
+        "brzuch",
+        "bok",
+        "bok brzucha",
+        "talia",
+        "boczki",
+        "mięśnie brzucha",
+        "skośne"
+      ]
+    },
+    "biceps-brachii-left": {
+      "where": "Lewe ramię, z przodu",
+      "simple": "Biceps, mięsień z przodu ramienia: zgina rękę w łokciu, np. gdy podnosisz kubek do ust.",
+      "aliases": [
+        "biceps",
+        "ramię",
+        "przód ramienia",
+        "łokieć",
+        "ręka",
+        "dwugłowy"
+      ]
+    },
+    "biceps-brachii-right": {
+      "where": "Prawe ramię, z przodu",
+      "simple": "Biceps, mięsień z przodu ramienia: zgina rękę w łokciu, np. gdy podnosisz kubek do ust.",
+      "aliases": [
+        "biceps",
+        "ramię",
+        "przód ramienia",
+        "łokieć",
+        "ręka",
+        "dwugłowy"
+      ]
+    },
+    "triceps-brachii-left": {
+      "where": "Lewe ramię, z tyłu",
+      "simple": "Triceps, mięsień z tyłu ramienia: prostuje rękę w łokciu, np. gdy podpierasz się, wstając z fotela.",
+      "aliases": [
+        "triceps",
+        "ramię",
+        "tył ramienia",
+        "łokieć",
+        "ręka",
+        "trójgłowy"
+      ]
+    },
+    "triceps-brachii-right": {
+      "where": "Prawe ramię, z tyłu",
+      "simple": "Triceps, mięsień z tyłu ramienia: prostuje rękę w łokciu, np. gdy podpierasz się, wstając z fotela.",
+      "aliases": [
+        "triceps",
+        "ramię",
+        "tył ramienia",
+        "łokieć",
+        "ręka",
+        "trójgłowy"
+      ]
+    },
+    "brachialis-left": {
+      "where": "Lewe ramię, z przodu, głęboko",
+      "simple": "Mięsień ukryty pod bicepsem; to główny mięsień zginający łokieć, bez względu na ułożenie dłoni.",
+      "aliases": [
+        "ramię",
+        "przód ramienia",
+        "łokieć",
+        "ręka",
+        "ramienny"
+      ]
+    },
+    "brachialis-right": {
+      "where": "Prawe ramię, z przodu, głęboko",
+      "simple": "Mięsień ukryty pod bicepsem; to główny mięsień zginający łokieć, bez względu na ułożenie dłoni.",
+      "aliases": [
+        "ramię",
+        "przód ramienia",
+        "łokieć",
+        "ręka",
+        "ramienny"
+      ]
+    },
+    "brachioradialis-left": {
+      "where": "Lewe przedramię, od kciuka",
+      "simple": "Mięsień przedramienia od strony kciuka; pomaga zginać łokieć, np. gdy podnosisz młotek albo kubek.",
+      "aliases": [
+        "przedramię",
+        "bok przedramienia",
+        "łokieć",
+        "ręka",
+        "ramienno-promieniowy"
+      ]
+    },
+    "brachioradialis-right": {
+      "where": "Prawe przedramię, od kciuka",
+      "simple": "Mięsień przedramienia od strony kciuka; pomaga zginać łokieć, np. gdy podnosisz młotek albo kubek.",
+      "aliases": [
+        "przedramię",
+        "bok przedramienia",
+        "łokieć",
+        "ręka",
+        "ramienno-promieniowy"
+      ]
+    },
+    "forearm-flexors-left": {
+      "where": "Lewe przedramię, od wewnątrz",
+      "simple": "Mięśnie przedramienia od strony dłoni: zginają nadgarstek i palce, gdy coś mocno chwytasz albo ściskasz.",
+      "aliases": [
+        "przedramię",
+        "nadgarstek",
+        "palce",
+        "chwyt",
+        "łokieć",
+        "łokieć golfisty",
+        "ręka",
+        "zginacze"
+      ]
+    },
+    "forearm-flexors-right": {
+      "where": "Prawe przedramię, od wewnątrz",
+      "simple": "Mięśnie przedramienia od strony dłoni: zginają nadgarstek i palce, gdy coś mocno chwytasz albo ściskasz.",
+      "aliases": [
+        "przedramię",
+        "nadgarstek",
+        "palce",
+        "chwyt",
+        "łokieć",
+        "łokieć golfisty",
+        "ręka",
+        "zginacze"
+      ]
+    },
+    "forearm-extensors-left": {
+      "where": "Lewe przedramię, z wierzchu",
+      "simple": "Mięśnie na wierzchu przedramienia: odginają nadgarstek i palce, a gdy coś chwytasz, usztywniają nadgarstek.",
+      "aliases": [
+        "przedramię",
+        "nadgarstek",
+        "palce",
+        "łokieć",
+        "łokieć tenisisty",
+        "ręka",
+        "prostowniki"
+      ]
+    },
+    "forearm-extensors-right": {
+      "where": "Prawe przedramię, z wierzchu",
+      "simple": "Mięśnie na wierzchu przedramienia: odginają nadgarstek i palce, a gdy coś chwytasz, usztywniają nadgarstek.",
+      "aliases": [
+        "przedramię",
+        "nadgarstek",
+        "palce",
+        "łokieć",
+        "łokieć tenisisty",
+        "ręka",
+        "prostowniki"
+      ]
+    },
+    "gluteus-maximus-left": {
+      "where": "Lewy pośladek",
+      "simple": "Największy mięsień ciała, tworzy pośladek: pomaga wstać z krzesła, wejść po schodach i biec.",
+      "aliases": [
+        "pośladek",
+        "pośladki",
+        "pupa",
+        "biodro",
+        "pośladkowy"
+      ]
+    },
+    "gluteus-maximus-right": {
+      "where": "Prawy pośladek",
+      "simple": "Największy mięsień ciała, tworzy pośladek: pomaga wstać z krzesła, wejść po schodach i biec.",
+      "aliases": [
+        "pośladek",
+        "pośladki",
+        "pupa",
+        "biodro",
+        "pośladkowy"
+      ]
+    },
+    "gluteus-medius-left": {
+      "where": "Lewy pośladek, u góry z boku",
+      "simple": "Mięsień z boku pośladka, który trzyma miednicę prosto, gdy idziesz albo stoisz na jednej nodze.",
+      "aliases": [
+        "pośladek",
+        "biodro",
+        "bok biodra",
+        "miednica",
+        "pośladkowy średni"
+      ]
+    },
+    "gluteus-medius-right": {
+      "where": "Prawy pośladek, u góry z boku",
+      "simple": "Mięsień z boku pośladka, który trzyma miednicę prosto, gdy idziesz albo stoisz na jednej nodze.",
+      "aliases": [
+        "pośladek",
+        "biodro",
+        "bok biodra",
+        "miednica",
+        "pośladkowy średni"
+      ]
+    },
+    "tensor-fasciae-latae-left": {
+      "where": "Lewe biodro, z boku",
+      "simple": "Mały mięsień z boku biodra: pomaga unieść nogę w przód lub w bok i stabilizuje biodro, gdy idziesz.",
+      "aliases": [
+        "biodro",
+        "bok biodra",
+        "bok uda",
+        "udo",
+        "napinacz",
+        "pasmo biodrowo-piszczelowe"
+      ]
+    },
+    "tensor-fasciae-latae-right": {
+      "where": "Prawe biodro, z boku",
+      "simple": "Mały mięsień z boku biodra: pomaga unieść nogę w przód lub w bok i stabilizuje biodro, gdy idziesz.",
+      "aliases": [
+        "biodro",
+        "bok biodra",
+        "bok uda",
+        "udo",
+        "napinacz",
+        "pasmo biodrowo-piszczelowe"
+      ]
+    },
+    "sartorius-left": {
+      "where": "Lewe udo, skośnie przez przód",
+      "simple": "Najdłuższy mięsień ciała, biegnie skośnie przez udo aż pod kolano; pomaga usiąść po turecku.",
+      "aliases": [
+        "udo",
+        "przód uda",
+        "kolano",
+        "siad po turecku",
+        "krawiecki"
+      ]
+    },
+    "sartorius-right": {
+      "where": "Prawe udo, skośnie przez przód",
+      "simple": "Najdłuższy mięsień ciała, biegnie skośnie przez udo aż pod kolano; pomaga usiąść po turecku.",
+      "aliases": [
+        "udo",
+        "przód uda",
+        "kolano",
+        "siad po turecku",
+        "krawiecki"
+      ]
+    },
+    "rectus-femoris-left": {
+      "where": "Lewe udo, z przodu, pośrodku",
+      "simple": "Środkowa część dużego mięśnia z przodu uda: prostuje kolano i unosi udo, np. gdy kopiesz piłkę.",
+      "aliases": [
+        "udo",
+        "przód uda",
+        "kolano",
+        "biodro",
+        "czworogłowy",
+        "czwórki"
+      ]
+    },
+    "rectus-femoris-right": {
+      "where": "Prawe udo, z przodu, pośrodku",
+      "simple": "Środkowa część dużego mięśnia z przodu uda: prostuje kolano i unosi udo, np. gdy kopiesz piłkę.",
+      "aliases": [
+        "udo",
+        "przód uda",
+        "kolano",
+        "biodro",
+        "czworogłowy",
+        "czwórki"
+      ]
+    },
+    "vastus-lateralis-left": {
+      "where": "Lewe udo, z boku",
+      "simple": "Największa część dużego mięśnia z przodu uda, od zewnątrz: prostuje kolano, gdy wstajesz z krzesła.",
+      "aliases": [
+        "udo",
+        "przód uda",
+        "bok uda",
+        "kolano",
+        "czworogłowy",
+        "czwórki"
+      ]
+    },
+    "vastus-lateralis-right": {
+      "where": "Prawe udo, z boku",
+      "simple": "Największa część dużego mięśnia z przodu uda, od zewnątrz: prostuje kolano, gdy wstajesz z krzesła.",
+      "aliases": [
+        "udo",
+        "przód uda",
+        "bok uda",
+        "kolano",
+        "czworogłowy",
+        "czwórki"
+      ]
+    },
+    "vastus-medialis-left": {
+      "where": "Nad lewym kolanem, od wewnątrz",
+      "simple": "Część mięśnia z przodu uda, tuż nad kolanem: prostuje kolano i pomaga trzymać rzepkę na miejscu.",
+      "aliases": [
+        "udo",
+        "przód uda",
+        "kolano",
+        "nad kolanem",
+        "czworogłowy",
+        "czwórki",
+        "łezka"
+      ]
+    },
+    "vastus-medialis-right": {
+      "where": "Nad prawym kolanem, od wewnątrz",
+      "simple": "Część mięśnia z przodu uda, tuż nad kolanem: prostuje kolano i pomaga trzymać rzepkę na miejscu.",
+      "aliases": [
+        "udo",
+        "przód uda",
+        "kolano",
+        "nad kolanem",
+        "czworogłowy",
+        "czwórki",
+        "łezka"
+      ]
+    },
+    "adductors-left": {
+      "where": "Lewe udo, od wewnątrz",
+      "simple": "Mięśnie wewnętrznej strony uda: przysuwają nogę do drugiej i pomagają utrzymać równowagę, gdy idziesz.",
+      "aliases": [
+        "udo",
+        "pachwina",
+        "wewnętrzna strona uda",
+        "przywodziciele"
+      ]
+    },
+    "adductors-right": {
+      "where": "Prawe udo, od wewnątrz",
+      "simple": "Mięśnie wewnętrznej strony uda: przysuwają nogę do drugiej i pomagają utrzymać równowagę, gdy idziesz.",
+      "aliases": [
+        "udo",
+        "pachwina",
+        "wewnętrzna strona uda",
+        "przywodziciele"
+      ]
+    },
+    "biceps-femoris-left": {
+      "where": "Lewe udo, z tyłu, od zewnątrz",
+      "simple": "Mięsień z tyłu uda, od zewnątrz: zgina kolano i odciąga nogę do tyłu przy każdym kroku.",
+      "aliases": [
+        "udo",
+        "tył uda",
+        "kolano",
+        "tył kolana",
+        "dwójki",
+        "dwugłowy uda"
+      ]
+    },
+    "biceps-femoris-right": {
+      "where": "Prawe udo, z tyłu, od zewnątrz",
+      "simple": "Mięsień z tyłu uda, od zewnątrz: zgina kolano i odciąga nogę do tyłu przy każdym kroku.",
+      "aliases": [
+        "udo",
+        "tył uda",
+        "kolano",
+        "tył kolana",
+        "dwójki",
+        "dwugłowy uda"
+      ]
+    },
+    "medial-hamstrings-left": {
+      "where": "Lewe udo, z tyłu, od wewnątrz",
+      "simple": "Dwa mięśnie z tyłu uda, od wewnątrz: zginają kolano i odciągają nogę do tyłu przy każdym kroku.",
+      "aliases": [
+        "udo",
+        "tył uda",
+        "kolano",
+        "tył kolana",
+        "dwójki",
+        "półścięgnisty",
+        "półbłoniasty"
+      ]
+    },
+    "medial-hamstrings-right": {
+      "where": "Prawe udo, z tyłu, od wewnątrz",
+      "simple": "Dwa mięśnie z tyłu uda, od wewnątrz: zginają kolano i odciągają nogę do tyłu przy każdym kroku.",
+      "aliases": [
+        "udo",
+        "tył uda",
+        "kolano",
+        "tył kolana",
+        "dwójki",
+        "półścięgnisty",
+        "półbłoniasty"
+      ]
+    },
+    "gastrocnemius-left": {
+      "where": "Lewa łydka",
+      "simple": "Główny mięsień łydki: przez ścięgno Achillesa unosi piętę, gdy stajesz na palcach, idziesz lub biegniesz.",
+      "aliases": [
+        "łydka",
+        "łydki",
+        "skurcz łydki",
+        "achilles",
+        "ścięgno achillesa",
+        "tył kolana",
+        "kolano"
+      ]
+    },
+    "gastrocnemius-right": {
+      "where": "Prawa łydka",
+      "simple": "Główny mięsień łydki: przez ścięgno Achillesa unosi piętę, gdy stajesz na palcach, idziesz lub biegniesz.",
+      "aliases": [
+        "łydka",
+        "łydki",
+        "skurcz łydki",
+        "achilles",
+        "ścięgno achillesa",
+        "tył kolana",
+        "kolano"
+      ]
+    },
+    "soleus-left": {
+      "where": "Lewa łydka, głęboko",
+      "simple": "Płaski mięsień ukryty głębiej w łydce: unosi piętę, a przy ruchu pomaga pompować krew z nóg w górę.",
+      "aliases": [
+        "łydka",
+        "łydki",
+        "skurcz łydki",
+        "achilles",
+        "ścięgno achillesa",
+        "płaszczkowaty"
+      ]
+    },
+    "soleus-right": {
+      "where": "Prawa łydka, głęboko",
+      "simple": "Płaski mięsień ukryty głębiej w łydce: unosi piętę, a przy ruchu pomaga pompować krew z nóg w górę.",
+      "aliases": [
+        "łydka",
+        "łydki",
+        "skurcz łydki",
+        "achilles",
+        "ścięgno achillesa",
+        "płaszczkowaty"
+      ]
+    },
+    "tibialis-anterior-left": {
+      "where": "Lewa goleń, z przodu",
+      "simple": "Mięsień z przodu goleni: unosi przód stopy, żeby palce nie zahaczały o ziemię, gdy idziesz.",
+      "aliases": [
+        "goleń",
+        "przód goleni",
+        "kostka",
+        "stopa",
+        "noga",
+        "piszczelowy"
+      ]
+    },
+    "tibialis-anterior-right": {
+      "where": "Prawa goleń, z przodu",
+      "simple": "Mięsień z przodu goleni: unosi przód stopy, żeby palce nie zahaczały o ziemię, gdy idziesz.",
+      "aliases": [
+        "goleń",
+        "przód goleni",
+        "kostka",
+        "stopa",
+        "noga",
+        "piszczelowy"
+      ]
+    },
+    "fibularis-longus-left": {
+      "where": "Lewa łydka, z boku",
+      "simple": "Mięsień z boku łydki: obraca stopę podeszwą na zewnątrz i pomaga utrzymać kostkę stabilnie.",
+      "aliases": [
+        "łydka",
+        "bok łydki",
+        "kostka",
+        "skręcona kostka",
+        "stopa",
+        "noga",
+        "strzałkowy"
+      ]
+    },
+    "fibularis-longus-right": {
+      "where": "Prawa łydka, z boku",
+      "simple": "Mięsień z boku łydki: obraca stopę podeszwą na zewnątrz i pomaga utrzymać kostkę stabilnie.",
+      "aliases": [
+        "łydka",
+        "bok łydki",
+        "kostka",
+        "skręcona kostka",
+        "stopa",
+        "noga",
+        "strzałkowy"
+      ]
+    },
+    "temporalis-left": {
+      "where": "Lewa skroń",
+      "simple": "Mięsień na skroni, który podnosi dolną szczękę przy gryzieniu; poczujesz go pod palcami, zaciskając zęby.",
+      "aliases": [
+        "skroń",
+        "głowa",
+        "ból głowy",
+        "szczęka",
+        "żucie",
+        "zaciskanie zębów",
+        "skroniowy"
+      ]
+    },
+    "temporalis-right": {
+      "where": "Prawa skroń",
+      "simple": "Mięsień na skroni, który podnosi dolną szczękę przy gryzieniu; poczujesz go pod palcami, zaciskając zęby.",
+      "aliases": [
+        "skroń",
+        "głowa",
+        "ból głowy",
+        "szczęka",
+        "żucie",
+        "zaciskanie zębów",
+        "skroniowy"
+      ]
+    },
+    "masseter-left": {
+      "where": "Lewy policzek, przy szczęce",
+      "simple": "Gruby mięsień żucia w tylnej części policzka: zamyka szczękę i zaciska zęby, gdy gryziesz.",
+      "aliases": [
+        "szczęka",
+        "policzek",
+        "twarz",
+        "żucie",
+        "zaciskanie zębów",
+        "zgrzytanie zębami",
+        "żwacz"
+      ]
+    },
+    "masseter-right": {
+      "where": "Prawy policzek, przy szczęce",
+      "simple": "Gruby mięsień żucia w tylnej części policzka: zamyka szczękę i zaciska zęby, gdy gryziesz.",
+      "aliases": [
+        "szczęka",
+        "policzek",
+        "twarz",
+        "żucie",
+        "zaciskanie zębów",
+        "zgrzytanie zębami",
+        "żwacz"
+      ]
+    },
+    "skull": {
+      "where": "Głowa",
+      "simple": "Kości głowy (bez dolnej szczęki): chronią mózg i oczy oraz nadają kształt twarzy.",
+      "aliases": [
+        "głowa",
+        "czaszka",
+        "czoło",
+        "potylica",
+        "skroń",
+        "twarz",
+        "nos",
+        "oko",
+        "oczodół",
+        "ucho"
+      ]
+    },
+    "mandible": {
+      "where": "Dolna szczęka i broda",
+      "simple": "Dolna szczęka: trzyma dolne zęby i porusza się, gdy jesz, mówisz albo ziewasz.",
+      "aliases": [
+        "szczęka",
+        "żuchwa",
+        "broda",
+        "zęby",
+        "ząb",
+        "twarz",
+        "żucie",
+        "staw skroniowo-żuchwowy"
+      ]
+    },
+    "vertebral-column": {
+      "where": "Od karku do krzyża, pośrodku",
+      "simple": "Słup kręgów od szyi do krzyża: podtrzymuje ciało, pozwala się schylać i chroni biegnący w nim rdzeń kręgowy.",
+      "aliases": [
+        "kręgosłup",
+        "plecy",
+        "kark",
+        "szyja",
+        "krzyż",
+        "lędźwie",
+        "dół pleców",
+        "między łopatkami",
+        "kręgi",
+        "dyski"
+      ]
+    },
+    "thoracic-cage": {
+      "where": "Klatka piersiowa",
+      "simple": "Żebra i mostek tworzą klatkę, która chroni serce i płuca i porusza się przy każdym oddechu.",
+      "aliases": [
+        "klatka piersiowa",
+        "żebra",
+        "żebro",
+        "mostek",
+        "pierś",
+        "bok"
+      ]
+    },
+    "clavicle-left": {
+      "where": "Od mostka do lewego barku",
+      "simple": "Obojczyk, kość pod szyją między mostkiem a barkiem: łączy rękę z resztą szkieletu i trzyma bark na miejscu.",
+      "aliases": [
+        "obojczyk",
+        "bark",
+        "przód barku",
+        "nasada szyi"
+      ]
+    },
+    "clavicle-right": {
+      "where": "Od mostka do prawego barku",
+      "simple": "Obojczyk, kość pod szyją między mostkiem a barkiem: łączy rękę z resztą szkieletu i trzyma bark na miejscu.",
+      "aliases": [
+        "obojczyk",
+        "bark",
+        "przód barku",
+        "nasada szyi"
+      ]
+    },
+    "scapula-left": {
+      "where": "Lewa strona pleców, u góry",
+      "simple": "Płaska, trójkątna kość na górze pleców; współtworzy staw barkowy i przesuwa się, gdy unosisz rękę.",
+      "aliases": [
+        "łopatka",
+        "łopatki",
+        "plecy",
+        "bark",
+        "staw barkowy",
+        "między łopatkami"
+      ]
+    },
+    "scapula-right": {
+      "where": "Prawa strona pleców, u góry",
+      "simple": "Płaska, trójkątna kość na górze pleców; współtworzy staw barkowy i przesuwa się, gdy unosisz rękę.",
+      "aliases": [
+        "łopatka",
+        "łopatki",
+        "plecy",
+        "bark",
+        "staw barkowy",
+        "między łopatkami"
+      ]
+    },
+    "humerus-left": {
+      "where": "Lewe ramię, od barku do łokcia",
+      "simple": "Długa kość ramienia, od barku do łokcia: jest częścią obu tych stawów i podtrzymuje całą rękę.",
+      "aliases": [
+        "ramię",
+        "kość ramienna",
+        "bark",
+        "staw barkowy",
+        "łokieć",
+        "ręka"
+      ]
+    },
+    "humerus-right": {
+      "where": "Prawe ramię, od barku do łokcia",
+      "simple": "Długa kość ramienia, od barku do łokcia: jest częścią obu tych stawów i podtrzymuje całą rękę.",
+      "aliases": [
+        "ramię",
+        "kość ramienna",
+        "bark",
+        "staw barkowy",
+        "łokieć",
+        "ręka"
+      ]
+    },
+    "radius-left": {
+      "where": "Lewe przedramię, od kciuka",
+      "simple": "Kość przedramienia po stronie kciuka; obraca się wokół sąsiedniej kości, gdy przekręcasz klucz w zamku.",
+      "aliases": [
+        "przedramię",
+        "nadgarstek",
+        "łokieć",
+        "ręka",
+        "kość promieniowa"
+      ]
+    },
+    "radius-right": {
+      "where": "Prawe przedramię, od kciuka",
+      "simple": "Kość przedramienia po stronie kciuka; obraca się wokół sąsiedniej kości, gdy przekręcasz klucz w zamku.",
+      "aliases": [
+        "przedramię",
+        "nadgarstek",
+        "łokieć",
+        "ręka",
+        "kość promieniowa"
+      ]
+    },
+    "ulna-left": {
+      "where": "Lewy łokieć i przedramię",
+      "simple": "Kość przedramienia po stronie małego palca; jej górny koniec to twardy czubek łokcia.",
+      "aliases": [
+        "przedramię",
+        "łokieć",
+        "czubek łokcia",
+        "nadgarstek",
+        "ręka",
+        "kość łokciowa"
+      ]
+    },
+    "ulna-right": {
+      "where": "Prawy łokieć i przedramię",
+      "simple": "Kość przedramienia po stronie małego palca; jej górny koniec to twardy czubek łokcia.",
+      "aliases": [
+        "przedramię",
+        "łokieć",
+        "czubek łokcia",
+        "nadgarstek",
+        "ręka",
+        "kość łokciowa"
+      ]
+    },
+    "hand-bones-left": {
+      "where": "Lewa dłoń, palce i nadgarstek",
+      "simple": "Drobne kości nadgarstka, dłoni i palców; dzięki nim możesz chwytać, pisać i zapinać guziki.",
+      "aliases": [
+        "dłoń",
+        "ręka",
+        "palce",
+        "palec",
+        "kciuk",
+        "nadgarstek",
+        "knykcie",
+        "kostki palców"
+      ]
+    },
+    "hand-bones-right": {
+      "where": "Prawa dłoń, palce i nadgarstek",
+      "simple": "Drobne kości nadgarstka, dłoni i palców; dzięki nim możesz chwytać, pisać i zapinać guziki.",
+      "aliases": [
+        "dłoń",
+        "ręka",
+        "palce",
+        "palec",
+        "kciuk",
+        "nadgarstek",
+        "knykcie",
+        "kostki palców"
+      ]
+    },
+    "pelvis": {
+      "where": "Biodra, krzyż i kość ogonowa",
+      "simple": "Kostny pierścień bioder i krzyża: przenosi ciężar tułowia na nogi i osłania pęcherz i inne narządy.",
+      "aliases": [
+        "miednica",
+        "biodro",
+        "biodra",
+        "krzyż",
+        "kość krzyżowa",
+        "kość ogonowa",
+        "kość łonowa",
+        "pachwina"
+      ]
+    },
+    "femur-left": {
+      "where": "Lewe udo, od biodra do kolana",
+      "simple": "Najdłuższa i najmocniejsza kość ciała, w udzie: łączy biodro z kolanem i dźwiga ciężar ciała.",
+      "aliases": [
+        "udo",
+        "kość udowa",
+        "biodro",
+        "kolano",
+        "noga"
+      ]
+    },
+    "femur-right": {
+      "where": "Prawe udo, od biodra do kolana",
+      "simple": "Najdłuższa i najmocniejsza kość ciała, w udzie: łączy biodro z kolanem i dźwiga ciężar ciała.",
+      "aliases": [
+        "udo",
+        "kość udowa",
+        "biodro",
+        "kolano",
+        "noga"
+      ]
+    },
+    "patella-left": {
+      "where": "Lewe kolano, z przodu",
+      "simple": "Płaska kość z przodu kolana: chroni staw i pomaga mięśniom uda prostować nogę.",
+      "aliases": [
+        "kolano",
+        "rzepka",
+        "przód kolana",
+        "staw kolanowy"
+      ]
+    },
+    "patella-right": {
+      "where": "Prawe kolano, z przodu",
+      "simple": "Płaska kość z przodu kolana: chroni staw i pomaga mięśniom uda prostować nogę.",
+      "aliases": [
+        "kolano",
+        "rzepka",
+        "przód kolana",
+        "staw kolanowy"
+      ]
+    },
+    "tibia-left": {
+      "where": "Lewa goleń, od kolana do kostki",
+      "simple": "Główna kość goleni, którą czujesz pod skórą z przodu; przenosi ciężar ciała z kolana na stopę.",
+      "aliases": [
+        "goleń",
+        "piszczel",
+        "kość piszczelowa",
+        "kolano",
+        "kostka",
+        "podudzie",
+        "noga"
+      ]
+    },
+    "tibia-right": {
+      "where": "Prawa goleń, od kolana do kostki",
+      "simple": "Główna kość goleni, którą czujesz pod skórą z przodu; przenosi ciężar ciała z kolana na stopę.",
+      "aliases": [
+        "goleń",
+        "piszczel",
+        "kość piszczelowa",
+        "kolano",
+        "kostka",
+        "podudzie",
+        "noga"
+      ]
+    },
+    "fibula-left": {
+      "where": "Lewa łydka, z boku, do kostki",
+      "simple": "Cienka kość z boku łydki; jej dolny koniec to kostka wystająca po zewnętrznej stronie nogi.",
+      "aliases": [
+        "strzałka",
+        "kość strzałkowa",
+        "łydka",
+        "kostka",
+        "kolano",
+        "podudzie",
+        "noga"
+      ]
+    },
+    "fibula-right": {
+      "where": "Prawa łydka, z boku, do kostki",
+      "simple": "Cienka kość z boku łydki; jej dolny koniec to kostka wystająca po zewnętrznej stronie nogi.",
+      "aliases": [
+        "strzałka",
+        "kość strzałkowa",
+        "łydka",
+        "kostka",
+        "kolano",
+        "podudzie",
+        "noga"
+      ]
+    },
+    "foot-bones-left": {
+      "where": "Lewa stopa",
+      "simple": "Kości stopy ułożone w łuki, które działają jak sprężyny: dźwigają ciężar ciała i amortyzują każdy krok.",
+      "aliases": [
+        "stopa",
+        "pięta",
+        "palce u nóg",
+        "duży palec",
+        "podeszwa",
+        "śródstopie",
+        "kostka",
+        "haluks",
+        "płaskostopie"
+      ]
+    },
+    "foot-bones-right": {
+      "where": "Prawa stopa",
+      "simple": "Kości stopy ułożone w łuki, które działają jak sprężyny: dźwigają ciężar ciała i amortyzują każdy krok.",
+      "aliases": [
+        "stopa",
+        "pięta",
+        "palce u nóg",
+        "duży palec",
+        "podeszwa",
+        "śródstopie",
+        "kostka",
+        "haluks",
+        "płaskostopie"
+      ]
+    },
+    "brain": {
+      "where": "Wnętrze głowy",
+      "simple": "Mózg odpowiada za myślenie, pamięć, mowę, uczucia i ruchy, a nawet steruje oddychaniem.",
+      "aliases": [
+        "mózg",
+        "głowa",
+        "mózgowie",
+        "móżdżek",
+        "pamięć",
+        "myślenie"
+      ]
+    },
+    "thyroid": {
+      "where": "Przód szyi, pod grdyką",
+      "simple": "Mały narząd w kształcie motyla na szyi; jego hormony ustalają tempo, w jakim ciało zużywa energię.",
+      "aliases": [
+        "tarczyca",
+        "szyja",
+        "przód szyi",
+        "hormony",
+        "wole",
+        "metabolizm"
+      ]
+    },
+    "trachea": {
+      "where": "Przód szyi i dalej za mostkiem",
+      "simple": "Rura, którą powietrze płynie z krtani do płuc; w klatce piersiowej rozdziela się na dwa oskrzela.",
+      "aliases": [
+        "tchawica",
+        "oskrzela",
+        "oddychanie",
+        "oddech",
+        "kaszel",
+        "szyja",
+        "przód szyi"
+      ]
+    },
+    "esophagus": {
+      "where": "Za mostkiem, od szyi do żołądka",
+      "simple": "Mięśniowa rura, która przesuwa połknięte jedzenie i picie z gardła do żołądka.",
+      "aliases": [
+        "przełyk",
+        "zgaga",
+        "refluks",
+        "połykanie",
+        "za mostkiem"
+      ]
+    },
+    "lung-left": {
+      "where": "Lewa strona klatki piersiowej",
+      "simple": "Płuco przekazuje tlen z wdychanego powietrza do krwi i odbiera z niej dwutlenek węgla, który wydychasz.",
+      "aliases": [
+        "płuco",
+        "płuca",
+        "oddychanie",
+        "oddech",
+        "kaszel",
+        "duszność",
+        "zadyszka",
+        "klatka piersiowa"
+      ]
+    },
+    "lung-right": {
+      "where": "Prawa strona klatki piersiowej",
+      "simple": "Płuco przekazuje tlen z wdychanego powietrza do krwi i odbiera z niej dwutlenek węgla, który wydychasz.",
+      "aliases": [
+        "płuco",
+        "płuca",
+        "oddychanie",
+        "oddech",
+        "kaszel",
+        "duszność",
+        "zadyszka",
+        "klatka piersiowa"
+      ]
+    },
+    "heart": {
+      "where": "Klatka piersiowa, lekko z lewej",
+      "simple": "Mięsień wielkości pięści, który bez przerwy pompuje krew do płuc i do całego ciała.",
+      "aliases": [
+        "serce",
+        "klatka piersiowa",
+        "kołatanie serca",
+        "tętno",
+        "puls",
+        "krążenie"
+      ]
+    },
+    "aorta": {
+      "where": "Od serca w dół, przy kręgosłupie",
+      "simple": "Największa tętnica ciała: wychodzi z serca i rozprowadza krew bogatą w tlen po całym organizmie.",
+      "aliases": [
+        "aorta",
+        "tętnica",
+        "naczynia krwionośne",
+        "krążenie",
+        "krew"
+      ]
+    },
+    "liver": {
+      "where": "Brzuch, prawa strona pod żebrami",
+      "simple": "Duży narząd pod prawymi żebrami: przerabia składniki jedzenia i leki, magazynuje energię i wytwarza żółć.",
+      "aliases": [
+        "wątroba",
+        "brzuch",
+        "podżebrze",
+        "żółć",
+        "trawienie"
+      ]
+    },
+    "gallbladder": {
+      "where": "Pod prawymi żebrami, z przodu",
+      "simple": "Woreczek pod wątrobą: przechowuje żółć, która pomaga trawić tłuszcze, i po posiłku wyciska ją do jelita.",
+      "aliases": [
+        "woreczek żółciowy",
+        "pęcherzyk żółciowy",
+        "kamienie żółciowe",
+        "kolka wątrobowa",
+        "żółć",
+        "brzuch",
+        "podżebrze"
+      ]
+    },
+    "stomach": {
+      "where": "Góra brzucha, bardziej po lewej",
+      "simple": "Worek, do którego trafia jedzenie z przełyku: miesza je z kwaśnym sokiem i zaczyna trawić.",
+      "aliases": [
+        "żołądek",
+        "brzuch",
+        "zgaga",
+        "nadbrzusze",
+        "dołek",
+        "niestrawność",
+        "trawienie"
+      ]
+    },
+    "spleen": {
+      "where": "Lewy bok, za dolnymi żebrami",
+      "simple": "Narząd pod lewymi żebrami, który filtruje krew, usuwa zużyte krwinki i pomaga zwalczać infekcje.",
+      "aliases": [
+        "śledziona",
+        "brzuch",
+        "podżebrze",
+        "bok",
+        "krew",
+        "odporność"
+      ]
+    },
+    "pancreas": {
+      "where": "Góra brzucha, za żołądkiem",
+      "simple": "Narząd za żołądkiem: wytwarza soki trawienne i insulinę, która pilnuje poziomu cukru we krwi.",
+      "aliases": [
+        "trzustka",
+        "brzuch",
+        "nadbrzusze",
+        "trawienie",
+        "cukier",
+        "cukrzyca",
+        "insulina"
+      ]
+    },
+    "kidney-left": {
+      "where": "Plecy po lewej, pod żebrami",
+      "simple": "Nerka filtruje krew i wytwarza mocz, którym usuwa z ciała nadmiar wody i zbędne substancje.",
+      "aliases": [
+        "nerka",
+        "nerki",
+        "mocz",
+        "lędźwie",
+        "bok",
+        "kamienie nerkowe"
+      ]
+    },
+    "kidney-right": {
+      "where": "Plecy po prawej, pod żebrami",
+      "simple": "Nerka filtruje krew i wytwarza mocz, którym usuwa z ciała nadmiar wody i zbędne substancje.",
+      "aliases": [
+        "nerka",
+        "nerki",
+        "mocz",
+        "lędźwie",
+        "bok",
+        "kamienie nerkowe"
+      ]
+    },
+    "small-intestine": {
+      "where": "Środek brzucha, wokół pępka",
+      "simple": "Długa, zwinięta rura w środku brzucha: tu jedzenie jest trawione, a jego składniki trafiają do krwi.",
+      "aliases": [
+        "jelito cienkie",
+        "jelita",
+        "brzuch",
+        "pępek",
+        "trawienie",
+        "wzdęcia",
+        "dwunastnica"
+      ]
+    },
+    "large-intestine": {
+      "where": "Brzuch, dookoła po brzegach",
+      "simple": "Ostatni odcinek jelit: odzyskuje wodę z resztek jedzenia i formuje z nich stolec.",
+      "aliases": [
+        "jelito grube",
+        "jelita",
+        "okrężnica",
+        "odbytnica",
+        "brzuch",
+        "wzdęcia",
+        "zaparcia",
+        "biegunka"
+      ]
+    },
+    "urinary-bladder": {
+      "where": "Dół brzucha, pośrodku",
+      "simple": "Rozciągliwy zbiornik w dole brzucha, który gromadzi mocz z nerek, aż pójdziesz do toalety.",
+      "aliases": [
+        "pęcherz",
+        "pęcherz moczowy",
+        "mocz",
+        "oddawanie moczu",
+        "podbrzusze",
+        "dół brzucha"
+      ]
+    }
+  },
+  "suggestions": [
+    {
+      "label": "Głowa",
+      "query": "głowa"
+    },
+    {
+      "label": "Kark",
+      "query": "kark"
+    },
+    {
+      "label": "Bark",
+      "query": "bark"
+    },
+    {
+      "label": "Plecy",
+      "query": "plecy"
+    },
+    {
+      "label": "Klatka piersiowa",
+      "query": "klatka piersiowa"
+    },
+    {
+      "label": "Serce",
+      "query": "serce"
+    },
+    {
+      "label": "Brzuch",
+      "query": "brzuch"
+    },
+    {
+      "label": "Biodro",
+      "query": "biodro"
+    },
+    {
+      "label": "Kolano",
+      "query": "kolano"
+    },
+    {
+      "label": "Stopa",
+      "query": "stopa"
+    }
+  ]
+}

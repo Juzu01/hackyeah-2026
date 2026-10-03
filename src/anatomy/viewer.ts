@@ -11,7 +11,7 @@ import { Box3, Group, MathUtils, Mesh, Plane, Ray, SphereGeometry, Vector3, type
 import type { PartInfo } from './content.ts'
 import { attachGestures, CameraRig, type View } from './controls.ts'
 import { createDepthState, depthAt, FOCUS_ZOOM, LAYER_ZOOM, layerOf, type DepthName, type LayerName } from './depth.ts'
-import { Hud } from './hud.ts'
+import { BodyHint, Hud } from './hud.ts'
 import { Announcer, HoverTag, Marker } from './labels.ts'
 import { AtlasMaterials, ORDER, setGhostWeight, setSolidWeight } from './materials.ts'
 import { buildAtlas, loadModel, type Atlas, type Part } from './model.ts'
@@ -40,6 +40,8 @@ export interface AnatomyViewer {
   /** Turns the body round: front ↔ back. */
   flip(): void
   reset(): void
+  /** A pulsing "touch here" hint on the body, or null to hide it. */
+  setHint(text: string | null): void
   /**
    * A sheet covering the bottom of the view (or a card on its right edge): the
    * picture shifts to the free area and the selection stays visible in it.
@@ -66,6 +68,7 @@ export interface AtlasHooks {
     azimuthDeg: number
     back: boolean
     selected: string | null
+    hint: string | null
     fps: number
     source: 'glb' | 'placeholder' | null
   }
@@ -115,6 +118,7 @@ class Viewer implements AnatomyViewer {
   private readonly options: ViewerOptions
   private readonly canvas = document.createElement('canvas')
   private readonly hud: Hud
+  private readonly hint: BodyHint
   private readonly marker: Marker
   private readonly hover: HoverTag
   private readonly announcer: Announcer
@@ -178,10 +182,10 @@ class Viewer implements AnatomyViewer {
       'Model 3D ciała człowieka. Przybliżanie odsłania głębsze warstwy: mięśnie, narządy i kości.',
     )
     host.append(this.canvas)
+    this.hint = new BodyHint(host)
     this.marker = new Marker(host)
     this.hover = new HoverTag(host)
-    const touch = matchMedia('(pointer: coarse)').matches || (!matchMedia('(pointer: fine)').matches && navigator.maxTouchPoints > 0)
-    this.hud = new Hud(host, { touch, hint: !this.params.has('nohint') })
+    this.hud = new Hud(host)
     this.announcer = new Announcer(host)
 
     this.renderer = createRenderer(this.canvas)
@@ -299,7 +303,7 @@ class Viewer implements AnatomyViewer {
     this.picker?.compile(camera)
   }
 
-  /** ?zoom=2.5&az=0&polar=5&layer=organs&sel=heart&focus=heart (plus ?nohint and ?noscan, read elsewhere). */
+  /** ?zoom=2.5&az=0&polar=5&layer=organs&sel=heart&focus=heart (plus ?noscan, read elsewhere). */
   private applyParams() {
     const num = (k: string) => {
       const v = Number.parseFloat(this.params.get(k) ?? '')
@@ -556,6 +560,22 @@ class Viewer implements AnatomyViewer {
       }
     }
     this.marker.update(at)
+    this.updateHint()
+  }
+
+  private readonly hintPx = { x: 0, y: 0 }
+
+  /** The first-visit hint sits on the chest, on whichever side faces the camera. */
+  private updateHint() {
+    if (!this.hint.text) return
+    const part = this.atlas?.byId.get('pectoralis-major-left') ?? this.atlas?.byId.get('heart')
+    let at: { x: number; y: number } | null = null
+    if (part && !this.selected) {
+      const inFront = this.toScreen(this.anchorOf(part, tmp2), this.hintPx)
+      const { x, y } = this.hintPx
+      if (inFront && x > 0 && x < this.width && y > this.chrome.top && y < this.height - this.chrome.bottom - 40) at = this.hintPx
+    }
+    this.hint.update(at)
   }
 
   // ── Picking ────────────────────────────────────────────────────────────
@@ -594,8 +614,7 @@ class Viewer implements AnatomyViewer {
   private gestures() {
     const rotateSpeed = () => Math.PI / Math.max(320, Math.min(this.width, this.height) * 0.9)
     const interacted = () => {
-      this.hud.dismissHint()
-      this.requestRender()
+        this.requestRender()
     }
     return {
       begin: () => {
@@ -712,7 +731,6 @@ class Viewer implements AnatomyViewer {
         return
     }
     e.preventDefault()
-    this.hud.dismissHint()
     this.requestRender()
   }
 
@@ -758,7 +776,6 @@ class Viewer implements AnatomyViewer {
     } else {
       this.announcer.say('')
     }
-    this.hud.dismissHint()
     this.options.onSelect?.(info)
     this.requestRender()
   }
@@ -818,7 +835,6 @@ class Viewer implements AnatomyViewer {
       },
       this.reducedMotion.matches ? 0 : LAYER_MS,
     )
-    this.hud.dismissHint()
     this.report()
     this.requestRender()
   }
@@ -829,7 +845,6 @@ class Viewer implements AnatomyViewer {
     // Snap to the nearest pure front or back view, then turn half way round.
     const back = Math.cos(v.azimuth) < 0
     this.rig.animateTo({ ...v, azimuth: back ? 0 : Math.PI, polar: 0 }, this.reducedMotion.matches ? 0 : FLIP_MS)
-    this.hud.dismissHint()
     this.requestRender()
   }
 
@@ -839,6 +854,11 @@ class Viewer implements AnatomyViewer {
       { target: this.rig.home.clone(), distance: this.rig.fitDistance, azimuth: 0, polar: 0 },
       this.reducedMotion.matches ? 0 : 600,
     )
+    this.requestRender()
+  }
+
+  setHint(text: string | null) {
+    this.hint.set(text)
     this.requestRender()
   }
 
@@ -893,6 +913,7 @@ class Viewer implements AnatomyViewer {
           azimuthDeg: round(MathUtils.radToDeg(this.rig.azimuth), 1),
           back,
           selected: this.selected?.id ?? null,
+          hint: this.hint.text,
           fps: Math.round(this.fps),
           source: this.source,
         }
@@ -939,7 +960,6 @@ class Viewer implements AnatomyViewer {
     cancelAnimationFrame(this.hoverFrame)
     this.occluder?.disconnect()
     for (const off of this.cleanup) off()
-    this.hud.destroy()
     if (this.stage) {
       this.stage.scene.traverse((o) => (o as Mesh).geometry?.dispose())
       this.stage.dispose()
@@ -965,6 +985,7 @@ export function mountAnatomyViewer(host: HTMLElement, options: ViewerOptions = {
     setLayer: (layer) => viewer.setLayer(layer),
     flip: () => viewer.flip(),
     reset: () => viewer.reset(),
+    setHint: (text) => viewer.setHint(text),
     setOccluder: (el) => viewer.setOccluder(el),
     destroy: () => {
       viewer.destroy()

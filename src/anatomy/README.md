@@ -24,7 +24,9 @@ The engine here is framework-free TypeScript on three.js. The app around it (tit
 | `placeholder.ts` | procedural stand-ins while `public/anatomy/body.glb` is missing |
 | `style.css` | tokens (on `:root`, shared with `src/atlas/ui.css`) and the viewer's overlays |
 
-And in `src/atlas/`: `TopBar.tsx`, `LayerSwitch.tsx`, `Sheet.tsx` (bottom sheet on phones, card on the right from 900px; drag handle, animated height), `PartCard.tsx`, `InfoSheet.tsx`, `install.ts` (install prompt / iOS instructions), `presence.ts` (exit animations), `ui.css`.
+Also here: `plain.ts` (plain-language copy from `data/plain.pl.json`: where a part is, one simple sentence, everyday aliases, search suggestions; falls back to the clinical copy) and `search.ts` (everyday-word search: diacritic-insensitive, endings tolerated on aliases and "where", side words like "lewa" put that side first; tests in `search.test.ts`).
+
+And in `src/atlas/`: `TopBar.tsx` (search, flip, info), `LayerSwitch.tsx` + `layers.tsx` (labels, icons, captions), `Sheet.tsx` (bottom sheet on phones, card on the right from 900px; drag handle, animated height), `PartCard.tsx` (plain words first, the atlas detail under "Więcej"), `SearchSheet.tsx`, `WelcomeSheet.tsx` (first visit, re-openable from info), `InfoSheet.tsx`, `install.ts`, `device.ts` (touch detection, safe localStorage, haptic tick), `presence.ts`, `ui.css`.
 
 Data: `data/catalog.json` (structures; id = GLB node name) and `data/content.pl.json` (copy).
 
@@ -37,6 +39,7 @@ const viewer = mountAnatomyViewer(host, {
 })
 viewer.select(id | null); viewer.focus(id); viewer.setLayer('organs'); viewer.flip(); viewer.reset()
 viewer.setOccluder(sheetElement | null)  // keeps the selection visible above (or beside) a sheet
+viewer.setHint('Dotknij dowolnego miejsca' | null)  // the pulsing first-visit hint on the chest
 viewer.destroy()
 ```
 
@@ -46,9 +49,9 @@ Pain reports store `painId(part.id)` (`src/pain/painId.ts`), not the atlas id: t
 
 ## Deep links and QA hooks
 
-URL params: `?zoom=2.5&az=0&polar=5&layer=organs&sel=heart&focus=heart&nohint&noscan`. With `sel` and a zoom above 1, the view centres on that part.
+URL params: `?zoom=2.5&az=0&polar=5&layer=organs&sel=heart&focus=heart&nohint&noscan&noonboard` (`noonboard` skips the welcome, `nohint` the pulsing hint). With `sel` and a zoom above 1, the view centres on that part.
 
-`window.__atlas`: `state()`, `parts()`, `project(id)`, `pick(x, y)`, `setView({ zoom, azimuthDeg, polarDeg, target })`, `labelRect()` (the sheet), plus `select`, `focus`, `setLayer`, `flip`, `reset`. See DESIGN.md §7.
+`window.__atlas`: `state()`, `parts()`, `project(id)`, `pick(x, y)`, `setView({ zoom, azimuthDeg, polarDeg, target })`, `labelRect()` (the sheet), plus `select`, `focus`, `setLayer`, `flip`, `reset`; `state().hint` is the hint's text. The app adds `window.__atlasUi`: `search(q)`, `openSearch(q)`, `welcome()`, `openWelcome()`. See DESIGN.md §7.
 
 Real WebGL screenshots and trusted touch input in headless Firefox:
 

@@ -9,7 +9,7 @@
 
 body {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .topbar,
@@ -56,7 +56,7 @@ body {
 .topbar-title {
   margin: 0;
   color: var(--ink-1);
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 650;
   letter-spacing: -0.015em;
 }
@@ -129,13 +129,17 @@ body {
 }
 .layers-btn {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   min-width: 0;
   padding: 0 4px;
   border: 0;
   border-radius: 12px;
   background: none;
   color: var(--ink-2);
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 500;
   white-space: nowrap;
   transition: color 200ms var(--ease-out);
@@ -228,7 +232,8 @@ body {
 .sheet-scrim.is-closing {
   animation: fade-out 220ms var(--ease-out) forwards;
 }
-.sheet-info {
+/* Modal sheets (info, search, welcome) sit above their scrim. */
+.sheet-modal {
   z-index: 30;
 }
 @keyframes fade-in {
@@ -296,7 +301,7 @@ body {
 .tag {
   margin: 0 0 6px;
   color: var(--accent);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   line-height: 1.3;
@@ -316,7 +321,7 @@ body {
 .card-name {
   margin: 0;
   color: var(--ink-1);
-  font-size: 21px;
+  font-size: 1.3125rem;
   font-weight: 650;
   letter-spacing: -0.015em;
   line-height: 1.2;
@@ -325,7 +330,7 @@ body {
 .card-latin {
   margin: 3px 0 0;
   color: var(--ink-2);
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-style: italic;
   line-height: 1.35;
 }
@@ -359,7 +364,7 @@ body {
   border-radius: var(--radius);
   background: var(--accent);
   color: var(--accent-ink);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 650;
   letter-spacing: 0.005em;
   transition:
@@ -379,7 +384,7 @@ body {
 .card-desc {
   margin: 12px 0 0;
   color: var(--ink-2);
-  font-size: 15.5px;
+  font-size: 1rem;
   line-height: 1.5;
 }
 .card-desc.is-clamped {
@@ -400,7 +405,7 @@ body {
   border: 0;
   background: none;
   color: var(--accent);
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 600;
 }
 
@@ -410,13 +415,13 @@ body {
 .card-more h3 {
   margin: 14px 0 4px;
   color: var(--ink-1);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
 }
 .card-more p {
   margin: 0;
   color: var(--ink-2);
-  font-size: 15px;
+  font-size: 1rem;
   line-height: 1.5;
 }
 .card-more ul {
@@ -428,7 +433,7 @@ body {
   position: relative;
   padding: 3px 0 3px 16px;
   color: var(--ink-2);
-  font-size: 15px;
+  font-size: 1rem;
   line-height: 1.45;
 }
 .card-more li::before {
@@ -455,7 +460,7 @@ body {
 .pain-q {
   margin: 22px 0 10px;
   color: var(--ink-1);
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 600;
 }
 .pain-levels {
@@ -471,7 +476,7 @@ body {
   border-radius: 12px;
   background: var(--surface-2);
   color: var(--ink-1);
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   transition:
@@ -503,7 +508,7 @@ body {
   justify-content: space-between;
   margin: 8px 0 0;
   color: var(--ink-3);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .pain-types {
@@ -518,7 +523,7 @@ body {
   border-radius: 22px;
   background: var(--surface-2);
   color: var(--ink-2);
-  font-size: 15px;
+  font-size: 1rem;
   transition:
     background-color 160ms var(--ease-out),
     border-color 160ms var(--ease-out),
@@ -531,13 +536,13 @@ body {
 }
 .pain-muted {
   color: var(--ink-3);
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 
 .pain-status {
   min-height: 20px;
   margin: 8px 0 0;
-  font-size: 14px;
+  font-size: 0.875rem;
   text-align: center;
 }
 .pain-status .is-ok {
@@ -561,14 +566,14 @@ body {
   align-items: center;
   gap: 12px;
   min-height: 40px;
-  font-size: 15px;
+  font-size: 1rem;
 }
 .pain-badge {
   flex: none;
   width: 30px;
   padding: 3px 0;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   text-align: center;
@@ -584,18 +589,18 @@ body {
 .pain-date {
   flex: none;
   color: var(--ink-3);
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-variant-numeric: tabular-nums;
 }
 .pain-off {
   margin: 16px 0 4px;
   color: var(--ink-2);
-  font-size: 15px;
+  font-size: 1rem;
   line-height: 1.5;
 }
 .pain-off code {
   color: var(--ink-1);
-  font-size: 13.5px;
+  font-size: 0.84375rem;
 }
 
 /* ── Info ──────────────────────────────────────────────────────────── */
@@ -603,13 +608,13 @@ body {
 .info-lead {
   margin: 12px 0 0;
   color: var(--ink-2);
-  font-size: 15.5px;
+  font-size: 1rem;
   line-height: 1.5;
 }
 .info-heading {
   margin: 26px 0 10px;
   color: var(--ink-1);
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 600;
 }
 .info-howto {
@@ -623,7 +628,7 @@ body {
   gap: 14px;
   min-height: 48px;
   color: var(--ink-2);
-  font-size: 15px;
+  font-size: 1rem;
   line-height: 1.4;
 }
 .info-icon {
@@ -639,7 +644,7 @@ body {
 .info-text {
   margin: 0;
   color: var(--ink-2);
-  font-size: 15px;
+  font-size: 1rem;
   line-height: 1.5;
 }
 .info-text a {
@@ -649,14 +654,14 @@ body {
 .info-note {
   margin: 10px 0 0;
   color: var(--ink-3);
-  font-size: 13.5px;
+  font-size: 0.84375rem;
   line-height: 1.45;
 }
 .info-steps {
   margin: 0;
   padding-left: 22px;
   color: var(--ink-2);
-  font-size: 15px;
+  font-size: 1rem;
   line-height: 1.7;
 }
 .info-steps svg {
@@ -671,7 +676,7 @@ body {
 .info-build {
   margin: 22px 0 4px;
   color: var(--ink-3);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
 }
 
@@ -690,7 +695,7 @@ body {
   border-radius: 12px;
   background: var(--surface);
   color: var(--ink-1);
-  font-size: 14px;
+  font-size: 0.875rem;
   text-align: center;
 }
 
@@ -704,4 +709,239 @@ body {
     transition: none !important;
     animation-duration: 1ms !important;
   }
+}
+
+/* ── Plain-language card, search, welcome, layer caption, pain scale ─ */
+
+/* Where the part is ("Lewe udo, z przodu"): the tag's colour, in sentence case. */
+.card-where {
+  font-size: 0.9375rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.layer-caption {
+  position: fixed;
+  bottom: calc(var(--chrome-bottom) + 10px);
+  left: 50%;
+  z-index: 11;
+  width: max-content;
+  max-width: calc(100% - 2 * var(--gutter));
+  margin: 0;
+  padding: 9px 16px;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-1);
+  font-size: 0.9375rem;
+  text-align: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+  animation: fade-in 200ms var(--ease-out);
+}
+
+@media (max-width: 899px) {
+  /* Search opens from the top, so the keyboard covers only the end of the results. */
+  .sheet-search {
+    top: calc(var(--safe-top) + 10px);
+  }
+  .sheet-search .sheet-body {
+    max-height: calc(100dvh - var(--safe-top) - 34px - var(--safe-bottom));
+  }
+}
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 0 14px;
+  border: 1px solid var(--hair-strong);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--ink-3);
+}
+.search-field:focus-within {
+  border-color: var(--accent);
+}
+.search-field input {
+  flex: 1;
+  min-width: 0;
+  height: 52px;
+  border: 0;
+  background: none;
+  color: var(--ink-1);
+  font: inherit;
+  font-size: 1.125rem;
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+}
+.search-field input:focus-visible {
+  outline: none;
+}
+.search-field input::placeholder {
+  color: var(--ink-3);
+}
+.search-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.search-empty {
+  margin: 18px 0 4px;
+  color: var(--ink-2);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.search-results {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.search-result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 64px;
+  padding: 8px 2px;
+  border: 0;
+  border-bottom: 1px solid var(--hair);
+  background: none;
+  color: inherit;
+  text-align: left;
+}
+.search-result:active {
+  background: var(--surface-2);
+}
+.search-result-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.search-result-name {
+  color: var(--ink-1);
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+.search-result-where {
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+.search-result-kind {
+  flex: none;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 0.8125rem;
+}
+
+.onboard-lead {
+  margin: 10px 0 0;
+  color: var(--ink-1);
+  font-size: 1.125rem;
+  line-height: 1.45;
+}
+.onboard-tips {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.onboard-tips li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 60px;
+  color: var(--ink-2);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+.onboard-tips strong {
+  color: var(--ink-1);
+  font-weight: 600;
+}
+.onboard-art {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  background: var(--surface-2);
+  color: var(--accent);
+}
+.onboard-art-pain {
+  padding: 0 10px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 0.75rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.pain-scale-groups {
+  display: grid;
+  gap: 8px;
+}
+.pain-scale-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.pain-scale-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-1);
+  font-size: 1rem;
+  font-weight: 500;
+}
+.pain-scale-face {
+  display: grid;
+}
+.pain-scale-levels {
+  display: grid;
+  grid-template-columns: repeat(3, 52px);
+  gap: 6px;
+}
+
+.pain-saved {
+  padding-top: 10px;
+  text-align: center;
+}
+.pain-saved-icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--accent);
+}
+.pain-saved-title {
+  margin: 12px 0 4px;
+  color: var(--ink-1);
+  font-size: 1.375rem;
+  font-weight: 650;
+}
+.pain-saved-text {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.pain-saved .pain-history {
+  text-align: left;
+}
+.pain-again {
+  display: flex;
+  margin: 6px auto 0;
 }

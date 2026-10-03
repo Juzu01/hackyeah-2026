@@ -1,14 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { PartInfo } from './anatomy/content.ts'
 import type { LayerName } from './anatomy/depth.ts'
+import { search } from './anatomy/search.ts'
 import { mountAnatomyViewer, type AnatomyViewer, type ViewerState } from './anatomy/viewer.ts'
+import { isTouchDevice, memory, tick } from './atlas/device.ts'
 import InfoSheet from './atlas/InfoSheet.tsx'
+import { LAYERS } from './atlas/layers.tsx'
 import LayerSwitch from './atlas/LayerSwitch.tsx'
 import PartCard from './atlas/PartCard.tsx'
 import { usePresence } from './atlas/presence.ts'
+import SearchSheet from './atlas/SearchSheet.tsx'
 import Sheet from './atlas/Sheet.tsx'
 import TopBar from './atlas/TopBar.tsx'
 import './atlas/ui.css'
+import WelcomeSheet from './atlas/WelcomeSheet.tsx'
 import { clearDemoHistory, seedDemoHistory } from './lib/painReports.ts'
 import { useMediaQuery } from './lib/useMediaQuery.ts'
 import PainPanel from './pain/PainPanel.tsx'
@@ -19,6 +24,25 @@ const commitSha: string | undefined = import.meta.env.VITE_COMMIT_SHA
 // The ?demo action runs once per page load (StrictMode runs effects twice in dev).
 let demoParamHandled = false
 
+const params = new URLSearchParams(location.search)
+/** Remembered on this device: the welcome was seen, a part was tapped once. */
+const WELCOMED = 'atlas-welcomed'
+const TAPPED = 'atlas-tapped'
+
+/** Test hooks for the app's own pieces (the viewer's are window.__atlas). */
+interface AtlasUiHooks {
+  search(query: string): { id: string; name: string; where: string; kind: string }[]
+  openSearch(query?: string): void
+  welcome(): boolean
+  openWelcome(): void
+}
+
+declare global {
+  interface Window {
+    __atlasUi?: AtlasUiHooks
+  }
+}
+
 function App() {
   const stage = useRef<HTMLDivElement>(null)
   const viewer = useRef<AnatomyViewer | null>(null)
@@ -28,30 +52,44 @@ function App() {
   const [mode, setMode] = useState<'card' | 'pain'>('card')
   const [expanded, setExpanded] = useState(false)
   const [info, setInfo] = useState(false)
+  const [searching, setSearching] = useState<string | null>(null)
+  const [welcome, setWelcome] = useState(() => memory.get(WELCOMED) !== '1' && !params.has('noonboard'))
+  const [tapped, setTapped] = useState(() => memory.get(TAPPED) === '1' || params.has('nohint'))
+  const [caption, setCaption] = useState<string | null>(null)
   // Bumped when the history changes outside the panel, so an open panel reloads it.
   const [dataVersion, setDataVersion] = useState(0)
   const [notice, setNotice] = useState<string | null>(null)
   const wide = useMediaQuery('(min-width: 900px)')
-  // Same test as the viewer's hint: a coarse pointer, or no fine one on a touch screen.
-  const coarse = useMediaQuery('(pointer: coarse)')
-  const fine = useMediaQuery('(pointer: fine)')
-  const touch = coarse || (!fine && navigator.maxTouchPoints > 0)
+  const [touch] = useState(isTouchDevice)
 
   const [part, closing] = usePresence(selected)
   const [infoShown, infoClosing] = usePresence(info ? true : null)
+  const [searchShown, searchClosing] = usePresence(searching)
+  const [welcomeShown, welcomeClosing] = usePresence(welcome ? true : null)
 
   useEffect(() => {
     const handle = mountAnatomyViewer(stage.current!, {
       onSelect: (p) => {
         setSelected(p)
         setExpanded(false)
-        if (!p) setMode('card')
+        if (!p) {
+          setMode('card')
+          return
+        }
+        tick()
+        setTapped(true)
+        memory.set(TAPPED, '1')
       },
       onChange: setView,
     })
     viewer.current = handle
     return () => handle.destroy()
   }, [])
+
+  // Until the first tap, a soft pulse on the body says where to start (not while the welcome is up).
+  useEffect(() => {
+    viewer.current?.setHint(!tapped && !welcome ? (touch ? 'Dotknij dowolnego miejsca' : 'Kliknij dowolne miejsce') : null)
+  }, [tapped, welcome, touch])
 
   // The viewer keeps the selected part visible above (or beside) the sheet.
   const sheetRef = useCallback((el: HTMLElement | null) => viewer.current?.setOccluder(el), [])
@@ -62,10 +100,40 @@ function App() {
     else if (expanded) setExpanded(false)
     else deselect()
   }
+  const finishWelcome = () => {
+    setWelcome(false)
+    memory.set(WELCOMED, '1')
+  }
+  const pickLayer = (layer: LayerName) => {
+    viewer.current?.setLayer(layer)
+    setCaption(LAYERS[layer].caption)
+  }
+  const pickResult = (id: string) => {
+    setSearching(null)
+    viewer.current?.focus(id)
+  }
+
+  useEffect(() => {
+    if (!caption) return
+    const timer = setTimeout(() => setCaption(null), 2200)
+    return () => clearTimeout(timer)
+  }, [caption])
+
+  useEffect(() => {
+    window.__atlasUi = {
+      search: (q) => search(q),
+      openSearch: (q = '') => setSearching(q),
+      welcome: () => !!document.querySelector('.onboard'),
+      openWelcome: () => setWelcome(true),
+    }
+    return () => {
+      delete window.__atlasUi
+    }
+  }, [])
 
   // Presentations: ?demo fills this browser's history with ~30 days of example reports, ?demo=clear removes them.
   useEffect(() => {
-    const demo = new URLSearchParams(location.search).get('demo')
+    const demo = params.get('demo')
     if (demo === null || demoParamHandled) return
     demoParamHandled = true
     const run = demo === 'clear'
@@ -88,12 +156,18 @@ function App() {
   return (
     <>
       <div ref={stage} />
-      <TopBar back={view.back} onFlip={() => viewer.current?.flip()} onInfo={() => setInfo(true)} />
-      <LayerSwitch
-        value={view.layer}
-        onChange={(layer: LayerName) => viewer.current?.setLayer(layer)}
-        hidden={!!selected && !wide}
+      <TopBar
+        back={view.back}
+        onSearch={() => setSearching('')}
+        onFlip={() => viewer.current?.flip()}
+        onInfo={() => setInfo(true)}
       />
+      <LayerSwitch value={view.layer} onChange={pickLayer} hidden={!!selected && !wide} />
+      {caption && !selected && (
+        <p className="layer-caption" role="status">
+          {caption}
+        </p>
+      )}
 
       {part && (
         <Sheet
@@ -113,15 +187,46 @@ function App() {
                 onClose={deselect}
               />
             ) : (
-              <PainPanel key={`${part.id}:${dataVersion}`} part={part} onBack={() => setMode('card')} />
+              <PainPanel
+                key={`${part.id}:${dataVersion}`}
+                part={part}
+                onBack={() => setMode('card')}
+                onDone={deselect}
+              />
             )}
           </div>
         </Sheet>
       )}
 
+      {searchShown !== null && (
+        <Sheet
+          label="Szukaj części ciała"
+          modal
+          closing={searchClosing}
+          onDismiss={() => setSearching(null)}
+          className="sheet-search"
+        >
+          <SearchSheet initial={searchShown} onPick={pickResult} onClose={() => setSearching(null)} />
+        </Sheet>
+      )}
+
       {infoShown && (
         <Sheet label="Informacje" modal closing={infoClosing} onDismiss={() => setInfo(false)} className="sheet-info">
-          <InfoSheet touch={touch} build={commitSha} onClose={() => setInfo(false)} />
+          <InfoSheet
+            touch={touch}
+            build={commitSha}
+            onClose={() => setInfo(false)}
+            onWelcome={() => {
+              setInfo(false)
+              setWelcome(true)
+            }}
+          />
+        </Sheet>
+      )}
+
+      {welcomeShown && (
+        <Sheet label="Witaj" modal closing={welcomeClosing} onDismiss={finishWelcome} className="sheet-onboard">
+          <WelcomeSheet touch={touch} onDone={finishWelcome} />
         </Sheet>
       )}
 

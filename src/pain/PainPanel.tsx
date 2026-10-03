@@ -1,14 +1,21 @@
 // Reporting pain in the selected part: rate it 1–10, pick its types, save to Supabase.
 // Shown in the atlas's sheet in place of the part's card; "back" returns to the card.
+// After saving it says so plainly, shows the latest entries and offers the way back.
 
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import type { PartInfo } from '../anatomy/content.ts'
-import { BackIcon } from '../atlas/icons.tsx'
+import { BackIcon, CheckIcon, PainFace } from '../atlas/icons.tsx'
 import { fetchPainHistory, fetchPainTypes, savePainReport, type PainEntry, type PainType } from '../lib/painReports.ts'
 import { supabase } from '../lib/supabase.ts'
 import { painId } from './painId.ts'
 
-const LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+/** The 1–10 scale in plain words, so nobody has to guess what a 6 means. */
+const GROUPS = [
+  { label: 'Lekki', levels: [1, 2, 3] },
+  { label: 'Umiarkowany', levels: [4, 5, 6] },
+  { label: 'Silny', levels: [7, 8] },
+  { label: 'Bardzo silny', levels: [9, 10] },
+] as const
 
 /** Green (1) → red (10). */
 const levelColor = (n: number) => `hsl(${120 - ((n - 1) * 120) / 9} 70% 42%)`
@@ -28,9 +35,11 @@ function subtitleOf(part: PartInfo): string {
 interface Props {
   part: PartInfo
   onBack: () => void
+  /** Back to the body (closes the sheet). */
+  onDone: () => void
 }
 
-export default function PainPanel({ part, onBack }: Props) {
+export default function PainPanel({ part, onBack, onDone }: Props) {
   const bodyPartId = painId(part.id)
   const subtitle = subtitleOf(part)
   const [painTypes, setPainTypes] = useState<PainType[]>([])
@@ -55,6 +64,12 @@ export default function PainPanel({ part, onBack }: Props) {
     }
   }, [bodyPartId])
 
+  // The saved state starts at the top of the sheet, wherever the form was scrolled to.
+  const root = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (status.kind === 'saved') root.current?.closest('.sheet-body')?.scrollTo({ top: 0 })
+  }, [status.kind])
+
   const toggleType = (id: string) =>
     setSelectedTypes((ids) => (ids.includes(id) ? ids.filter((t) => t !== id) : [...ids, id]))
 
@@ -75,7 +90,7 @@ export default function PainPanel({ part, onBack }: Props) {
   }
 
   return (
-    <div className="pain">
+    <div ref={root} className="pain">
       <header className="pain-head">
         <button type="button" className="icon-btn" aria-label="Wróć do opisu" onClick={onBack}>
           <BackIcon />
@@ -87,7 +102,24 @@ export default function PainPanel({ part, onBack }: Props) {
         </div>
       </header>
 
-      {!supabase ? (
+      {status.kind === 'saved' ? (
+        <div className="pain-saved" role="status">
+          <span className="pain-saved-icon" aria-hidden="true">
+            <CheckIcon />
+          </span>
+          <h3 className="pain-saved-title">Zapisano</h3>
+          <p className="pain-saved-text">Możesz wrócić tu w każdej chwili i dodać kolejny wpis.</p>
+          {history.length > 0 && <HistoryList history={history} />}
+          <div className="sheet-actions">
+            <button type="button" className="btn-primary" onClick={onDone}>
+              Wróć do ciała
+            </button>
+            <button type="button" className="more-toggle pain-again" onClick={() => setStatus({ kind: 'idle' })}>
+              Dodaj kolejny wpis
+            </button>
+          </div>
+        </div>
+      ) : !supabase ? (
         <p className="pain-off">
           Zapisywanie bólu jest wyłączone: brak konfiguracji Supabase. Skopiuj <code>.env.example</code> do{' '}
           <code>.env.local</code> i uruchom ponownie <code>npm run dev</code>.
@@ -95,27 +127,33 @@ export default function PainPanel({ part, onBack }: Props) {
       ) : (
         <>
           <h3 className="pain-q">Jak mocno boli?</h3>
-          <div className="pain-levels" role="group" aria-label="Natężenie bólu od 1 do 10">
-            {LEVELS.map((n) => {
-              const on = intensity === n
-              return (
-                <button
-                  key={n}
-                  type="button"
-                  aria-pressed={on}
-                  onClick={() => setIntensity(n)}
-                  style={{ '--level': levelColor(n), '--level-ink': levelInk(n) } as CSSProperties}
-                  className="pain-level"
-                >
-                  {n}
-                </button>
-              )
-            })}
+          <div className="pain-scale-groups" role="group" aria-label="Natężenie bólu od 1 do 10">
+            {GROUPS.map((g, i) => (
+              <div key={g.label} className="pain-scale-group">
+                <span className="pain-scale-label">
+                  <span className="pain-scale-face" style={{ color: levelColor(g.levels[g.levels.length - 1]) }}>
+                    <PainFace level={i as 0 | 1 | 2 | 3} />
+                  </span>
+                  {g.label}
+                </span>
+                <span className="pain-scale-levels">
+                  {g.levels.map((n) => (
+                    <button
+                      key={n}
+                      type="button"
+                      aria-pressed={intensity === n}
+                      aria-label={`${n}: ${g.label.toLowerCase()}`}
+                      onClick={() => setIntensity(n)}
+                      style={{ '--level': levelColor(n), '--level-ink': levelInk(n) } as CSSProperties}
+                      className="pain-level"
+                    >
+                      {n}
+                    </button>
+                  ))}
+                </span>
+              </div>
+            ))}
           </div>
-          <p className="pain-scale">
-            <span>1 · lekki</span>
-            <span>10 · nie do zniesienia</span>
-          </p>
 
           <h3 className="pain-q">Jaki to ból?</h3>
           <div className="pain-types">
@@ -135,29 +173,32 @@ export default function PainPanel({ part, onBack }: Props) {
               {status.kind === 'saving' ? 'Zapisuję…' : 'Zapisz'}
             </button>
             <p role="status" className="pain-status">
-              {status.kind === 'saved' && <span className="is-ok">Zapisano.</span>}
               {status.kind === 'error' && <span className="is-error">{status.message}</span>}
             </p>
           </div>
 
-          {history.length > 0 && (
-            <div className="pain-history">
-              <h3 className="pain-q">Twoja historia</h3>
-              <ul>
-                {history.map((h) => (
-                  <li key={h.id}>
-                    <span className="pain-badge" style={{ backgroundColor: levelColor(h.intensity), color: levelInk(h.intensity) }}>
-                      {h.intensity}
-                    </span>
-                    <span className="pain-types-text">{h.types.map((t) => t.name_pl.toLowerCase()).join(', ')}</span>
-                    <span className="pain-date">{dateFormat.format(h.reportedAt)}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {history.length > 0 && <HistoryList history={history} />}
         </>
       )}
+    </div>
+  )
+}
+
+function HistoryList({ history }: { history: PainEntry[] }) {
+  return (
+    <div className="pain-history">
+      <h3 className="pain-q">Ostatnie wpisy</h3>
+      <ul>
+        {history.map((h) => (
+          <li key={h.id}>
+            <span className="pain-badge" style={{ backgroundColor: levelColor(h.intensity), color: levelInk(h.intensity) }}>
+              {h.intensity}
+            </span>
+            <span className="pain-types-text">{h.types.map((t) => t.name_pl.toLowerCase()).join(', ')}</span>
+            <span className="pain-date">{dateFormat.format(h.reportedAt)}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

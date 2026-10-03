@@ -15,7 +15,11 @@ import { join } from 'node:path'
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
-export async function openPage(url, { width = 390, height = 844, dpr = 2, waitMs = 1500 } = {}) {
+/**
+ * `preload`: optional function source run in the page before any of its scripts
+ * (e.g. to stub a backend with a fake fetch), via script.addPreloadScript.
+ */
+export async function openPage(url, { width = 390, height = 844, dpr = 2, waitMs = 1500, preload } = {}) {
   const port = 9400 + Math.floor(Math.random() * 2000)
   const profile = mkdtempSync(join(tmpdir(), 'ff-bidi-'))
   const ff = spawn('firefox', ['--headless', '--no-remote', '--profile', profile, `--remote-debugging-port=${port}`], {
@@ -63,6 +67,7 @@ export async function openPage(url, { width = 390, height = 844, dpr = 2, waitMs
   // The initial tab is privileged in headless mode; viewport emulation needs a fresh one.
   const { context } = await send('browsingContext.create', { type: 'tab' })
   await send('browsingContext.setViewport', { context, viewport: { width, height }, devicePixelRatio: dpr })
+  if (preload) await send('script.addPreloadScript', { functionDeclaration: preload, contexts: [context] })
   await send('browsingContext.navigate', { context, url, wait: 'complete' })
   await sleep(waitMs)
 
