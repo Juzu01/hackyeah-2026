@@ -191,9 +191,12 @@ a {
     radial-gradient(80% 30% at 85% 100%, rgb(192 228 178 / 0.07), transparent 70%),
     var(--bg);
 }
-.app[data-view='cialo'] .top,
-.app[data-view='objawy'] .top {
+/* The header (logo, name, sign-in) belongs to Rozmowa only; the other tabs start with their own title. */
+.app:not([data-view='rozmowa']) .top {
   display: none;
+}
+.app:not([data-view='rozmowa']) .page {
+  padding-top: calc(var(--sat) + 28px);
 }
 
 .inapp-banner {
