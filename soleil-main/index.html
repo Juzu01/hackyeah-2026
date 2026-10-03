@@ -294,8 +294,16 @@
   .pet-select-label { font-weight: 700; color: var(--text); font-size: 0.9rem; }
   .daily-loading { text-align: center; padding: 8px 0; color: var(--muted); font-size: 0.78rem; }
   #clerk-sign-in { min-height: 200px; }
+  /* Okno logowania Clerka dopasowane do popupu: bez karty w karcie i bez przewijania, także na telefonie */
+  #clerk-sign-in { width: 100%; }
+  #clerk-sign-in p { margin-bottom: 0; }
+  #clerk-sign-in .cl-card { width: 100%; max-width: 100%; margin: 0; padding: 4px 0 0; gap: 18px; background: transparent; border: none; border-radius: 0; box-shadow: none; }
+  #clerk-sign-in .cl-headerTitle { font-size: 1.1rem; }
+  #clerk-sign-in .cl-main { gap: 16px; }
+  #clerk-sign-in .cl-card > div:last-child:not(.cl-footer) { position: static; transform: none; align-self: center; align-items: center; gap: 4px; background: none; padding: 0; color: var(--muted); opacity: 0.6; }
   * { scrollbar-width: thin; scrollbar-color: var(--accent2) transparent; }
 </style>
+<link rel="stylesheet" href="voice.css">
 </head>
 <body>
 
@@ -469,6 +477,7 @@
     <div class="user-menu-email" id="userEmail">—</div>
   </div>
   <button class="user-menu-btn" onclick="openLanguage(); toggleUserMenu()">🌍 <span id="menuLangLabel">Język</span> <span id="menuLangFlag">🇵🇱</span></button>
+  <button class="user-menu-btn" onclick="openVoicePicker(); toggleUserMenu()">🎙️ <span id="menuVoiceLabel">Głos Soleil</span></button>
   <button class="user-menu-btn" id="pushMenuBtn" onclick="document.getElementById('userMenu').classList.remove('visible'); setTimeout(togglePushNotifications, 400)">🔔 <span id="menuPushLabel">Włącz powiadomienia</span></button>
   <button class="user-menu-btn premium-menu" id="premiumMenuBtn" onclick="openPremium()" style="display:none">✨ <span id="menuPremiumLabel">Przejdź na Premium</span></button>
   <button class="user-menu-btn" onclick="openReferral(); toggleUserMenu()">🎁 <span id="menuReferralLabel">Poleć znajomym</span></button>
@@ -568,6 +577,9 @@
   <div class="input-area">
     <div class="input-wrapper">
       <textarea id="userInput" placeholder="Napisz mi o swoim dniu..." rows="1"></textarea>
+      <button class="send-btn" id="voiceCallBtn" onclick="openVoiceCall()" title="Porozmawiaj z Soleil" aria-label="Porozmawiaj z Soleil">
+        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      </button>
       <button class="send-btn" onclick="sendMessage()">
         <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
       </button>
@@ -1004,6 +1016,7 @@ function updateInterfaceLanguage(lang) {
   if (document.getElementById('menuPremiumLabel')) document.getElementById('menuPremiumLabel').textContent = menuPrem[lang] || menuPrem.pl;
   if (document.getElementById('menuSignOutLabel')) document.getElementById('menuSignOutLabel').textContent = menuOut[lang] || menuOut.pl;
   if (document.getElementById('menuReferralLabel')) document.getElementById('menuReferralLabel').textContent = menuRef[lang] || menuRef.pl;
+  if (typeof updateVoiceLanguage === 'function') updateVoiceLanguage();
 }
 
 // History API
@@ -1114,6 +1127,7 @@ function updateAuthUI(user) {
     badge.style.display = 'none';
     document.getElementById('premiumBadge').style.display = 'none';
   }
+  if (typeof updateVoiceAuth === 'function') updateVoiceAuth(user);
 }
 
 function openAuth() { pushOverlayState('authOverlay'); document.getElementById('authOverlay').classList.add('visible'); if (clerk) clerk.mountSignIn(document.getElementById('clerk-sign-in'), { routing: 'virtual', appearance: { variables: { colorPrimary: '#e8845a', colorBackground: '#fdf6ee', borderRadius: '12px', fontFamily: 'Lato, sans-serif' } } }); }
@@ -2106,5 +2120,6 @@ window.__clerk_init = initClerk;
 document.querySelector('script[data-clerk-publishable-key]').onload = initClerk;
 window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangUI(); updateInterfaceLanguage(currentLanguage); loadDailyQuote(); });
 </script>
+<script src="voice.js"></script>
 </body>
 </html>
