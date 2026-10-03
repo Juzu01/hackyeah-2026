@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
-import type { BodyPart } from './body/anatomy.ts'
-import { mountBodyMap, type BodyMapHandle } from './body/BodyMap.ts'
-import './body/body.css'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import type { PartInfo } from './anatomy/content.ts'
+import { mountAnatomyViewer, type AnatomyViewer } from './anatomy/viewer.ts'
 import { clearDemoHistory, seedDemoHistory } from './lib/painReports.ts'
 import PainPanel from './pain/PainPanel.tsx'
 
@@ -13,17 +12,29 @@ let demoParamHandled = false
 
 function App() {
   const stage = useRef<HTMLDivElement>(null)
-  const map = useRef<BodyMapHandle | null>(null)
-  const [selected, setSelected] = useState<BodyPart | null>(null)
+  const viewer = useRef<AnatomyViewer | null>(null)
+  const [selected, setSelected] = useState<PartInfo | null>(null)
+  // The pain sheet opens from the callout's "Zgłoś ból" and follows the selection while open.
+  const [reporting, setReporting] = useState(false)
   // Bumped when the history changes outside the panel, so an open panel reloads it.
   const [dataVersion, setDataVersion] = useState(0)
   const [notice, setNotice] = useState<string | null>(null)
 
   useEffect(() => {
-    const handle = mountBodyMap(stage.current!, { onSelect: setSelected })
-    map.current = handle
+    const handle = mountAnatomyViewer(stage.current!, {
+      onSelect: (part) => {
+        setSelected(part)
+        if (!part) setReporting(false)
+      },
+      action: { label: 'Zgłoś ból', run: () => setReporting(true) },
+      build: commitSha,
+    })
+    viewer.current = handle
     return () => handle.destroy()
   }, [])
+
+  // The viewer keeps the selected part visible above the sheet.
+  const sheetRef = useCallback((el: HTMLElement | null) => viewer.current?.setOccluder(el), [])
 
   // Presentations: ?demo fills this browser's history with ~30 days of example reports, ?demo=clear removes them.
   useEffect(() => {
@@ -49,23 +60,22 @@ function App() {
 
   return (
     <>
-      <div ref={stage} className="body-stage">
-        {commitSha && (
-          <span className="pointer-events-none absolute right-2 bottom-1 z-10 font-mono text-[10px] text-slate-500/60">
-            {commitSha.slice(0, 7)}
-          </span>
-        )}
-      </div>
+      <div ref={stage} />
       {notice && (
         <p
           role="status"
-          className="fixed inset-x-4 top-4 z-30 mx-auto max-w-sm rounded-xl border border-cyan-200/30 bg-[#0a1020]/90 px-4 py-2 text-center text-sm text-slate-100 backdrop-blur-md"
+          className="fixed inset-x-4 top-16 z-30 mx-auto max-w-sm rounded-[3px] border border-(--hair) bg-(--panel) px-4 py-2.5 text-center text-[13px] text-(--ink-1) backdrop-blur-md"
         >
           {notice}
         </p>
       )}
-      {selected && (
-        <PainPanel key={`${selected.id}:${dataVersion}`} part={selected} onClose={() => map.current?.select(null)} />
+      {selected && reporting && (
+        <PainPanel
+          key={`${selected.id}:${dataVersion}`}
+          ref={sheetRef}
+          part={selected}
+          onClose={() => setReporting(false)}
+        />
       )}
     </>
   )

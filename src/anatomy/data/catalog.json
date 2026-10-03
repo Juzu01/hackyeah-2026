@@ -1,0 +1,1221 @@
+{
+ "$comment": "Single source of truth for which anatomical structures the atlas shows. id = GLB node name = key in content.pl.json. concepts = BodyParts3D English concept names (parts_list_e.txt) unioned into one mesh; for side-specific ids, prefer 'left X'/'right X' concepts, else keep the primitives on that side (BodyParts3D: x > 0 is the patient's LEFT). layer: shell = translucent skin; muscles = outer selectable layer; deep = organs and bones revealed by zooming in. explode: organs pulled apart at the deepest zoom.",
+ "parts": [
+  {
+   "id": "skin",
+   "system": "skin",
+   "layer": "shell",
+   "group": "integumentary",
+   "side": null,
+   "explode": false,
+   "concepts": [
+    "skin"
+   ]
+  },
+  {
+   "id": "sternocleidomastoid-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "sternocleidomastoid"
+   ]
+  },
+  {
+   "id": "sternocleidomastoid-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "sternocleidomastoid"
+   ]
+  },
+  {
+   "id": "trapezius-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "trapezius"
+   ]
+  },
+  {
+   "id": "trapezius-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "trapezius"
+   ]
+  },
+  {
+   "id": "deltoid-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "deltoid"
+   ]
+  },
+  {
+   "id": "deltoid-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "deltoid"
+   ]
+  },
+  {
+   "id": "pectoralis-major-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "pectoralis major"
+   ]
+  },
+  {
+   "id": "pectoralis-major-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "pectoralis major"
+   ]
+  },
+  {
+   "id": "serratus-anterior-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "serratus anterior"
+   ]
+  },
+  {
+   "id": "serratus-anterior-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "serratus anterior"
+   ]
+  },
+  {
+   "id": "latissimus-dorsi-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "latissimus dorsi"
+   ]
+  },
+  {
+   "id": "latissimus-dorsi-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "latissimus dorsi"
+   ]
+  },
+  {
+   "id": "rectus-abdominis-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "rectus abdominis"
+   ]
+  },
+  {
+   "id": "rectus-abdominis-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "rectus abdominis"
+   ]
+  },
+  {
+   "id": "external-oblique-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "external oblique"
+   ]
+  },
+  {
+   "id": "external-oblique-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "external oblique"
+   ]
+  },
+  {
+   "id": "biceps-brachii-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "biceps brachii"
+   ]
+  },
+  {
+   "id": "biceps-brachii-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "biceps brachii"
+   ]
+  },
+  {
+   "id": "triceps-brachii-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "triceps brachii"
+   ]
+  },
+  {
+   "id": "triceps-brachii-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "triceps brachii"
+   ]
+  },
+  {
+   "id": "brachialis-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "brachialis"
+   ]
+  },
+  {
+   "id": "brachialis-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "brachialis"
+   ]
+  },
+  {
+   "id": "brachioradialis-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "brachioradialis"
+   ]
+  },
+  {
+   "id": "brachioradialis-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "brachioradialis"
+   ]
+  },
+  {
+   "id": "forearm-flexors-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "pronator teres",
+    "flexor carpi radialis",
+    "palmaris longus",
+    "flexor carpi ulnaris",
+    "flexor digitorum superficialis"
+   ]
+  },
+  {
+   "id": "forearm-flexors-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "pronator teres",
+    "flexor carpi radialis",
+    "palmaris longus",
+    "flexor carpi ulnaris",
+    "flexor digitorum superficialis"
+   ]
+  },
+  {
+   "id": "forearm-extensors-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "extensor carpi radialis longus",
+    "extensor carpi radialis brevis",
+    "extensor digitorum",
+    "extensor digiti minimi",
+    "extensor carpi ulnaris"
+   ]
+  },
+  {
+   "id": "forearm-extensors-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "extensor carpi radialis longus",
+    "extensor carpi radialis brevis",
+    "extensor digitorum",
+    "extensor digiti minimi",
+    "extensor carpi ulnaris"
+   ]
+  },
+  {
+   "id": "gluteus-maximus-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "gluteus maximus"
+   ]
+  },
+  {
+   "id": "gluteus-maximus-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "gluteus maximus"
+   ]
+  },
+  {
+   "id": "gluteus-medius-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "gluteus medius"
+   ]
+  },
+  {
+   "id": "gluteus-medius-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "gluteus medius"
+   ]
+  },
+  {
+   "id": "tensor-fasciae-latae-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "tensor fasciae latae"
+   ]
+  },
+  {
+   "id": "tensor-fasciae-latae-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "tensor fasciae latae"
+   ]
+  },
+  {
+   "id": "sartorius-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "sartorius"
+   ]
+  },
+  {
+   "id": "sartorius-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "sartorius"
+   ]
+  },
+  {
+   "id": "rectus-femoris-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "rectus femoris"
+   ]
+  },
+  {
+   "id": "rectus-femoris-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "rectus femoris"
+   ]
+  },
+  {
+   "id": "vastus-lateralis-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "vastus lateralis"
+   ]
+  },
+  {
+   "id": "vastus-lateralis-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "vastus lateralis"
+   ]
+  },
+  {
+   "id": "vastus-medialis-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "vastus medialis"
+   ]
+  },
+  {
+   "id": "vastus-medialis-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "vastus medialis"
+   ]
+  },
+  {
+   "id": "adductors-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "adductor longus",
+    "adductor brevis",
+    "adductor magnus",
+    "gracilis",
+    "pectineus"
+   ]
+  },
+  {
+   "id": "adductors-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "adductor longus",
+    "adductor brevis",
+    "adductor magnus",
+    "gracilis",
+    "pectineus"
+   ]
+  },
+  {
+   "id": "biceps-femoris-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "biceps femoris"
+   ]
+  },
+  {
+   "id": "biceps-femoris-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "biceps femoris"
+   ]
+  },
+  {
+   "id": "medial-hamstrings-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "semitendinosus",
+    "semimembranosus"
+   ]
+  },
+  {
+   "id": "medial-hamstrings-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "semitendinosus",
+    "semimembranosus"
+   ]
+  },
+  {
+   "id": "gastrocnemius-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "gastrocnemius"
+   ]
+  },
+  {
+   "id": "gastrocnemius-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "gastrocnemius"
+   ]
+  },
+  {
+   "id": "soleus-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "soleus"
+   ]
+  },
+  {
+   "id": "soleus-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "soleus"
+   ]
+  },
+  {
+   "id": "tibialis-anterior-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "tibialis anterior"
+   ]
+  },
+  {
+   "id": "tibialis-anterior-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "tibialis anterior"
+   ]
+  },
+  {
+   "id": "fibularis-longus-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "fibularis longus",
+    "peroneus longus"
+   ]
+  },
+  {
+   "id": "fibularis-longus-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "fibularis longus",
+    "peroneus longus"
+   ]
+  },
+  {
+   "id": "temporalis-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "temporalis"
+   ]
+  },
+  {
+   "id": "temporalis-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "temporalis"
+   ]
+  },
+  {
+   "id": "masseter-left",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "masseter"
+   ]
+  },
+  {
+   "id": "masseter-right",
+   "system": "muscle",
+   "layer": "muscles",
+   "group": "muscular",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "masseter"
+   ]
+  },
+  {
+   "id": "skull",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": null,
+   "explode": false,
+   "concepts": [
+    "skull"
+   ],
+   "exclude": [
+    "mandible"
+   ]
+  },
+  {
+   "id": "mandible",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": null,
+   "explode": false,
+   "concepts": [
+    "mandible"
+   ]
+  },
+  {
+   "id": "vertebral-column",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": null,
+   "explode": false,
+   "concepts": [
+    "set of cervical vertebrae",
+    "set of thoracic vertebrae",
+    "set of lumbar vertebrae"
+   ]
+  },
+  {
+   "id": "thoracic-cage",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": null,
+   "explode": false,
+   "concepts": [
+    "set of ribs",
+    "sternum",
+    "costal cartilage"
+   ]
+  },
+  {
+   "id": "clavicle-left",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "clavicle"
+   ]
+  },
+  {
+   "id": "clavicle-right",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "clavicle"
+   ]
+  },
+  {
+   "id": "scapula-left",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "scapula"
+   ]
+  },
+  {
+   "id": "scapula-right",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "scapula"
+   ]
+  },
+  {
+   "id": "humerus-left",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "humerus"
+   ]
+  },
+  {
+   "id": "humerus-right",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "humerus"
+   ]
+  },
+  {
+   "id": "radius-left",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "radius"
+   ]
+  },
+  {
+   "id": "radius-right",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "radius"
+   ]
+  },
+  {
+   "id": "ulna-left",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "ulna"
+   ]
+  },
+  {
+   "id": "ulna-right",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "ulna"
+   ]
+  },
+  {
+   "id": "hand-bones-left",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "set of carpal bones",
+    "set of metacarpal bones",
+    "set of phalanges of hand"
+   ]
+  },
+  {
+   "id": "hand-bones-right",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "set of carpal bones",
+    "set of metacarpal bones",
+    "set of phalanges of hand"
+   ]
+  },
+  {
+   "id": "pelvis",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": null,
+   "explode": false,
+   "concepts": [
+    "hip bone",
+    "sacrum",
+    "coccyx"
+   ]
+  },
+  {
+   "id": "femur-left",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "femur"
+   ]
+  },
+  {
+   "id": "femur-right",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "femur"
+   ]
+  },
+  {
+   "id": "patella-left",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "patella"
+   ]
+  },
+  {
+   "id": "patella-right",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "patella"
+   ]
+  },
+  {
+   "id": "tibia-left",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "tibia"
+   ]
+  },
+  {
+   "id": "tibia-right",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "tibia"
+   ]
+  },
+  {
+   "id": "fibula-left",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "fibula"
+   ]
+  },
+  {
+   "id": "fibula-right",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "fibula"
+   ]
+  },
+  {
+   "id": "foot-bones-left",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "left",
+   "explode": false,
+   "concepts": [
+    "set of tarsal bones",
+    "set of metatarsal bones",
+    "set of phalanges of foot"
+   ]
+  },
+  {
+   "id": "foot-bones-right",
+   "system": "bone",
+   "layer": "deep",
+   "group": "skeletal",
+   "side": "right",
+   "explode": false,
+   "concepts": [
+    "set of tarsal bones",
+    "set of metatarsal bones",
+    "set of phalanges of foot"
+   ]
+  },
+  {
+   "id": "brain",
+   "system": "organ",
+   "layer": "deep",
+   "group": "nervous",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "brain"
+   ]
+  },
+  {
+   "id": "thyroid",
+   "system": "organ",
+   "layer": "deep",
+   "group": "endocrine",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "thyroid gland"
+   ]
+  },
+  {
+   "id": "trachea",
+   "system": "organ",
+   "layer": "deep",
+   "group": "respiratory",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "trachea",
+    "right main bronchus",
+    "left main bronchus"
+   ]
+  },
+  {
+   "id": "esophagus",
+   "system": "organ",
+   "layer": "deep",
+   "group": "digestive",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "esophagus"
+   ]
+  },
+  {
+   "id": "lung-left",
+   "system": "organ",
+   "layer": "deep",
+   "group": "respiratory",
+   "side": "left",
+   "explode": true,
+   "concepts": [
+    "left lung"
+   ]
+  },
+  {
+   "id": "lung-right",
+   "system": "organ",
+   "layer": "deep",
+   "group": "respiratory",
+   "side": "right",
+   "explode": true,
+   "concepts": [
+    "right lung"
+   ]
+  },
+  {
+   "id": "heart",
+   "system": "organ",
+   "layer": "deep",
+   "group": "circulatory",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "heart"
+   ]
+  },
+  {
+   "id": "aorta",
+   "system": "organ",
+   "layer": "deep",
+   "group": "circulatory",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "aorta"
+   ]
+  },
+  {
+   "id": "liver",
+   "system": "organ",
+   "layer": "deep",
+   "group": "digestive",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "liver"
+   ]
+  },
+  {
+   "id": "gallbladder",
+   "system": "organ",
+   "layer": "deep",
+   "group": "digestive",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "gallbladder"
+   ]
+  },
+  {
+   "id": "stomach",
+   "system": "organ",
+   "layer": "deep",
+   "group": "digestive",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "stomach"
+   ]
+  },
+  {
+   "id": "spleen",
+   "system": "organ",
+   "layer": "deep",
+   "group": "lymphatic",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "spleen"
+   ]
+  },
+  {
+   "id": "pancreas",
+   "system": "organ",
+   "layer": "deep",
+   "group": "digestive",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "pancreas"
+   ]
+  },
+  {
+   "id": "kidney-left",
+   "system": "organ",
+   "layer": "deep",
+   "group": "urinary",
+   "side": "left",
+   "explode": true,
+   "concepts": [
+    "left kidney"
+   ]
+  },
+  {
+   "id": "kidney-right",
+   "system": "organ",
+   "layer": "deep",
+   "group": "urinary",
+   "side": "right",
+   "explode": true,
+   "concepts": [
+    "right kidney"
+   ]
+  },
+  {
+   "id": "small-intestine",
+   "system": "organ",
+   "layer": "deep",
+   "group": "digestive",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "small intestine",
+    "duodenum",
+    "jejunum",
+    "ileum"
+   ]
+  },
+  {
+   "id": "large-intestine",
+   "system": "organ",
+   "layer": "deep",
+   "group": "digestive",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "large intestine"
+   ]
+  },
+  {
+   "id": "urinary-bladder",
+   "system": "organ",
+   "layer": "deep",
+   "group": "urinary",
+   "side": null,
+   "explode": true,
+   "concepts": [
+    "urinary bladder"
+   ]
+  }
+ ]
+}

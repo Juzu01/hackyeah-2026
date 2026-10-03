@@ -1,0 +1,957 @@
+{
+  "groups": {
+    "circulatory": "Układ krążenia",
+    "respiratory": "Układ oddechowy",
+    "digestive": "Układ pokarmowy",
+    "urinary": "Układ moczowy",
+    "nervous": "Układ nerwowy",
+    "endocrine": "Układ dokrewny",
+    "lymphatic": "Układ chłonny",
+    "muscular": "Układ mięśniowy",
+    "skeletal": "Układ kostny",
+    "integumentary": "Powłoka wspólna"
+  },
+  "sides": {
+    "left": "strona lewa",
+    "right": "strona prawa"
+  },
+  "parts": {
+    "skin": {
+      "name": "Skóra",
+      "latin": "cutis",
+      "description": "Zewnętrzna powłoka ciała zbudowana z naskórka i skóry właściwej; chroni przed urazami i drobnoustrojami, reguluje temperaturę i odbiera bodźce.",
+      "fact": "Jest największym narządem ciała: u dorosłego ma ok. 1,5–2 m² powierzchni.",
+      "sport": "Regularny trening i aklimatyzacja do upału nasilają pocenie, co poprawia chłodzenie ciała podczas wysiłku."
+    },
+    "sternocleidomastoid-left": {
+      "name": "Mięsień mostkowo-obojczykowo-sutkowy",
+      "latin": "musculus sternocleidomastoideus",
+      "description": "Biegnie skośnie po bocznej stronie szyi, od mostka i obojczyka do wyrostka sutkowatego; przy wzmożonym oddychaniu wspomaga wdech.",
+      "action": "Zgina szyję w bok i obraca twarz w przeciwną stronę; obustronnie zgina szyję.",
+      "exercises": [
+        "zginanie szyi w leżeniu tyłem z obciążeniem",
+        "izometryczne ćwiczenia szyi z oporem dłoni"
+      ]
+    },
+    "sternocleidomastoid-right": {
+      "name": "Mięsień mostkowo-obojczykowo-sutkowy",
+      "latin": "musculus sternocleidomastoideus",
+      "description": "Biegnie skośnie po bocznej stronie szyi, od mostka i obojczyka do wyrostka sutkowatego; przy wzmożonym oddychaniu wspomaga wdech.",
+      "action": "Zgina szyję w bok i obraca twarz w przeciwną stronę; obustronnie zgina szyję.",
+      "exercises": [
+        "zginanie szyi w leżeniu tyłem z obciążeniem",
+        "izometryczne ćwiczenia szyi z oporem dłoni"
+      ]
+    },
+    "trapezius-left": {
+      "name": "Mięsień czworoboczny",
+      "latin": "musculus trapezius",
+      "description": "Płaski mięsień karku i grzbietu, rozpięty od kości potylicznej do XII kręgu piersiowego; przyczepia się do obojczyka i łopatki.",
+      "action": "Unosi, przywodzi i obniża łopatkę oraz obraca ją ku górze przy unoszeniu ręki.",
+      "exercises": [
+        "wzruszanie ramion ze sztangielkami (szrugsy)",
+        "wiosłowanie sztangą w opadzie tułowia",
+        "przyciąganie linki wyciągu do twarzy (face pull)"
+      ]
+    },
+    "trapezius-right": {
+      "name": "Mięsień czworoboczny",
+      "latin": "musculus trapezius",
+      "description": "Płaski mięsień karku i grzbietu, rozpięty od kości potylicznej do XII kręgu piersiowego; przyczepia się do obojczyka i łopatki.",
+      "action": "Unosi, przywodzi i obniża łopatkę oraz obraca ją ku górze przy unoszeniu ręki.",
+      "exercises": [
+        "wzruszanie ramion ze sztangielkami (szrugsy)",
+        "wiosłowanie sztangą w opadzie tułowia",
+        "przyciąganie linki wyciągu do twarzy (face pull)"
+      ]
+    },
+    "deltoid-left": {
+      "name": "Mięsień naramienny",
+      "latin": "musculus deltoideus",
+      "description": "Gruby, trójkątny mięsień okrywający staw ramienny od przodu, z boku i od tyłu; nadaje barkowi zaokrąglony kształt.",
+      "action": "Odwodzi ramię; część przednia zgina je, a tylna prostuje i obraca na zewnątrz.",
+      "exercises": [
+        "wyciskanie żołnierskie",
+        "unoszenie sztangielek bokiem",
+        "odwrotne rozpiętki"
+      ]
+    },
+    "deltoid-right": {
+      "name": "Mięsień naramienny",
+      "latin": "musculus deltoideus",
+      "description": "Gruby, trójkątny mięsień okrywający staw ramienny od przodu, z boku i od tyłu; nadaje barkowi zaokrąglony kształt.",
+      "action": "Odwodzi ramię; część przednia zgina je, a tylna prostuje i obraca na zewnątrz.",
+      "exercises": [
+        "wyciskanie żołnierskie",
+        "unoszenie sztangielek bokiem",
+        "odwrotne rozpiętki"
+      ]
+    },
+    "pectoralis-major-left": {
+      "name": "Mięsień piersiowy większy",
+      "latin": "musculus pectoralis major",
+      "description": "Duży, wachlarzowaty mięsień przedniej ściany klatki piersiowej; biegnie od obojczyka, mostka i chrząstek żebrowych do kości ramiennej.",
+      "action": "Przywodzi ramię i obraca je do wewnątrz; część obojczykowa także je zgina.",
+      "exercises": [
+        "wyciskanie sztangi leżąc",
+        "pompki",
+        "rozpiętki ze sztangielkami"
+      ]
+    },
+    "pectoralis-major-right": {
+      "name": "Mięsień piersiowy większy",
+      "latin": "musculus pectoralis major",
+      "description": "Duży, wachlarzowaty mięsień przedniej ściany klatki piersiowej; biegnie od obojczyka, mostka i chrząstek żebrowych do kości ramiennej.",
+      "action": "Przywodzi ramię i obraca je do wewnątrz; część obojczykowa także je zgina.",
+      "exercises": [
+        "wyciskanie sztangi leżąc",
+        "pompki",
+        "rozpiętki ze sztangielkami"
+      ]
+    },
+    "serratus-anterior-left": {
+      "name": "Mięsień zębaty przedni",
+      "latin": "musculus serratus anterior",
+      "description": "Pokrywa boczną ścianę klatki piersiowej, przyczepiając się zębami do górnych 8–9 żeber; jego porażenie daje łopatkę skrzydłowatą.",
+      "action": "Wysuwa łopatkę do przodu i obraca ją ku górze; dociska ją do klatki piersiowej.",
+      "exercises": [
+        "pompki z wypchnięciem łopatek (push-up plus)",
+        "wypychanie sztangielki w leżeniu tyłem (serratus punch)"
+      ]
+    },
+    "serratus-anterior-right": {
+      "name": "Mięsień zębaty przedni",
+      "latin": "musculus serratus anterior",
+      "description": "Pokrywa boczną ścianę klatki piersiowej, przyczepiając się zębami do górnych 8–9 żeber; jego porażenie daje łopatkę skrzydłowatą.",
+      "action": "Wysuwa łopatkę do przodu i obraca ją ku górze; dociska ją do klatki piersiowej.",
+      "exercises": [
+        "pompki z wypchnięciem łopatek (push-up plus)",
+        "wypychanie sztangielki w leżeniu tyłem (serratus punch)"
+      ]
+    },
+    "latissimus-dorsi-left": {
+      "name": "Mięsień najszerszy grzbietu",
+      "latin": "musculus latissimus dorsi",
+      "description": "Rozległy, płaski mięsień dolnej części grzbietu; biegnie od kręgosłupa, powięzi piersiowo-lędźwiowej i grzebienia biodrowego do kości ramiennej.",
+      "action": "Przywodzi, prostuje i obraca do wewnątrz ramię; podciąga tułów do uniesionych rąk.",
+      "exercises": [
+        "podciąganie na drążku nachwytem",
+        "ściąganie drążka wyciągu górnego",
+        "wiosłowanie sztangielką w opadzie"
+      ]
+    },
+    "latissimus-dorsi-right": {
+      "name": "Mięsień najszerszy grzbietu",
+      "latin": "musculus latissimus dorsi",
+      "description": "Rozległy, płaski mięsień dolnej części grzbietu; biegnie od kręgosłupa, powięzi piersiowo-lędźwiowej i grzebienia biodrowego do kości ramiennej.",
+      "action": "Przywodzi, prostuje i obraca do wewnątrz ramię; podciąga tułów do uniesionych rąk.",
+      "exercises": [
+        "podciąganie na drążku nachwytem",
+        "ściąganie drążka wyciągu górnego",
+        "wiosłowanie sztangielką w opadzie"
+      ]
+    },
+    "rectus-abdominis-left": {
+      "name": "Mięsień prosty brzucha",
+      "latin": "musculus rectus abdominis",
+      "description": "Taśmowaty mięsień przedniej ściany brzucha, od kości łonowej do chrząstek żeber V–VII; smugi ścięgniste dzielą go na segmenty, widoczne przy niewielkiej ilości tłuszczu.",
+      "action": "Zgina tułów, przybliżając klatkę piersiową do miednicy; napina powłoki brzucha.",
+      "exercises": [
+        "spięcia brzucha",
+        "unoszenie nóg w zwisie na drążku",
+        "deska (plank)"
+      ]
+    },
+    "rectus-abdominis-right": {
+      "name": "Mięsień prosty brzucha",
+      "latin": "musculus rectus abdominis",
+      "description": "Taśmowaty mięsień przedniej ściany brzucha, od kości łonowej do chrząstek żeber V–VII; smugi ścięgniste dzielą go na segmenty, widoczne przy niewielkiej ilości tłuszczu.",
+      "action": "Zgina tułów, przybliżając klatkę piersiową do miednicy; napina powłoki brzucha.",
+      "exercises": [
+        "spięcia brzucha",
+        "unoszenie nóg w zwisie na drążku",
+        "deska (plank)"
+      ]
+    },
+    "external-oblique-left": {
+      "name": "Mięsień skośny zewnętrzny brzucha",
+      "latin": "musculus obliquus externus abdominis",
+      "description": "Najbardziej powierzchowny mięsień bocznej ściany brzucha; jego włókna biegną od dolnych żeber skośnie w dół i do przodu, ku kresie białej.",
+      "action": "Skręca tułów w przeciwną stronę i zgina go w bok; wspiera tłocznię brzuszną.",
+      "exercises": [
+        "deska bokiem",
+        "skręty tułowia z linką wyciągu (woodchop)",
+        "skręty rosyjskie (Russian twist)"
+      ]
+    },
+    "external-oblique-right": {
+      "name": "Mięsień skośny zewnętrzny brzucha",
+      "latin": "musculus obliquus externus abdominis",
+      "description": "Najbardziej powierzchowny mięsień bocznej ściany brzucha; jego włókna biegną od dolnych żeber skośnie w dół i do przodu, ku kresie białej.",
+      "action": "Skręca tułów w przeciwną stronę i zgina go w bok; wspiera tłocznię brzuszną.",
+      "exercises": [
+        "deska bokiem",
+        "skręty tułowia z linką wyciągu (woodchop)",
+        "skręty rosyjskie (Russian twist)"
+      ]
+    },
+    "biceps-brachii-left": {
+      "name": "Mięsień dwugłowy ramienia",
+      "latin": "musculus biceps brachii",
+      "description": "Mięsień przedniej strony ramienia o dwóch głowach, długiej i krótkiej, które biegną od łopatki do guzowatości kości promieniowej.",
+      "action": "Zgina staw łokciowy i odwraca przedramię (supinacja); wspomaga zginanie ramienia.",
+      "exercises": [
+        "uginanie ramion ze sztangą",
+        "uginanie ramion ze sztangielkami z supinacją",
+        "podciąganie podchwytem"
+      ]
+    },
+    "biceps-brachii-right": {
+      "name": "Mięsień dwugłowy ramienia",
+      "latin": "musculus biceps brachii",
+      "description": "Mięsień przedniej strony ramienia o dwóch głowach, długiej i krótkiej, które biegną od łopatki do guzowatości kości promieniowej.",
+      "action": "Zgina staw łokciowy i odwraca przedramię (supinacja); wspomaga zginanie ramienia.",
+      "exercises": [
+        "uginanie ramion ze sztangą",
+        "uginanie ramion ze sztangielkami z supinacją",
+        "podciąganie podchwytem"
+      ]
+    },
+    "triceps-brachii-left": {
+      "name": "Mięsień trójgłowy ramienia",
+      "latin": "musculus triceps brachii",
+      "description": "Mięsień tylnej strony ramienia; jego głowy – długa, boczna i przyśrodkowa – łączą się we wspólne ścięgno na wyrostku łokciowym.",
+      "action": "Prostuje staw łokciowy; głowa długa wspomaga prostowanie i przywodzenie ramienia.",
+      "exercises": [
+        "wyciskanie francuskie",
+        "prostowanie ramion z linką wyciągu górnego",
+        "pompki na poręczach"
+      ]
+    },
+    "triceps-brachii-right": {
+      "name": "Mięsień trójgłowy ramienia",
+      "latin": "musculus triceps brachii",
+      "description": "Mięsień tylnej strony ramienia; jego głowy – długa, boczna i przyśrodkowa – łączą się we wspólne ścięgno na wyrostku łokciowym.",
+      "action": "Prostuje staw łokciowy; głowa długa wspomaga prostowanie i przywodzenie ramienia.",
+      "exercises": [
+        "wyciskanie francuskie",
+        "prostowanie ramion z linką wyciągu górnego",
+        "pompki na poręczach"
+      ]
+    },
+    "brachialis-left": {
+      "name": "Mięsień ramienny",
+      "latin": "musculus brachialis",
+      "description": "Leży pod mięśniem dwugłowym na przedniej powierzchni kości ramiennej i przyczepia się do kości łokciowej; to główny zginacz łokcia.",
+      "action": "Zgina staw łokciowy niezależnie od ustawienia przedramienia.",
+      "exercises": [
+        "uginanie ramion chwytem młotkowym",
+        "uginanie ramion ze sztangą nachwytem"
+      ]
+    },
+    "brachialis-right": {
+      "name": "Mięsień ramienny",
+      "latin": "musculus brachialis",
+      "description": "Leży pod mięśniem dwugłowym na przedniej powierzchni kości ramiennej i przyczepia się do kości łokciowej; to główny zginacz łokcia.",
+      "action": "Zgina staw łokciowy niezależnie od ustawienia przedramienia.",
+      "exercises": [
+        "uginanie ramion chwytem młotkowym",
+        "uginanie ramion ze sztangą nachwytem"
+      ]
+    },
+    "brachioradialis-left": {
+      "name": "Mięsień ramienno-promieniowy",
+      "latin": "musculus brachioradialis",
+      "description": "Biegnie bocznym brzegiem przedramienia od kości ramiennej do wyrostka rysikowatego kości promieniowej; choć zgina łokieć, unerwia go nerw promieniowy.",
+      "action": "Zgina staw łokciowy, najsilniej przy pośrednim ustawieniu przedramienia.",
+      "exercises": [
+        "uginanie ramion chwytem młotkowym",
+        "uginanie ramion ze sztangą nachwytem"
+      ]
+    },
+    "brachioradialis-right": {
+      "name": "Mięsień ramienno-promieniowy",
+      "latin": "musculus brachioradialis",
+      "description": "Biegnie bocznym brzegiem przedramienia od kości ramiennej do wyrostka rysikowatego kości promieniowej; choć zgina łokieć, unerwia go nerw promieniowy.",
+      "action": "Zgina staw łokciowy, najsilniej przy pośrednim ustawieniu przedramienia.",
+      "exercises": [
+        "uginanie ramion chwytem młotkowym",
+        "uginanie ramion ze sztangą nachwytem"
+      ]
+    },
+    "forearm-flexors-left": {
+      "name": "Zginacze nadgarstka i palców",
+      "latin": "musculi flexores antebrachii",
+      "description": "Powierzchowne mięśnie przedniej strony przedramienia: zginacze nadgarstka i palców oraz nawracacz obły. Przeciążenie ich przyczepu to tzw. łokieć golfisty.",
+      "action": "Zginają nadgarstek i palce oraz nawracają przedramię; współtworzą siłę chwytu.",
+      "exercises": [
+        "uginanie nadgarstków ze sztangą podchwytem",
+        "zwis na drążku",
+        "spacer farmera"
+      ]
+    },
+    "forearm-flexors-right": {
+      "name": "Zginacze nadgarstka i palców",
+      "latin": "musculi flexores antebrachii",
+      "description": "Powierzchowne mięśnie przedniej strony przedramienia: zginacze nadgarstka i palców oraz nawracacz obły. Przeciążenie ich przyczepu to tzw. łokieć golfisty.",
+      "action": "Zginają nadgarstek i palce oraz nawracają przedramię; współtworzą siłę chwytu.",
+      "exercises": [
+        "uginanie nadgarstków ze sztangą podchwytem",
+        "zwis na drążku",
+        "spacer farmera"
+      ]
+    },
+    "forearm-extensors-left": {
+      "name": "Prostowniki nadgarstka i palców",
+      "latin": "musculi extensores antebrachii",
+      "description": "Powierzchowne mięśnie tylnej strony przedramienia: prostowniki nadgarstka, palców i palca małego. Przeciążenie ich przyczepu to tzw. łokieć tenisisty.",
+      "action": "Prostują nadgarstek i palce; stabilizują nadgarstek podczas chwytania.",
+      "exercises": [
+        "prostowanie nadgarstków ze sztangą nachwytem",
+        "uginanie ramion ze sztangą nachwytem",
+        "nawijanie linki z ciężarkiem na drążek (wrist roller)"
+      ]
+    },
+    "forearm-extensors-right": {
+      "name": "Prostowniki nadgarstka i palców",
+      "latin": "musculi extensores antebrachii",
+      "description": "Powierzchowne mięśnie tylnej strony przedramienia: prostowniki nadgarstka, palców i palca małego. Przeciążenie ich przyczepu to tzw. łokieć tenisisty.",
+      "action": "Prostują nadgarstek i palce; stabilizują nadgarstek podczas chwytania.",
+      "exercises": [
+        "prostowanie nadgarstków ze sztangą nachwytem",
+        "uginanie ramion ze sztangą nachwytem",
+        "nawijanie linki z ciężarkiem na drążek (wrist roller)"
+      ]
+    },
+    "gluteus-maximus-left": {
+      "name": "Mięsień pośladkowy wielki",
+      "latin": "musculus gluteus maximus",
+      "description": "Największy pojedynczy mięsień ciała, tworzący kształt pośladka; biegnie od kości biodrowej i krzyżowej do kości udowej i pasma biodrowo-piszczelowego.",
+      "action": "Prostuje staw biodrowy i obraca udo na zewnątrz; pracuje przy wstawaniu, biegu i skokach.",
+      "exercises": [
+        "przysiad ze sztangą",
+        "wypychanie bioder ze sztangą (hip thrust)",
+        "martwy ciąg"
+      ]
+    },
+    "gluteus-maximus-right": {
+      "name": "Mięsień pośladkowy wielki",
+      "latin": "musculus gluteus maximus",
+      "description": "Największy pojedynczy mięsień ciała, tworzący kształt pośladka; biegnie od kości biodrowej i krzyżowej do kości udowej i pasma biodrowo-piszczelowego.",
+      "action": "Prostuje staw biodrowy i obraca udo na zewnątrz; pracuje przy wstawaniu, biegu i skokach.",
+      "exercises": [
+        "przysiad ze sztangą",
+        "wypychanie bioder ze sztangą (hip thrust)",
+        "martwy ciąg"
+      ]
+    },
+    "gluteus-medius-left": {
+      "name": "Mięsień pośladkowy średni",
+      "latin": "musculus gluteus medius",
+      "description": "Leży na bocznej powierzchni talerza biodrowego, częściowo pod pośladkowym wielkim; jego osłabienie powoduje opadanie miednicy w chodzie (objaw Trendelenburga).",
+      "action": "Odwodzi udo i utrzymuje miednicę w poziomie podczas stania na jednej nodze.",
+      "exercises": [
+        "odwodzenie nogi w leżeniu bokiem",
+        "chód bokiem z taśmą oporową",
+        "odwodzenie nóg na maszynie"
+      ]
+    },
+    "gluteus-medius-right": {
+      "name": "Mięsień pośladkowy średni",
+      "latin": "musculus gluteus medius",
+      "description": "Leży na bocznej powierzchni talerza biodrowego, częściowo pod pośladkowym wielkim; jego osłabienie powoduje opadanie miednicy w chodzie (objaw Trendelenburga).",
+      "action": "Odwodzi udo i utrzymuje miednicę w poziomie podczas stania na jednej nodze.",
+      "exercises": [
+        "odwodzenie nogi w leżeniu bokiem",
+        "chód bokiem z taśmą oporową",
+        "odwodzenie nóg na maszynie"
+      ]
+    },
+    "tensor-fasciae-latae-left": {
+      "name": "Mięsień napinacz powięzi szerokiej",
+      "latin": "musculus tensor fasciae latae",
+      "description": "Niewielki mięsień bocznej strony biodra, przechodzący w pasmo biodrowo-piszczelowe; stabilizuje biodro i kolano podczas chodu i biegu.",
+      "action": "Napina powięź szeroką; zgina, odwodzi i obraca do wewnątrz udo.",
+      "exercises": [
+        "odwodzenie nóg na maszynie",
+        "odwodzenie nogi na wyciągu dolnym"
+      ]
+    },
+    "tensor-fasciae-latae-right": {
+      "name": "Mięsień napinacz powięzi szerokiej",
+      "latin": "musculus tensor fasciae latae",
+      "description": "Niewielki mięsień bocznej strony biodra, przechodzący w pasmo biodrowo-piszczelowe; stabilizuje biodro i kolano podczas chodu i biegu.",
+      "action": "Napina powięź szeroką; zgina, odwodzi i obraca do wewnątrz udo.",
+      "exercises": [
+        "odwodzenie nóg na maszynie",
+        "odwodzenie nogi na wyciągu dolnym"
+      ]
+    },
+    "sartorius-left": {
+      "name": "Mięsień krawiecki",
+      "latin": "musculus sartorius",
+      "description": "Najdłuższy mięsień ciała; biegnie skośnie przez przednią stronę uda, od kolca biodrowego przedniego górnego do przyśrodkowej strony piszczeli.",
+      "action": "Zgina, odwodzi i obraca na zewnątrz udo oraz zgina kolano, jak w siadzie skrzyżnym.",
+      "exercises": [
+        "unoszenie kolan w zwisie na drążku",
+        "skip A (bieg z wysokim unoszeniem kolan)"
+      ]
+    },
+    "sartorius-right": {
+      "name": "Mięsień krawiecki",
+      "latin": "musculus sartorius",
+      "description": "Najdłuższy mięsień ciała; biegnie skośnie przez przednią stronę uda, od kolca biodrowego przedniego górnego do przyśrodkowej strony piszczeli.",
+      "action": "Zgina, odwodzi i obraca na zewnątrz udo oraz zgina kolano, jak w siadzie skrzyżnym.",
+      "exercises": [
+        "unoszenie kolan w zwisie na drążku",
+        "skip A (bieg z wysokim unoszeniem kolan)"
+      ]
+    },
+    "rectus-femoris-left": {
+      "name": "Mięsień prosty uda",
+      "latin": "musculus rectus femoris",
+      "description": "Środkowa, powierzchowna głowa mięśnia czworogłowego uda; jako jedyna z czterech głów przechodzi nad stawem biodrowym.",
+      "action": "Prostuje staw kolanowy i zgina staw biodrowy, np. przy kopnięciu.",
+      "exercises": [
+        "przysiad ze sztangą",
+        "prostowanie nóg na maszynie",
+        "wykroki"
+      ]
+    },
+    "rectus-femoris-right": {
+      "name": "Mięsień prosty uda",
+      "latin": "musculus rectus femoris",
+      "description": "Środkowa, powierzchowna głowa mięśnia czworogłowego uda; jako jedyna z czterech głów przechodzi nad stawem biodrowym.",
+      "action": "Prostuje staw kolanowy i zgina staw biodrowy, np. przy kopnięciu.",
+      "exercises": [
+        "przysiad ze sztangą",
+        "prostowanie nóg na maszynie",
+        "wykroki"
+      ]
+    },
+    "vastus-lateralis-left": {
+      "name": "Mięsień obszerny boczny",
+      "latin": "musculus vastus lateralis",
+      "description": "Największa głowa mięśnia czworogłowego, leżąca na bocznej stronie uda; to typowe miejsce biopsji mięśnia w badaniach fizjologii wysiłku.",
+      "action": "Prostuje staw kolanowy, np. przy wstawaniu, wchodzeniu po schodach i skokach.",
+      "exercises": [
+        "przysiad ze sztangą",
+        "wypychanie nóg na suwnicy",
+        "prostowanie nóg na maszynie"
+      ]
+    },
+    "vastus-lateralis-right": {
+      "name": "Mięsień obszerny boczny",
+      "latin": "musculus vastus lateralis",
+      "description": "Największa głowa mięśnia czworogłowego, leżąca na bocznej stronie uda; to typowe miejsce biopsji mięśnia w badaniach fizjologii wysiłku.",
+      "action": "Prostuje staw kolanowy, np. przy wstawaniu, wchodzeniu po schodach i skokach.",
+      "exercises": [
+        "przysiad ze sztangą",
+        "wypychanie nóg na suwnicy",
+        "prostowanie nóg na maszynie"
+      ]
+    },
+    "vastus-medialis-left": {
+      "name": "Mięsień obszerny przyśrodkowy",
+      "latin": "musculus vastus medialis",
+      "description": "Przyśrodkowa głowa mięśnia czworogłowego, tworząca nad kolanem wyraźne uwypuklenie; jej dolne, skośne włókna stabilizują rzepkę.",
+      "action": "Prostuje staw kolanowy i przeciwdziała bocznemu przemieszczaniu się rzepki.",
+      "exercises": [
+        "przysiad ze sztangą",
+        "wykroki",
+        "prostowanie nóg na maszynie"
+      ]
+    },
+    "vastus-medialis-right": {
+      "name": "Mięsień obszerny przyśrodkowy",
+      "latin": "musculus vastus medialis",
+      "description": "Przyśrodkowa głowa mięśnia czworogłowego, tworząca nad kolanem wyraźne uwypuklenie; jej dolne, skośne włókna stabilizują rzepkę.",
+      "action": "Prostuje staw kolanowy i przeciwdziała bocznemu przemieszczaniu się rzepki.",
+      "exercises": [
+        "przysiad ze sztangą",
+        "wykroki",
+        "prostowanie nóg na maszynie"
+      ]
+    },
+    "adductors-left": {
+      "name": "Przywodziciele uda",
+      "latin": "musculi adductores femoris",
+      "description": "Przyśrodkowa grupa mięśni uda: przywodziciele długi, krótki i wielki oraz mięśnie smukły i grzebieniowy, biegnące od kości łonowej i kulszowej.",
+      "action": "Przywodzą udo i stabilizują miednicę podczas chodu, biegu i zmian kierunku.",
+      "exercises": [
+        "przywodzenie nóg na maszynie",
+        "przysiad sumo",
+        "deska kopenhaska (Copenhagen plank)"
+      ]
+    },
+    "adductors-right": {
+      "name": "Przywodziciele uda",
+      "latin": "musculi adductores femoris",
+      "description": "Przyśrodkowa grupa mięśni uda: przywodziciele długi, krótki i wielki oraz mięśnie smukły i grzebieniowy, biegnące od kości łonowej i kulszowej.",
+      "action": "Przywodzą udo i stabilizują miednicę podczas chodu, biegu i zmian kierunku.",
+      "exercises": [
+        "przywodzenie nóg na maszynie",
+        "przysiad sumo",
+        "deska kopenhaska (Copenhagen plank)"
+      ]
+    },
+    "biceps-femoris-left": {
+      "name": "Mięsień dwugłowy uda",
+      "latin": "musculus biceps femoris",
+      "description": "Boczny mięsień grupy kulszowo-goleniowej; głowa długa biegnie od guza kulszowego, krótka od kości udowej, obie do głowy strzałki.",
+      "action": "Zgina staw kolanowy i obraca podudzie na zewnątrz; głowa długa prostuje biodro.",
+      "exercises": [
+        "uginanie nóg leżąc na maszynie",
+        "martwy ciąg rumuński",
+        "ćwiczenie nordyckie (Nordic hamstring)"
+      ]
+    },
+    "biceps-femoris-right": {
+      "name": "Mięsień dwugłowy uda",
+      "latin": "musculus biceps femoris",
+      "description": "Boczny mięsień grupy kulszowo-goleniowej; głowa długa biegnie od guza kulszowego, krótka od kości udowej, obie do głowy strzałki.",
+      "action": "Zgina staw kolanowy i obraca podudzie na zewnątrz; głowa długa prostuje biodro.",
+      "exercises": [
+        "uginanie nóg leżąc na maszynie",
+        "martwy ciąg rumuński",
+        "ćwiczenie nordyckie (Nordic hamstring)"
+      ]
+    },
+    "medial-hamstrings-left": {
+      "name": "Mięśnie półścięgnisty i półbłoniasty",
+      "latin": "musculi semitendinosus et semimembranosus",
+      "description": "Przyśrodkowe mięśnie grupy kulszowo-goleniowej, od guza kulszowego do piszczeli; ścięgno półścięgnistego bywa przeszczepem przy rekonstrukcji ACL.",
+      "action": "Zginają staw kolanowy i obracają podudzie do wewnątrz; prostują staw biodrowy.",
+      "exercises": [
+        "uginanie nóg leżąc na maszynie",
+        "martwy ciąg rumuński",
+        "ćwiczenie nordyckie (Nordic hamstring)"
+      ]
+    },
+    "medial-hamstrings-right": {
+      "name": "Mięśnie półścięgnisty i półbłoniasty",
+      "latin": "musculi semitendinosus et semimembranosus",
+      "description": "Przyśrodkowe mięśnie grupy kulszowo-goleniowej, od guza kulszowego do piszczeli; ścięgno półścięgnistego bywa przeszczepem przy rekonstrukcji ACL.",
+      "action": "Zginają staw kolanowy i obracają podudzie do wewnątrz; prostują staw biodrowy.",
+      "exercises": [
+        "uginanie nóg leżąc na maszynie",
+        "martwy ciąg rumuński",
+        "ćwiczenie nordyckie (Nordic hamstring)"
+      ]
+    },
+    "gastrocnemius-left": {
+      "name": "Mięsień brzuchaty łydki",
+      "latin": "musculus gastrocnemius",
+      "description": "Powierzchowny, dwugłowy mięsień łydki; z mięśniem płaszczkowatym tworzy mięsień trójgłowy łydki, zakończony ścięgnem piętowym (Achillesa).",
+      "action": "Zgina podeszwowo stopę i zgina kolano; napędza odbicie w chodzie, biegu i skoku.",
+      "exercises": [
+        "wspięcia na palce stojąc",
+        "wspięcia na palce na suwnicy",
+        "skakanie na skakance"
+      ]
+    },
+    "gastrocnemius-right": {
+      "name": "Mięsień brzuchaty łydki",
+      "latin": "musculus gastrocnemius",
+      "description": "Powierzchowny, dwugłowy mięsień łydki; z mięśniem płaszczkowatym tworzy mięsień trójgłowy łydki, zakończony ścięgnem piętowym (Achillesa).",
+      "action": "Zgina podeszwowo stopę i zgina kolano; napędza odbicie w chodzie, biegu i skoku.",
+      "exercises": [
+        "wspięcia na palce stojąc",
+        "wspięcia na palce na suwnicy",
+        "skakanie na skakance"
+      ]
+    },
+    "soleus-left": {
+      "name": "Mięsień płaszczkowaty",
+      "latin": "musculus soleus",
+      "description": "Szeroki, płaski mięsień leżący pod brzuchatym łydki; jego skurcze działają jak pompa mięśniowa, wypychając krew żylną z nóg ku sercu.",
+      "action": "Zgina podeszwowo stopę, także przy zgiętym kolanie; stabilizuje postawę stojącą.",
+      "exercises": [
+        "wspięcia na palce siedząc",
+        "wspięcia na palce z ugiętymi kolanami"
+      ]
+    },
+    "soleus-right": {
+      "name": "Mięsień płaszczkowaty",
+      "latin": "musculus soleus",
+      "description": "Szeroki, płaski mięsień leżący pod brzuchatym łydki; jego skurcze działają jak pompa mięśniowa, wypychając krew żylną z nóg ku sercu.",
+      "action": "Zgina podeszwowo stopę, także przy zgiętym kolanie; stabilizuje postawę stojącą.",
+      "exercises": [
+        "wspięcia na palce siedząc",
+        "wspięcia na palce z ugiętymi kolanami"
+      ]
+    },
+    "tibialis-anterior-left": {
+      "name": "Mięsień piszczelowy przedni",
+      "latin": "musculus tibialis anterior",
+      "description": "Leży wzdłuż przedniej krawędzi piszczeli; jego ścięgno biegnie przed stawem skokowym do przyśrodkowego brzegu stopy.",
+      "action": "Zgina grzbietowo i odwraca stopę; zapobiega opadaniu stopy podczas kroku.",
+      "exercises": [
+        "unoszenie przodostopia stojąc przy ścianie",
+        "chód na piętach",
+        "zginanie grzbietowe stopy z taśmą oporową"
+      ]
+    },
+    "tibialis-anterior-right": {
+      "name": "Mięsień piszczelowy przedni",
+      "latin": "musculus tibialis anterior",
+      "description": "Leży wzdłuż przedniej krawędzi piszczeli; jego ścięgno biegnie przed stawem skokowym do przyśrodkowego brzegu stopy.",
+      "action": "Zgina grzbietowo i odwraca stopę; zapobiega opadaniu stopy podczas kroku.",
+      "exercises": [
+        "unoszenie przodostopia stojąc przy ścianie",
+        "chód na piętach",
+        "zginanie grzbietowe stopy z taśmą oporową"
+      ]
+    },
+    "fibularis-longus-left": {
+      "name": "Mięsień strzałkowy długi",
+      "latin": "musculus fibularis longus",
+      "description": "Leży na bocznej stronie podudzia; jego ścięgno owija się za kostką boczną i biegnie pod podeszwą do przyśrodkowego brzegu stopy.",
+      "action": "Nawraca i zgina podeszwowo stopę; stabilizuje staw skokowy i łuk poprzeczny stopy.",
+      "exercises": [
+        "nawracanie stopy z taśmą oporową",
+        "stanie na jednej nodze na niestabilnym podłożu",
+        "wspięcia na palce"
+      ]
+    },
+    "fibularis-longus-right": {
+      "name": "Mięsień strzałkowy długi",
+      "latin": "musculus fibularis longus",
+      "description": "Leży na bocznej stronie podudzia; jego ścięgno owija się za kostką boczną i biegnie pod podeszwą do przyśrodkowego brzegu stopy.",
+      "action": "Nawraca i zgina podeszwowo stopę; stabilizuje staw skokowy i łuk poprzeczny stopy.",
+      "exercises": [
+        "nawracanie stopy z taśmą oporową",
+        "stanie na jednej nodze na niestabilnym podłożu",
+        "wspięcia na palce"
+      ]
+    },
+    "temporalis-left": {
+      "name": "Mięsień skroniowy",
+      "latin": "musculus temporalis",
+      "description": "Wachlarzowaty mięsień żucia wypełniający dół skroniowy; jego ścięgno przechodzi pod łukiem jarzmowym do wyrostka dziobiastego żuchwy.",
+      "action": "Unosi żuchwę, zamykając usta; tylne włókna cofają żuchwę.",
+      "exercises": [
+        "żucie gumy",
+        "izometryczne ćwiczenia żuchwy z oporem dłoni"
+      ]
+    },
+    "temporalis-right": {
+      "name": "Mięsień skroniowy",
+      "latin": "musculus temporalis",
+      "description": "Wachlarzowaty mięsień żucia wypełniający dół skroniowy; jego ścięgno przechodzi pod łukiem jarzmowym do wyrostka dziobiastego żuchwy.",
+      "action": "Unosi żuchwę, zamykając usta; tylne włókna cofają żuchwę.",
+      "exercises": [
+        "żucie gumy",
+        "izometryczne ćwiczenia żuchwy z oporem dłoni"
+      ]
+    },
+    "masseter-left": {
+      "name": "Mięsień żwacz",
+      "latin": "musculus masseter",
+      "description": "Gruby, czworoboczny mięsień żucia, biegnący od łuku jarzmowego do kąta żuchwy; wyraźnie twardnieje przy zaciskaniu zębów.",
+      "action": "Unosi żuchwę i zaciska zęby; nieznacznie wysuwa żuchwę do przodu.",
+      "exercises": [
+        "żucie gumy",
+        "izometryczne ćwiczenia żuchwy z oporem dłoni"
+      ]
+    },
+    "masseter-right": {
+      "name": "Mięsień żwacz",
+      "latin": "musculus masseter",
+      "description": "Gruby, czworoboczny mięsień żucia, biegnący od łuku jarzmowego do kąta żuchwy; wyraźnie twardnieje przy zaciskaniu zębów.",
+      "action": "Unosi żuchwę i zaciska zęby; nieznacznie wysuwa żuchwę do przodu.",
+      "exercises": [
+        "żucie gumy",
+        "izometryczne ćwiczenia żuchwy z oporem dłoni"
+      ]
+    },
+    "skull": {
+      "name": "Czaszka",
+      "latin": "cranium",
+      "description": "Kości mózgoczaszki i twarzoczaszki (tu bez żuchwy), połączone głównie szwami; chronią mózgowie i narządy zmysłów.",
+      "fact": "W kości skroniowej kryją się kosteczki słuchowe, w tym strzemiączko – najmniejsza kość ciała (ok. 3 mm)."
+    },
+    "mandible": {
+      "name": "Żuchwa",
+      "latin": "mandibula",
+      "description": "Największa i najmocniejsza kość twarzy; łączy się z czaszką ruchomymi stawami skroniowo-żuchwowymi i utrzymuje zęby dolne.",
+      "fact": "U noworodka składa się z dwóch połówek, które zrastają się pośrodku w pierwszym roku życia."
+    },
+    "vertebral-column": {
+      "name": "Kręgosłup",
+      "latin": "columna vertebralis",
+      "description": "Oś szkieletu: 7 kręgów szyjnych, 12 piersiowych i 5 lędźwiowych (kość krzyżową i guziczną pokazano tu z miednicą); chroni rdzeń kręgowy.",
+      "fact": "Rano jesteśmy wyżsi o ok. 1–2 cm niż wieczorem, bo w ciągu dnia krążki międzykręgowe tracą część wody."
+    },
+    "thoracic-cage": {
+      "name": "Klatka piersiowa",
+      "latin": "cavea thoracis",
+      "description": "Dwanaście par żeber, mostek i chrząstki żebrowe; razem z kręgosłupem piersiowym osłaniają serce i płuca, a ich ruchy umożliwiają oddychanie.",
+      "fact": "Żebra I–VII łączą się z mostkiem bezpośrednio, VIII–X przez łuk żebrowy, a XI i XII kończą się wolno."
+    },
+    "clavicle-left": {
+      "name": "Obojczyk",
+      "latin": "clavicula",
+      "description": "Esowato wygięta kość łącząca mostek z łopatką; to jedyne kostne połączenie kończyny górnej z tułowiem.",
+      "fact": "Zaczyna kostnieć jako pierwsza kość szkieletu, w 5.–6. tygodniu życia wewnątrzmacicznego."
+    },
+    "clavicle-right": {
+      "name": "Obojczyk",
+      "latin": "clavicula",
+      "description": "Esowato wygięta kość łącząca mostek z łopatką; to jedyne kostne połączenie kończyny górnej z tułowiem.",
+      "fact": "Zaczyna kostnieć jako pierwsza kość szkieletu, w 5.–6. tygodniu życia wewnątrzmacicznego."
+    },
+    "scapula-left": {
+      "name": "Łopatka",
+      "latin": "scapula",
+      "description": "Płaska, trójkątna kość tylnej ściany klatki piersiowej; jej wydrążenie stawowe tworzy z głową kości ramiennej staw ramienny.",
+      "fact": "Nie tworzy z żebrami prawdziwego stawu – ślizga się po klatce piersiowej, utrzymywana przez mięśnie."
+    },
+    "scapula-right": {
+      "name": "Łopatka",
+      "latin": "scapula",
+      "description": "Płaska, trójkątna kość tylnej ściany klatki piersiowej; jej wydrążenie stawowe tworzy z głową kości ramiennej staw ramienny.",
+      "fact": "Nie tworzy z żebrami prawdziwego stawu – ślizga się po klatce piersiowej, utrzymywana przez mięśnie."
+    },
+    "humerus-left": {
+      "name": "Kość ramienna",
+      "latin": "humerus",
+      "description": "Najdłuższa kość kończyny górnej; łączy się z łopatką w stawie ramiennym, a z kośćmi przedramienia w stawie łokciowym.",
+      "fact": "Uderzenie w tył nadkłykcia przyśrodkowego drażni nerw łokciowy – stąd „prąd” promieniujący do palca małego."
+    },
+    "humerus-right": {
+      "name": "Kość ramienna",
+      "latin": "humerus",
+      "description": "Najdłuższa kość kończyny górnej; łączy się z łopatką w stawie ramiennym, a z kośćmi przedramienia w stawie łokciowym.",
+      "fact": "Uderzenie w tył nadkłykcia przyśrodkowego drażni nerw łokciowy – stąd „prąd” promieniujący do palca małego."
+    },
+    "radius-left": {
+      "name": "Kość promieniowa",
+      "latin": "radius",
+      "description": "Boczna kość przedramienia, po stronie kciuka; przy odwracaniu i nawracaniu przedramienia obraca się wokół kości łokciowej.",
+      "fact": "Złamanie jej dalszego końca to jedno z najczęstszych złamań – zwykle po upadku na wyprostowaną rękę."
+    },
+    "radius-right": {
+      "name": "Kość promieniowa",
+      "latin": "radius",
+      "description": "Boczna kość przedramienia, po stronie kciuka; przy odwracaniu i nawracaniu przedramienia obraca się wokół kości łokciowej.",
+      "fact": "Złamanie jej dalszego końca to jedno z najczęstszych złamań – zwykle po upadku na wyprostowaną rękę."
+    },
+    "ulna-left": {
+      "name": "Kość łokciowa",
+      "latin": "ulna",
+      "description": "Przyśrodkowa kość przedramienia, po stronie palca małego; jej wyrostek łokciowy tworzy wyczuwalny szczyt łokcia.",
+      "fact": "Nie łączy się bezpośrednio z kośćmi nadgarstka – oddziela ją od nich krążek stawowy."
+    },
+    "ulna-right": {
+      "name": "Kość łokciowa",
+      "latin": "ulna",
+      "description": "Przyśrodkowa kość przedramienia, po stronie palca małego; jej wyrostek łokciowy tworzy wyczuwalny szczyt łokcia.",
+      "fact": "Nie łączy się bezpośrednio z kośćmi nadgarstka – oddziela ją od nich krążek stawowy."
+    },
+    "hand-bones-left": {
+      "name": "Kości ręki",
+      "latin": "ossa manus",
+      "description": "Osiem kości nadgarstka, pięć kości śródręcza i czternaście paliczków; liczne stawy między nimi umożliwiają precyzyjny i silny chwyt.",
+      "fact": "Obie ręce mają razem 54 kości – to ponad jedna czwarta wszystkich kości szkieletu dorosłego."
+    },
+    "hand-bones-right": {
+      "name": "Kości ręki",
+      "latin": "ossa manus",
+      "description": "Osiem kości nadgarstka, pięć kości śródręcza i czternaście paliczków; liczne stawy między nimi umożliwiają precyzyjny i silny chwyt.",
+      "fact": "Obie ręce mają razem 54 kości – to ponad jedna czwarta wszystkich kości szkieletu dorosłego."
+    },
+    "pelvis": {
+      "name": "Miednica",
+      "latin": "pelvis",
+      "description": "Pierścień kostny z dwóch kości miednicznych, kości krzyżowej i guzicznej; przenosi ciężar tułowia na kończyny dolne i osłania narządy miednicy.",
+      "fact": "Miednica kobieca ma zwykle szerszy, bardziej okrągły wchód i obszerniejszą miednicę mniejszą, co ułatwia poród."
+    },
+    "femur-left": {
+      "name": "Kość udowa",
+      "latin": "femur",
+      "description": "Najdłuższa i najmocniejsza kość ciała; współtworzy stawy biodrowy i kolanowy, przenosząc ciężar ciała z miednicy na podudzie.",
+      "fact": "Ma długość ok. jednej czwartej wzrostu, dlatego antropolodzy szacują na jej podstawie wzrost człowieka."
+    },
+    "femur-right": {
+      "name": "Kość udowa",
+      "latin": "femur",
+      "description": "Najdłuższa i najmocniejsza kość ciała; współtworzy stawy biodrowy i kolanowy, przenosząc ciężar ciała z miednicy na podudzie.",
+      "fact": "Ma długość ok. jednej czwartej wzrostu, dlatego antropolodzy szacują na jej podstawie wzrost człowieka."
+    },
+    "patella-left": {
+      "name": "Rzepka",
+      "latin": "patella",
+      "description": "Największa trzeszczka ciała, leżąca w ścięgnie mięśnia czworogłowego; zwiększa jego ramię dźwigni przy prostowaniu kolana.",
+      "fact": "Pokrywa ją jedna z najgrubszych chrząstek stawowych w organizmie – staw rzepkowo-udowy przenosi bardzo duże siły."
+    },
+    "patella-right": {
+      "name": "Rzepka",
+      "latin": "patella",
+      "description": "Największa trzeszczka ciała, leżąca w ścięgnie mięśnia czworogłowego; zwiększa jego ramię dźwigni przy prostowaniu kolana.",
+      "fact": "Pokrywa ją jedna z najgrubszych chrząstek stawowych w organizmie – staw rzepkowo-udowy przenosi bardzo duże siły."
+    },
+    "tibia-left": {
+      "name": "Kość piszczelowa",
+      "latin": "tibia",
+      "description": "Główna, przyśrodkowa kość podudzia; przenosi ciężar ciała z kości udowej na stopę i tworzy kostkę przyśrodkową.",
+      "fact": "Jej przyśrodkowa powierzchnia leży tuż pod skórą, bez osłony mięśni – stąd ból po uderzeniu w goleń."
+    },
+    "tibia-right": {
+      "name": "Kość piszczelowa",
+      "latin": "tibia",
+      "description": "Główna, przyśrodkowa kość podudzia; przenosi ciężar ciała z kości udowej na stopę i tworzy kostkę przyśrodkową.",
+      "fact": "Jej przyśrodkowa powierzchnia leży tuż pod skórą, bez osłony mięśni – stąd ból po uderzeniu w goleń."
+    },
+    "fibula-left": {
+      "name": "Kość strzałkowa",
+      "latin": "fibula",
+      "description": "Smukła, boczna kość podudzia; przenosi niewielką część ciężaru ciała, stanowi przyczep mięśni i tworzy kostkę boczną.",
+      "fact": "Fragment jej trzonu bywa pobierany jako przeszczep, np. do odtworzenia żuchwy, a chód zwykle pozostaje sprawny."
+    },
+    "fibula-right": {
+      "name": "Kość strzałkowa",
+      "latin": "fibula",
+      "description": "Smukła, boczna kość podudzia; przenosi niewielką część ciężaru ciała, stanowi przyczep mięśni i tworzy kostkę boczną.",
+      "fact": "Fragment jej trzonu bywa pobierany jako przeszczep, np. do odtworzenia żuchwy, a chód zwykle pozostaje sprawny."
+    },
+    "foot-bones-left": {
+      "name": "Kości stopy",
+      "latin": "ossa pedis",
+      "description": "Siedem kości stępu, pięć kości śródstopia i czternaście paliczków, ułożonych w łuki, które amortyzują i rozkładają obciążenia.",
+      "fact": "Kość piętowa, największa kość stopy, przyjmuje uderzenie pięty o podłoże i jest przyczepem ścięgna Achillesa."
+    },
+    "foot-bones-right": {
+      "name": "Kości stopy",
+      "latin": "ossa pedis",
+      "description": "Siedem kości stępu, pięć kości śródstopia i czternaście paliczków, ułożonych w łuki, które amortyzują i rozkładają obciążenia.",
+      "fact": "Kość piętowa, największa kość stopy, przyjmuje uderzenie pięty o podłoże i jest przyczepem ścięgna Achillesa."
+    },
+    "brain": {
+      "name": "Mózgowie",
+      "latin": "encephalon",
+      "description": "Mózg, móżdżek i pień mózgu: przetwarza bodźce, steruje ruchem, odpowiada za pamięć, mowę i emocje oraz reguluje czynności życiowe.",
+      "fact": "Stanowi ok. 2% masy ciała, a w spoczynku zużywa ok. 20% tlenu pobieranego przez organizm.",
+      "sport": "Regularny wysiłek aerobowy wiąże się z lepszymi funkcjami poznawczymi i mniejszym ryzykiem otępienia."
+    },
+    "thyroid": {
+      "name": "Tarczyca",
+      "latin": "glandula thyroidea",
+      "description": "Gruczoł dokrewny na przedniej stronie szyi, przylegający do krtani i tchawicy; jego hormony (T4 i T3) regulują tempo przemiany materii.",
+      "fact": "Magazynuje w pęcherzykach duży zapas hormonów – wystarcza on na ok. 2–3 miesiące.",
+      "sport": "U intensywnie trenujących przewlekły niedobór energii obniża stężenie T3, co spowalnia przemianę materii."
+    },
+    "trachea": {
+      "name": "Tchawica i oskrzela główne",
+      "latin": "trachea et bronchi principales",
+      "description": "Rura wzmocniona podkowiastymi chrząstkami, prowadząca powietrze z krtani do płuc; dzieli się na oskrzele główne prawe i lewe.",
+      "fact": "Ma ok. 10–12 cm długości; jej tylna, błoniasta ściana pozwala przylegającemu przełykowi rozszerzać się przy połykaniu.",
+      "sport": "Przepływ powietrza rośnie z ok. 6 l/min w spoczynku do nawet ponad 100 l/min przy maksymalnym wysiłku."
+    },
+    "esophagus": {
+      "name": "Przełyk",
+      "latin": "oesophagus",
+      "description": "Mięśniowy przewód długości ok. 25 cm, łączący gardło z żołądkiem; przesuwa pokarm falami perystaltycznymi.",
+      "fact": "Dzięki perystaltyce połykanie działa niezależnie od grawitacji – także w stanie nieważkości.",
+      "sport": "Intensywny wysiłek, zwłaszcza bieg wkrótce po posiłku, może nasilać refluks żołądkowo-przełykowy."
+    },
+    "lung-left": {
+      "name": "Płuco lewe",
+      "latin": "pulmo sinister",
+      "description": "Ma dwa płaty i wcięcie sercowe; w pęcherzykach płucnych tlen przenika do krwi, a dwutlenek węgla do wydychanego powietrza.",
+      "fact": "Płuca zawierają kilkaset milionów pęcherzyków o łącznej powierzchni wymiany gazowej rzędu 70–100 m².",
+      "sport": "Trening nie powiększa istotnie płuc, ale usprawnia mięśnie oddechowe; przy tym samym wysiłku oddycha się spokojniej."
+    },
+    "lung-right": {
+      "name": "Płuco prawe",
+      "latin": "pulmo dexter",
+      "description": "Ma trzy płaty i jest większe od lewego; w pęcherzykach płucnych tlen przenika do krwi, a dwutlenek węgla do wydychanego powietrza.",
+      "fact": "Prawe oskrzele główne jest szersze i bardziej pionowe, dlatego ciała obce częściej trafiają do prawego płuca.",
+      "sport": "Trening nie powiększa istotnie płuc, ale usprawnia mięśnie oddechowe; przy tym samym wysiłku oddycha się spokojniej."
+    },
+    "heart": {
+      "name": "Serce",
+      "latin": "cor",
+      "description": "Mięśniowa pompa o czterech jamach: prawa połowa tłoczy krew do płuc, lewa – przez aortę do całego ciała.",
+      "fact": "W spoczynku pompuje ok. 5 l krwi na minutę, przy maksymalnym wysiłku ok. 20 l, a u wyczynowych sportowców ponad 30 l.",
+      "sport": "Trening wytrzymałościowy zwiększa objętość wyrzutową serca, dzięki czemu tętno spoczynkowe z czasem spada."
+    },
+    "aorta": {
+      "name": "Aorta",
+      "latin": "aorta",
+      "description": "Największa tętnica ciała; wychodzi z lewej komory serca i przez swoje odgałęzienia rozprowadza utlenowaną krew po całym organizmie.",
+      "fact": "Jej sprężysta ściana rozciąga się przy każdym skurczu serca, a w rozkurczu podtrzymuje przepływ krwi.",
+      "sport": "Regularny wysiłek aerobowy obniża ciśnienie tętnicze i pomaga ograniczać sztywnienie tętnic z wiekiem."
+    },
+    "liver": {
+      "name": "Wątroba",
+      "latin": "hepar",
+      "description": "Największy gruczoł ciała; przetwarza składniki odżywcze i leki, magazynuje glikogen, wytwarza żółć i białka osocza.",
+      "fact": "Waży ok. 1,5 kg i potrafi odtworzyć swoją masę nawet po usunięciu ok. dwóch trzecich miąższu.",
+      "sport": "Regularna aktywność fizyczna zmniejsza stłuszczenie wątroby, także bez dużej utraty masy ciała."
+    },
+    "gallbladder": {
+      "name": "Pęcherzyk żółciowy",
+      "latin": "vesica biliaris",
+      "description": "Gruszkowaty zbiornik na dolnej powierzchni wątroby; magazynuje i zagęszcza żółć, a po posiłku kurczy się, kierując ją do dwunastnicy.",
+      "fact": "Mieści ok. 30–50 ml żółci, którą zagęszcza kilkukrotnie, wchłaniając wodę i elektrolity.",
+      "sport": "Regularna aktywność fizyczna wiąże się z mniejszym ryzykiem objawowej kamicy żółciowej."
+    },
+    "stomach": {
+      "name": "Żołądek",
+      "latin": "gaster",
+      "description": "Workowate poszerzenie przewodu pokarmowego między przełykiem a dwunastnicą; miesza pokarm z kwaśnym sokiem i zaczyna trawienie białek.",
+      "fact": "Podczas jedzenia jego ściana się rozluźnia, dzięki czemu mieści ok. 1–1,5 l bez wyraźnego wzrostu ciśnienia.",
+      "sport": "Bardzo intensywny wysiłek spowalnia opróżnianie żołądka; umiarkowany wpływa na nie niewiele."
+    },
+    "spleen": {
+      "name": "Śledziona",
+      "latin": "splen",
+      "description": "Największy narząd układu chłonnego, leżący w lewym podżebrzu; filtruje krew, usuwa zużyte krwinki czerwone i wspiera odporność.",
+      "fact": "Można żyć bez śledziony, choć zwiększa to ryzyko ciężkich zakażeń bakteriami otoczkowymi.",
+      "sport": "Przy intensywnym wysiłku lub bezdechu kurczy się, uwalniając do krwi niewielki zapas krwinek czerwonych."
+    },
+    "pancreas": {
+      "name": "Trzustka",
+      "latin": "pancreas",
+      "description": "Gruczoł o podwójnej funkcji: wydziela do dwunastnicy enzymy trawienne, a do krwi insulinę i glukagon, które regulują stężenie glukozy.",
+      "fact": "Wyspy Langerhansa, wytwarzające insulinę i glukagon, stanowią zaledwie ok. 1–2% jej masy.",
+      "sport": "Ćwiczenia zwiększają wrażliwość mięśni na insulinę, więc do utrzymania prawidłowej glikemii potrzeba jej mniej."
+    },
+    "kidney-left": {
+      "name": "Nerka lewa",
+      "latin": "ren sinister",
+      "description": "Filtruje krew i wytwarza mocz, regulując bilans wody i elektrolitów oraz ciśnienie tętnicze; leży nieco wyżej niż prawa.",
+      "fact": "Obie nerki przesączają ok. 180 l osocza na dobę, z czego powstaje zaledwie ok. 1,5 l moczu.",
+      "sport": "Przy intensywnym wysiłku przepływ krwi przez nerki przejściowo maleje, bo krew kierowana jest do mięśni."
+    },
+    "kidney-right": {
+      "name": "Nerka prawa",
+      "latin": "ren dexter",
+      "description": "Filtruje krew i wytwarza mocz, regulując bilans wody i elektrolitów oraz ciśnienie tętnicze; leży nieco niżej niż lewa, pod wątrobą.",
+      "fact": "Choć obie nerki ważą razem ok. 300 g, w spoczynku przepływa przez nie ok. 20% krwi tłoczonej przez serce.",
+      "sport": "Przy intensywnym wysiłku przepływ krwi przez nerki przejściowo maleje, bo krew kierowana jest do mięśni."
+    },
+    "small-intestine": {
+      "name": "Jelito cienkie",
+      "latin": "intestinum tenue",
+      "description": "Najdłuższy odcinek przewodu pokarmowego: dwunastnica, jelito czcze i kręte; tu zachodzi większość trawienia i wchłaniania składników odżywczych.",
+      "fact": "Ma kilka metrów długości, a fałdy, kosmki i mikrokosmki wielokrotnie zwiększają jego powierzchnię wchłaniania.",
+      "sport": "Długi, intensywny wysiłek zmniejsza przepływ krwi przez jelita, co u części sportowców wywołuje dolegliwości trawienne."
+    },
+    "large-intestine": {
+      "name": "Jelito grube",
+      "latin": "intestinum crassum",
+      "description": "Końcowy odcinek przewodu pokarmowego (kątnica, okrężnica, odbytnica); wchłania wodę i elektrolity, formuje kał i jest siedliskiem mikrobioty.",
+      "fact": "Ma ok. 1,5 m długości; żyje w nim mniej więcej tyle bakterii, ile całe ciało ma własnych komórek.",
+      "sport": "Regularna aktywność fizyczna wiąże się z mniejszym ryzykiem raka okrężnicy – to dobrze udokumentowany efekt."
+    },
+    "urinary-bladder": {
+      "name": "Pęcherz moczowy",
+      "latin": "vesica urinaria",
+      "description": "Mięśniowy zbiornik w miednicy mniejszej; gromadzi mocz spływający moczowodami z nerek i okresowo go wydala.",
+      "fact": "U dorosłego mieści zwykle 400–600 ml, a podczas napełniania ciśnienie w nim prawie nie rośnie.",
+      "sport": "Trening mięśni dna miednicy, które podpierają pęcherz, zmniejsza objawy wysiłkowego nietrzymania moczu."
+    }
+  }
+}

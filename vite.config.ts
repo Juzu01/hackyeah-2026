@@ -28,4 +28,7 @@ export default defineConfig({
   // GitHub Pages serves the app under /<repo-name>/; the deploy workflow sets BASE_PATH.
   base: process.env.BASE_PATH ?? '/',
   plugins: [react(), tailwindcss(), gdzieBoliPage],
+  // Only the two apps' entries: by default the dev server also crawls every other .html in the repo
+  // (tools/anatomy/preview.html has its own copy of three), which loads two copies of three.
+  optimizeDeps: { entries: ['index.html', 'src/gdzie-boli.tsx'] },
 })

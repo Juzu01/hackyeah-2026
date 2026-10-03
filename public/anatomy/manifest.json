@@ -1,0 +1,5841 @@
+{
+  "source": "BodyParts3D 3.0 (https://dbarchive.biosciencedbc.jp/en/bodyparts3d/), via github.com/Kevin-Mattheus-Moerman/BodyParts3D",
+  "license": "CC BY-SA 2.1 JP (https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en)",
+  "attribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution-Share Alike 2.1 Japan",
+  "citation": "Mitsuhashi N, Fujieda K, Tamura T, Kawamoto S, Takagi T, Okubo K. BodyParts3D: 3D structure database for anatomical concepts. Nucleic Acids Res. 2009;37:D782-5.",
+  "frame": "metres; +Y up with the soles at 0; +X = patient's left; +Z = anterior; skin bounding box centred on X and Z",
+  "totals": {
+    "parts": 106,
+    "triangles": 447866,
+    "vertices": 266918,
+    "fileBytes": 2471292
+  },
+  "parts": {
+    "skin": {
+      "triangles": 72000,
+      "vertices": 36632,
+      "bboxMin": [
+        -0.32928,
+        0,
+        -0.14281
+      ],
+      "bboxMax": [
+        0.32928,
+        1.65508,
+        0.14281
+      ],
+      "centroid": [
+        -0.00001,
+        0.84067,
+        -0.01178
+      ],
+      "simplificationErrorMm": 0.16,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7163",
+          "name": "skin"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "skin",
+          "match": {
+            "id": "FMA7163",
+            "name": "skin"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ],
+      "note": "Outer surface only: inner sheets of the BodyParts3D skin volume are removed (see tools/anatomy/lib/skin.mjs)."
+    },
+    "sternocleidomastoid-left": {
+      "triangles": 2920,
+      "vertices": 1817,
+      "bboxMin": [
+        0.00367,
+        1.33836,
+        -0.04629
+      ],
+      "bboxMax": [
+        0.05941,
+        1.52569,
+        0.06349
+      ],
+      "centroid": [
+        0.035,
+        1.43248,
+        0.01376
+      ],
+      "simplificationErrorMm": 0.26,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13409",
+          "name": "left sternocleidomastoid"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "sternocleidomastoid",
+          "match": {
+            "id": "FMA13409",
+            "name": "left sternocleidomastoid"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "sternocleidomastoid-right": {
+      "triangles": 2912,
+      "vertices": 1870,
+      "bboxMin": [
+        -0.05946,
+        1.33817,
+        -0.04636
+      ],
+      "bboxMax": [
+        -0.00362,
+        1.52584,
+        0.06378
+      ],
+      "centroid": [
+        -0.03501,
+        1.43231,
+        0.01383
+      ],
+      "simplificationErrorMm": 0.3,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13408",
+          "name": "right sternocleidomastoid"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "sternocleidomastoid",
+          "match": {
+            "id": "FMA13408",
+            "name": "right sternocleidomastoid"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "trapezius-left": {
+      "triangles": 2914,
+      "vertices": 1874,
+      "bboxMin": [
+        -0.00033,
+        1.08589,
+        -0.1245
+      ],
+      "bboxMax": [
+        0.16257,
+        1.52492,
+        0.00155
+      ],
+      "centroid": [
+        0.04927,
+        1.33996,
+        -0.08368
+      ],
+      "simplificationErrorMm": 0.95,
+      "sourcePrimitives": [
+        {
+          "id": "FMA33587",
+          "name": "descending part of left trapezius"
+        },
+        {
+          "id": "FMA33585",
+          "name": "transverse part of left trapezius"
+        },
+        {
+          "id": "FMA33583",
+          "name": "ascending part of left trapezius"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "trapezius",
+          "match": {
+            "id": "FMA9626",
+            "name": "trapezius"
+          },
+          "via": "exact",
+          "primitives": 6
+        }
+      ]
+    },
+    "trapezius-right": {
+      "triangles": 2922,
+      "vertices": 1854,
+      "bboxMin": [
+        -0.16152,
+        1.08507,
+        -0.12468
+      ],
+      "bboxMax": [
+        0.00423,
+        1.52522,
+        0.00152
+      ],
+      "centroid": [
+        -0.04773,
+        1.34073,
+        -0.08352
+      ],
+      "simplificationErrorMm": 1.03,
+      "sourcePrimitives": [
+        {
+          "id": "FMA33586",
+          "name": "descending part of right trapezius"
+        },
+        {
+          "id": "FMA33584",
+          "name": "transverse part of right trapezius"
+        },
+        {
+          "id": "FMA33581",
+          "name": "ascending part of right trapezius"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "trapezius",
+          "match": {
+            "id": "FMA9626",
+            "name": "trapezius"
+          },
+          "via": "exact",
+          "primitives": 6
+        }
+      ]
+    },
+    "deltoid-left": {
+      "triangles": 2920,
+      "vertices": 1701,
+      "bboxMin": [
+        0.08194,
+        1.21212,
+        -0.09834
+      ],
+      "bboxMax": [
+        0.22718,
+        1.37899,
+        0.02113
+      ],
+      "centroid": [
+        0.17849,
+        1.3153,
+        -0.03684
+      ],
+      "simplificationErrorMm": 0.61,
+      "sourcePrimitives": [
+        {
+          "id": "FMA34685",
+          "name": "spinal part of left deltoid"
+        },
+        {
+          "id": "FMA34681",
+          "name": "clavicular part of left deltoid"
+        },
+        {
+          "id": "FMA34683",
+          "name": "acromial part of left deltoid"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "deltoid",
+          "match": {
+            "id": "FMA32521",
+            "name": "deltoid"
+          },
+          "via": "exact",
+          "primitives": 6
+        }
+      ]
+    },
+    "deltoid-right": {
+      "triangles": 2914,
+      "vertices": 1727,
+      "bboxMin": [
+        -0.22746,
+        1.21157,
+        -0.09825
+      ],
+      "bboxMax": [
+        -0.08191,
+        1.37894,
+        0.02105
+      ],
+      "centroid": [
+        -0.17852,
+        1.31536,
+        -0.03689
+      ],
+      "simplificationErrorMm": 0.67,
+      "sourcePrimitives": [
+        {
+          "id": "FMA34682",
+          "name": "acromial part of right deltoid"
+        },
+        {
+          "id": "FMA34680",
+          "name": "clavicular part of right deltoid"
+        },
+        {
+          "id": "FMA34684",
+          "name": "spinal part of right deltoid"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "deltoid",
+          "match": {
+            "id": "FMA32521",
+            "name": "deltoid"
+          },
+          "via": "exact",
+          "primitives": 6
+        }
+      ]
+    },
+    "pectoralis-major-left": {
+      "triangles": 2880,
+      "vertices": 1793,
+      "bboxMin": [
+        0.00313,
+        1.13652,
+        -0.01468
+      ],
+      "bboxMax": [
+        0.19329,
+        1.36488,
+        0.12396
+      ],
+      "centroid": [
+        0.09286,
+        1.27235,
+        0.06447
+      ],
+      "simplificationErrorMm": 0.8,
+      "sourcePrimitives": [
+        {
+          "id": "FMA45875",
+          "name": "abdominal part of left pectoralis major"
+        },
+        {
+          "id": "FMA34691",
+          "name": "clavicular part of left pectoralis major"
+        },
+        {
+          "id": "FMA79980",
+          "name": "sternocostal part of left pectoralis major"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "pectoralis major",
+          "match": {
+            "id": "FMA9627",
+            "name": "pectoralis major"
+          },
+          "via": "exact",
+          "primitives": 6
+        }
+      ]
+    },
+    "pectoralis-major-right": {
+      "triangles": 2896,
+      "vertices": 1901,
+      "bboxMin": [
+        -0.19395,
+        1.13502,
+        -0.01489
+      ],
+      "bboxMax": [
+        -0.00346,
+        1.3652,
+        0.12392
+      ],
+      "centroid": [
+        -0.09281,
+        1.27226,
+        0.0646
+      ],
+      "simplificationErrorMm": 0.81,
+      "sourcePrimitives": [
+        {
+          "id": "FMA45874",
+          "name": "abdominal part of right pectoralis major"
+        },
+        {
+          "id": "FMA34690",
+          "name": "clavicular part of right pectoralis major"
+        },
+        {
+          "id": "FMA79979",
+          "name": "sternocostal part of right pectoralis major"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "pectoralis major",
+          "match": {
+            "id": "FMA9627",
+            "name": "pectoralis major"
+          },
+          "via": "exact",
+          "primitives": 6
+        }
+      ]
+    },
+    "serratus-anterior-left": {
+      "triangles": 2922,
+      "vertices": 1927,
+      "bboxMin": [
+        0.06043,
+        1.11212,
+        -0.10552
+      ],
+      "bboxMax": [
+        0.14336,
+        1.37775,
+        0.06108
+      ],
+      "centroid": [
+        0.11317,
+        1.25326,
+        -0.03675
+      ],
+      "simplificationErrorMm": 0.84,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13399",
+          "name": "left serratus anterior"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "serratus anterior",
+          "match": {
+            "id": "FMA13399",
+            "name": "left serratus anterior"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "serratus-anterior-right": {
+      "triangles": 2922,
+      "vertices": 1928,
+      "bboxMin": [
+        -0.14382,
+        1.11231,
+        -0.10538
+      ],
+      "bboxMax": [
+        -0.06037,
+        1.37772,
+        0.06088
+      ],
+      "centroid": [
+        -0.1131,
+        1.25345,
+        -0.0369
+      ],
+      "simplificationErrorMm": 0.86,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13398",
+          "name": "right serratus anterior"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "serratus anterior",
+          "match": {
+            "id": "FMA13398",
+            "name": "right serratus anterior"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "latissimus-dorsi-left": {
+      "triangles": 2922,
+      "vertices": 1813,
+      "bboxMin": [
+        -0.00029,
+        0.90263,
+        -0.11465
+      ],
+      "bboxMax": [
+        0.17937,
+        1.29943,
+        -0.01542
+      ],
+      "centroid": [
+        0.09104,
+        1.13483,
+        -0.06816
+      ],
+      "simplificationErrorMm": 1.13,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13359",
+          "name": "left latissimus dorsi"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "latissimus dorsi",
+          "match": {
+            "id": "FMA13359",
+            "name": "left latissimus dorsi"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "latissimus-dorsi-right": {
+      "triangles": 2894,
+      "vertices": 1706,
+      "bboxMin": [
+        -0.17889,
+        0.9027,
+        -0.11475
+      ],
+      "bboxMax": [
+        0.00183,
+        1.29965,
+        -0.0155
+      ],
+      "centroid": [
+        -0.09068,
+        1.13514,
+        -0.06815
+      ],
+      "simplificationErrorMm": 1.16,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13358",
+          "name": "right latissimus dorsi"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "latissimus dorsi",
+          "match": {
+            "id": "FMA13358",
+            "name": "right latissimus dorsi"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "rectus-abdominis-left": {
+      "triangles": 2922,
+      "vertices": 1688,
+      "bboxMin": [
+        0.00307,
+        0.82352,
+        0.04508
+      ],
+      "bboxMax": [
+        0.0789,
+        1.21832,
+        0.11723
+      ],
+      "centroid": [
+        0.03768,
+        1.03738,
+        0.09219
+      ],
+      "simplificationErrorMm": 0.61,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13378",
+          "name": "left rectus abdominis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "rectus abdominis",
+          "match": {
+            "id": "FMA13378",
+            "name": "left rectus abdominis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "rectus-abdominis-right": {
+      "triangles": 2922,
+      "vertices": 1714,
+      "bboxMin": [
+        -0.07909,
+        0.82334,
+        0.04497
+      ],
+      "bboxMax": [
+        -0.00293,
+        1.21863,
+        0.11713
+      ],
+      "centroid": [
+        -0.03773,
+        1.03764,
+        0.09221
+      ],
+      "simplificationErrorMm": 0.67,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13377",
+          "name": "right rectus abdominis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "rectus abdominis",
+          "match": {
+            "id": "FMA13377",
+            "name": "right rectus abdominis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "external-oblique-left": {
+      "triangles": 2922,
+      "vertices": 1780,
+      "bboxMin": [
+        0.00272,
+        0.82333,
+        -0.0578
+      ],
+      "bboxMax": [
+        0.13855,
+        1.24129,
+        0.12208
+      ],
+      "centroid": [
+        0.08383,
+        1.04513,
+        0.06133
+      ],
+      "simplificationErrorMm": 1.12,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13337",
+          "name": "left external oblique"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "external oblique",
+          "match": {
+            "id": "FMA13337",
+            "name": "left external oblique"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "external-oblique-right": {
+      "triangles": 2922,
+      "vertices": 1745,
+      "bboxMin": [
+        -0.13848,
+        0.82342,
+        -0.05752
+      ],
+      "bboxMax": [
+        -0.00277,
+        1.24212,
+        0.12206
+      ],
+      "centroid": [
+        -0.08384,
+        1.04505,
+        0.06136
+      ],
+      "simplificationErrorMm": 1.14,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13336",
+          "name": "right external oblique"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "external oblique",
+          "match": {
+            "id": "FMA13336",
+            "name": "right external oblique"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "biceps-brachii-left": {
+      "triangles": 2922,
+      "vertices": 1746,
+      "bboxMin": [
+        0.13367,
+        1.01857,
+        -0.03837
+      ],
+      "bboxMax": [
+        0.22982,
+        1.36354,
+        0.00948
+      ],
+      "centroid": [
+        0.19051,
+        1.19581,
+        -0.00965
+      ],
+      "simplificationErrorMm": 0.48,
+      "sourcePrimitives": [
+        {
+          "id": "FMA37685",
+          "name": "short head of left biceps brachii"
+        },
+        {
+          "id": "FMA37687",
+          "name": "long head of left biceps brachii"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "biceps brachii",
+          "match": {
+            "id": "FMA37670",
+            "name": "biceps brachii"
+          },
+          "via": "exact",
+          "primitives": 4
+        }
+      ]
+    },
+    "biceps-brachii-right": {
+      "triangles": 2918,
+      "vertices": 1808,
+      "bboxMin": [
+        -0.22991,
+        1.01789,
+        -0.03854
+      ],
+      "bboxMax": [
+        -0.12949,
+        1.36353,
+        0.00936
+      ],
+      "centroid": [
+        -0.19057,
+        1.19569,
+        -0.00967
+      ],
+      "simplificationErrorMm": 0.51,
+      "sourcePrimitives": [
+        {
+          "id": "FMA37684",
+          "name": "short head of right biceps brachii"
+        },
+        {
+          "id": "FMA37686",
+          "name": "long head of right biceps brachii"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "biceps brachii",
+          "match": {
+            "id": "FMA37670",
+            "name": "biceps brachii"
+          },
+          "via": "exact",
+          "primitives": 4
+        }
+      ]
+    },
+    "triceps-brachii-left": {
+      "triangles": 2922,
+      "vertices": 1735,
+      "bboxMin": [
+        0.12798,
+        1.05314,
+        -0.08165
+      ],
+      "bboxMax": [
+        0.22869,
+        1.32242,
+        -0.02895
+      ],
+      "centroid": [
+        0.18944,
+        1.18298,
+        -0.05318
+      ],
+      "simplificationErrorMm": 0.63,
+      "sourcePrimitives": [
+        {
+          "id": "FMA37700",
+          "name": "long head of left triceps brachii"
+        },
+        {
+          "id": "FMA37696",
+          "name": "medial head of left triceps brachii"
+        },
+        {
+          "id": "FMA37698",
+          "name": "lateral head of left triceps brachii"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "triceps brachii",
+          "match": {
+            "id": "FMA37688",
+            "name": "triceps brachii"
+          },
+          "via": "exact",
+          "primitives": 6
+        }
+      ]
+    },
+    "triceps-brachii-right": {
+      "triangles": 2920,
+      "vertices": 1697,
+      "bboxMin": [
+        -0.22873,
+        1.05317,
+        -0.08143
+      ],
+      "bboxMax": [
+        -0.12773,
+        1.32239,
+        -0.02855
+      ],
+      "centroid": [
+        -0.18953,
+        1.18295,
+        -0.05313
+      ],
+      "simplificationErrorMm": 0.67,
+      "sourcePrimitives": [
+        {
+          "id": "FMA37695",
+          "name": "medial head of right triceps brachii"
+        },
+        {
+          "id": "FMA37697",
+          "name": "lateral head of right triceps brachii"
+        },
+        {
+          "id": "FMA37699",
+          "name": "long head of right triceps brachii"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "triceps brachii",
+          "match": {
+            "id": "FMA37688",
+            "name": "triceps brachii"
+          },
+          "via": "exact",
+          "primitives": 6
+        }
+      ]
+    },
+    "brachialis-left": {
+      "triangles": 2922,
+      "vertices": 1705,
+      "bboxMin": [
+        0.17617,
+        1.01939,
+        -0.03982
+      ],
+      "bboxMax": [
+        0.23507,
+        1.2437,
+        -0.01317
+      ],
+      "centroid": [
+        0.20633,
+        1.13873,
+        -0.02487
+      ],
+      "simplificationErrorMm": 0.3,
+      "sourcePrimitives": [
+        {
+          "id": "FMA37669",
+          "name": "left brachialis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "brachialis",
+          "match": {
+            "id": "FMA37669",
+            "name": "left brachialis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "brachialis-right": {
+      "triangles": 2922,
+      "vertices": 1801,
+      "bboxMin": [
+        -0.23509,
+        1.01918,
+        -0.03989
+      ],
+      "bboxMax": [
+        -0.17613,
+        1.24402,
+        -0.01312
+      ],
+      "centroid": [
+        -0.20638,
+        1.13867,
+        -0.02487
+      ],
+      "simplificationErrorMm": 0.33,
+      "sourcePrimitives": [
+        {
+          "id": "FMA37668",
+          "name": "right brachialis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "brachialis",
+          "match": {
+            "id": "FMA37668",
+            "name": "right brachialis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "brachioradialis-left": {
+      "triangles": 2922,
+      "vertices": 1748,
+      "bboxMin": [
+        0.20843,
+        0.83377,
+        -0.04435
+      ],
+      "bboxMax": [
+        0.28033,
+        1.1713,
+        0.02271
+      ],
+      "centroid": [
+        0.2491,
+        1.02299,
+        -0.01138
+      ],
+      "simplificationErrorMm": 0.34,
+      "sourcePrimitives": [
+        {
+          "id": "FMA38487",
+          "name": "left brachioradialis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "brachioradialis",
+          "match": {
+            "id": "FMA38487",
+            "name": "left brachioradialis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "brachioradialis-right": {
+      "triangles": 2922,
+      "vertices": 1846,
+      "bboxMin": [
+        -0.28034,
+        0.83362,
+        -0.04438
+      ],
+      "bboxMax": [
+        -0.20844,
+        1.17121,
+        0.02262
+      ],
+      "centroid": [
+        -0.24916,
+        1.02304,
+        -0.01139
+      ],
+      "simplificationErrorMm": 0.39,
+      "sourcePrimitives": [
+        {
+          "id": "FMA38486",
+          "name": "right brachioradialis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "brachioradialis",
+          "match": {
+            "id": "FMA38486",
+            "name": "right brachioradialis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "forearm-flexors-left": {
+      "triangles": 2904,
+      "vertices": 2103,
+      "bboxMin": [
+        0.17784,
+        0.69992,
+        -0.05279
+      ],
+      "bboxMax": [
+        0.30587,
+        1.08716,
+        0.06777
+      ],
+      "centroid": [
+        0.2224,
+        0.94804,
+        0.00197
+      ],
+      "simplificationErrorMm": 0.89,
+      "sourcePrimitives": [
+        {
+          "id": "FMA38461",
+          "name": "left flexor carpi radialis"
+        },
+        {
+          "id": "FMA38464",
+          "name": "left palmaris longus"
+        },
+        {
+          "id": "FMA38561",
+          "name": "humeral head of left pronator teres"
+        },
+        {
+          "id": "FMA38563",
+          "name": "ulnar head of left pronator teres"
+        },
+        {
+          "id": "FMA38618",
+          "name": "humeral head of left flexor carpi ulnaris"
+        },
+        {
+          "id": "FMA38620",
+          "name": "ulnar head of left flexor carpi ulnaris"
+        },
+        {
+          "id": "FMA38639",
+          "name": "humeroulnar head of left flexor digitorum superficialis"
+        },
+        {
+          "id": "FMA38641",
+          "name": "radial head of left flexor digitorum superficialis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "pronator teres",
+          "match": {
+            "id": "FMA38450",
+            "name": "pronator teres"
+          },
+          "via": "exact",
+          "primitives": 4
+        },
+        {
+          "concept": "flexor carpi radialis",
+          "match": {
+            "id": "FMA38461",
+            "name": "left flexor carpi radialis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "palmaris longus",
+          "match": {
+            "id": "FMA38464",
+            "name": "left palmaris longus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "flexor carpi ulnaris",
+          "match": {
+            "id": "FMA38465",
+            "name": "flexor carpi ulnaris"
+          },
+          "via": "exact",
+          "primitives": 4
+        },
+        {
+          "concept": "flexor digitorum superficialis",
+          "match": {
+            "id": "FMA38469",
+            "name": "flexor digitorum superficialis"
+          },
+          "via": "exact",
+          "primitives": 4
+        }
+      ]
+    },
+    "forearm-flexors-right": {
+      "triangles": 2896,
+      "vertices": 2150,
+      "bboxMin": [
+        -0.30543,
+        0.69994,
+        -0.05258
+      ],
+      "bboxMax": [
+        -0.17813,
+        1.08831,
+        0.06777
+      ],
+      "centroid": [
+        -0.22242,
+        0.94801,
+        0.00194
+      ],
+      "simplificationErrorMm": 0.95,
+      "sourcePrimitives": [
+        {
+          "id": "FMA38460",
+          "name": "right flexor carpi radialis"
+        },
+        {
+          "id": "FMA38463",
+          "name": "right palmaris longus"
+        },
+        {
+          "id": "FMA38560",
+          "name": "humeral head of right pronator teres"
+        },
+        {
+          "id": "FMA38562",
+          "name": "ulnar head of right pronator teres"
+        },
+        {
+          "id": "FMA38617",
+          "name": "humeral head of right flexor carpi ulnaris"
+        },
+        {
+          "id": "FMA38619",
+          "name": "ulnar head of right flexor carpi ulnaris"
+        },
+        {
+          "id": "FMA38638",
+          "name": "humeroulnar head of right flexor digitorum superficialis"
+        },
+        {
+          "id": "FMA38640",
+          "name": "radial head of right flexor digitorum superficialis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "pronator teres",
+          "match": {
+            "id": "FMA38450",
+            "name": "pronator teres"
+          },
+          "via": "exact",
+          "primitives": 4
+        },
+        {
+          "concept": "flexor carpi radialis",
+          "match": {
+            "id": "FMA38460",
+            "name": "right flexor carpi radialis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "palmaris longus",
+          "match": {
+            "id": "FMA38463",
+            "name": "right palmaris longus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "flexor carpi ulnaris",
+          "match": {
+            "id": "FMA38465",
+            "name": "flexor carpi ulnaris"
+          },
+          "via": "exact",
+          "primitives": 4
+        },
+        {
+          "concept": "flexor digitorum superficialis",
+          "match": {
+            "id": "FMA38469",
+            "name": "flexor digitorum superficialis"
+          },
+          "via": "exact",
+          "primitives": 4
+        }
+      ]
+    },
+    "forearm-extensors-left": {
+      "triangles": 2900,
+      "vertices": 1920,
+      "bboxMin": [
+        0.2194,
+        0.70219,
+        -0.05491
+      ],
+      "bboxMax": [
+        0.30481,
+        1.12508,
+        0.06217
+      ],
+      "centroid": [
+        0.24481,
+        0.93879,
+        -0.01959
+      ],
+      "simplificationErrorMm": 0.67,
+      "sourcePrimitives": [
+        {
+          "id": "FMA38496",
+          "name": "left extensor carpi radialis longus"
+        },
+        {
+          "id": "FMA38499",
+          "name": "left extensor carpi radialis brevis"
+        },
+        {
+          "id": "FMA38502",
+          "name": "left extensor digitorum"
+        },
+        {
+          "id": "FMA38505",
+          "name": "left extensor digiti minimi"
+        },
+        {
+          "id": "BP44",
+          "name": "humeral head of left extensor carpi ulnaris"
+        },
+        {
+          "id": "BP46",
+          "name": "ulnar head of left extensor carpi ulnaris"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "extensor carpi radialis longus",
+          "match": {
+            "id": "FMA38496",
+            "name": "left extensor carpi radialis longus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "extensor carpi radialis brevis",
+          "match": {
+            "id": "FMA38499",
+            "name": "left extensor carpi radialis brevis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "extensor digitorum",
+          "match": {
+            "id": "FMA38502",
+            "name": "left extensor digitorum"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "extensor digiti minimi",
+          "match": {
+            "id": "FMA38505",
+            "name": "left extensor digiti minimi"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "extensor carpi ulnaris",
+          "match": {
+            "id": "FMA38508",
+            "name": "left extensor carpi ulnaris"
+          },
+          "via": "side prefix",
+          "primitives": 2
+        }
+      ]
+    },
+    "forearm-extensors-right": {
+      "triangles": 2918,
+      "vertices": 1907,
+      "bboxMin": [
+        -0.30501,
+        0.70181,
+        -0.05495
+      ],
+      "bboxMax": [
+        -0.21972,
+        1.12515,
+        0.062
+      ],
+      "centroid": [
+        -0.24477,
+        0.93906,
+        -0.01965
+      ],
+      "simplificationErrorMm": 0.76,
+      "sourcePrimitives": [
+        {
+          "id": "FMA38495",
+          "name": "right extensor carpi radialis longus"
+        },
+        {
+          "id": "FMA38498",
+          "name": "right extensor carpi radialis brevis"
+        },
+        {
+          "id": "FMA38501",
+          "name": "right extensor digitorum"
+        },
+        {
+          "id": "FMA38504",
+          "name": "right extensor digiti minimi"
+        },
+        {
+          "id": "BP45",
+          "name": "humeral head of right extensor carpi ulnaris"
+        },
+        {
+          "id": "BP47",
+          "name": "ulnar head of right extensor carpi ulnaris"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "extensor carpi radialis longus",
+          "match": {
+            "id": "FMA38495",
+            "name": "right extensor carpi radialis longus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "extensor carpi radialis brevis",
+          "match": {
+            "id": "FMA38498",
+            "name": "right extensor carpi radialis brevis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "extensor digitorum",
+          "match": {
+            "id": "FMA38501",
+            "name": "right extensor digitorum"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "extensor digiti minimi",
+          "match": {
+            "id": "FMA38504",
+            "name": "right extensor digiti minimi"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "extensor carpi ulnaris",
+          "match": {
+            "id": "FMA38507",
+            "name": "right extensor carpi ulnaris"
+          },
+          "via": "side prefix",
+          "primitives": 2
+        }
+      ]
+    },
+    "gluteus-maximus-left": {
+      "triangles": 2918,
+      "vertices": 1744,
+      "bboxMin": [
+        0.00145,
+        0.68758,
+        -0.10706
+      ],
+      "bboxMax": [
+        0.14115,
+        0.94792,
+        -0.01315
+      ],
+      "centroid": [
+        0.07809,
+        0.82546,
+        -0.06882
+      ],
+      "simplificationErrorMm": 0.56,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22329",
+          "name": "left gluteus maximus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "gluteus maximus",
+          "match": {
+            "id": "FMA22329",
+            "name": "left gluteus maximus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "gluteus-maximus-right": {
+      "triangles": 2922,
+      "vertices": 1804,
+      "bboxMin": [
+        -0.14188,
+        0.68739,
+        -0.10701
+      ],
+      "bboxMax": [
+        -0.00136,
+        0.9485,
+        -0.01326
+      ],
+      "centroid": [
+        -0.07823,
+        0.82541,
+        -0.06869
+      ],
+      "simplificationErrorMm": 0.57,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22328",
+          "name": "right gluteus maximus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "gluteus maximus",
+          "match": {
+            "id": "FMA22328",
+            "name": "right gluteus maximus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "gluteus-medius-left": {
+      "triangles": 2922,
+      "vertices": 1772,
+      "bboxMin": [
+        0.05874,
+        0.80442,
+        -0.06611
+      ],
+      "bboxMax": [
+        0.14516,
+        0.96582,
+        0.02247
+      ],
+      "centroid": [
+        0.10952,
+        0.89713,
+        -0.0316
+      ],
+      "simplificationErrorMm": 0.45,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22331",
+          "name": "left gluteus medius"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "gluteus medius",
+          "match": {
+            "id": "FMA22331",
+            "name": "left gluteus medius"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "gluteus-medius-right": {
+      "triangles": 2922,
+      "vertices": 1827,
+      "bboxMin": [
+        -0.1453,
+        0.80347,
+        -0.06614
+      ],
+      "bboxMax": [
+        -0.05859,
+        0.96582,
+        0.02265
+      ],
+      "centroid": [
+        -0.10954,
+        0.89713,
+        -0.03159
+      ],
+      "simplificationErrorMm": 0.48,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22330",
+          "name": "right gluteus medius"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "gluteus medius",
+          "match": {
+            "id": "FMA22330",
+            "name": "right gluteus medius"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "tensor-fasciae-latae-left": {
+      "triangles": 2922,
+      "vertices": 1654,
+      "bboxMin": [
+        0.10934,
+        0.77802,
+        0.01386
+      ],
+      "bboxMax": [
+        0.14723,
+        0.93416,
+        0.0479
+      ],
+      "centroid": [
+        0.12856,
+        0.85834,
+        0.03068
+      ],
+      "simplificationErrorMm": 0.21,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22426",
+          "name": "left tensor fasciae latae"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "tensor fasciae latae",
+          "match": {
+            "id": "FMA22426",
+            "name": "left tensor fasciae latae"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "tensor-fasciae-latae-right": {
+      "triangles": 2922,
+      "vertices": 1781,
+      "bboxMin": [
+        -0.14727,
+        0.77802,
+        0.01377
+      ],
+      "bboxMax": [
+        -0.1094,
+        0.93432,
+        0.04785
+      ],
+      "centroid": [
+        -0.12864,
+        0.8583,
+        0.03064
+      ],
+      "simplificationErrorMm": 0.24,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22425",
+          "name": "right tensor fasciae latae"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "tensor fasciae latae",
+          "match": {
+            "id": "FMA22425",
+            "name": "right tensor fasciae latae"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "sartorius-left": {
+      "triangles": 2922,
+      "vertices": 1699,
+      "bboxMin": [
+        0.02064,
+        0.33914,
+        -0.03013
+      ],
+      "bboxMax": [
+        0.12037,
+        0.91758,
+        0.05706
+      ],
+      "centroid": [
+        0.05916,
+        0.63405,
+        0.0207
+      ],
+      "simplificationErrorMm": 0.32,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22355",
+          "name": "left sartorius"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "sartorius",
+          "match": {
+            "id": "FMA22355",
+            "name": "left sartorius"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "sartorius-right": {
+      "triangles": 2914,
+      "vertices": 1736,
+      "bboxMin": [
+        -0.12044,
+        0.33856,
+        -0.03018
+      ],
+      "bboxMax": [
+        -0.02065,
+        0.91813,
+        0.05694
+      ],
+      "centroid": [
+        -0.05925,
+        0.63392,
+        0.02069
+      ],
+      "simplificationErrorMm": 0.36,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22354",
+          "name": "right sartorius"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "sartorius",
+          "match": {
+            "id": "FMA22354",
+            "name": "right sartorius"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "rectus-femoris-left": {
+      "triangles": 2922,
+      "vertices": 1665,
+      "bboxMin": [
+        0.06467,
+        0.35916,
+        -0.00726
+      ],
+      "bboxMax": [
+        0.14351,
+        0.88701,
+        0.05969
+      ],
+      "centroid": [
+        0.10428,
+        0.65721,
+        0.02997
+      ],
+      "simplificationErrorMm": 0.59,
+      "sourcePrimitives": [
+        {
+          "id": "FMA38929",
+          "name": "left rectus femoris"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "rectus femoris",
+          "match": {
+            "id": "FMA38929",
+            "name": "left rectus femoris"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "rectus-femoris-right": {
+      "triangles": 2914,
+      "vertices": 1749,
+      "bboxMin": [
+        -0.14355,
+        0.3591,
+        -0.00714
+      ],
+      "bboxMax": [
+        -0.06463,
+        0.88696,
+        0.05968
+      ],
+      "centroid": [
+        -0.1043,
+        0.65688,
+        0.02993
+      ],
+      "simplificationErrorMm": 0.66,
+      "sourcePrimitives": [
+        {
+          "id": "FMA38928",
+          "name": "right rectus femoris"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "rectus femoris",
+          "match": {
+            "id": "FMA38928",
+            "name": "right rectus femoris"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "vastus-lateralis-left": {
+      "triangles": 2922,
+      "vertices": 1711,
+      "bboxMin": [
+        0.08276,
+        0.3719,
+        -0.03322
+      ],
+      "bboxMax": [
+        0.15361,
+        0.81442,
+        0.0435
+      ],
+      "centroid": [
+        0.12257,
+        0.61339,
+        0.00144
+      ],
+      "simplificationErrorMm": 0.65,
+      "sourcePrimitives": [
+        {
+          "id": "FMA38931",
+          "name": "left vastus lateralis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "vastus lateralis",
+          "match": {
+            "id": "FMA38931",
+            "name": "left vastus lateralis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "vastus-lateralis-right": {
+      "triangles": 2922,
+      "vertices": 1735,
+      "bboxMin": [
+        -0.15378,
+        0.37188,
+        -0.03324
+      ],
+      "bboxMax": [
+        -0.08217,
+        0.8145,
+        0.04345
+      ],
+      "centroid": [
+        -0.12256,
+        0.61312,
+        0.00136
+      ],
+      "simplificationErrorMm": 0.7,
+      "sourcePrimitives": [
+        {
+          "id": "FMA38930",
+          "name": "right vastus lateralis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "vastus lateralis",
+          "match": {
+            "id": "FMA38930",
+            "name": "right vastus lateralis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "vastus-medialis-left": {
+      "triangles": 2922,
+      "vertices": 1683,
+      "bboxMin": [
+        0.0325,
+        0.37323,
+        -0.01748
+      ],
+      "bboxMax": [
+        0.10191,
+        0.76721,
+        0.04872
+      ],
+      "centroid": [
+        0.06919,
+        0.57102,
+        0.01656
+      ],
+      "simplificationErrorMm": 0.54,
+      "sourcePrimitives": [
+        {
+          "id": "FMA38933",
+          "name": "left vastus medialis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "vastus medialis",
+          "match": {
+            "id": "FMA38933",
+            "name": "left vastus medialis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "vastus-medialis-right": {
+      "triangles": 2922,
+      "vertices": 1741,
+      "bboxMin": [
+        -0.10168,
+        0.37342,
+        -0.01742
+      ],
+      "bboxMax": [
+        -0.0326,
+        0.76777,
+        0.04879
+      ],
+      "centroid": [
+        -0.06928,
+        0.57107,
+        0.01656
+      ],
+      "simplificationErrorMm": 0.58,
+      "sourcePrimitives": [
+        {
+          "id": "FMA38932",
+          "name": "right vastus medialis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "vastus medialis",
+          "match": {
+            "id": "FMA38932",
+            "name": "right vastus medialis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "adductors-left": {
+      "triangles": 2920,
+      "vertices": 1808,
+      "bboxMin": [
+        0.00923,
+        0.33528,
+        -0.04522
+      ],
+      "bboxMax": [
+        0.10666,
+        0.83722,
+        0.05537
+      ],
+      "centroid": [
+        0.04866,
+        0.66879,
+        0.00231
+      ],
+      "simplificationErrorMm": 0.96,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22457",
+          "name": "left adductor longus"
+        },
+        {
+          "id": "FMA22454",
+          "name": "left adductor brevis"
+        },
+        {
+          "id": "FMA22460",
+          "name": "left adductor magnus"
+        },
+        {
+          "id": "FMA43884",
+          "name": "left gracilis"
+        },
+        {
+          "id": "FMA22451",
+          "name": "left pectineus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "adductor longus",
+          "match": {
+            "id": "FMA22457",
+            "name": "left adductor longus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "adductor brevis",
+          "match": {
+            "id": "FMA22454",
+            "name": "left adductor brevis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "adductor magnus",
+          "match": {
+            "id": "FMA22460",
+            "name": "left adductor magnus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "gracilis",
+          "match": {
+            "id": "FMA43884",
+            "name": "left gracilis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "pectineus",
+          "match": {
+            "id": "FMA22451",
+            "name": "left pectineus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "adductors-right": {
+      "triangles": 2918,
+      "vertices": 1849,
+      "bboxMin": [
+        -0.10661,
+        0.33431,
+        -0.04495
+      ],
+      "bboxMax": [
+        -0.00932,
+        0.83712,
+        0.05565
+      ],
+      "centroid": [
+        -0.04873,
+        0.66862,
+        0.00227
+      ],
+      "simplificationErrorMm": 1.05,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22456",
+          "name": "right adductor longus"
+        },
+        {
+          "id": "FMA22452",
+          "name": "right adductor brevis"
+        },
+        {
+          "id": "FMA22459",
+          "name": "right adductor magnus"
+        },
+        {
+          "id": "FMA43883",
+          "name": "right gracilis"
+        },
+        {
+          "id": "FMA22450",
+          "name": "right pectineus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "adductor longus",
+          "match": {
+            "id": "FMA22456",
+            "name": "right adductor longus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "adductor brevis",
+          "match": {
+            "id": "FMA22452",
+            "name": "right adductor brevis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "adductor magnus",
+          "match": {
+            "id": "FMA22459",
+            "name": "right adductor magnus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "gracilis",
+          "match": {
+            "id": "FMA43883",
+            "name": "right gracilis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "pectineus",
+          "match": {
+            "id": "FMA22450",
+            "name": "right pectineus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "biceps-femoris-left": {
+      "triangles": 2920,
+      "vertices": 1691,
+      "bboxMin": [
+        0.04851,
+        0.38194,
+        -0.07277
+      ],
+      "bboxMax": [
+        0.12413,
+        0.79426,
+        -0.01271
+      ],
+      "centroid": [
+        0.09228,
+        0.5853,
+        -0.04209
+      ],
+      "simplificationErrorMm": 0.62,
+      "sourcePrimitives": [
+        {
+          "id": "FMA45892",
+          "name": "short head of left biceps femoris"
+        },
+        {
+          "id": "FMA45889",
+          "name": "long head of left biceps femoris"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "biceps femoris",
+          "match": {
+            "id": "FMA22356",
+            "name": "biceps femoris"
+          },
+          "via": "exact",
+          "primitives": 4
+        }
+      ]
+    },
+    "biceps-femoris-right": {
+      "triangles": 2922,
+      "vertices": 1734,
+      "bboxMin": [
+        -0.12415,
+        0.38283,
+        -0.07275
+      ],
+      "bboxMax": [
+        -0.04845,
+        0.79437,
+        -0.01273
+      ],
+      "centroid": [
+        -0.09239,
+        0.58512,
+        -0.0421
+      ],
+      "simplificationErrorMm": 0.68,
+      "sourcePrimitives": [
+        {
+          "id": "FMA45891",
+          "name": "short head of right biceps femoris"
+        },
+        {
+          "id": "FMA45888",
+          "name": "long head of right biceps femoris"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "biceps femoris",
+          "match": {
+            "id": "FMA22356",
+            "name": "biceps femoris"
+          },
+          "via": "exact",
+          "primitives": 4
+        }
+      ]
+    },
+    "medial-hamstrings-left": {
+      "triangles": 2922,
+      "vertices": 1663,
+      "bboxMin": [
+        0.01478,
+        0.34095,
+        -0.07173
+      ],
+      "bboxMax": [
+        0.07597,
+        0.78587,
+        -0.01225
+      ],
+      "centroid": [
+        0.04538,
+        0.58882,
+        -0.04527
+      ],
+      "simplificationErrorMm": 0.63,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22359",
+          "name": "left semitendinosus"
+        },
+        {
+          "id": "FMA22449",
+          "name": "left semimembranosus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "semitendinosus",
+          "match": {
+            "id": "FMA22359",
+            "name": "left semitendinosus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "semimembranosus",
+          "match": {
+            "id": "FMA22449",
+            "name": "left semimembranosus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "medial-hamstrings-right": {
+      "triangles": 2922,
+      "vertices": 1690,
+      "bboxMin": [
+        -0.07623,
+        0.34216,
+        -0.07178
+      ],
+      "bboxMax": [
+        -0.01458,
+        0.78611,
+        -0.01242
+      ],
+      "centroid": [
+        -0.04539,
+        0.58878,
+        -0.04523
+      ],
+      "simplificationErrorMm": 0.72,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22358",
+          "name": "right semitendinosus"
+        },
+        {
+          "id": "FMA22448",
+          "name": "right semimembranosus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "semitendinosus",
+          "match": {
+            "id": "FMA22358",
+            "name": "right semitendinosus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "semimembranosus",
+          "match": {
+            "id": "FMA22448",
+            "name": "right semimembranosus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "gastrocnemius-left": {
+      "triangles": 2922,
+      "vertices": 1667,
+      "bboxMin": [
+        0.03367,
+        0.20046,
+        -0.10167
+      ],
+      "bboxMax": [
+        0.13023,
+        0.49001,
+        -0.01669
+      ],
+      "centroid": [
+        0.07759,
+        0.34147,
+        -0.07049
+      ],
+      "simplificationErrorMm": 0.57,
+      "sourcePrimitives": [
+        {
+          "id": "FMA45961",
+          "name": "lateral head of left gastrocnemius"
+        },
+        {
+          "id": "FMA45958",
+          "name": "medial head of left gastrocnemius"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "gastrocnemius",
+          "match": {
+            "id": "FMA22541",
+            "name": "gastrocnemius"
+          },
+          "via": "exact",
+          "primitives": 4
+        }
+      ]
+    },
+    "gastrocnemius-right": {
+      "triangles": 2920,
+      "vertices": 1671,
+      "bboxMin": [
+        -0.13009,
+        0.20026,
+        -0.10169
+      ],
+      "bboxMax": [
+        -0.03367,
+        0.49024,
+        -0.01674
+      ],
+      "centroid": [
+        -0.07768,
+        0.34142,
+        -0.07048
+      ],
+      "simplificationErrorMm": 0.63,
+      "sourcePrimitives": [
+        {
+          "id": "FMA45960",
+          "name": "lateral head of right gastrocnemius"
+        },
+        {
+          "id": "FMA45957",
+          "name": "medial head of right gastrocnemius"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "gastrocnemius",
+          "match": {
+            "id": "FMA22541",
+            "name": "gastrocnemius"
+          },
+          "via": "exact",
+          "primitives": 4
+        }
+      ]
+    },
+    "soleus-left": {
+      "triangles": 2916,
+      "vertices": 1641,
+      "bboxMin": [
+        0.04234,
+        0.13001,
+        -0.07509
+      ],
+      "bboxMax": [
+        0.12458,
+        0.39659,
+        -0.02165
+      ],
+      "centroid": [
+        0.08278,
+        0.27164,
+        -0.05589
+      ],
+      "simplificationErrorMm": 0.44,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22559",
+          "name": "left soleus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "soleus",
+          "match": {
+            "id": "FMA22559",
+            "name": "left soleus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "soleus-right": {
+      "triangles": 2920,
+      "vertices": 1686,
+      "bboxMin": [
+        -0.12466,
+        0.12983,
+        -0.07501
+      ],
+      "bboxMax": [
+        -0.0423,
+        0.39607,
+        -0.02169
+      ],
+      "centroid": [
+        -0.08282,
+        0.27168,
+        -0.05587
+      ],
+      "simplificationErrorMm": 0.48,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22558",
+          "name": "right soleus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "soleus",
+          "match": {
+            "id": "FMA22558",
+            "name": "right soleus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "tibialis-anterior-left": {
+      "triangles": 2922,
+      "vertices": 1799,
+      "bboxMin": [
+        0.05493,
+        0.04147,
+        -0.03235
+      ],
+      "bboxMax": [
+        0.11372,
+        0.39743,
+        0.03827
+      ],
+      "centroid": [
+        0.09253,
+        0.25321,
+        -0.0121
+      ],
+      "simplificationErrorMm": 0.3,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22545",
+          "name": "left tibialis anterior"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "tibialis anterior",
+          "match": {
+            "id": "FMA22545",
+            "name": "left tibialis anterior"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "tibialis-anterior-right": {
+      "triangles": 2922,
+      "vertices": 1894,
+      "bboxMin": [
+        -0.11377,
+        0.04125,
+        -0.03242
+      ],
+      "bboxMax": [
+        -0.05496,
+        0.39777,
+        0.03568
+      ],
+      "centroid": [
+        -0.09257,
+        0.25284,
+        -0.01208
+      ],
+      "simplificationErrorMm": 0.34,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22544",
+          "name": "right tibialis anterior"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "tibialis anterior",
+          "match": {
+            "id": "FMA22544",
+            "name": "right tibialis anterior"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "fibularis-longus-left": {
+      "triangles": 2910,
+      "vertices": 1656,
+      "bboxMin": [
+        0.07395,
+        0.02823,
+        -0.06032
+      ],
+      "bboxMax": [
+        0.13072,
+        0.39504,
+        0.02627
+      ],
+      "centroid": [
+        0.11362,
+        0.24446,
+        -0.0441
+      ],
+      "simplificationErrorMm": 0.23,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22553",
+          "name": "left fibularis longus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "fibularis longus",
+          "match": {
+            "id": "FMA22553",
+            "name": "left fibularis longus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "peroneus longus",
+          "match": {
+            "id": "FMA22553",
+            "name": "left fibularis longus"
+          },
+          "via": "alias \"fibularis longus\"",
+          "primitives": 1
+        }
+      ]
+    },
+    "fibularis-longus-right": {
+      "triangles": 2906,
+      "vertices": 1690,
+      "bboxMin": [
+        -0.13076,
+        0.02829,
+        -0.06026
+      ],
+      "bboxMax": [
+        -0.07379,
+        0.39521,
+        0.02641
+      ],
+      "centroid": [
+        -0.11367,
+        0.24455,
+        -0.04408
+      ],
+      "simplificationErrorMm": 0.25,
+      "sourcePrimitives": [
+        {
+          "id": "FMA22552",
+          "name": "right fibularis longus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "fibularis longus",
+          "match": {
+            "id": "FMA22552",
+            "name": "right fibularis longus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        },
+        {
+          "concept": "peroneus longus",
+          "match": {
+            "id": "FMA22552",
+            "name": "right fibularis longus"
+          },
+          "via": "alias \"fibularis longus\"",
+          "primitives": 1
+        }
+      ]
+    },
+    "temporalis-left": {
+      "triangles": 2918,
+      "vertices": 1703,
+      "bboxMin": [
+        0.03652,
+        1.49737,
+        -0.04746
+      ],
+      "bboxMax": [
+        0.0743,
+        1.60956,
+        0.06305
+      ],
+      "centroid": [
+        0.06014,
+        1.56608,
+        0.01365
+      ],
+      "simplificationErrorMm": 0.3,
+      "sourcePrimitives": [
+        {
+          "id": "FMA49008",
+          "name": "left temporalis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "temporalis",
+          "match": {
+            "id": "FMA49008",
+            "name": "left temporalis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "temporalis-right": {
+      "triangles": 2922,
+      "vertices": 1774,
+      "bboxMin": [
+        -0.07432,
+        1.49733,
+        -0.04753
+      ],
+      "bboxMax": [
+        -0.03657,
+        1.60963,
+        0.06272
+      ],
+      "centroid": [
+        -0.06016,
+        1.56612,
+        0.01359
+      ],
+      "simplificationErrorMm": 0.3,
+      "sourcePrimitives": [
+        {
+          "id": "FMA49007",
+          "name": "right temporalis"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "temporalis",
+          "match": {
+            "id": "FMA49007",
+            "name": "right temporalis"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "masseter-left": {
+      "triangles": 2918,
+      "vertices": 1746,
+      "bboxMin": [
+        0.0337,
+        1.46489,
+        0.01052
+      ],
+      "bboxMax": [
+        0.0606,
+        1.52921,
+        0.05623
+      ],
+      "centroid": [
+        0.04703,
+        1.49686,
+        0.03183
+      ],
+      "simplificationErrorMm": 0.18,
+      "sourcePrimitives": [
+        {
+          "id": "FMA49005",
+          "name": "deep part of left masseter"
+        },
+        {
+          "id": "FMA49002",
+          "name": "superficial part of left masseter"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "masseter",
+          "match": {
+            "id": "FMA48996",
+            "name": "masseter"
+          },
+          "via": "exact",
+          "primitives": 4
+        }
+      ]
+    },
+    "masseter-right": {
+      "triangles": 2920,
+      "vertices": 1759,
+      "bboxMin": [
+        -0.06068,
+        1.46469,
+        0.01048
+      ],
+      "bboxMax": [
+        -0.03371,
+        1.52924,
+        0.05603
+      ],
+      "centroid": [
+        -0.04709,
+        1.49687,
+        0.03184
+      ],
+      "simplificationErrorMm": 0.18,
+      "sourcePrimitives": [
+        {
+          "id": "FMA49004",
+          "name": "deep part of right masseter"
+        },
+        {
+          "id": "FMA49001",
+          "name": "superficial part of right masseter"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "masseter",
+          "match": {
+            "id": "FMA48996",
+            "name": "masseter"
+          },
+          "via": "exact",
+          "primitives": 4
+        }
+      ]
+    },
+    "skull": {
+      "triangles": 9974,
+      "vertices": 9286,
+      "bboxMin": [
+        -0.07173,
+        1.44499,
+        -0.09858
+      ],
+      "bboxMax": [
+        0.07168,
+        1.65167,
+        0.09851
+      ],
+      "centroid": [
+        -0.00008,
+        1.55999,
+        0.00669
+      ],
+      "simplificationErrorMm": 0.96,
+      "sourcePrimitives": [
+        {
+          "id": "FMA9710",
+          "name": "vomer"
+        },
+        {
+          "id": "FMA53650",
+          "name": "left maxilla"
+        },
+        {
+          "id": "FMA53655",
+          "name": "right palatine bone"
+        },
+        {
+          "id": "FMA53656",
+          "name": "left palatine bone"
+        },
+        {
+          "id": "FMA52788",
+          "name": "right parietal bone"
+        },
+        {
+          "id": "FMA53647",
+          "name": "right nasal bone"
+        },
+        {
+          "id": "FMA52789",
+          "name": "left parietal bone"
+        },
+        {
+          "id": "FMA53646",
+          "name": "left lacrimal bone"
+        },
+        {
+          "id": "FMA53649",
+          "name": "right maxilla"
+        },
+        {
+          "id": "FMA53648",
+          "name": "left nasal bone"
+        },
+        {
+          "id": "FMA52740",
+          "name": "ethmoid"
+        },
+        {
+          "id": "FMA59764",
+          "name": "gingiva of lower jaw"
+        },
+        {
+          "id": "FMA59763",
+          "name": "gingiva of upper jaw"
+        },
+        {
+          "id": "FMA52892",
+          "name": "right zygomatic bone"
+        },
+        {
+          "id": "FMA52893",
+          "name": "left zygomatic bone"
+        },
+        {
+          "id": "FMA52749",
+          "name": "hyoid bone"
+        },
+        {
+          "id": "FMA53645",
+          "name": "right lacrimal bone"
+        },
+        {
+          "id": "FMA54738",
+          "name": "left inferior nasal concha"
+        },
+        {
+          "id": "FMA54737",
+          "name": "right inferior nasal concha"
+        },
+        {
+          "id": "FMA52736",
+          "name": "sphenoid bone"
+        },
+        {
+          "id": "FMA52739",
+          "name": "left temporal bone"
+        },
+        {
+          "id": "FMA52738",
+          "name": "right temporal bone"
+        },
+        {
+          "id": "FMA52735",
+          "name": "occipital bone"
+        },
+        {
+          "id": "FMA52734",
+          "name": "frontal bone"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "skull",
+          "match": {
+            "id": "FMA46565",
+            "name": "skull"
+          },
+          "via": "exact",
+          "primitives": 26
+        }
+      ]
+    },
+    "mandible": {
+      "triangles": 3340,
+      "vertices": 1701,
+      "bboxMin": [
+        -0.05024,
+        1.44917,
+        0.00305
+      ],
+      "bboxMax": [
+        0.05013,
+        1.52902,
+        0.08241
+      ],
+      "centroid": [
+        -0.00002,
+        1.48367,
+        0.04065
+      ],
+      "simplificationErrorMm": 0.16,
+      "sourcePrimitives": [
+        {
+          "id": "FMA52748",
+          "name": "mandible"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "mandible",
+          "match": {
+            "id": "FMA52748",
+            "name": "mandible"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ]
+    },
+    "vertebral-column": {
+      "triangles": 10020,
+      "vertices": 7524,
+      "bboxMin": [
+        -0.05112,
+        0.92762,
+        -0.09575
+      ],
+      "bboxMax": [
+        0.04954,
+        1.50403,
+        0.02012
+      ],
+      "centroid": [
+        -0.00054,
+        1.20908,
+        -0.03643
+      ],
+      "simplificationErrorMm": 0.91,
+      "sourcePrimitives": [
+        {
+          "id": "FMA12525",
+          "name": "seventh cervical vertebra"
+        },
+        {
+          "id": "FMA12524",
+          "name": "sixth cervical vertebra"
+        },
+        {
+          "id": "FMA12523",
+          "name": "fifth cervical vertebra"
+        },
+        {
+          "id": "FMA12522",
+          "name": "fourth cervical vertebra"
+        },
+        {
+          "id": "FMA12521",
+          "name": "third cervical vertebra"
+        },
+        {
+          "id": "FMA12520",
+          "name": "axis"
+        },
+        {
+          "id": "FMA12519",
+          "name": "atlas"
+        },
+        {
+          "id": "FMA9991",
+          "name": "eighth thoracic vertebra"
+        },
+        {
+          "id": "FMA9968",
+          "name": "seventh thoracic vertebra"
+        },
+        {
+          "id": "FMA9248",
+          "name": "fourth thoracic vertebra"
+        },
+        {
+          "id": "FMA9187",
+          "name": "second thoracic vertebra"
+        },
+        {
+          "id": "FMA9922",
+          "name": "fifth thoracic vertebra"
+        },
+        {
+          "id": "FMA9209",
+          "name": "third thoracic vertebra"
+        },
+        {
+          "id": "FMA9945",
+          "name": "sixth thoracic vertebra"
+        },
+        {
+          "id": "FMA9165",
+          "name": "first thoracic vertebra"
+        },
+        {
+          "id": "FMA10014",
+          "name": "ninth thoracic vertebra"
+        },
+        {
+          "id": "FMA10037",
+          "name": "tenth thoracic vertebra"
+        },
+        {
+          "id": "FMA10081",
+          "name": "twelfth thoracic vertebra"
+        },
+        {
+          "id": "FMA10059",
+          "name": "eleventh thoracic vertebra"
+        },
+        {
+          "id": "FMA13076",
+          "name": "fifth lumbar vertebra"
+        },
+        {
+          "id": "FMA13075",
+          "name": "fourth lumbar vertebra"
+        },
+        {
+          "id": "FMA13074",
+          "name": "third lumbar vertebra"
+        },
+        {
+          "id": "FMA13073",
+          "name": "second lumbar vertebra"
+        },
+        {
+          "id": "FMA13072",
+          "name": "first lumbar vertebra"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "set of cervical vertebrae",
+          "match": {
+            "id": "FMA72063",
+            "name": "set of cervical vertebrae"
+          },
+          "via": "exact",
+          "primitives": 7
+        },
+        {
+          "concept": "set of thoracic vertebrae",
+          "match": {
+            "id": "FMA72064",
+            "name": "set of thoracic vertebrae"
+          },
+          "via": "exact",
+          "primitives": 12
+        },
+        {
+          "concept": "set of lumbar vertebrae",
+          "match": {
+            "id": "FMA72065",
+            "name": "set of lumbar vertebrae"
+          },
+          "via": "exact",
+          "primitives": 5
+        }
+      ]
+    },
+    "thoracic-cage": {
+      "triangles": 10004,
+      "vertices": 6315,
+      "bboxMin": [
+        -0.13699,
+        1.02337,
+        -0.09282
+      ],
+      "bboxMax": [
+        0.13596,
+        1.40083,
+        0.11114
+      ],
+      "centroid": [
+        -0.0004,
+        1.21654,
+        0.00852
+      ],
+      "simplificationErrorMm": 0.68,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7882",
+          "name": "right second rib"
+        },
+        {
+          "id": "FMA8012",
+          "name": "left second rib"
+        },
+        {
+          "id": "FMA8283",
+          "name": "right eighth rib"
+        },
+        {
+          "id": "FMA8472",
+          "name": "left tenth rib"
+        },
+        {
+          "id": "FMA8310",
+          "name": "left eighth rib"
+        },
+        {
+          "id": "FMA8148",
+          "name": "left fourth rib"
+        },
+        {
+          "id": "FMA7957",
+          "name": "right fourth rib"
+        },
+        {
+          "id": "FMA8229",
+          "name": "right seventh rib"
+        },
+        {
+          "id": "FMA7909",
+          "name": "right third rib"
+        },
+        {
+          "id": "FMA8364",
+          "name": "right ninth rib"
+        },
+        {
+          "id": "FMA8445",
+          "name": "right tenth rib"
+        },
+        {
+          "id": "FMA8066",
+          "name": "right fifth rib"
+        },
+        {
+          "id": "FMA8093",
+          "name": "left fifth rib"
+        },
+        {
+          "id": "FMA8391",
+          "name": "left ninth rib"
+        },
+        {
+          "id": "FMA7987",
+          "name": "left first rib"
+        },
+        {
+          "id": "FMA8202",
+          "name": "left sixth rib"
+        },
+        {
+          "id": "FMA8039",
+          "name": "left third rib"
+        },
+        {
+          "id": "FMA8175",
+          "name": "right sixth rib"
+        },
+        {
+          "id": "FMA8532",
+          "name": "left eleventh rib"
+        },
+        {
+          "id": "FMA8533",
+          "name": "right twelfth rib"
+        },
+        {
+          "id": "FMA8531",
+          "name": "right eleventh rib"
+        },
+        {
+          "id": "FMA8256",
+          "name": "left seventh rib"
+        },
+        {
+          "id": "FMA7857",
+          "name": "right first rib"
+        },
+        {
+          "id": "FMA8534",
+          "name": "left twelfth rib"
+        },
+        {
+          "id": "FMA7488",
+          "name": "xiphoid process"
+        },
+        {
+          "id": "FMA7487",
+          "name": "body of sternum"
+        },
+        {
+          "id": "FMA7486",
+          "name": "manubrium"
+        },
+        {
+          "id": "FMA8031",
+          "name": "left second costal cartilage"
+        },
+        {
+          "id": "FMA8058",
+          "name": "left third costal cartilage"
+        },
+        {
+          "id": "FMA8070",
+          "name": "right fifth costal cartilage"
+        },
+        {
+          "id": "FMA8112",
+          "name": "left fifth costal cartilage"
+        },
+        {
+          "id": "FMA7976",
+          "name": "right fourth costal cartilage"
+        },
+        {
+          "id": "FMA7913",
+          "name": "right third costal cartilage"
+        },
+        {
+          "id": "FMA8005",
+          "name": "left first costal cartilage"
+        },
+        {
+          "id": "FMA8167",
+          "name": "left fourth costal cartilage"
+        },
+        {
+          "id": "FMA8194",
+          "name": "right sixth costal cartilage"
+        },
+        {
+          "id": "FMA8275",
+          "name": "left seventh costal cartilage"
+        },
+        {
+          "id": "FMA8248",
+          "name": "right seventh costal cartilage"
+        },
+        {
+          "id": "FMA8221",
+          "name": "left sixth costal cartilage"
+        },
+        {
+          "id": "FMA7875",
+          "name": "right first costal cartilage"
+        },
+        {
+          "id": "FMA7886",
+          "name": "right second costal cartilage"
+        },
+        {
+          "id": "BP24",
+          "name": "left costal cartilage"
+        },
+        {
+          "id": "BP28",
+          "name": "right costal cartilage"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "set of ribs",
+          "match": {
+            "id": "FMA71331",
+            "name": "set of ribs"
+          },
+          "via": "exact",
+          "primitives": 24
+        },
+        {
+          "concept": "sternum",
+          "match": {
+            "id": "FMA7485",
+            "name": "sternum"
+          },
+          "via": "exact",
+          "primitives": 3
+        },
+        {
+          "concept": "costal cartilage",
+          "match": {
+            "id": "FMA7591",
+            "name": "costal cartilage"
+          },
+          "via": "exact",
+          "primitives": 16
+        }
+      ]
+    },
+    "clavicle-left": {
+      "triangles": 1762,
+      "vertices": 889,
+      "bboxMin": [
+        0.01078,
+        1.34531,
+        -0.0492
+      ],
+      "bboxMax": [
+        0.14932,
+        1.38036,
+        0.05023
+      ],
+      "centroid": [
+        0.08034,
+        1.36727,
+        0.0029
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13323",
+          "name": "left clavicle"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "clavicle",
+          "match": {
+            "id": "FMA13323",
+            "name": "left clavicle"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "clavicle-right": {
+      "triangles": 1752,
+      "vertices": 882,
+      "bboxMin": [
+        -0.14941,
+        1.34528,
+        -0.04924
+      ],
+      "bboxMax": [
+        -0.01086,
+        1.38038,
+        0.05017
+      ],
+      "centroid": [
+        -0.08041,
+        1.36728,
+        0.00288
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13322",
+          "name": "right clavicle"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "clavicle",
+          "match": {
+            "id": "FMA13322",
+            "name": "right clavicle"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "scapula-left": {
+      "triangles": 3340,
+      "vertices": 1700,
+      "bboxMin": [
+        0.05866,
+        1.21508,
+        -0.10783
+      ],
+      "bboxMax": [
+        0.16799,
+        1.37335,
+        0.00247
+      ],
+      "centroid": [
+        0.10774,
+        1.31478,
+        -0.06852
+      ],
+      "simplificationErrorMm": 0.2,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13396",
+          "name": "left scapula"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "scapula",
+          "match": {
+            "id": "FMA13396",
+            "name": "left scapula"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "scapula-right": {
+      "triangles": 3340,
+      "vertices": 1719,
+      "bboxMin": [
+        -0.16805,
+        1.21505,
+        -0.10781
+      ],
+      "bboxMax": [
+        -0.05878,
+        1.37336,
+        0.00253
+      ],
+      "centroid": [
+        -0.1078,
+        1.31478,
+        -0.0685
+      ],
+      "simplificationErrorMm": 0.2,
+      "sourcePrimitives": [
+        {
+          "id": "FMA13395",
+          "name": "right scapula"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "scapula",
+          "match": {
+            "id": "FMA13395",
+            "name": "right scapula"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "humerus-left": {
+      "triangles": 3340,
+      "vertices": 1717,
+      "bboxMin": [
+        0.13998,
+        1.05298,
+        -0.04934
+      ],
+      "bboxMax": [
+        0.24089,
+        1.36038,
+        0.00014
+      ],
+      "centroid": [
+        0.1914,
+        1.21052,
+        -0.03004
+      ],
+      "simplificationErrorMm": 0.21,
+      "sourcePrimitives": [
+        {
+          "id": "FMA23131",
+          "name": "left humerus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "humerus",
+          "match": {
+            "id": "FMA23131",
+            "name": "left humerus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "humerus-right": {
+      "triangles": 3340,
+      "vertices": 1782,
+      "bboxMin": [
+        -0.24082,
+        1.05302,
+        -0.0493
+      ],
+      "bboxMax": [
+        -0.14014,
+        1.36046,
+        0.0002
+      ],
+      "centroid": [
+        -0.19144,
+        1.21056,
+        -0.03003
+      ],
+      "simplificationErrorMm": 0.23,
+      "sourcePrimitives": [
+        {
+          "id": "FMA23130",
+          "name": "right humerus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "humerus",
+          "match": {
+            "id": "FMA23130",
+            "name": "right humerus"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "radius-left": {
+      "triangles": 1752,
+      "vertices": 879,
+      "bboxMin": [
+        0.21966,
+        0.8296,
+        -0.03939
+      ],
+      "bboxMax": [
+        0.27945,
+        1.05892,
+        0.02725
+      ],
+      "centroid": [
+        0.24824,
+        0.94076,
+        -0.00785
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA23465",
+          "name": "left radius"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "radius",
+          "match": {
+            "id": "FMA23465",
+            "name": "left radius"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "radius-right": {
+      "triangles": 1758,
+      "vertices": 882,
+      "bboxMin": [
+        -0.27952,
+        0.82955,
+        -0.03935
+      ],
+      "bboxMax": [
+        -0.2197,
+        1.05899,
+        0.02731
+      ],
+      "centroid": [
+        -0.24831,
+        0.94069,
+        -0.00783
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA23464",
+          "name": "right radius"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "radius",
+          "match": {
+            "id": "FMA23464",
+            "name": "right radius"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "ulna-left": {
+      "triangles": 1996,
+      "vertices": 1002,
+      "bboxMin": [
+        0.19664,
+        0.82878,
+        -0.05595
+      ],
+      "bboxMax": [
+        0.24739,
+        1.07643,
+        0.02357
+      ],
+      "centroid": [
+        0.2218,
+        0.97043,
+        -0.02062
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA23468",
+          "name": "left ulna"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "ulna",
+          "match": {
+            "id": "FMA23468",
+            "name": "left ulna"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "ulna-right": {
+      "triangles": 2042,
+      "vertices": 1030,
+      "bboxMin": [
+        -0.24751,
+        0.82876,
+        -0.05606
+      ],
+      "bboxMax": [
+        -0.19663,
+        1.07644,
+        0.02351
+      ],
+      "centroid": [
+        -0.22184,
+        0.97049,
+        -0.02062
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA23467",
+          "name": "right ulna"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "ulna",
+          "match": {
+            "id": "FMA23467",
+            "name": "right ulna"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "hand-bones-left": {
+      "triangles": 3340,
+      "vertices": 2049,
+      "bboxMin": [
+        0.21902,
+        0.67695,
+        0.01
+      ],
+      "bboxMax": [
+        0.32394,
+        0.83544,
+        0.09513
+      ],
+      "centroid": [
+        0.26485,
+        0.7683,
+        0.03878
+      ],
+      "simplificationErrorMm": 0.49,
+      "sourcePrimitives": [
+        {
+          "id": "FMA24440",
+          "name": "left triquetral"
+        },
+        {
+          "id": "FMA24442",
+          "name": "left pisiform"
+        },
+        {
+          "id": "FMA24444",
+          "name": "left trapezium"
+        },
+        {
+          "id": "FMA24445",
+          "name": "left trapezoid"
+        },
+        {
+          "id": "FMA24438",
+          "name": "left lunate"
+        },
+        {
+          "id": "FMA24436",
+          "name": "left scaphoid"
+        },
+        {
+          "id": "FMA24447",
+          "name": "left capitate"
+        },
+        {
+          "id": "FMA24449",
+          "name": "left hamate"
+        },
+        {
+          "id": "FMA24469",
+          "name": "left third metacarpal bone"
+        },
+        {
+          "id": "FMA24467",
+          "name": "left second metacarpal bone"
+        },
+        {
+          "id": "FMA24471",
+          "name": "left fourth metacarpal bone"
+        },
+        {
+          "id": "FMA24465",
+          "name": "left first metacarpal bone"
+        },
+        {
+          "id": "FMA24473",
+          "name": "left fifth metacarpal bone"
+        },
+        {
+          "id": "FMA23942",
+          "name": "middle phalanx of left ring finger"
+        },
+        {
+          "id": "FMA23944",
+          "name": "middle phalanx of left little finger"
+        },
+        {
+          "id": "FMA23959",
+          "name": "distal phalanx of left little finger"
+        },
+        {
+          "id": "FMA66791",
+          "name": "proximal phalanx of left little finger"
+        },
+        {
+          "id": "FMA71916",
+          "name": "proximal phalanx of left ring finger"
+        },
+        {
+          "id": "FMA23940",
+          "name": "middle phalanx of left middle finger"
+        },
+        {
+          "id": "FMA23955",
+          "name": "distal phalanx of left middle finger"
+        },
+        {
+          "id": "FMA71908",
+          "name": "proximal phalanx of left middle finger"
+        },
+        {
+          "id": "FMA23957",
+          "name": "distal phalanx of left ring finger"
+        },
+        {
+          "id": "FMA71915",
+          "name": "proximal phalanx of left index finger"
+        },
+        {
+          "id": "FMA23938",
+          "name": "middle phalanx of left index finger"
+        },
+        {
+          "id": "FMA23951",
+          "name": "distal phalanx of left thumb"
+        },
+        {
+          "id": "FMA65470",
+          "name": "proximal phalanx of left thumb"
+        },
+        {
+          "id": "FMA23953",
+          "name": "distal phalanx of left index finger"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "set of carpal bones",
+          "match": {
+            "id": "FMA71335",
+            "name": "set of carpal bones"
+          },
+          "via": "exact",
+          "primitives": 16
+        },
+        {
+          "concept": "set of metacarpal bones",
+          "match": {
+            "id": "FMA71336",
+            "name": "set of metacarpal bones"
+          },
+          "via": "exact",
+          "primitives": 10
+        },
+        {
+          "concept": "set of phalanges of hand",
+          "match": {
+            "id": "FMA75592",
+            "name": "set of fingers"
+          },
+          "via": "alias \"set of fingers\"",
+          "primitives": 28
+        }
+      ]
+    },
+    "hand-bones-right": {
+      "triangles": 3340,
+      "vertices": 2098,
+      "bboxMin": [
+        -0.32402,
+        0.67688,
+        0.01005
+      ],
+      "bboxMax": [
+        -0.21888,
+        0.83571,
+        0.09532
+      ],
+      "centroid": [
+        -0.26493,
+        0.76831,
+        0.03879
+      ],
+      "simplificationErrorMm": 0.51,
+      "sourcePrimitives": [
+        {
+          "id": "FMA24439",
+          "name": "right triquetral"
+        },
+        {
+          "id": "FMA24441",
+          "name": "right pisiform"
+        },
+        {
+          "id": "FMA24443",
+          "name": "right trapezium"
+        },
+        {
+          "id": "FMA23725",
+          "name": "right trapezoid"
+        },
+        {
+          "id": "FMA24437",
+          "name": "right lunate"
+        },
+        {
+          "id": "FMA24435",
+          "name": "right scaphoid"
+        },
+        {
+          "id": "FMA24446",
+          "name": "right capitate"
+        },
+        {
+          "id": "FMA24448",
+          "name": "right hamate"
+        },
+        {
+          "id": "FMA24468",
+          "name": "right third metacarpal bone"
+        },
+        {
+          "id": "FMA24466",
+          "name": "right second metacarpal bone"
+        },
+        {
+          "id": "FMA24470",
+          "name": "right fourth metacarpal bone"
+        },
+        {
+          "id": "FMA24472",
+          "name": "right fifth metacarpal bone"
+        },
+        {
+          "id": "FMA24464",
+          "name": "right first metacarpal bone"
+        },
+        {
+          "id": "FMA24458",
+          "name": "middle phalanx of right little finger"
+        },
+        {
+          "id": "FMA24454",
+          "name": "proximal phalanx of right little finger"
+        },
+        {
+          "id": "FMA24463",
+          "name": "distal phalanx of right little finger"
+        },
+        {
+          "id": "FMA24456",
+          "name": "middle phalanx of right middle finger"
+        },
+        {
+          "id": "FMA24452",
+          "name": "proximal phalanx of right middle finger"
+        },
+        {
+          "id": "FMA24461",
+          "name": "distal phalanx of right middle finger"
+        },
+        {
+          "id": "FMA24457",
+          "name": "middle phalanx of right ring finger"
+        },
+        {
+          "id": "FMA24453",
+          "name": "proximal phalanx of right ring finger"
+        },
+        {
+          "id": "FMA24462",
+          "name": "distal phalanx of right ring finger"
+        },
+        {
+          "id": "FMA24459",
+          "name": "distal phalanx of right thumb"
+        },
+        {
+          "id": "FMA24455",
+          "name": "middle phalanx of right index finger"
+        },
+        {
+          "id": "FMA24451",
+          "name": "proximal phalanx of right index finger"
+        },
+        {
+          "id": "FMA24450",
+          "name": "proximal phalanx of right thumb"
+        },
+        {
+          "id": "FMA24460",
+          "name": "distal phalanx of right index finger"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "set of carpal bones",
+          "match": {
+            "id": "FMA71335",
+            "name": "set of carpal bones"
+          },
+          "via": "exact",
+          "primitives": 16
+        },
+        {
+          "concept": "set of metacarpal bones",
+          "match": {
+            "id": "FMA71336",
+            "name": "set of metacarpal bones"
+          },
+          "via": "exact",
+          "primitives": 10
+        },
+        {
+          "concept": "set of phalanges of hand",
+          "match": {
+            "id": "FMA75592",
+            "name": "set of fingers"
+          },
+          "via": "alias \"set of fingers\"",
+          "primitives": 28
+        }
+      ]
+    },
+    "pelvis": {
+      "triangles": 10020,
+      "vertices": 5113,
+      "bboxMin": [
+        -0.13059,
+        0.77243,
+        -0.0908
+      ],
+      "bboxMax": [
+        0.13251,
+        0.98062,
+        0.05557
+      ],
+      "centroid": [
+        0.0009,
+        0.88486,
+        -0.02098
+      ],
+      "simplificationErrorMm": 0.37,
+      "sourcePrimitives": [
+        {
+          "id": "FMA16586",
+          "name": "right hip bone"
+        },
+        {
+          "id": "FMA16587",
+          "name": "left hip bone"
+        },
+        {
+          "id": "FMA16202",
+          "name": "sacrum"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "hip bone",
+          "match": {
+            "id": "FMA16585",
+            "name": "hip bone"
+          },
+          "via": "exact",
+          "primitives": 2
+        },
+        {
+          "concept": "sacrum",
+          "match": {
+            "id": "FMA16202",
+            "name": "sacrum"
+          },
+          "via": "exact",
+          "primitives": 1
+        },
+        {
+          "concept": "coccyx",
+          "match": null,
+          "note": "not a separate part; the sacrum mesh already includes it"
+        }
+      ],
+      "note": "The coccyx is part of the BodyParts3D sacrum mesh."
+    },
+    "femur-left": {
+      "triangles": 3340,
+      "vertices": 1698,
+      "bboxMin": [
+        0.0327,
+        0.41642,
+        -0.05607
+      ],
+      "bboxMax": [
+        0.14399,
+        0.85662,
+        0.01942
+      ],
+      "centroid": [
+        0.09122,
+        0.62488,
+        -0.01129
+      ],
+      "simplificationErrorMm": 0.32,
+      "sourcePrimitives": [
+        {
+          "id": "FMA24475",
+          "name": "left femur"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "femur",
+          "match": {
+            "id": "FMA24475",
+            "name": "left femur"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "femur-right": {
+      "triangles": 3340,
+      "vertices": 1718,
+      "bboxMin": [
+        -0.14409,
+        0.4164,
+        -0.05597
+      ],
+      "bboxMax": [
+        -0.0328,
+        0.8565,
+        0.01941
+      ],
+      "centroid": [
+        -0.09126,
+        0.62482,
+        -0.0113
+      ],
+      "simplificationErrorMm": 0.32,
+      "sourcePrimitives": [
+        {
+          "id": "FMA24474",
+          "name": "right femur"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "femur",
+          "match": {
+            "id": "FMA24474",
+            "name": "right femur"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "patella-left": {
+      "triangles": 708,
+      "vertices": 356,
+      "bboxMin": [
+        0.06258,
+        0.41062,
+        -0.00262
+      ],
+      "bboxMax": [
+        0.10444,
+        0.45027,
+        0.01969
+      ],
+      "centroid": [
+        0.08353,
+        0.43097,
+        0.00938
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA24487",
+          "name": "left patella"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "patella",
+          "match": {
+            "id": "FMA24487",
+            "name": "left patella"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "patella-right": {
+      "triangles": 668,
+      "vertices": 336,
+      "bboxMin": [
+        -0.10458,
+        0.41069,
+        -0.00264
+      ],
+      "bboxMax": [
+        -0.06271,
+        0.45031,
+        0.01965
+      ],
+      "centroid": [
+        -0.08359,
+        0.43098,
+        0.00939
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA24486",
+          "name": "right patella"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "patella",
+          "match": {
+            "id": "FMA24486",
+            "name": "right patella"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "tibia-left": {
+      "triangles": 3340,
+      "vertices": 1685,
+      "bboxMin": [
+        0.0383,
+        0.07306,
+        -0.05955
+      ],
+      "bboxMax": [
+        0.1143,
+        0.41959,
+        0.00633
+      ],
+      "centroid": [
+        0.07805,
+        0.26985,
+        -0.02516
+      ],
+      "simplificationErrorMm": 0.18,
+      "sourcePrimitives": [
+        {
+          "id": "FMA24478",
+          "name": "left tibia"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "tibia",
+          "match": {
+            "id": "FMA24478",
+            "name": "left tibia"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "tibia-right": {
+      "triangles": 3340,
+      "vertices": 1678,
+      "bboxMin": [
+        -0.11443,
+        0.07306,
+        -0.05949
+      ],
+      "bboxMax": [
+        -0.03837,
+        0.41971,
+        0.00634
+      ],
+      "centroid": [
+        -0.0781,
+        0.2699,
+        -0.02517
+      ],
+      "simplificationErrorMm": 0.19,
+      "sourcePrimitives": [
+        {
+          "id": "FMA24477",
+          "name": "right tibia"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "tibia",
+          "match": {
+            "id": "FMA24477",
+            "name": "right tibia"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "fibula-left": {
+      "triangles": 2108,
+      "vertices": 1057,
+      "bboxMin": [
+        0.09232,
+        0.05391,
+        -0.05652
+      ],
+      "bboxMax": [
+        0.12583,
+        0.40488,
+        -0.02456
+      ],
+      "centroid": [
+        0.10758,
+        0.23102,
+        -0.04356
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA24481",
+          "name": "left fibula"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "fibula",
+          "match": {
+            "id": "FMA24481",
+            "name": "left fibula"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "fibula-right": {
+      "triangles": 2154,
+      "vertices": 1082,
+      "bboxMin": [
+        -0.1258,
+        0.05389,
+        -0.0565
+      ],
+      "bboxMax": [
+        -0.09233,
+        0.40484,
+        -0.02457
+      ],
+      "centroid": [
+        -0.10762,
+        0.23102,
+        -0.04356
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA24480",
+          "name": "right fibula"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "fibula",
+          "match": {
+            "id": "FMA24480",
+            "name": "right fibula"
+          },
+          "via": "side prefix",
+          "primitives": 1
+        }
+      ]
+    },
+    "foot-bones-left": {
+      "triangles": 3340,
+      "vertices": 2276,
+      "bboxMin": [
+        0.05486,
+        0.00953,
+        -0.08733
+      ],
+      "bboxMax": [
+        0.14541,
+        0.08289,
+        0.13412
+      ],
+      "centroid": [
+        0.08901,
+        0.03979,
+        0.01457
+      ],
+      "simplificationErrorMm": 0.72,
+      "sourcePrimitives": [
+        {
+          "id": "FMA24501",
+          "name": "navicular bone of left foot"
+        },
+        {
+          "id": "FMA24526",
+          "name": "left lateral cuneiform bone"
+        },
+        {
+          "id": "FMA24522",
+          "name": "left medial cuneiform bone"
+        },
+        {
+          "id": "FMA24524",
+          "name": "left intermediate cuneiform bone"
+        },
+        {
+          "id": "FMA24529",
+          "name": "left cuboid bone"
+        },
+        {
+          "id": "FMA24498",
+          "name": "left calcaneus"
+        },
+        {
+          "id": "FMA24483",
+          "name": "left talus"
+        },
+        {
+          "id": "FMA24516",
+          "name": "left fifth metatarsal bone"
+        },
+        {
+          "id": "FMA24514",
+          "name": "left fourth metatarsal bone"
+        },
+        {
+          "id": "FMA24512",
+          "name": "left third metatarsal bone"
+        },
+        {
+          "id": "FMA24510",
+          "name": "left second metatarsal bone"
+        },
+        {
+          "id": "FMA24508",
+          "name": "left first metatarsal bone"
+        },
+        {
+          "id": "FMA32651",
+          "name": "distal phalanx of left big toe"
+        },
+        {
+          "id": "FMA32653",
+          "name": "distal phalanx of left second toe"
+        },
+        {
+          "id": "FMA32635",
+          "name": "proximal phalanx of left second toe"
+        },
+        {
+          "id": "FMA32637",
+          "name": "proximal phalanx of left third toe"
+        },
+        {
+          "id": "FMA32655",
+          "name": "distal phalanx of left third toe"
+        },
+        {
+          "id": "FMA32645",
+          "name": "middle phalanx of left third toe"
+        },
+        {
+          "id": "FMA32657",
+          "name": "distal phalanx of left fourth toe"
+        },
+        {
+          "id": "FMA32647",
+          "name": "middle phalanx of left fourth toe"
+        },
+        {
+          "id": "FMA230988",
+          "name": "middle phalanx of left little toe"
+        },
+        {
+          "id": "FMA32641",
+          "name": "proximal phalanx of left little toe"
+        },
+        {
+          "id": "FMA32659",
+          "name": "distal phalanx of left little toe"
+        },
+        {
+          "id": "FMA32639",
+          "name": "proximal phalanx of left fourth toe"
+        },
+        {
+          "id": "FMA32643",
+          "name": "middle phalanx of left second toe"
+        },
+        {
+          "id": "FMA43254",
+          "name": "proximal phalanx of left big toe"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "set of tarsal bones",
+          "match": {
+            "id": "FMA71339",
+            "name": "set of tarsal bones"
+          },
+          "via": "exact",
+          "primitives": 14
+        },
+        {
+          "concept": "set of metatarsal bones",
+          "match": {
+            "id": "FMA71340",
+            "name": "set of metatarsal bones"
+          },
+          "via": "exact",
+          "primitives": 10
+        },
+        {
+          "concept": "set of phalanges of foot",
+          "match": {
+            "id": "FMA70664",
+            "name": "set of toes"
+          },
+          "via": "alias \"set of toes\"",
+          "primitives": 28
+        }
+      ]
+    },
+    "foot-bones-right": {
+      "triangles": 3340,
+      "vertices": 2299,
+      "bboxMin": [
+        -0.14556,
+        0.00952,
+        -0.08731
+      ],
+      "bboxMax": [
+        -0.05482,
+        0.08331,
+        0.13414
+      ],
+      "centroid": [
+        -0.08905,
+        0.03984,
+        0.01449
+      ],
+      "simplificationErrorMm": 0.75,
+      "sourcePrimitives": [
+        {
+          "id": "FMA24500",
+          "name": "navicular bone of right foot"
+        },
+        {
+          "id": "FMA24525",
+          "name": "right lateral cuneiform bone"
+        },
+        {
+          "id": "FMA24521",
+          "name": "right medial cuneiform bone"
+        },
+        {
+          "id": "FMA24523",
+          "name": "right intermediate cuneiform bone"
+        },
+        {
+          "id": "FMA24528",
+          "name": "right cuboid bone"
+        },
+        {
+          "id": "FMA24497",
+          "name": "right calcaneus"
+        },
+        {
+          "id": "FMA24482",
+          "name": "right talus"
+        },
+        {
+          "id": "FMA24515",
+          "name": "right fifth metatarsal bone"
+        },
+        {
+          "id": "FMA24513",
+          "name": "right fourth metatarsal bone"
+        },
+        {
+          "id": "FMA24511",
+          "name": "right third metatarsal bone"
+        },
+        {
+          "id": "FMA24509",
+          "name": "right second metatarsal bone"
+        },
+        {
+          "id": "FMA24507",
+          "name": "right first metatarsal bone"
+        },
+        {
+          "id": "FMA32650",
+          "name": "distal phalanx of right big toe"
+        },
+        {
+          "id": "FMA32652",
+          "name": "distal phalanx of right second toe"
+        },
+        {
+          "id": "FMA32634",
+          "name": "proximal phalanx of right second toe"
+        },
+        {
+          "id": "FMA32636",
+          "name": "proximal phalanx of right third toe"
+        },
+        {
+          "id": "FMA32654",
+          "name": "distal phalanx of right third toe"
+        },
+        {
+          "id": "FMA32644",
+          "name": "middle phalanx of right third toe"
+        },
+        {
+          "id": "FMA32656",
+          "name": "distal phalanx of right fourth toe"
+        },
+        {
+          "id": "FMA230986",
+          "name": "middle phalanx of right little toe"
+        },
+        {
+          "id": "FMA32640",
+          "name": "proximal phalanx of right little toe"
+        },
+        {
+          "id": "FMA32658",
+          "name": "distal phalanx of right little toe"
+        },
+        {
+          "id": "FMA32638",
+          "name": "proximal phalanx of right fourth toe"
+        },
+        {
+          "id": "FMA32646",
+          "name": "middle phalanx of right fourth toe"
+        },
+        {
+          "id": "FMA32642",
+          "name": "middle phalanx of right second toe"
+        },
+        {
+          "id": "FMA43253",
+          "name": "proximal phalanx of right big toe"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "set of tarsal bones",
+          "match": {
+            "id": "FMA71339",
+            "name": "set of tarsal bones"
+          },
+          "via": "exact",
+          "primitives": 14
+        },
+        {
+          "concept": "set of metatarsal bones",
+          "match": {
+            "id": "FMA71340",
+            "name": "set of metatarsal bones"
+          },
+          "via": "exact",
+          "primitives": 10
+        },
+        {
+          "concept": "set of phalanges of foot",
+          "match": {
+            "id": "FMA70664",
+            "name": "set of toes"
+          },
+          "via": "alias \"set of toes\"",
+          "primitives": 28
+        }
+      ]
+    },
+    "brain": {
+      "triangles": 11917,
+      "vertices": 10575,
+      "bboxMin": [
+        -0.06666,
+        1.48999,
+        -0.092
+      ],
+      "bboxMax": [
+        0.06671,
+        1.64639,
+        0.07805
+      ],
+      "centroid": [
+        -0.00015,
+        1.58027,
+        -0.01359
+      ],
+      "simplificationErrorMm": 0.9,
+      "sourcePrimitives": [
+        {
+          "id": "FMA72669",
+          "name": "right angular gyrus"
+        },
+        {
+          "id": "FMA72668",
+          "name": "left supramarginal gyrus"
+        },
+        {
+          "id": "FMA72667",
+          "name": "right supramarginal gyrus"
+        },
+        {
+          "id": "FMA72666",
+          "name": "left postcentral gyrus"
+        },
+        {
+          "id": "FMA72665",
+          "name": "right postcentral gyrus"
+        },
+        {
+          "id": "FMA72655",
+          "name": "right middle frontal gyrus"
+        },
+        {
+          "id": "FMA72656",
+          "name": "left middle frontal gyrus"
+        },
+        {
+          "id": "FMA73310",
+          "name": "left medial geniculate body"
+        },
+        {
+          "id": "FMA72653",
+          "name": "right superior frontal gyrus"
+        },
+        {
+          "id": "FMA72654",
+          "name": "left superior frontal gyrus"
+        },
+        {
+          "id": "FMA73304",
+          "name": "left lateral geniculate body"
+        },
+        {
+          "id": "FMA73303",
+          "name": "right lateral geniculate body"
+        },
+        {
+          "id": "FMA62327",
+          "name": "tuber cinereum"
+        },
+        {
+          "id": "FMA73309",
+          "name": "right medial geniculate body"
+        },
+        {
+          "id": "FMA72670",
+          "name": "left angular gyrus"
+        },
+        {
+          "id": "FMA72833",
+          "name": "left amygdala"
+        },
+        {
+          "id": "FMA72832",
+          "name": "right amygdala"
+        },
+        {
+          "id": "FMA72831",
+          "name": "left globus pallidus"
+        },
+        {
+          "id": "FMA72830",
+          "name": "right globus pallidus"
+        },
+        {
+          "id": "FMA73464",
+          "name": "brachium of left inferior colliculus"
+        },
+        {
+          "id": "FMA73461",
+          "name": "brachium of right superior colliculus"
+        },
+        {
+          "id": "FMA73462",
+          "name": "brachium of left superior colliculus"
+        },
+        {
+          "id": "FMA73463",
+          "name": "brachium of right inferior colliculus"
+        },
+        {
+          "id": "FMA61844",
+          "name": "septum pellucidum"
+        },
+        {
+          "id": "FMA67944",
+          "name": "cerebellum"
+        },
+        {
+          "id": "FMA67943",
+          "name": "pons"
+        },
+        {
+          "id": "FMA72701",
+          "name": "right accessory short gyrus"
+        },
+        {
+          "id": "FMA72975",
+          "name": "right occipital lobe"
+        },
+        {
+          "id": "FMA72976",
+          "name": "left occipital lobe"
+        },
+        {
+          "id": "FMA72702",
+          "name": "left accessory short gyrus"
+        },
+        {
+          "id": "FMA72705",
+          "name": "right parahippocampal gyrus"
+        },
+        {
+          "id": "FMA72977",
+          "name": "right insula"
+        },
+        {
+          "id": "FMA72978",
+          "name": "left insula"
+        },
+        {
+          "id": "FMA72661",
+          "name": "right precentral gyrus"
+        },
+        {
+          "id": "FMA72706",
+          "name": "left parahippocampal gyrus"
+        },
+        {
+          "id": "FMA72662",
+          "name": "left precentral gyrus"
+        },
+        {
+          "id": "FMA78469",
+          "name": "fourth ventricle"
+        },
+        {
+          "id": "FMA78467",
+          "name": "cerebral aqueduct"
+        },
+        {
+          "id": "FMA72689",
+          "name": "right fusiform gyrus"
+        },
+        {
+          "id": "FMA72688",
+          "name": "left inferior temporal gyrus"
+        },
+        {
+          "id": "FMA72687",
+          "name": "right inferior temporal gyrus"
+        },
+        {
+          "id": "FMA62032",
+          "name": "habenula"
+        },
+        {
+          "id": "FMA62033",
+          "name": "pineal body"
+        },
+        {
+          "id": "FMA73434",
+          "name": "right inferior colliculus"
+        },
+        {
+          "id": "FMA62008nsn",
+          "name": "hypothalamus, nsn"
+        },
+        {
+          "id": "FMA258716",
+          "name": "left thalamus"
+        },
+        {
+          "id": "FMA258714",
+          "name": "right thalamus"
+        },
+        {
+          "id": "FMA72685",
+          "name": "right middle temporal gyrus"
+        },
+        {
+          "id": "FMA72686",
+          "name": "left middle temporal gyrus"
+        },
+        {
+          "id": "FMA72714",
+          "name": "left hippocampus"
+        },
+        {
+          "id": "FMA72713",
+          "name": "right hippocampus"
+        },
+        {
+          "id": "FMA72801",
+          "name": "anterior part of left superior temporal gyrus"
+        },
+        {
+          "id": "FMA72804",
+          "name": "posterior part of right superior temporal gyrus"
+        },
+        {
+          "id": "FMA72800",
+          "name": "anterior part of right superior temporal gyrus"
+        },
+        {
+          "id": "FMA72805",
+          "name": "posterior part of left superior temporal gyrus"
+        },
+        {
+          "id": "FMA78450",
+          "name": "left lateral ventricle"
+        },
+        {
+          "id": "FMA72690",
+          "name": "left fusiform gyrus"
+        },
+        {
+          "id": "FMA78454",
+          "name": "third ventricle"
+        },
+        {
+          "id": "FMA72718",
+          "name": "left cingulate gyrus"
+        },
+        {
+          "id": "FMA72717",
+          "name": "right cingulate gyrus"
+        },
+        {
+          "id": "FMA72828",
+          "name": "right putamen"
+        },
+        {
+          "id": "FMA72827",
+          "name": "left caudate nucleus"
+        },
+        {
+          "id": "FMA72829",
+          "name": "left putamen"
+        },
+        {
+          "id": "FMA73423",
+          "name": "left superior colliculus"
+        },
+        {
+          "id": "FMA73422",
+          "name": "right superior colliculus"
+        },
+        {
+          "id": "FMA73435",
+          "name": "left inferior colliculus"
+        },
+        {
+          "id": "FMA62004",
+          "name": "medulla oblongata"
+        },
+        {
+          "id": "FMA62394",
+          "name": "peduncle of midbrain"
+        },
+        {
+          "id": "FMA78449",
+          "name": "right lateral ventricle"
+        },
+        {
+          "id": "BP50",
+          "name": "right superior parietal lobule precuneus"
+        },
+        {
+          "id": "BP49",
+          "name": "left superior parietal lobule precuneus"
+        },
+        {
+          "id": "FMA72826",
+          "name": "right caudate nucleus"
+        },
+        {
+          "id": "BP51",
+          "name": "orbital gyri straight gyrus"
+        },
+        {
+          "id": "FMA61993nsn",
+          "name": "midbrain, nsn"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "brain",
+          "match": {
+            "id": "FMA50801",
+            "name": "brain"
+          },
+          "via": "exact",
+          "primitives": 74
+        }
+      ],
+      "note": "Outer surface only (hidden ventricles and deep nuclei removed)."
+    },
+    "thyroid": {
+      "triangles": 2126,
+      "vertices": 1375,
+      "bboxMin": [
+        -0.03074,
+        1.36831,
+        -0.00295
+      ],
+      "bboxMax": [
+        0.03003,
+        1.4222,
+        0.02542
+      ],
+      "centroid": [
+        -0.00028,
+        1.3908,
+        0.0125
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [],
+      "concepts": [
+        {
+          "concept": "thyroid gland",
+          "match": null,
+          "note": "not in BodyParts3D; build.mjs models it procedurally around the trachea"
+        }
+      ],
+      "procedural": "Not in BodyParts3D 3.0: modelled procedurally around the BodyParts3D trachea, below the thyroid cartilage.",
+      "fittedTo": [
+        {
+          "id": "FMA7394",
+          "name": "trachea"
+        },
+        {
+          "id": "FMA55099",
+          "name": "thyroid cartilage"
+        }
+      ]
+    },
+    "trachea": {
+      "triangles": 4682,
+      "vertices": 2545,
+      "bboxMin": [
+        -0.02123,
+        1.28108,
+        -0.02375
+      ],
+      "bboxMax": [
+        0.03923,
+        1.43044,
+        0.02273
+      ],
+      "centroid": [
+        0.00223,
+        1.35525,
+        -0.00238
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7394",
+          "name": "trachea"
+        },
+        {
+          "id": "FMA7409",
+          "name": "bronchus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "trachea",
+          "match": {
+            "id": "FMA7394",
+            "name": "trachea"
+          },
+          "via": "exact",
+          "primitives": 1
+        },
+        {
+          "concept": "right main bronchus",
+          "match": {
+            "id": "FMA7409",
+            "name": "bronchus"
+          },
+          "via": "alias \"bronchus\"",
+          "primitives": 1
+        },
+        {
+          "concept": "left main bronchus",
+          "match": {
+            "id": "FMA7409",
+            "name": "bronchus"
+          },
+          "via": "alias \"bronchus\"",
+          "primitives": 1
+        }
+      ],
+      "note": "The bronchial trees are cut to the main bronchi (spheres around the carina: 22 mm right, 45 mm left)."
+    },
+    "esophagus": {
+      "triangles": 1298,
+      "vertices": 680,
+      "bboxMin": [
+        -0.00941,
+        1.17976,
+        -0.03304
+      ],
+      "bboxMax": [
+        0.01644,
+        1.42913,
+        0.01186
+      ],
+      "centroid": [
+        0.00152,
+        1.30495,
+        -0.01356
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7131",
+          "name": "esophagus"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "esophagus",
+          "match": {
+            "id": "FMA7131",
+            "name": "esophagus"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ]
+    },
+    "lung-left": {
+      "triangles": 7998,
+      "vertices": 4763,
+      "bboxMin": [
+        0.00599,
+        1.12829,
+        -0.07897
+      ],
+      "bboxMax": [
+        0.12587,
+        1.38699,
+        0.10015
+      ],
+      "centroid": [
+        0.06966,
+        1.24115,
+        0.00186
+      ],
+      "simplificationErrorMm": 0.44,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7371",
+          "name": "lower lobe of left lung"
+        },
+        {
+          "id": "FMA7370",
+          "name": "upper lobe of left lung"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "left lung",
+          "match": {
+            "id": "FMA7310",
+            "name": "left lung"
+          },
+          "via": "exact",
+          "primitives": 2
+        }
+      ],
+      "note": "Outer surface only (fissure walls between the lobes removed)."
+    },
+    "lung-right": {
+      "triangles": 7998,
+      "vertices": 4884,
+      "bboxMin": [
+        -0.12725,
+        1.13159,
+        -0.07983
+      ],
+      "bboxMax": [
+        -0.00105,
+        1.38564,
+        0.10086
+      ],
+      "centroid": [
+        -0.06458,
+        1.24121,
+        0.00151
+      ],
+      "simplificationErrorMm": 0.48,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7383",
+          "name": "middle lobe of lung"
+        },
+        {
+          "id": "FMA7337",
+          "name": "lower lobe of right lung"
+        },
+        {
+          "id": "FMA7333",
+          "name": "upper lobe of right lung"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "right lung",
+          "match": {
+            "id": "FMA7309",
+            "name": "right lung"
+          },
+          "via": "exact",
+          "primitives": 3
+        }
+      ],
+      "note": "Outer surface only (fissure walls between the lobes removed)."
+    },
+    "heart": {
+      "triangles": 7843,
+      "vertices": 7789,
+      "bboxMin": [
+        -0.03569,
+        1.19788,
+        -0.02939
+      ],
+      "bboxMax": [
+        0.07971,
+        1.3336,
+        0.08009
+      ],
+      "centroid": [
+        0.01778,
+        1.25383,
+        0.02307
+      ],
+      "simplificationErrorMm": 0.56,
+      "sourcePrimitives": [
+        {
+          "id": "FMA4713",
+          "name": "middle cardiac vein"
+        },
+        {
+          "id": "FMA3862nsn",
+          "name": "anterior interventricular branch of left coronary artery, nsn"
+        },
+        {
+          "id": "FMA71670",
+          "name": "set of interventricular septal branches of left coronary artery"
+        },
+        {
+          "id": "FMA3895",
+          "name": "circumflex branch of left coronary artery"
+        },
+        {
+          "id": "FMA4685",
+          "name": "stem of left coronary artery"
+        },
+        {
+          "id": "FMA76751",
+          "name": "set of posterior veins of left ventricle"
+        },
+        {
+          "id": "FMA7235",
+          "name": "mitral valve"
+        },
+        {
+          "id": "FMA7261",
+          "name": "posterior papillary muscle of right ventricle"
+        },
+        {
+          "id": "FMA7234",
+          "name": "tricuspid valve"
+        },
+        {
+          "id": "FMA7262",
+          "name": "septal papillary muscle of right ventricle"
+        },
+        {
+          "id": "FMA7260",
+          "name": "anterior papillary muscle of right ventricle"
+        },
+        {
+          "id": "FMA9352nsn",
+          "name": "papillary muscle of left ventricle, nsn"
+        },
+        {
+          "id": "FMA7266",
+          "name": "posterior papillary muscle of left ventricle"
+        },
+        {
+          "id": "FMA7246",
+          "name": "pulmonary valve"
+        },
+        {
+          "id": "FMA3802",
+          "name": "trunk of right coronary artery"
+        },
+        {
+          "id": "FMA76994",
+          "name": "right posterolateral branch of right coronary artery"
+        },
+        {
+          "id": "FMA3840nsn",
+          "name": "posterior interventricular branch of right coronary artery, nsn"
+        },
+        {
+          "id": "FMA71669",
+          "name": "set of interventricular septal branches of right coronary artery"
+        },
+        {
+          "id": "FMA3818",
+          "name": "marginal branch of right coronary artery"
+        },
+        {
+          "id": "FMA4707",
+          "name": "great cardiac vein"
+        },
+        {
+          "id": "FMA4706",
+          "name": "coronary sinus"
+        },
+        {
+          "id": "FMA7274",
+          "name": "wall of heart"
+        },
+        {
+          "id": "FMA71567",
+          "name": "set of anterior cardiac veins"
+        },
+        {
+          "id": "FMA4720",
+          "name": "superior vena cava"
+        },
+        {
+          "id": "FMA66326",
+          "name": "pulmonary artery"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "heart",
+          "match": {
+            "id": "FMA7088",
+            "name": "heart"
+          },
+          "via": "exact",
+          "primitives": 23
+        },
+        {
+          "concept": "superior vena cava",
+          "match": {
+            "id": "FMA4720",
+            "name": "superior vena cava"
+          },
+          "via": "exact",
+          "primitives": 1
+        },
+        {
+          "concept": "pulmonary artery",
+          "match": {
+            "id": "FMA66326",
+            "name": "pulmonary artery"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ],
+      "note": "Includes the superior vena cava and the pulmonary trunk (the pulmonary arterial tree cut to a 55 mm sphere around the pulmonary valve); only the outer surface is kept."
+    },
+    "aorta": {
+      "triangles": 3452,
+      "vertices": 1771,
+      "bboxMin": [
+        -0.00748,
+        0.97353,
+        -0.04843
+      ],
+      "bboxMax": [
+        0.03222,
+        1.35295,
+        0.04293
+      ],
+      "centroid": [
+        0.0121,
+        1.21748,
+        0.0011
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA3768",
+          "name": "arch of aorta"
+        },
+        {
+          "id": "FMA3736",
+          "name": "ascending aorta"
+        },
+        {
+          "id": "FMA3784",
+          "name": "descending aorta"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "aorta",
+          "match": {
+            "id": "FMA3734",
+            "name": "aorta"
+          },
+          "via": "exact",
+          "primitives": 3
+        }
+      ]
+    },
+    "liver": {
+      "triangles": 6406,
+      "vertices": 3219,
+      "bboxMin": [
+        -0.11734,
+        1.04388,
+        -0.05408
+      ],
+      "bboxMax": [
+        0.08166,
+        1.21783,
+        0.09586
+      ],
+      "centroid": [
+        -0.04393,
+        1.1477,
+        0.03306
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7197",
+          "name": "liver"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "liver",
+          "match": {
+            "id": "FMA7197",
+            "name": "liver"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ]
+    },
+    "gallbladder": {
+      "triangles": 786,
+      "vertices": 399,
+      "bboxMin": [
+        -0.0722,
+        1.07231,
+        0.03289
+      ],
+      "bboxMax": [
+        -0.03633,
+        1.11827,
+        0.0764
+      ],
+      "centroid": [
+        -0.05574,
+        1.08981,
+        0.055
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7202",
+          "name": "gallbladder"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "gallbladder",
+          "match": {
+            "id": "FMA7202",
+            "name": "gallbladder"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ]
+    },
+    "stomach": {
+      "triangles": 3452,
+      "vertices": 1728,
+      "bboxMin": [
+        -0.02691,
+        1.07519,
+        -0.01616
+      ],
+      "bboxMax": [
+        0.11479,
+        1.19539,
+        0.09902
+      ],
+      "centroid": [
+        0.05421,
+        1.13496,
+        0.04302
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7148",
+          "name": "stomach"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "stomach",
+          "match": {
+            "id": "FMA7148",
+            "name": "stomach"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ]
+    },
+    "spleen": {
+      "triangles": 2428,
+      "vertices": 1219,
+      "bboxMin": [
+        0.04313,
+        1.08467,
+        -0.04831
+      ],
+      "bboxMax": [
+        0.11699,
+        1.16831,
+        0.05093
+      ],
+      "centroid": [
+        0.08583,
+        1.12349,
+        -0.00631
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7196",
+          "name": "spleen"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "spleen",
+          "match": {
+            "id": "FMA7196",
+            "name": "spleen"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ]
+    },
+    "pancreas": {
+      "triangles": 6306,
+      "vertices": 3380,
+      "bboxMin": [
+        -0.05182,
+        1.03526,
+        0.01343
+      ],
+      "bboxMax": [
+        0.0612,
+        1.1076,
+        0.05255
+      ],
+      "centroid": [
+        -0.00566,
+        1.07319,
+        0.03645
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7198nsn",
+          "name": "pancreas, nsn"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "pancreas",
+          "match": {
+            "id": "FMA7198",
+            "name": "pancreas"
+          },
+          "via": "exact",
+          "primitives": 2
+        }
+      ]
+    },
+    "kidney-left": {
+      "triangles": 2264,
+      "vertices": 1135,
+      "bboxMin": [
+        0.02524,
+        1.0282,
+        -0.04404
+      ],
+      "bboxMax": [
+        0.08568,
+        1.13109,
+        0.00003
+      ],
+      "centroid": [
+        0.05679,
+        1.08031,
+        -0.02151
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7205",
+          "name": "left kidney"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "left kidney",
+          "match": {
+            "id": "FMA7205",
+            "name": "left kidney"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ]
+    },
+    "kidney-right": {
+      "triangles": 2256,
+      "vertices": 1131,
+      "bboxMin": [
+        -0.09486,
+        1.01311,
+        -0.05171
+      ],
+      "bboxMax": [
+        -0.03486,
+        1.11526,
+        0.0013
+      ],
+      "centroid": [
+        -0.06593,
+        1.06412,
+        -0.02503
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7204",
+          "name": "right kidney"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "right kidney",
+          "match": {
+            "id": "FMA7204",
+            "name": "right kidney"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ]
+    },
+    "small-intestine": {
+      "triangles": 14000,
+      "vertices": 7236,
+      "bboxMin": [
+        -0.09711,
+        0.83931,
+        0.00543
+      ],
+      "bboxMax": [
+        0.10442,
+        1.11455,
+        0.08697
+      ],
+      "centroid": [
+        0.00729,
+        0.96055,
+        0.0507
+      ],
+      "simplificationErrorMm": 0.67,
+      "sourcePrimitives": [
+        {
+          "id": "FMA7206",
+          "name": "duodenum"
+        },
+        {
+          "id": "FMA7207",
+          "name": "jejunum"
+        },
+        {
+          "id": "FMA7208",
+          "name": "ileum"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "small intestine",
+          "match": {
+            "id": "FMA7200",
+            "name": "small intestine"
+          },
+          "via": "exact",
+          "primitives": 3
+        },
+        {
+          "concept": "duodenum",
+          "match": {
+            "id": "FMA7206",
+            "name": "duodenum"
+          },
+          "via": "exact",
+          "primitives": 1
+        },
+        {
+          "concept": "jejunum",
+          "match": {
+            "id": "FMA7207",
+            "name": "jejunum"
+          },
+          "via": "exact",
+          "primitives": 1
+        },
+        {
+          "concept": "ileum",
+          "match": {
+            "id": "FMA7208",
+            "name": "ileum"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ]
+    },
+    "large-intestine": {
+      "triangles": 14000,
+      "vertices": 8537,
+      "bboxMin": [
+        -0.10624,
+        0.76953,
+        -0.07133
+      ],
+      "bboxMax": [
+        0.11167,
+        1.10065,
+        0.09201
+      ],
+      "centroid": [
+        0.00541,
+        0.97957,
+        0.01709
+      ],
+      "simplificationErrorMm": 0.38,
+      "sourcePrimitives": [
+        {
+          "id": "FMA14543nsn",
+          "name": "colon, nsn"
+        },
+        {
+          "id": "FMA76891",
+          "name": "mesocolic taenia"
+        },
+        {
+          "id": "FMA76893",
+          "name": "free taenia"
+        },
+        {
+          "id": "FMA76892",
+          "name": "omental taenia"
+        },
+        {
+          "id": "FMA14544",
+          "name": "rectum"
+        },
+        {
+          "id": "FMA14542",
+          "name": "appendix"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "large intestine",
+          "match": {
+            "id": "FMA7201",
+            "name": "large intestine"
+          },
+          "via": "exact",
+          "primitives": 5
+        },
+        {
+          "concept": "rectum",
+          "match": {
+            "id": "FMA14544",
+            "name": "rectum"
+          },
+          "via": "exact",
+          "primitives": 1
+        },
+        {
+          "concept": "appendix",
+          "match": {
+            "id": "FMA14542",
+            "name": "appendix"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ]
+    },
+    "urinary-bladder": {
+      "triangles": 1474,
+      "vertices": 741,
+      "bboxMin": [
+        -0.03633,
+        0.80314,
+        -0.04053
+      ],
+      "bboxMax": [
+        0.03625,
+        0.85457,
+        0.04214
+      ],
+      "centroid": [
+        -0.00003,
+        0.82886,
+        -0.00865
+      ],
+      "simplificationErrorMm": 0.15,
+      "sourcePrimitives": [
+        {
+          "id": "FMA15900",
+          "name": "urinary bladder"
+        }
+      ],
+      "concepts": [
+        {
+          "concept": "urinary bladder",
+          "match": {
+            "id": "FMA15900",
+            "name": "urinary bladder"
+          },
+          "via": "exact",
+          "primitives": 1
+        }
+      ]
+    }
+  }
+}
