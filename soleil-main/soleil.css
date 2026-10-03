@@ -934,9 +934,10 @@ a {
 }
 .tabs {
   position: absolute;
-  right: 6px;
+  /* Clear of the rounded screen corners on phones without a home bar inset. */
+  right: max(12px, env(safe-area-inset-right));
   bottom: calc(var(--sab) + 6px);
-  left: 6px;
+  left: max(12px, env(safe-area-inset-left));
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   height: 62px;
