@@ -72,7 +72,7 @@ for (const [msg, want] of TOPICS) {
   check(`${msg} never "nie rozumiem"`, () => assert.ok(!/nie rozumiem/i.test(r.text)))
 }
 
-// 3. A conversation: multi-turn, no repeats, the offline note only once, crisis mid-conversation
+// 3. A conversation: multi-turn, no repeats, crisis mid-conversation
 console.log('\n— Conversation —')
 const c = create({ random: Math.random })
 const convo = ['Czuję stres', 'tak', 'nie wiem', 'w pracy jest za dużo wszystkiego', 'Czuję stres', 'Czuję stres', 'Czuję stres',
@@ -83,10 +83,7 @@ for (const msg of convo) {
   replies.push(r)
   console.log(`${r.topic.padEnd(14)} ${msg}\n${' '.repeat(15)}→ ${short(r.text)}`)
 }
-check('offline note only on the first reply', () => {
-  assert.ok(replies[0].html.includes('hy-offline-note'))
-  assert.equal(replies.filter((r) => r.html.includes('hy-offline-note')).length, 1)
-})
+check('no links off the site', () => assert.ok(replies.every((r) => !/https?:/.test(r.html))))
 check('"tak" after an offered step continues it', () => assert.match(replies[1].topic, /^stress:yes$/))
 check('"nie wiem" stays on topic', () => assert.match(replies[2].topic, /^stress:dunno$/))
 check('4 × "Czuję stres" gives 4 different replies', () => {

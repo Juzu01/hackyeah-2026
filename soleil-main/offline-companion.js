@@ -16,7 +16,6 @@
       .replace(/[^a-z0-9]+/g, ' ').trim();
   }
 
-  const FULL_VERSION_URL = 'https://soleil-sage.vercel.app';
   const ATLAS = '<a href="cialo/">Atlas ciała 3D</a>';
   const CHECKER = '<a href="gdzie-boli/">Gdzie boli?</a>';
 
@@ -280,11 +279,9 @@
 
   function create(opts = {}) {
     const rand = opts.random || Math.random;
-    const host = opts.hostname ?? (typeof location !== 'undefined' ? location.hostname : '');
     const used = {};
     let topic = null; // current conversation topic
     let lastKind = null; // what the last reply offered ('ask' or the step name)
-    let noteShown = false;
     let crisisSeen = false; // after a crisis signal every later reply keeps the numbers at hand
 
     // Pick an unused item from the list (no repeats until all are used)
@@ -342,14 +339,8 @@
       if (t === 'crisis') crisisSeen = true;
       else if (crisisSeen) html += REMINDER;
 
-      let note = '';
-      if (!noteShown) {
-        noteShown = true;
-        const link = host === 'soleil-sage.vercel.app' ? '' : ` <a href="${FULL_VERSION_URL}" target="_blank" rel="noopener">Pełna wersja z AI</a>`;
-        note = `<span class="hy-offline-note">Działam teraz w prostszym trybie offline — odpowiadam krócej, ale jestem tu.${link}</span>`;
-      }
       const text = strip(html);
-      return { topic: t, html: html + note, text, delay: 600 + Math.round(rand() * 300) + Math.min(300, text.length) };
+      return { topic: t, html, text, delay: 600 + Math.round(rand() * 300) + Math.min(300, text.length) };
     }
 
     return { reply: respond, get topic() { return topic; } };

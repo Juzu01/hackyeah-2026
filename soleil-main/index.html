@@ -13,35 +13,17 @@
 <meta name="theme-color" content="#e8845a">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<!-- HackYeah: GitHub Pages has no server functions (api/*). There, relative fetch('api/...') calls go
-     to the Vercel deployment, so everything works as soon as it allows CORS from https://juzu01.github.io.
-     api/chat gets a 6 s timeout; when it fails, offline-companion.js answers (see sendMessage). -->
+<!-- HackYeah: the site runs only on GitHub Pages, which has no server (api/*). There, fetch('api/...')
+     fails at once without a network request, so every feature takes its local path: the chat answers
+     from offline-companion.js (see sendMessage), the daily card from its built-in list. -->
 <script>
 (function () {
   if (!/(^|\.)github\.io$/.test(location.hostname) || !window.fetch) return;
-  var API = 'https://soleil-sage.vercel.app/';
   var localApi = new URL('api/', location.href).href;
   var nativeFetch = window.fetch;
-  var downUntil = 0; // after a failed call, skip the server for 60 s (offline replies come at once)
-  function remember(promise) {
-    return promise.then(function (res) { downUntil = 0; return res; }, function (err) { downUntil = Date.now() + 60000; throw err; });
-  }
   window.fetch = function (input, init) {
-    var url = typeof input === 'string' ? input : (input instanceof URL ? input.href : null);
-    if (url !== null) {
-      if (url.indexOf('./api/') === 0) url = url.slice(2);
-      var path = url.indexOf('api/') === 0 ? url : (url.indexOf(localApi) === 0 ? 'api/' + url.slice(localApi.length) : null);
-      if (path) {
-        if (Date.now() < downUntil) return Promise.reject(new TypeError('Soleil API unavailable'));
-        if (/^api\/chat(\?|$)/.test(path) && window.AbortController && !(init && init.signal)) {
-          var ctl = new AbortController();
-          var timer = setTimeout(function () { ctl.abort(); }, 6000);
-          return remember(nativeFetch.call(window, API + path, Object.assign({}, init, { signal: ctl.signal })))
-            .finally(function () { clearTimeout(timer); });
-        }
-        return remember(nativeFetch.call(window, API + path, init));
-      }
-    }
+    var url = typeof input === 'string' ? input : (input instanceof URL ? input.href : '');
+    if (/^(\.\/)?api\//.test(url) || url.indexOf(localApi) === 0) return Promise.reject(new TypeError('No server on GitHub Pages'));
     return nativeFetch.call(window, input, init);
   };
 })();
@@ -387,8 +369,6 @@
   .bubble { font-size: 1.0625rem; line-height: 1.55; max-width: 84%; overflow-wrap: anywhere; }
   .bubble.user { background: var(--cta); }
   .bubble.ai a { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
-  .hy-offline-note { display: block; margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(58,46,40,0.1); font-size: 0.875rem; line-height: 1.45; color: var(--muted); }
-  .hy-offline-note a { white-space: nowrap; }
   .hy-help { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
   .bubble.ai a.hy-tel-row { display: flex; flex-direction: column; gap: 2px; min-height: 44px; padding: 10px 14px; border: 1.5px solid #efc2a6; border-radius: 14px; background: #fff6ef; color: var(--text); font-weight: 400; text-decoration: none; }
   .hy-tel-row strong { font-size: 1.125rem; color: var(--ink); }
@@ -675,7 +655,7 @@
     <div class="welcome" id="welcomeMsg">
       <span class="sun">☀️</span>
       <h2>Hej, jestem tu dla Ciebie</h2>
-      <p>Jestem Soleil, Twój przyjaciel AI do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz — albo wybierz temat poniżej.&nbsp;💛</p>
+      <p>Jestem Soleil, Twój przyjaciel do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz — albo wybierz temat poniżej.&nbsp;💛</p>
       <div class="hy-free-note" id="hyFreeNote">Możesz pisać od razu — bez logowania.</div>
       <div class="suggestions">
         <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s1 || translations.pl.s1)">😔 Jestem smutny/a</button>
@@ -868,7 +848,7 @@ const translations = {
   pl: {
     tagline: 'Zawsze tutaj dla Ciebie',
     welcomeTitle: 'Hej, jestem tu dla Ciebie',
-    welcomeText: 'Jestem Soleil, Twój przyjaciel AI do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz — albo wybierz temat poniżej.\u00a0💛',
+    welcomeText: 'Jestem Soleil, Twój przyjaciel do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz — albo wybierz temat poniżej.\u00a0💛',
     s1: '😔 Jestem smutny/a', s2: '💼 Problem w pracy/szkole', s3: '💔 Kłótnia z kimś bliskim', s4: '😰 Czuję stres',
     placeholder: 'Napisz mi o swoim dniu...',
     loginBtn: 'Zaloguj się',
@@ -909,7 +889,7 @@ const translations = {
   en: {
     tagline: 'Always here for you',
     welcomeTitle: 'Hey, I\'m here for you',
-    welcomeText: 'I\'m Soleil, your AI friend to talk to about whatever is on your mind. Write how you feel — or pick a topic below.\u00a0💛',
+    welcomeText: 'I\'m Soleil, your friend to talk to about whatever is on your mind. Write how you feel — or pick a topic below.\u00a0💛',
     s1: '😔 I\'m sad', s2: '💼 Work/school problem', s3: '💔 Argument with someone', s4: '😰 I feel stressed',
     placeholder: 'Tell me about your day...',
     loginBtn: 'Sign in',
