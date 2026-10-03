@@ -1,510 +1,628 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" data-lang="pl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Polityka Prywatności — Doco</title>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Polityka prywatności · Doco</title>
+<link rel="icon" href="icon-192.png">
+<script>
+// No language switcher here: the page speaks whatever language was chosen in Doco (Więcej → Język),
+// which the app keeps in localStorage. ?lang=en overrides it, e.g. for a shared link.
+(function () {
+  var langs = ['pl', 'en', 'uk', 'de', 'es'];
+  var asked = new URLSearchParams(location.search).get('lang');
+  var saved = null;
+  try { saved = localStorage.getItem('soleil_language'); } catch (e) {}
+  var lang = langs.indexOf(asked) >= 0 ? asked : langs.indexOf(saved) >= 0 ? saved : 'pl';
+  document.documentElement.lang = lang;
+  document.documentElement.setAttribute('data-lang', lang);
+})();
+</script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #030605; --panel: #0a110e; --line: #1c2a24;
-    --mint: #b8e6c9; --mint-dim: rgba(184,230,201,0.14);
-    --text: #e6eee9; --muted: #93a39b;
-    --cut: 18px;
-  }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'IBM Plex Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
-  body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(184,230,201,0.07) 0%, transparent 70%); }
-  a { color: var(--mint); }
+/* The same look as Doco (soleil.css): black, warm sage green, Fraunces titles, Nunito text,
+   sharp corners cut at an angle instead of rounded ones. */
+@font-face { font-family: 'Nunito'; font-style: normal; font-display: swap; font-weight: 200 1000; src: url(fonts/nunito-latin-ext-wght-normal.woff2) format('woff2-variations'); }
+@font-face { font-family: 'Nunito'; font-style: normal; font-display: swap; font-weight: 200 1000; src: url(fonts/nunito-latin-wght-normal.woff2) format('woff2-variations'); }
+@font-face { font-family: 'Nunito'; font-style: normal; font-display: swap; font-weight: 200 1000; src: url(fonts/nunito-cyrillic-wght-normal.woff2) format('woff2-variations'); }
+@font-face { font-family: 'Fraunces'; font-style: normal; font-display: swap; font-weight: 100 900; src: url(fonts/fraunces-latin-ext-full-normal.woff2) format('woff2-variations'); }
+@font-face { font-family: 'Fraunces'; font-style: normal; font-display: swap; font-weight: 100 900; src: url(fonts/fraunces-latin-full-normal.woff2) format('woff2-variations'); }
 
-  /* NAGŁÓWEK */
-  .header { position: sticky; top: 0; z-index: 100; background: rgba(3,6,5,0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .header-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-  .header-logo svg { width: 40px; height: 40px; flex-shrink: 0; }
-  .brand-name { display: block; font-family: 'Newsreader', Georgia, serif; font-size: 1.6rem; line-height: 1; color: var(--text); }
-  .brand-tag { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
-  .brand-tag::before { content: ''; width: 8px; height: 8px; background: var(--mint); transform: rotate(45deg); }
-  .back-link { font-size: 0.82rem; font-weight: 600; color: #0b1307; background: var(--mint); text-decoration: none; padding: 10px 16px; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); transition: filter 0.2s; white-space: nowrap; }
-  .back-link:hover { filter: brightness(1.08); }
+:root {
+  --bg: #000;
+  --s1: #0c100b;
+  --s2: #141912;
+  --line: rgb(211 235 202 / 0.1);
+  --line-2: rgb(211 235 202 / 0.18);
+  --ink: #f2f5ed;
+  --ink-2: #a8b1a1;
+  --ink-3: #6b7364;
+  --green: #c0e4b2;
+  --green-ink: #0b1307;
+  --green-soft: rgb(192 228 178 / 0.13);
+  --green-glow: rgb(192 228 178 / 0.28);
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sans: 'Nunito', system-ui, sans-serif;
+  --serif: 'Fraunces', 'Nunito', Georgia, serif;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); -webkit-text-size-adjust: 100%; }
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(70% 320px at 12% 0%, rgb(192 228 178 / 0.08), transparent 70%),
+    var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+}
+a { color: var(--green); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+.sprite { display: none; }
+.ico {
+  width: 22px; height: 22px; flex: none;
+  fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: miter; stroke-linecap: square;
+}
 
-  /* HORYZONT */
-  .horizon { position: relative; z-index: 1; height: 1px; margin: 0 -10vw; background: var(--mint); opacity: 0.55; transform: rotate(-0.6deg); }
+.lang { display: none; }
+html[data-lang='pl'] .lang[data-lang='pl'],
+html[data-lang='en'] .lang[data-lang='en'],
+html[data-lang='uk'] .lang[data-lang='uk'],
+html[data-lang='de'] .lang[data-lang='de'],
+html[data-lang='es'] .lang[data-lang='es'] { display: block; }
 
-  /* PRZEŁĄCZNIK JĘZYKA */
-  .lang-switcher { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; padding: 28px 24px 0; position: relative; z-index: 1; }
-  .lang-pill { background: var(--panel); border: 1px solid var(--line); color: var(--muted); padding: 8px 14px; font-size: 0.8rem; font-weight: 600; font-family: inherit; cursor: pointer; transition: all 0.2s; clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%); }
-  .lang-pill:hover { color: var(--text); border-color: var(--mint); }
-  .lang-pill.active { background: var(--mint); color: #0b1307; border-color: var(--mint); }
+/* Top bar: back to the app, with the logo. Its lower edge is the rising horizon from the tab bar. */
+.bar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center;
+  min-height: calc(60px + var(--sat));
+  padding: var(--sat) 12px 0 6px;
+  background: rgb(0 0 0 / 0.86);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.bar::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 7px;
+  background: linear-gradient(to top right, transparent calc(50% - 0.6px), rgb(192 228 178 / 0.45) 50%, transparent calc(50% + 0.6px));
+  pointer-events: none;
+}
+.back {
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 48px; padding: 0 12px 0 4px;
+  color: var(--ink); text-decoration: none;
+}
+.back > .ico { color: var(--ink-2); }
+.back .logo { width: 36px; height: 36px; flex: none; color: var(--green); filter: drop-shadow(0 0 8px var(--green-glow)); }
+.back .name { margin-left: 4px; font-family: var(--serif); font-size: 1.5rem; font-weight: 640; line-height: 1; letter-spacing: -0.01em; }
+.back:active { background: var(--s2); }
 
-  /* TREŚĆ */
-  .container { max-width: 760px; margin: 0 auto; padding: 44px 24px 80px; position: relative; z-index: 1; }
-  .page-title { font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: clamp(2.2rem, 6vw, 3.2rem); line-height: 1.05; color: var(--text); margin-bottom: 10px; }
-  .page-subtitle { font-size: 0.95rem; color: var(--muted); margin-bottom: 6px; }
-  .last-updated { font-size: 0.78rem; color: var(--muted); margin-bottom: 36px; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+.page { max-width: 640px; margin: 0 auto; padding: 30px 20px calc(48px + var(--sab)); }
+/* min(): long one-word titles (Datenschutzerklärung) still fit a small phone; hyphens are the fallback. */
+.title { font-family: var(--serif); font-size: min(2.125rem, 8.2vw); font-weight: 640; line-height: 1.1; letter-spacing: -0.02em; overflow-wrap: break-word; hyphens: auto; }
+.updated { margin-top: 8px; color: var(--ink-3); font-size: 0.9375rem; }
 
-  .section { padding: 26px 0; border-bottom: 1px solid var(--line); }
-  .section h2 { font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
-  .section h2 svg { width: 24px; height: 24px; flex-shrink: 0; stroke: var(--mint); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-  .section p { font-size: 0.93rem; line-height: 1.75; color: #c9d4ce; margin-bottom: 10px; }
-  .section ul { padding-left: 0; margin-bottom: 10px; list-style: none; }
-  .section ul li { font-size: 0.93rem; line-height: 1.7; color: #c9d4ce; margin-bottom: 6px; padding-left: 20px; position: relative; }
-  .section ul li::before { content: ''; position: absolute; left: 2px; top: 0.62em; width: 6px; height: 6px; background: var(--mint); transform: rotate(45deg); }
-  .section strong, .highlight-box strong { color: var(--text); }
+/* The short version, in a panel with one cut corner. */
+.short, .ask { position: relative; }
+/* clip-path cuts the border off with the corner; draw the diagonal back in. */
+.short::after, .ask::after {
+  content: ''; position: absolute; top: 0; right: 0; width: 16px; height: 16px;
+  background: linear-gradient(to bottom left, transparent calc(50% - 0.8px), var(--edge) 50%, transparent calc(50% + 0.8px));
+}
+.short {
+  --edge: var(--line);
+  margin-top: 24px; padding: 18px 18px 6px;
+  background: var(--s1); border: 1px solid var(--line);
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+}
+.label { color: var(--green); font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.short ul { list-style: none; margin-top: 6px; }
+.short li { display: flex; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 1.0625rem; line-height: 1.45; }
+.short li:first-child { border-top: 0; }
+.short li .ico { margin-top: 1px; color: var(--green); }
 
-  /* PANELE ZE ŚCIĘTYM ROGIEM */
-  .highlight-box, .contact-box { position: relative; padding: 20px 22px; margin-bottom: 14px; background: var(--line); clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%); }
-  .highlight-box::before, .contact-box::before { content: ''; position: absolute; inset: 1px; background: var(--panel); clip-path: polygon(0 0, calc(100% - var(--cut) + 0.4px) 0, 100% calc(var(--cut) - 0.4px), 100% 100%, 0 100%); z-index: -1; }
-  .highlight-box, .contact-box { isolation: isolate; }
-  .highlight-box p { margin-bottom: 0; color: var(--text); font-size: 0.95rem; line-height: 1.7; }
-  .contact-box { text-align: left; margin-top: 40px; }
-  .contact-box h2 { font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: 1.6rem; color: var(--text); margin-bottom: 8px; }
-  .contact-box p { font-size: 0.92rem; color: var(--muted); margin-bottom: 0; line-height: 1.6; }
+.part { margin-top: 34px; }
+.part h2 {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--serif); font-size: 1.375rem; font-weight: 640; line-height: 1.2;
+}
+.part h2 .ico { color: var(--green); }
+.part p, .part li { color: var(--ink-2); font-size: 1rem; line-height: 1.6; }
+.part p { margin-top: 10px; }
+.part strong { color: var(--ink); font-weight: 700; }
+.part ul { list-style: none; margin-top: 10px; border-top: 1px solid var(--line); }
+.part li { position: relative; padding: 10px 0 10px 20px; border-bottom: 1px solid var(--line); }
+.part li::before {
+  content: ''; position: absolute; left: 3px; top: calc(10px + 0.62em);
+  width: 6px; height: 6px; background: var(--green); transform: rotate(45deg);
+}
 
-  /* STOPKA */
-  .footer { padding: 28px 24px 40px; font-size: 0.8rem; color: var(--muted); position: relative; z-index: 1; max-width: 760px; margin: 0 auto; line-height: 1.6; }
-  .footer a { color: var(--mint); }
-  .footer .copy { margin-top: 10px; opacity: 0.7; }
+.ask {
+  --edge: var(--line-2);
+  margin-top: 40px; padding: 20px 18px;
+  background: var(--green-soft); border: 1px solid var(--line-2);
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+}
+.ask h2 { font-family: var(--serif); font-size: 1.375rem; font-weight: 640; }
+.ask p { margin-top: 4px; color: var(--ink-2); }
+.btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; margin-top: 16px; padding: 0 16px;
+  background: var(--green); color: var(--green-ink);
+  font-weight: 800; text-decoration: none; overflow-wrap: anywhere;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+}
+.btn:active { filter: brightness(0.92); }
 
-  .lang-section { display: none; }
-  .lang-section.active { display: block; animation: fade 0.35s ease both; }
-  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.fine { margin-top: 26px; color: var(--ink-3); font-size: 0.875rem; line-height: 1.5; }
 
-  @media (max-width: 560px) {
-    .header { padding: 12px 16px; }
-    .brand-tag { display: none; }
-    .brand-name { font-size: 1.35rem; }
-    .back-link { padding: 9px 12px; font-size: 0.76rem; }
-  }
+@media (min-width: 720px) {
+  .page { padding-top: 48px; }
+  .title { font-size: 2.75rem; }
+}
 </style>
 </head>
 <body>
 
-<header class="header">
-  <a href="./" class="header-logo">
-    <svg viewBox="0 0 48 48" aria-hidden="true"><g stroke="#b8e6c9" stroke-width="2.4" stroke-linecap="round"><line x1="24" y1="6" x2="24" y2="11"/><line x1="12" y1="11" x2="15" y2="15"/><line x1="36" y1="11" x2="33" y2="15"/><line x1="5" y1="22" x2="10" y2="23"/><line x1="43" y1="22" x2="38" y2="23"/></g><path d="M13 30a11 11 0 0 1 22 0z" fill="#b8e6c9"/><line x1="4" y1="32" x2="44" y2="29" stroke="#b8e6c9" stroke-width="1.6"/><line x1="18" y1="37" x2="30" y2="36" stroke="#b8e6c9" stroke-width="1.6" opacity=".6"/></svg>
-    <span><span class="brand-name">Doco</span><span class="brand-tag" id="brandTag">Zawsze tutaj dla Ciebie</span></span>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="lemur" viewBox="0 0 64 64">
+      <ellipse cx="32" cy="50" rx="25" ry="8.5" fill="#1f3d24" stroke="#f7f3de" stroke-width="9"/>
+      <ellipse cx="32" cy="50" rx="25" ry="8.5" fill="none" stroke="#3f7344" stroke-width="9" stroke-dasharray="5.59 5.59"/>
+      <path d="M19 49C18 40 24 35 32 35C40 35 46 40 45 49C44.5 53 39 55 32 55C25 55 19.5 53 19 49Z" fill="#6fa45f"/>
+      <ellipse cx="32" cy="47" rx="9" ry="7" fill="#f7f3de"/>
+      <path d="M57 50A25 8.5 0 0 1 7 50" fill="none" stroke="#f7f3de" stroke-width="9"/>
+      <path d="M57 50A25 8.5 0 0 1 7 50" fill="none" stroke="#3f7344" stroke-width="9" stroke-dasharray="5.59 5.59"/>
+      <path d="M34 53C27.3 49.4 24.1 45.4 24.4 41.8C24.7 37.9 30.1 36.4 33.6 40.4C36.6 36 42 36.3 43 40C43.8 43.4 41.3 47.8 34 53Z" fill="currentColor"/>
+      <ellipse cx="41.8" cy="47" rx="2.6" ry="2.3" fill="#2f5233"/>
+      <g transform="rotate(7 32 32)">
+        <path d="M10.9 17.1C7.6 11.2 7.6 2.6 10.2 0.7C14.5 1.2 19.5 7.6 19.8 14.7C17.6 16.9 13.3 18.6 10.9 17.1Z" fill="#6fa45f"/>
+        <path d="M12.6 14.9C10.2 10.7 10.2 4.8 12.2 3.6C15.2 4.3 18.6 8.8 18.6 13.7C16.9 15.1 14.2 15.9 12.6 14.9Z" fill="#f7f3de"/>
+        <path d="M14 13.3C12.6 10.6 12.7 7.4 13.6 6.7C15.2 7.5 16.8 10.4 16.4 13.1Z" fill="#2f5233"/>
+        <path d="M53.1 17.1C56.4 11.2 56.4 2.6 53.8 0.7C49.5 1.2 44.5 7.6 44.2 14.7C46.4 16.9 50.7 18.6 53.1 17.1Z" fill="#6fa45f"/>
+        <path d="M51.4 14.9C53.8 10.7 53.8 4.8 51.8 3.6C48.8 4.3 45.4 8.8 45.4 13.7C47.1 15.1 49.8 15.9 51.4 14.9Z" fill="#f7f3de"/>
+        <path d="M50 13.3C51.4 10.6 51.3 7.4 50.4 6.7C48.8 7.5 47.2 10.4 47.6 13.1Z" fill="#2f5233"/>
+        <ellipse cx="32" cy="25" rx="17.5" ry="14.5" fill="#6fa45f"/>
+        <path d="M17.6 30.6C16.6 25.2 21.4 21.4 27.2 21.9C29.5 22.1 30.9 20.4 32 18.2C33.1 20.4 34.5 22.1 36.8 21.9C42.6 21.4 47.4 25.2 46.4 30.6C45.4 36.4 39.6 38.9 32 38.9C24.4 38.9 18.6 36.4 17.6 30.6Z" fill="#f7f3de"/>
+        <path d="M21.8 28.4Q24.8 24.9 27.8 28.4M36.2 28.4Q39.2 24.9 42.2 28.4" fill="none" stroke="#14211b" stroke-width="2.7" stroke-linecap="round"/>
+        <path d="M29.5 31.2Q32 30.2 34.5 31.2Q33.7 33.7 32 34.1Q30.3 33.7 29.5 31.2Z" fill="#14211b"/>
+      </g>
+    </symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 4 7 12l8 8"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/></symbol>
+    <symbol id="i-device" viewBox="0 0 24 24"><path d="M6.5 2.5h11v19h-11z"/><path d="M10.5 18h3"/></symbol>
+    <symbol id="i-voice" viewBox="0 0 24 24"><path d="M2 12h3l2-6 3 12 3-14 3 16 2-8h4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5 20 5.5V12l-8 9.5L4 12V5.5z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M3 20.5 21.5 12 3 3.5 6.5 12z"/><path d="M6.5 12H13"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2.5 14 10l7.5 2-7.5 2-2 7.5-2-7.5-7.5-2 7.5-2z"/></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M4 7h16"/><path d="M4 7 1.5 13h5zM20 7l-2.5 6h5z"/></symbol>
+    <symbol id="i-storage" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9.5h16M4 15h16"/></symbol>
+    <symbol id="i-child" viewBox="0 0 24 24"><circle cx="12" cy="5.5" r="2.5"/><path d="M12 9v6M7.5 11.5h9M8.5 21l3.5-6 3.5 6"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="m3 5 9 8 9-8"/></symbol>
+  </defs>
+</svg>
+
+<header class="bar">
+  <a class="back" href="./#wiecej" id="back" aria-label="Wróć do aplikacji">
+    <svg class="ico" aria-hidden="true"><use href="#i-back"/></svg>
+    <svg class="logo" aria-hidden="true"><use href="#lemur"/></svg>
+    <span class="name">Doco</span>
   </a>
-  <a href="./" class="back-link">← Wróć do aplikacji</a>
 </header>
-<div class="horizon"></div>
 
-<div class="lang-switcher">
-  <button class="lang-pill active" onclick="showLang('pl', this)">Polski</button>
-  <button class="lang-pill" onclick="showLang('en', this)">English</button>
-  <button class="lang-pill" onclick="showLang('uk', this)">Українська</button>
-  <button class="lang-pill" onclick="showLang('de', this)">Deutsch</button>
-  <button class="lang-pill" onclick="showLang('es', this)">Español</button>
-</div>
+<main class="page">
+  <article class="lang" data-lang="pl" lang="pl">
+    <h1 class="title">Polityka prywatności</h1>
+    <p class="updated">Aktualizacja: 4 października 2026</p>
 
-<div class="container">
-
-  <!-- POLSKI -->
-  <div class="lang-section active" id="lang-pl">
-    <h1 class="page-title">Polityka Prywatności</h1>
-    <p class="page-subtitle">Doco — Twój przyjaciel AI</p>
-    <p class="last-updated">Ostatnia aktualizacja: kwiecień 2026</p>
-
-    <div class="highlight-box">
-      <p>Doco to aplikacja wsparcia emocjonalnego. Twoja prywatność jest dla nas priorytetem. Poniżej opisujemy jakie dane zbieramy, jak je używamy i jakie masz prawa.</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Administrator danych</h2>
-      <p>Administratorem Twoich danych osobowych jest Adrian Małysa, osoba fizyczna prowadząca serwis Doco, dostępny pod adresem soleil-sage.vercel.app.</p>
-      <p>Kontakt: adrianmalysa49@gmail.com</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17"/><path d="M9 4V2h6v2M8 10h8M8 14h8M8 18h5"/></svg>Jakie dane zbieramy</h2>
+    <section class="short" aria-label="W skrócie">
+      <p class="label">W skrócie</p>
       <ul>
-        <li><strong>Dane konta:</strong> adres e-mail, imię (opcjonalnie) — przy rejestracji przez Clerk</li>
-        <li><strong>Historia rozmów:</strong> treść Twoich rozmów z Doco — przechowywana w Supabase</li>
-        <li><strong>Dziennik nastroju:</strong> codzienne oceny nastroju i opcjonalne notatki</li>
-        <li><strong>Dane subskrypcji:</strong> status płatności Premium (przez Stripe) — bez danych karty</li>
-        <li><strong>Dane techniczne:</strong> adresy IP, typ przeglądarki — standardowe logi serwera</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-device"/></svg><span>Rozmowa tekstowa, nastrój i dziennik bólu zostają na Twoim telefonie. Nie wysyłamy ich na żaden serwer.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg><span>Konto nie jest potrzebne. Jeśli je założysz, logowanie obsługuje Clerk.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-voice"/></svg><span>Rozmowa głosowa (po zalogowaniu) idzie przez ElevenLabs, a odpowiedzi Doco układa model Claude firmy Anthropic.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><span>Nie sprzedajemy danych. Nie ma reklam ani plików cookie, które śledzą.</span></li>
       </ul>
-    </div>
+    </section>
 
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Cel przetwarzania danych</h2>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg>Administrator danych</h2>
+      <p>Administratorem Twoich danych osobowych jest Adrian Małysa, osoba fizyczna prowadząca serwis Doco, dostępny pod adresem <a href="./">juzu01.github.io/hackyeah-2026</a>.</p>
+      <p>Kontakt: <a href="mailto:adrianmalysa49@gmail.com">adrianmalysa49@gmail.com</a></p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-device"/></svg>Co zostaje na Twoim urządzeniu</h2>
+      <p>Te dane zapisuje tylko Twoja przeglądarka (localStorage). Nie widzimy ich i nie mamy do nich dostępu.</p>
       <ul>
-        <li>Świadczenie usług aplikacji Doco</li>
-        <li>Zapamiętywanie historii rozmów i nastrojów</li>
-        <li>Obsługa płatności Premium (Stripe)</li>
-        <li>Zapewnienie bezpieczeństwa i zapobieganie nadużyciom</li>
+        <li><strong>Rozmowa tekstowa:</strong> odpowiedzi Doco powstają w Twojej przeglądarce, wiadomości nigdzie nie wychodzą.</li>
+        <li><strong>Dziennik nastroju:</strong> oceny i notatki.</li>
+        <li><strong>Dziennik bólu:</strong> wpisy przypisane do Twojego konta, ale zapisane na tym urządzeniu.</li>
+        <li><strong>Historia „Gdzie boli?”:</strong> Twoje wcześniejsze sprawdzenia objawów.</li>
+        <li><strong>Ustawienia:</strong> język i głos Doco.</li>
       </ul>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Jak chronimy Twoje dane</h2>
+      <p>Usuniesz je, czyszcząc dane tej strony w ustawieniach przeglądarki.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg>Co trafia do zewnętrznych usług</h2>
       <ul>
-        <li>Rozmowy przechowywane w szyfrowanej bazie danych Supabase</li>
-        <li>Logowanie przez Clerk — nie przechowujemy haseł</li>
-        <li>Dane kart płatniczych obsługuje wyłącznie Stripe — nie mamy do nich dostępu</li>
-        <li>Połączenia szyfrowane przez HTTPS</li>
+        <li><strong>Clerk</strong>: konto, czyli adres e-mail, imię i, przy logowaniu przez Google, zdjęcie profilowe. Nie przechowujemy haseł.</li>
+        <li><strong>ElevenLabs</strong>: rozmowa głosowa. Twój głos jest przesyłany na żywo, żeby zamienić go na tekst i odpowiedzieć głosem.</li>
+        <li><strong>Anthropic (Claude)</strong>: w rozmowie głosowej układa odpowiedzi Doco na podstawie tego, co mówisz.</li>
+        <li><strong>Supabase</strong>: zgłoszenia bólu z Atlasu ciała, czyli część ciała, natężenie, rodzaj bólu i notatka.</li>
+        <li><strong>GitHub Pages i jsDelivr</strong>: serwują stronę i jej biblioteki. Jak każdy serwer widzą adres IP i typ przeglądarki.</li>
       </ul>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Sztuczna inteligencja</h2>
-      <p>Treść Twoich rozmów jest wysyłana do API Anthropic (Claude) w celu generowania odpowiedzi. Anthropic przetwarza dane zgodnie z własną polityką prywatności. Treści rozmów nie są używane do trenowania modeli AI.</p>
-      <p><strong>Ważne:</strong> Doco nie jest terapeutą ani narzędziem medycznym. W przypadku kryzysu psychicznego skontaktuj się z Telefonem Zaufania: 116 123.</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 14v7h16v-7"/></svg>Udostępnianie danych</h2>
-      <p>Nie sprzedajemy Twoich danych. Współpracujemy wyłącznie z:</p>
+      <p>Każda z tych firm przetwarza dane według własnej polityki prywatności. Połączenia są szyfrowane (HTTPS).</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-spark"/></svg>Sztuczna inteligencja i zdrowie</h2>
+      <p>Doco nie jest lekarzem, terapeutą ani wyrobem medycznym. Odpowiedzi i ocena objawów mają charakter wyłącznie informacyjny.</p>
+      <p>W kryzysie psychicznym zadzwoń pod <a href="tel:116123">116 123</a> lub <a href="tel:800702222">800 70 2222</a> (całą dobę), a w nagłej sytuacji pod <a href="tel:112">112</a>.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-scale"/></svg>Twoje prawa (RODO)</h2>
       <ul>
-        <li><strong>Clerk</strong> — uwierzytelnianie użytkowników</li>
-        <li><strong>Supabase</strong> — przechowywanie danych</li>
-        <li><strong>Anthropic</strong> — generowanie odpowiedzi AI</li>
-        <li><strong>Stripe</strong> — obsługa płatności</li>
-        <li><strong>Vercel</strong> — hosting aplikacji</li>
+        <li><strong>Dostęp:</strong> możesz poprosić o kopię swoich danych.</li>
+        <li><strong>Sprostowanie:</strong> możesz poprawić nieprawidłowe dane.</li>
+        <li><strong>Usunięcie:</strong> możesz poprosić o usunięcie konta i danych.</li>
+        <li><strong>Przenoszenie:</strong> możesz otrzymać dane w formacie elektronicznym.</li>
+        <li><strong>Sprzeciw:</strong> możesz sprzeciwić się przetwarzaniu danych.</li>
       </ul>
-    </div>
+      <p>Aby skorzystać z tych praw, napisz: <a href="mailto:adrianmalysa49@gmail.com">adrianmalysa49@gmail.com</a></p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-storage"/></svg>Pliki cookie i pamięć przeglądarki</h2>
+      <p>Clerk używa niezbędnych plików cookie, żeby utrzymać Twoje logowanie. Nie używamy plików cookie do śledzenia ani reklam.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-child"/></svg>Dzieci</h2>
+      <p>Doco nie jest przeznaczone dla osób poniżej 14 roku życia. Jeśli masz mniej niż 14 lat, prosimy, nie korzystaj z aplikacji.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-edit"/></svg>Zmiany polityki</h2>
+      <p>O istotnych zmianach poinformujemy w aplikacji. Korzystanie z Doco po zmianach oznacza ich akceptację.</p>
+    </section>
 
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M4 7h16"/><path d="M4 7l-3 7h6zM20 7l-3 7h6z"/></svg>Twoje prawa (RODO)</h2>
-      <ul>
-        <li><strong>Dostęp</strong> — możesz poprosić o kopię swoich danych</li>
-        <li><strong>Sprostowanie</strong> — możesz poprawić nieprawidłowe dane</li>
-        <li><strong>Usunięcie</strong> — możesz poprosić o usunięcie konta i danych</li>
-        <li><strong>Przenośność</strong> — możesz otrzymać dane w formacie elektronicznym</li>
-        <li><strong>Sprzeciw</strong> — możesz sprzeciwić się przetwarzaniu danych</li>
-      </ul>
-      <p>Aby skorzystać z tych praw, skontaktuj się z nami: adrianmalysa49@gmail.com</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="13" r="1"/><circle cx="10" cy="15" r="1"/></svg>Pliki cookie i localStorage</h2>
-      <p>Używamy localStorage przeglądarki do zapamiętywania Twoich preferencji (wybrany język, data ostatniego nastroju). Nie używamy plików cookie do śledzenia ani reklam.</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="3"/><path d="M12 10v6M8 13h8M9 21l3-5 3 5"/></svg>Dzieci</h2>
-      <p>Doco nie jest przeznaczony dla osób poniżej 14 roku życia. Jeśli masz mniej niż 14 lat, prosimy o nieużywanie aplikacji.</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>Zmiany polityki</h2>
-      <p>O istotnych zmianach w polityce prywatności będziemy informować poprzez aplikację. Kontynuowanie korzystania z Doco po zmianach oznacza ich akceptację.</p>
-    </div>
-
-    <div class="contact-box">
+    <section class="ask">
       <h2>Masz pytania?</h2>
-      <p>Napisz do nas: <strong>adrianmalysa49@gmail.com</strong></p>
-    </div>
-  </div>
+      <p>Napisz do nas, odpowiemy.</p>
+      <a class="btn" href="mailto:adrianmalysa49@gmail.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><span>adrianmalysa49@gmail.com</span></a>
+    </section>
 
-  <!-- ENGLISH -->
-  <div class="lang-section" id="lang-en">
-    <h1 class="page-title">Privacy Policy</h1>
-    <p class="page-subtitle">Doco — Your AI Friend</p>
-    <p class="last-updated">Last updated: April 2026</p>
+    <p class="fine">Doco nie jest lekarzem ani terapeutą. W nagłej sytuacji dzwoń pod <a href="tel:112">112</a>, a w kryzysie psychicznym pod <a href="tel:800702222">800 70 2222</a> (całą dobę).</p>
+  </article>
 
-    <div class="highlight-box">
-      <p>Doco is an emotional support application. Your privacy is our priority. Below we describe what data we collect, how we use it and what rights you have.</p>
-    </div>
+  <article class="lang" data-lang="en" lang="en">
+    <h1 class="title">Privacy policy</h1>
+    <p class="updated">Updated 4 October 2026</p>
 
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Data Controller</h2>
-      <p>The data controller is Adrian Małysa, an individual operating the Doco service, available at soleil-sage.vercel.app.</p>
-      <p>Contact: adrianmalysa49@gmail.com</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17"/><path d="M9 4V2h6v2M8 10h8M8 14h8M8 18h5"/></svg>What data we collect</h2>
+    <section class="short" aria-label="In short">
+      <p class="label">In short</p>
       <ul>
-        <li><strong>Account data:</strong> email address, name (optional) — upon registration via Clerk</li>
-        <li><strong>Conversation history:</strong> content of your conversations with Doco — stored in Supabase</li>
-        <li><strong>Mood journal:</strong> daily mood ratings and optional notes</li>
-        <li><strong>Subscription data:</strong> Premium payment status (via Stripe) — no card data</li>
-        <li><strong>Technical data:</strong> IP addresses, browser type — standard server logs</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-device"/></svg><span>Text chat, your mood diary and your pain diary stay on your phone. We don't send them to any server.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg><span>You don't need an account. If you create one, Clerk handles sign-in.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-voice"/></svg><span>Voice calls (after signing in) go through ElevenLabs, and Anthropic's Claude model writes Doco's replies.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><span>We don't sell data. No ads, no tracking cookies.</span></li>
       </ul>
-    </div>
+    </section>
 
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Purpose of processing</h2>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg>Data controller</h2>
+      <p>The controller of your personal data is Adrian Małysa, a private individual who runs Doco, available at <a href="./">juzu01.github.io/hackyeah-2026</a>.</p>
+      <p>Contact: <a href="mailto:adrianmalysa49@gmail.com">adrianmalysa49@gmail.com</a></p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-device"/></svg>What stays on your device</h2>
+      <p>Only your browser stores this (localStorage). We can't see it and have no access to it.</p>
       <ul>
-        <li>Providing Doco application services</li>
-        <li>Remembering conversation history and moods</li>
-        <li>Processing Premium payments (Stripe)</li>
-        <li>Ensuring security and preventing abuse</li>
+        <li><strong>Text chat:</strong> Doco's replies are composed in your browser; your messages don't leave it.</li>
+        <li><strong>Mood diary:</strong> ratings and notes.</li>
+        <li><strong>Pain diary:</strong> entries linked to your account but saved on this device.</li>
+        <li><strong>“Gdzie boli?” history:</strong> your past symptom checks.</li>
+        <li><strong>Settings:</strong> language and Doco's voice.</li>
       </ul>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>How we protect your data</h2>
+      <p>You can delete it by clearing this site's data in your browser settings.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg>What goes to outside services</h2>
       <ul>
-        <li>Conversations stored in Supabase encrypted database</li>
-        <li>Login via Clerk — we don't store passwords</li>
-        <li>Payment card data handled exclusively by Stripe — we have no access to it</li>
-        <li>Connections encrypted via HTTPS</li>
+        <li><strong>Clerk</strong>: your account, meaning your email address, name and, if you sign in with Google, your profile photo. We don't store passwords.</li>
+        <li><strong>ElevenLabs</strong>: voice calls. Your voice is streamed live to turn it into text and answer out loud.</li>
+        <li><strong>Anthropic (Claude)</strong>: in voice calls, writes Doco's replies from what you say.</li>
+        <li><strong>Supabase</strong>: pain reports from the body atlas, meaning the body part, intensity, type of pain and your note.</li>
+        <li><strong>GitHub Pages and jsDelivr</strong>: serve the site and its libraries. Like any server, they see your IP address and browser type.</li>
       </ul>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Artificial Intelligence</h2>
-      <p>The content of your conversations is sent to Anthropic API (Claude) to generate responses. Anthropic processes data according to its own privacy policy. Conversation content is not used to train AI models.</p>
-      <p><strong>Important:</strong> Doco is not a therapist or medical tool. In case of mental health crisis, contact a crisis helpline.</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 14v7h16v-7"/></svg>Data sharing</h2>
-      <p>We do not sell your data. We work only with:</p>
+      <p>Each of these companies processes data under its own privacy policy. All connections are encrypted (HTTPS).</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-spark"/></svg>AI and health</h2>
+      <p>Doco is not a doctor, a therapist or a medical device. Its replies and the symptom check are for information only.</p>
+      <p>In a mental health crisis, call a helpline (in Poland <a href="tel:116123">116 123</a>). In an emergency, call <a href="tel:112">112</a>.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-scale"/></svg>Your rights (GDPR)</h2>
       <ul>
-        <li><strong>Clerk</strong> — user authentication</li>
-        <li><strong>Supabase</strong> — data storage</li>
-        <li><strong>Anthropic</strong> — AI response generation</li>
-        <li><strong>Stripe</strong> — payment processing</li>
-        <li><strong>Vercel</strong> — application hosting</li>
+        <li><strong>Access:</strong> you can ask for a copy of your data.</li>
+        <li><strong>Rectification:</strong> you can correct data that is wrong.</li>
+        <li><strong>Erasure:</strong> you can ask us to delete your account and data.</li>
+        <li><strong>Portability:</strong> you can get your data in an electronic format.</li>
+        <li><strong>Objection:</strong> you can object to your data being processed.</li>
       </ul>
-    </div>
+      <p>To use these rights, write to: <a href="mailto:adrianmalysa49@gmail.com">adrianmalysa49@gmail.com</a></p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-storage"/></svg>Cookies and browser storage</h2>
+      <p>Clerk uses essential cookies to keep you signed in. We don't use cookies for tracking or ads.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-child"/></svg>Children</h2>
+      <p>Doco is not meant for people under 14. If you are under 14, please don't use the app.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-edit"/></svg>Changes to this policy</h2>
+      <p>We'll tell you about important changes in the app. Using Doco after a change means you accept it.</p>
+    </section>
 
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M4 7h16"/><path d="M4 7l-3 7h6zM20 7l-3 7h6z"/></svg>Your rights (GDPR)</h2>
+    <section class="ask">
+      <h2>Questions?</h2>
+      <p>Write to us and we'll reply.</p>
+      <a class="btn" href="mailto:adrianmalysa49@gmail.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><span>adrianmalysa49@gmail.com</span></a>
+    </section>
+
+    <p class="fine">Doco is not a doctor or a therapist. In an emergency call <a href="tel:112">112</a>.</p>
+  </article>
+
+  <article class="lang" data-lang="uk" lang="uk">
+    <h1 class="title">Політика конфіденційності</h1>
+    <p class="updated">Оновлено 4 жовтня 2026</p>
+
+    <section class="short" aria-label="Коротко">
+      <p class="label">Коротко</p>
       <ul>
-        <li><strong>Access</strong> — you can request a copy of your data</li>
-        <li><strong>Rectification</strong> — you can correct inaccurate data</li>
-        <li><strong>Erasure</strong> — you can request deletion of your account and data</li>
-        <li><strong>Portability</strong> — you can receive your data in electronic format</li>
-        <li><strong>Objection</strong> — you can object to data processing</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-device"/></svg><span>Текстова розмова, щоденник настрою та щоденник болю залишаються на твоєму телефоні. Ми не надсилаємо їх на жоден сервер.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg><span>Обліковий запис не потрібен. Якщо ти його створиш, вхід забезпечує Clerk.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-voice"/></svg><span>Голосова розмова (після входу) проходить через ElevenLabs, а відповіді Doco складає модель Claude від Anthropic.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><span>Ми не продаємо дані. Немає реклами й файлів cookie для стеження.</span></li>
       </ul>
-      <p>To exercise these rights, contact us: adrianmalysa49@gmail.com</p>
-    </div>
+    </section>
 
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="13" r="1"/><circle cx="10" cy="15" r="1"/></svg>Cookies and localStorage</h2>
-      <p>We use browser localStorage to remember your preferences (selected language, last mood date). We do not use cookies for tracking or advertising.</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="3"/><path d="M12 10v6M8 13h8M9 21l3-5 3 5"/></svg>Children</h2>
-      <p>Doco is not intended for persons under 14 years of age. If you are under 14, please do not use the application.</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>Policy changes</h2>
-      <p>We will notify you of significant changes to this privacy policy through the application. Continued use of Doco after changes implies acceptance.</p>
-    </div>
-
-    <div class="contact-box">
-      <h2>Have questions?</h2>
-      <p>Contact us: <strong>adrianmalysa49@gmail.com</strong></p>
-    </div>
-  </div>
-
-  <!-- УКРАЇНСЬКА -->
-  <div class="lang-section" id="lang-uk">
-    <h1 class="page-title">Політика конфіденційності</h1>
-    <p class="page-subtitle">Doco — Твій друг AI</p>
-    <p class="last-updated">Останнє оновлення: квітень 2026</p>
-
-    <div class="highlight-box">
-      <p>Doco — це застосунок емоційної підтримки. Твоя конфіденційність є нашим пріоритетом. Нижче ми описуємо, які дані збираємо, як їх використовуємо і які права ти маєш.</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Контролер даних</h2>
-      <p>Контролером твоїх персональних даних є Adrian Małysa, фізична особа, що керує сервісом Doco за адресою soleil-sage.vercel.app.</p>
-      <p>Контакт: adrianmalysa49@gmail.com</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17"/><path d="M9 4V2h6v2M8 10h8M8 14h8M8 18h5"/></svg>Які дані ми збираємо</h2>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg>Адміністратор даних</h2>
+      <p>Адміністратором твоїх персональних даних є Adrian Małysa, фізична особа, яка веде сервіс Doco, доступний за адресою <a href="./">juzu01.github.io/hackyeah-2026</a>.</p>
+      <p>Контакт: <a href="mailto:adrianmalysa49@gmail.com">adrianmalysa49@gmail.com</a></p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-device"/></svg>Що залишається на твоєму пристрої</h2>
+      <p>Ці дані зберігає лише твій браузер (localStorage). Ми їх не бачимо й не маємо до них доступу.</p>
       <ul>
-        <li><strong>Дані облікового запису:</strong> електронна пошта, ім'я (опційно) — при реєстрації через Clerk</li>
-        <li><strong>Історія розмов:</strong> зміст твоїх розмов з Doco — зберігається в Supabase</li>
-        <li><strong>Щоденник настрою:</strong> щоденні оцінки настрою та опційні нотатки</li>
-        <li><strong>Дані підписки:</strong> статус Premium (через Stripe) — без даних картки</li>
-        <li><strong>Технічні дані:</strong> IP-адреси, тип браузера — стандартні логи сервера</li>
+        <li><strong>Текстова розмова:</strong> відповіді Doco створюються у твоєму браузері, повідомлення нікуди не надсилаються.</li>
+        <li><strong>Щоденник настрою:</strong> оцінки та нотатки.</li>
+        <li><strong>Щоденник болю:</strong> записи прив’язані до облікового запису, але збережені на цьому пристрої.</li>
+        <li><strong>Історія «Gdzie boli?»:</strong> твої попередні перевірки симптомів.</li>
+        <li><strong>Налаштування:</strong> мова та голос Doco.</li>
       </ul>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Як ми захищаємо твої дані</h2>
+      <p>Видалити їх можна, очистивши дані цього сайту в налаштуваннях браузера.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg>Що потрапляє до зовнішніх сервісів</h2>
       <ul>
-        <li>Розмови зберігаються в зашифрованій базі даних Supabase</li>
-        <li>Вхід через Clerk — ми не зберігаємо паролі</li>
-        <li>Дані платіжних карток обробляє виключно Stripe</li>
-        <li>З'єднання зашифровані через HTTPS</li>
+        <li><strong>Clerk</strong>: обліковий запис, тобто адреса e-mail, ім’я та, якщо входиш через Google, фото профілю. Ми не зберігаємо паролі.</li>
+        <li><strong>ElevenLabs</strong>: голосова розмова. Твій голос передається наживо, щоб перетворити його на текст і відповісти голосом.</li>
+        <li><strong>Anthropic (Claude)</strong>: у голосовій розмові складає відповіді Doco на основі того, що ти кажеш.</li>
+        <li><strong>Supabase</strong>: повідомлення про біль з Атласу тіла, тобто частина тіла, інтенсивність, вид болю та нотатка.</li>
+        <li><strong>GitHub Pages і jsDelivr</strong>: надають сайт і його бібліотеки. Як і будь-який сервер, бачать IP-адресу та тип браузера.</li>
       </ul>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Штучний інтелект</h2>
-      <p>Зміст твоїх розмов надсилається до API Anthropic (Claude) для генерації відповідей. Вміст розмов не використовується для навчання моделей AI.</p>
-      <p><strong>Важливо:</strong> Doco не є терапевтом або медичним інструментом.</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M4 7h16"/><path d="M4 7l-3 7h6zM20 7l-3 7h6z"/></svg>Твої права (GDPR)</h2>
+      <p>Кожна з цих компаній обробляє дані згідно з власною політикою конфіденційності. З’єднання зашифровані (HTTPS).</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-spark"/></svg>Штучний інтелект і здоров’я</h2>
+      <p>Doco не є лікарем, терапевтом чи медичним виробом. Відповіді й оцінка симптомів мають лише інформаційний характер.</p>
+      <p>У психологічній кризі телефонуй на лінію допомоги (у Польщі <a href="tel:116123">116 123</a>). У надзвичайній ситуації телефонуй <a href="tel:112">112</a>.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-scale"/></svg>Твої права (GDPR)</h2>
       <ul>
-        <li><strong>Доступ</strong> — ти можеш запросити копію своїх даних</li>
-        <li><strong>Виправлення</strong> — ти можеш виправити неточні дані</li>
-        <li><strong>Видалення</strong> — ти можеш запросити видалення облікового запису</li>
-        <li><strong>Переносимість</strong> — ти можеш отримати дані в електронному форматі</li>
+        <li><strong>Доступ:</strong> можеш попросити копію своїх даних.</li>
+        <li><strong>Виправлення:</strong> можеш виправити неправильні дані.</li>
+        <li><strong>Видалення:</strong> можеш попросити видалити обліковий запис і дані.</li>
+        <li><strong>Перенесення:</strong> можеш отримати дані в електронному форматі.</li>
+        <li><strong>Заперечення:</strong> можеш заперечити проти обробки даних.</li>
       </ul>
-      <p>Для реалізації цих прав: adrianmalysa49@gmail.com</p>
-    </div>
+      <p>Щоб скористатися цими правами, напиши: <a href="mailto:adrianmalysa49@gmail.com">adrianmalysa49@gmail.com</a></p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-storage"/></svg>Файли cookie та пам’ять браузера</h2>
+      <p>Clerk використовує необхідні файли cookie, щоб зберігати твій вхід. Ми не використовуємо cookie для стеження чи реклами.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-child"/></svg>Діти</h2>
+      <p>Doco не призначений для осіб віком до 14 років. Якщо тобі менше 14, будь ласка, не користуйся застосунком.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-edit"/></svg>Зміни політики</h2>
+      <p>Про важливі зміни ми повідомимо в застосунку. Користування Doco після змін означає їх прийняття.</p>
+    </section>
 
-    <div class="contact-box">
+    <section class="ask">
       <h2>Маєш питання?</h2>
-      <p>Напиши нам: <strong>adrianmalysa49@gmail.com</strong></p>
-    </div>
-  </div>
+      <p>Напиши нам, ми відповімо.</p>
+      <a class="btn" href="mailto:adrianmalysa49@gmail.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><span>adrianmalysa49@gmail.com</span></a>
+    </section>
 
-  <!-- DEUTSCH -->
-  <div class="lang-section" id="lang-de">
-    <h1 class="page-title">Datenschutzerklärung</h1>
-    <p class="page-subtitle">Doco — Dein KI-Freund</p>
-    <p class="last-updated">Zuletzt aktualisiert: April 2026</p>
+    <p class="fine">Doco не є лікарем чи терапевтом. У надзвичайній ситуації телефонуй <a href="tel:112">112</a>.</p>
+  </article>
 
-    <div class="highlight-box">
-      <p>Doco ist eine emotionale Support-App. Deine Privatsphäre hat für uns Priorität. Im Folgenden beschreiben wir, welche Daten wir erheben, wie wir sie verwenden und welche Rechte du hast.</p>
-    </div>
+  <article class="lang" data-lang="de" lang="de">
+    <h1 class="title">Datenschutzerklärung</h1>
+    <p class="updated">Aktualisiert am 4. Oktober 2026</p>
 
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Verantwortlicher</h2>
-      <p>Verantwortlicher für deine personenbezogenen Daten ist Adrian Małysa, eine Privatperson, die den Doco-Dienst unter soleil-sage.vercel.app betreibt.</p>
-      <p>Kontakt: adrianmalysa49@gmail.com</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17"/><path d="M9 4V2h6v2M8 10h8M8 14h8M8 18h5"/></svg>Welche Daten wir erheben</h2>
+    <section class="short" aria-label="Kurz gesagt">
+      <p class="label">Kurz gesagt</p>
       <ul>
-        <li><strong>Kontodaten:</strong> E-Mail-Adresse, Name (optional) — bei Registrierung über Clerk</li>
-        <li><strong>Gesprächsverlauf:</strong> Inhalt deiner Gespräche mit Doco — gespeichert in Supabase</li>
-        <li><strong>Stimmungstagebuch:</strong> tägliche Stimmungsbewertungen und optionale Notizen</li>
-        <li><strong>Abonnementdaten:</strong> Premium-Status (über Stripe) — keine Kartendaten</li>
-        <li><strong>Technische Daten:</strong> IP-Adressen, Browsertyp — Standard-Serverlogs</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-device"/></svg><span>Textchat, Stimmungstagebuch und Schmerztagebuch bleiben auf deinem Handy. Wir senden sie an keinen Server.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg><span>Ein Konto brauchst du nicht. Wenn du eins anlegst, übernimmt Clerk die Anmeldung.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-voice"/></svg><span>Sprachanrufe (nach der Anmeldung) laufen über ElevenLabs; die Antworten von Doco schreibt das Modell Claude von Anthropic.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><span>Wir verkaufen keine Daten. Keine Werbung, keine Tracking-Cookies.</span></li>
       </ul>
-    </div>
+    </section>
 
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Wie wir deine Daten schützen</h2>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg>Verantwortlicher</h2>
+      <p>Verantwortlich für deine personenbezogenen Daten ist Adrian Małysa, eine Privatperson, die Doco betreibt, erreichbar unter <a href="./">juzu01.github.io/hackyeah-2026</a>.</p>
+      <p>Kontakt: <a href="mailto:adrianmalysa49@gmail.com">adrianmalysa49@gmail.com</a></p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-device"/></svg>Was auf deinem Gerät bleibt</h2>
+      <p>Diese Daten speichert nur dein Browser (localStorage). Wir sehen sie nicht und haben keinen Zugriff darauf.</p>
       <ul>
-        <li>Gespräche in verschlüsselter Supabase-Datenbank gespeichert</li>
-        <li>Anmeldung über Clerk — wir speichern keine Passwörter</li>
-        <li>Zahlungskartendaten werden ausschließlich von Stripe verarbeitet</li>
-        <li>Verbindungen über HTTPS verschlüsselt</li>
+        <li><strong>Textchat:</strong> Die Antworten von Doco entstehen in deinem Browser; deine Nachrichten verlassen ihn nicht.</li>
+        <li><strong>Stimmungstagebuch:</strong> Bewertungen und Notizen.</li>
+        <li><strong>Schmerztagebuch:</strong> Einträge, die deinem Konto zugeordnet, aber auf diesem Gerät gespeichert sind.</li>
+        <li><strong>Verlauf von „Gdzie boli?“:</strong> deine bisherigen Symptomchecks.</li>
+        <li><strong>Einstellungen:</strong> Sprache und Stimme von Doco.</li>
       </ul>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Künstliche Intelligenz</h2>
-      <p>Der Inhalt deiner Gespräche wird zur Antwortgenerierung an die Anthropic API (Claude) gesendet. Gesprächsinhalte werden nicht zum Training von KI-Modellen verwendet.</p>
-      <p><strong>Wichtig:</strong> Doco ist kein Therapeut oder medizinisches Werkzeug.</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M4 7h16"/><path d="M4 7l-3 7h6zM20 7l-3 7h6z"/></svg>Deine Rechte (DSGVO)</h2>
+      <p>Du löschst sie, indem du die Daten dieser Website in den Browser-Einstellungen entfernst.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg>Was an externe Dienste geht</h2>
       <ul>
-        <li><strong>Auskunft</strong> — du kannst eine Kopie deiner Daten anfordern</li>
-        <li><strong>Berichtigung</strong> — du kannst unrichtige Daten korrigieren</li>
-        <li><strong>Löschung</strong> — du kannst die Löschung deines Kontos beantragen</li>
-        <li><strong>Datenübertragbarkeit</strong> — du kannst deine Daten in elektronischem Format erhalten</li>
-        <li><strong>Widerspruch</strong> — du kannst der Verarbeitung widersprechen</li>
+        <li><strong>Clerk</strong>: dein Konto, also E-Mail-Adresse, Name und, bei Anmeldung mit Google, dein Profilbild. Wir speichern keine Passwörter.</li>
+        <li><strong>ElevenLabs</strong>: Sprachanrufe. Deine Stimme wird live übertragen, um sie in Text umzuwandeln und laut zu antworten.</li>
+        <li><strong>Anthropic (Claude)</strong>: schreibt in Sprachanrufen die Antworten von Doco aus dem, was du sagst.</li>
+        <li><strong>Supabase</strong>: Schmerzmeldungen aus dem Körperatlas, also Körperteil, Stärke, Art des Schmerzes und deine Notiz.</li>
+        <li><strong>GitHub Pages und jsDelivr</strong>: liefern die Website und ihre Bibliotheken aus. Wie jeder Server sehen sie deine IP-Adresse und deinen Browsertyp.</li>
       </ul>
-      <p>Zur Ausübung dieser Rechte: adrianmalysa49@gmail.com</p>
-    </div>
-
-    <div class="contact-box">
-      <h2>Hast du Fragen?</h2>
-      <p>Schreib uns: <strong>adrianmalysa49@gmail.com</strong></p>
-    </div>
-  </div>
-
-  <!-- ESPAÑOL -->
-  <div class="lang-section" id="lang-es">
-    <h1 class="page-title">Política de Privacidad</h1>
-    <p class="page-subtitle">Doco — Tu Amigo AI</p>
-    <p class="last-updated">Última actualización: abril 2026</p>
-
-    <div class="highlight-box">
-      <p>Doco es una aplicación de apoyo emocional. Tu privacidad es nuestra prioridad. A continuación describimos qué datos recopilamos, cómo los usamos y qué derechos tienes.</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Responsable del tratamiento</h2>
-      <p>El responsable de tus datos personales es Adrian Małysa, persona física que opera el servicio Doco en soleil-sage.vercel.app.</p>
-      <p>Contacto: adrianmalysa49@gmail.com</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17"/><path d="M9 4V2h6v2M8 10h8M8 14h8M8 18h5"/></svg>Qué datos recopilamos</h2>
+      <p>Jedes dieser Unternehmen verarbeitet Daten nach seiner eigenen Datenschutzerklärung. Alle Verbindungen sind verschlüsselt (HTTPS).</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-spark"/></svg>KI und Gesundheit</h2>
+      <p>Doco ist weder Arzt noch Therapeut noch ein Medizinprodukt. Antworten und Symptomcheck dienen nur der Information.</p>
+      <p>In einer psychischen Krise ruf eine Krisenhotline an (in Polen <a href="tel:116123">116 123</a>). Im Notfall wähle <a href="tel:112">112</a>.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-scale"/></svg>Deine Rechte (DSGVO)</h2>
       <ul>
-        <li><strong>Datos de cuenta:</strong> dirección de correo, nombre (opcional) — al registrarse via Clerk</li>
-        <li><strong>Historial de conversaciones:</strong> contenido de tus conversaciones con Doco — almacenado en Supabase</li>
-        <li><strong>Diario de estado de ánimo:</strong> valoraciones diarias y notas opcionales</li>
-        <li><strong>Datos de suscripción:</strong> estado Premium (via Stripe) — sin datos de tarjeta</li>
-        <li><strong>Datos técnicos:</strong> direcciones IP, tipo de navegador — logs estándar del servidor</li>
+        <li><strong>Auskunft:</strong> Du kannst eine Kopie deiner Daten verlangen.</li>
+        <li><strong>Berichtigung:</strong> Du kannst falsche Daten korrigieren lassen.</li>
+        <li><strong>Löschung:</strong> Du kannst die Löschung deines Kontos und deiner Daten verlangen.</li>
+        <li><strong>Übertragbarkeit:</strong> Du kannst deine Daten in elektronischer Form erhalten.</li>
+        <li><strong>Widerspruch:</strong> Du kannst der Verarbeitung deiner Daten widersprechen.</li>
       </ul>
-    </div>
+      <p>Schreib dazu an: <a href="mailto:adrianmalysa49@gmail.com">adrianmalysa49@gmail.com</a></p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-storage"/></svg>Cookies und Browserspeicher</h2>
+      <p>Clerk verwendet notwendige Cookies, damit du angemeldet bleibst. Wir verwenden keine Cookies für Tracking oder Werbung.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-child"/></svg>Kinder</h2>
+      <p>Doco ist nicht für Personen unter 14 Jahren gedacht. Wenn du jünger als 14 bist, nutze die App bitte nicht.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-edit"/></svg>Änderungen</h2>
+      <p>Über wichtige Änderungen informieren wir in der App. Wenn du Doco danach weiter nutzt, akzeptierst du sie.</p>
+    </section>
 
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Cómo protegemos tus datos</h2>
+    <section class="ask">
+      <h2>Fragen?</h2>
+      <p>Schreib uns, wir antworten.</p>
+      <a class="btn" href="mailto:adrianmalysa49@gmail.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><span>adrianmalysa49@gmail.com</span></a>
+    </section>
+
+    <p class="fine">Doco ist weder Arzt noch Therapeut. Im Notfall wähle <a href="tel:112">112</a>.</p>
+  </article>
+
+  <article class="lang" data-lang="es" lang="es">
+    <h1 class="title">Política de privacidad</h1>
+    <p class="updated">Actualizada el 4 de octubre de 2026</p>
+
+    <section class="short" aria-label="En resumen">
+      <p class="label">En resumen</p>
       <ul>
-        <li>Conversaciones almacenadas en base de datos Supabase cifrada</li>
-        <li>Inicio de sesión via Clerk — no almacenamos contraseñas</li>
-        <li>Datos de tarjetas de pago procesados exclusivamente por Stripe</li>
-        <li>Conexiones cifradas via HTTPS</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-device"/></svg><span>El chat de texto y tus diarios de ánimo y de dolor se quedan en tu móvil. No los enviamos a ningún servidor.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg><span>No necesitas una cuenta. Si creas una, Clerk se encarga del inicio de sesión.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-voice"/></svg><span>Las llamadas de voz (tras iniciar sesión) pasan por ElevenLabs, y el modelo Claude de Anthropic escribe las respuestas de Doco.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><span>No vendemos datos. Sin anuncios ni cookies de seguimiento.</span></li>
       </ul>
-    </div>
+    </section>
 
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Inteligencia Artificial</h2>
-      <p>El contenido de tus conversaciones se envía a la API de Anthropic (Claude) para generar respuestas. El contenido no se usa para entrenar modelos de IA.</p>
-      <p><strong>Importante:</strong> Doco no es un terapeuta ni una herramienta médica.</p>
-    </div>
-
-    <div class="section">
-      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M4 7h16"/><path d="M4 7l-3 7h6zM20 7l-3 7h6z"/></svg>Tus derechos (RGPD)</h2>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg>Responsable del tratamiento</h2>
+      <p>El responsable de tus datos personales es Adrian Małysa, persona física que gestiona Doco, disponible en <a href="./">juzu01.github.io/hackyeah-2026</a>.</p>
+      <p>Contacto: <a href="mailto:adrianmalysa49@gmail.com">adrianmalysa49@gmail.com</a></p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-device"/></svg>Lo que se queda en tu dispositivo</h2>
+      <p>Solo tu navegador guarda estos datos (localStorage). No los vemos ni tenemos acceso a ellos.</p>
       <ul>
-        <li><strong>Acceso</strong> — puedes solicitar una copia de tus datos</li>
-        <li><strong>Rectificación</strong> — puedes corregir datos inexactos</li>
-        <li><strong>Supresión</strong> — puedes solicitar la eliminación de tu cuenta</li>
-        <li><strong>Portabilidad</strong> — puedes recibir tus datos en formato electrónico</li>
-        <li><strong>Oposición</strong> — puedes oponerte al tratamiento de datos</li>
+        <li><strong>Chat de texto:</strong> las respuestas de Doco se generan en tu navegador; tus mensajes no salen de él.</li>
+        <li><strong>Diario de ánimo:</strong> valoraciones y notas.</li>
+        <li><strong>Diario de dolor:</strong> entradas vinculadas a tu cuenta, pero guardadas en este dispositivo.</li>
+        <li><strong>Historial de «Gdzie boli?»:</strong> tus comprobaciones de síntomas anteriores.</li>
+        <li><strong>Ajustes:</strong> idioma y voz de Doco.</li>
       </ul>
-      <p>Para ejercer estos derechos: adrianmalysa49@gmail.com</p>
-    </div>
+      <p>Puedes borrarlos eliminando los datos de este sitio en los ajustes del navegador.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg>Lo que va a servicios externos</h2>
+      <ul>
+        <li><strong>Clerk</strong>: tu cuenta, es decir, tu correo electrónico, tu nombre y, si entras con Google, tu foto de perfil. No guardamos contraseñas.</li>
+        <li><strong>ElevenLabs</strong>: llamadas de voz. Tu voz se transmite en directo para convertirla en texto y responder en voz alta.</li>
+        <li><strong>Anthropic (Claude)</strong>: en las llamadas de voz, escribe las respuestas de Doco a partir de lo que dices.</li>
+        <li><strong>Supabase</strong>: avisos de dolor del atlas del cuerpo, es decir, parte del cuerpo, intensidad, tipo de dolor y tu nota.</li>
+        <li><strong>GitHub Pages y jsDelivr</strong>: sirven el sitio y sus bibliotecas. Como cualquier servidor, ven tu dirección IP y tu tipo de navegador.</li>
+      </ul>
+      <p>Cada una de estas empresas trata los datos según su propia política de privacidad. Todas las conexiones están cifradas (HTTPS).</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-spark"/></svg>IA y salud</h2>
+      <p>Doco no es médico, ni terapeuta, ni un producto sanitario. Sus respuestas y la comprobación de síntomas son solo informativas.</p>
+      <p>En una crisis emocional, llama a una línea de ayuda (en Polonia, <a href="tel:116123">116 123</a>). En una emergencia, llama al <a href="tel:112">112</a>.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-scale"/></svg>Tus derechos (RGPD)</h2>
+      <ul>
+        <li><strong>Acceso:</strong> puedes pedir una copia de tus datos.</li>
+        <li><strong>Rectificación:</strong> puedes corregir datos incorrectos.</li>
+        <li><strong>Supresión:</strong> puedes pedir que borremos tu cuenta y tus datos.</li>
+        <li><strong>Portabilidad:</strong> puedes recibir tus datos en formato electrónico.</li>
+        <li><strong>Oposición:</strong> puedes oponerte al tratamiento de tus datos.</li>
+      </ul>
+      <p>Para ejercerlos, escríbenos a: <a href="mailto:adrianmalysa49@gmail.com">adrianmalysa49@gmail.com</a></p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-storage"/></svg>Cookies y almacenamiento del navegador</h2>
+      <p>Clerk usa cookies esenciales para mantener tu sesión iniciada. No usamos cookies para seguimiento ni publicidad.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-child"/></svg>Menores</h2>
+      <p>Doco no está pensado para menores de 14 años. Si tienes menos de 14, por favor no uses la app.</p>
+    </section>
+    <section class="part">
+      <h2><svg class="ico" aria-hidden="true"><use href="#i-edit"/></svg>Cambios en esta política</h2>
+      <p>Te avisaremos en la app de los cambios importantes. Seguir usando Doco después de un cambio significa que lo aceptas.</p>
+    </section>
 
-    <div class="contact-box">
+    <section class="ask">
       <h2>¿Tienes preguntas?</h2>
-      <p>Escríbenos: <strong>adrianmalysa49@gmail.com</strong></p>
-    </div>
-  </div>
+      <p>Escríbenos y te responderemos.</p>
+      <a class="btn" href="mailto:adrianmalysa49@gmail.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><span>adrianmalysa49@gmail.com</span></a>
+    </section>
 
-</div>
-
-<div class="horizon"></div>
-<footer class="footer">
-  <p id="footerNote">Doco nie jest lekarzem ani terapeutą. W nagłej sytuacji dzwoń pod <a href="tel:112">112</a>, a w kryzysie psychicznym pod <a href="tel:800702222">800 70 2222</a> (całodobowo).</p>
-  <p class="copy">© 2026 Doco</p>
-</footer>
+    <p class="fine">Doco no es médico ni terapeuta. En una emergencia llama al <a href="tel:112">112</a>.</p>
+  </article>
+</main>
 
 <script>
-const PRIVACY_UI = {
-  pl: { back: '← Wróć do aplikacji', tag: 'Zawsze tutaj dla Ciebie', note: 'Doco nie jest lekarzem ani terapeutą. W nagłej sytuacji dzwoń pod <a href="tel:112">112</a>, a w kryzysie psychicznym pod <a href="tel:800702222">800 70 2222</a> (całodobowo).' },
-  en: { back: '← Back to app', tag: 'Always here for you', note: 'Doco is not a doctor or a therapist. In an emergency call <a href="tel:112">112</a>.' },
-  uk: { back: '← Назад до застосунку', tag: 'Завжди поруч із тобою', note: 'Doco не є лікарем чи терапевтом. У надзвичайній ситуації телефонуй <a href="tel:112">112</a>.' },
-  de: { back: '← Zurück zur App', tag: 'Immer für dich da', note: 'Doco ist weder Arzt noch Therapeut. Im Notfall wähle <a href="tel:112">112</a>.' },
-  es: { back: '← Volver a la app', tag: 'Siempre aquí para ti', note: 'Doco no es médico ni terapeuta. En una emergencia llama al <a href="tel:112">112</a>.' }
-};
-function showLang(lang, btn) {
-  document.querySelectorAll('.lang-section').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.lang-pill').forEach(el => el.classList.remove('active'));
-  document.getElementById('lang-' + lang).classList.add('active');
-  if (btn) btn.classList.add('active');
-  const ui = PRIVACY_UI[lang] || PRIVACY_UI.pl;
-  document.querySelector('.back-link').textContent = ui.back;
-  document.getElementById('brandTag').textContent = ui.tag;
-  document.getElementById('footerNote').innerHTML = ui.note;
-  document.documentElement.lang = lang;
-}
+(function () {
+  var UI = { pl: { doc: 'Polityka prywatności · Doco', back: 'Wróć do aplikacji' }, en: { doc: 'Privacy policy · Doco', back: 'Back to the app' }, uk: { doc: 'Політика конфіденційності · Doco', back: 'Назад до застосунку' }, de: { doc: 'Datenschutzerklärung · Doco', back: 'Zurück zur App' }, es: { doc: 'Política de privacidad · Doco', back: 'Volver a la app' } };
+  var t = UI[document.documentElement.getAttribute('data-lang')] || UI.pl;
+  document.title = t.doc;
+  document.getElementById('back').setAttribute('aria-label', t.back);
+})();
 </script>
 </body>
 </html>
