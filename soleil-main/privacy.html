@@ -4,79 +4,98 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Polityka Prywatności — Soleil</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #fdf6ee; --accent: #e8845a; --accent2: #f2b48a;
-    --text: #3a2e28; --muted: #9e8e83; --shadow: rgba(180,120,80,0.1);
+    --bg: #030605; --panel: #0a110e; --line: #1c2a24;
+    --mint: #b8e6c9; --mint-dim: rgba(184,230,201,0.14);
+    --text: #e6eee9; --muted: #93a39b;
+    --cut: 18px;
   }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Lato', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  body { font-family: 'IBM Plex Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(184,230,201,0.07) 0%, transparent 70%); }
+  a { color: var(--mint); }
 
-  body::before {
-    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background: radial-gradient(ellipse 80% 50% at 10% 0%, rgba(242,180,138,0.2) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 40% at 90% 100%, rgba(125,189,181,0.15) 0%, transparent 60%);
-  }
+  /* NAGŁÓWEK */
+  .header { position: sticky; top: 0; z-index: 100; background: rgba(3,6,5,0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .header-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .header-logo svg { width: 40px; height: 40px; flex-shrink: 0; }
+  .brand-name { display: block; font-family: 'Newsreader', Georgia, serif; font-size: 1.6rem; line-height: 1; color: var(--text); }
+  .brand-tag { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+  .brand-tag::before { content: ''; width: 8px; height: 8px; background: var(--mint); transform: rotate(45deg); }
+  .back-link { font-size: 0.82rem; font-weight: 600; color: #04140c; background: var(--mint); text-decoration: none; padding: 10px 16px; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); transition: filter 0.2s; white-space: nowrap; }
+  .back-link:hover { filter: brightness(1.08); }
 
-  /* HEADER */
-  .header { position: sticky; top: 0; z-index: 100; background: rgba(253,246,238,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(232,132,90,0.12); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
-  .header-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .header-logo img { width: 32px; height: 32px; object-fit: contain; }
-  .header-logo span { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--accent); }
-  .back-link { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 4px; }
-  .back-link:hover { color: var(--accent); }
+  /* HORYZONT */
+  .horizon { position: relative; z-index: 1; height: 1px; margin: 0 -10vw; background: var(--mint); opacity: 0.55; transform: rotate(-0.6deg); }
 
-  /* LANG SWITCHER */
-  .lang-switcher { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; padding: 20px 24px 0; position: relative; z-index: 1; }
-  .lang-pill { background: white; border: 1.5px solid rgba(232,132,90,0.2); color: var(--muted); padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-family: 'Lato', sans-serif; cursor: pointer; transition: all 0.2s; }
-  .lang-pill:hover { border-color: var(--accent2); color: var(--accent); }
-  .lang-pill.active { background: var(--accent); color: white; border-color: var(--accent); }
+  /* PRZEŁĄCZNIK JĘZYKA */
+  .lang-switcher { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; padding: 28px 24px 0; position: relative; z-index: 1; }
+  .lang-pill { background: var(--panel); border: 1px solid var(--line); color: var(--muted); padding: 8px 14px; font-size: 0.8rem; font-weight: 600; font-family: inherit; cursor: pointer; transition: all 0.2s; clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%); }
+  .lang-pill:hover { color: var(--text); border-color: var(--mint); }
+  .lang-pill.active { background: var(--mint); color: #04140c; border-color: var(--mint); }
 
-  /* CONTENT */
-  .container { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; position: relative; z-index: 1; }
+  /* TREŚĆ */
+  .container { max-width: 760px; margin: 0 auto; padding: 44px 24px 80px; position: relative; z-index: 1; }
+  .page-title { font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: clamp(2.2rem, 6vw, 3.2rem); line-height: 1.05; color: var(--text); margin-bottom: 10px; }
+  .page-subtitle { font-size: 0.95rem; color: var(--muted); margin-bottom: 6px; }
+  .last-updated { font-size: 0.78rem; color: var(--muted); margin-bottom: 36px; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
 
-  .page-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--accent); margin-bottom: 6px; }
-  .page-subtitle { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
-  .last-updated { font-size: 0.75rem; color: var(--muted); margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid rgba(232,132,90,0.15); }
+  .section { padding: 26px 0; border-bottom: 1px solid var(--line); }
+  .section h2 { font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
+  .section h2 svg { width: 24px; height: 24px; flex-shrink: 0; stroke: var(--mint); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .section p { font-size: 0.93rem; line-height: 1.75; color: #c9d4ce; margin-bottom: 10px; }
+  .section ul { padding-left: 0; margin-bottom: 10px; list-style: none; }
+  .section ul li { font-size: 0.93rem; line-height: 1.7; color: #c9d4ce; margin-bottom: 6px; padding-left: 20px; position: relative; }
+  .section ul li::before { content: ''; position: absolute; left: 2px; top: 0.62em; width: 6px; height: 6px; background: var(--mint); transform: rotate(45deg); }
+  .section strong, .highlight-box strong { color: var(--text); }
 
-  .section { margin-bottom: 32px; }
-  .section h2 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-  .section p { font-size: 0.88rem; line-height: 1.75; color: var(--text); margin-bottom: 10px; }
-  .section ul { padding-left: 18px; margin-bottom: 10px; }
-  .section ul li { font-size: 0.88rem; line-height: 1.75; color: var(--text); margin-bottom: 4px; }
+  /* PANELE ZE ŚCIĘTYM ROGIEM */
+  .highlight-box, .contact-box { position: relative; padding: 20px 22px; margin-bottom: 14px; background: var(--line); clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%); }
+  .highlight-box::before, .contact-box::before { content: ''; position: absolute; inset: 1px; background: var(--panel); clip-path: polygon(0 0, calc(100% - var(--cut) + 0.4px) 0, 100% calc(var(--cut) - 0.4px), 100% 100%, 0 100%); z-index: -1; }
+  .highlight-box, .contact-box { isolation: isolate; }
+  .highlight-box p { margin-bottom: 0; color: var(--text); font-size: 0.95rem; line-height: 1.7; }
+  .contact-box { text-align: left; margin-top: 40px; }
+  .contact-box h2 { font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: 1.6rem; color: var(--text); margin-bottom: 8px; }
+  .contact-box p { font-size: 0.92rem; color: var(--muted); margin-bottom: 0; line-height: 1.6; }
 
-  .highlight-box { background: white; border-radius: 14px; padding: 16px 18px; border: 1px solid rgba(232,132,90,0.15); box-shadow: 0 2px 12px var(--shadow); margin-bottom: 12px; }
-  .highlight-box p { margin-bottom: 0; }
-
-  .contact-box { background: linear-gradient(135deg, rgba(232,132,90,0.08), rgba(242,180,138,0.08)); border-radius: 16px; padding: 20px; border: 1px solid rgba(232,132,90,0.15); text-align: center; margin-top: 40px; }
-  .contact-box h2 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--accent); margin-bottom: 8px; }
-  .contact-box p { font-size: 0.85rem; color: var(--muted); margin-bottom: 0; }
-
-  .footer { text-align: center; padding: 24px; font-size: 0.75rem; color: var(--muted); border-top: 1px solid rgba(232,132,90,0.1); position: relative; z-index: 1; }
-  .footer a { color: var(--accent); text-decoration: none; }
+  /* STOPKA */
+  .footer { padding: 28px 24px 40px; font-size: 0.8rem; color: var(--muted); position: relative; z-index: 1; max-width: 760px; margin: 0 auto; line-height: 1.6; }
+  .footer a { color: var(--mint); }
+  .footer .copy { margin-top: 10px; opacity: 0.7; }
 
   .lang-section { display: none; }
-  .lang-section.active { display: block; }
+  .lang-section.active { display: block; animation: fade 0.35s ease both; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  @media (max-width: 560px) {
+    .header { padding: 12px 16px; }
+    .brand-tag { display: none; }
+    .brand-name { font-size: 1.35rem; }
+    .back-link { padding: 9px 12px; font-size: 0.76rem; }
+  }
 </style>
 </head>
 <body>
 
 <header class="header">
   <a href="./" class="header-logo">
-    <img src="logosoleil.png" alt="Soleil">
-    <span>Soleil</span>
+    <svg viewBox="0 0 48 48" aria-hidden="true"><g stroke="#b8e6c9" stroke-width="2.4" stroke-linecap="round"><line x1="24" y1="6" x2="24" y2="11"/><line x1="12" y1="11" x2="15" y2="15"/><line x1="36" y1="11" x2="33" y2="15"/><line x1="5" y1="22" x2="10" y2="23"/><line x1="43" y1="22" x2="38" y2="23"/></g><path d="M13 30a11 11 0 0 1 22 0z" fill="#b8e6c9"/><line x1="4" y1="32" x2="44" y2="29" stroke="#b8e6c9" stroke-width="1.6"/><line x1="18" y1="37" x2="30" y2="36" stroke="#b8e6c9" stroke-width="1.6" opacity=".6"/></svg>
+    <span><span class="brand-name">Soleil</span><span class="brand-tag" id="brandTag">Zawsze tutaj dla Ciebie</span></span>
   </a>
   <a href="./" class="back-link">← Wróć do aplikacji</a>
 </header>
+<div class="horizon"></div>
 
 <div class="lang-switcher">
-  <button class="lang-pill active" onclick="showLang('pl')">🇵🇱 Polski</button>
-  <button class="lang-pill" onclick="showLang('en')">🇬🇧 English</button>
-  <button class="lang-pill" onclick="showLang('uk')">🇺🇦 Українська</button>
-  <button class="lang-pill" onclick="showLang('de')">🇩🇪 Deutsch</button>
-  <button class="lang-pill" onclick="showLang('es')">🇪🇸 Español</button>
+  <button class="lang-pill active" onclick="showLang('pl', this)">Polski</button>
+  <button class="lang-pill" onclick="showLang('en', this)">English</button>
+  <button class="lang-pill" onclick="showLang('uk', this)">Українська</button>
+  <button class="lang-pill" onclick="showLang('de', this)">Deutsch</button>
+  <button class="lang-pill" onclick="showLang('es', this)">Español</button>
 </div>
 
 <div class="container">
@@ -92,13 +111,13 @@
     </div>
 
     <div class="section">
-      <h2>👤 Administrator danych</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Administrator danych</h2>
       <p>Administratorem Twoich danych osobowych jest Adrian Małysa, osoba fizyczna prowadząca serwis Soleil, dostępny pod adresem soleil-sage.vercel.app.</p>
       <p>Kontakt: adrianmalysa49@gmail.com</p>
     </div>
 
     <div class="section">
-      <h2>📋 Jakie dane zbieramy</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17"/><path d="M9 4V2h6v2M8 10h8M8 14h8M8 18h5"/></svg>Jakie dane zbieramy</h2>
       <ul>
         <li><strong>Dane konta:</strong> adres e-mail, imię (opcjonalnie) — przy rejestracji przez Clerk</li>
         <li><strong>Historia rozmów:</strong> treść Twoich rozmów z Soleil — przechowywana w Supabase</li>
@@ -109,7 +128,7 @@
     </div>
 
     <div class="section">
-      <h2>🎯 Cel przetwarzania danych</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Cel przetwarzania danych</h2>
       <ul>
         <li>Świadczenie usług aplikacji Soleil</li>
         <li>Zapamiętywanie historii rozmów i nastrojów</li>
@@ -119,7 +138,7 @@
     </div>
 
     <div class="section">
-      <h2>🔒 Jak chronimy Twoje dane</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Jak chronimy Twoje dane</h2>
       <ul>
         <li>Rozmowy przechowywane w szyfrowanej bazie danych Supabase</li>
         <li>Logowanie przez Clerk — nie przechowujemy haseł</li>
@@ -129,13 +148,13 @@
     </div>
 
     <div class="section">
-      <h2>🤖 Sztuczna inteligencja</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Sztuczna inteligencja</h2>
       <p>Treść Twoich rozmów jest wysyłana do API Anthropic (Claude) w celu generowania odpowiedzi. Anthropic przetwarza dane zgodnie z własną polityką prywatności. Treści rozmów nie są używane do trenowania modeli AI.</p>
       <p><strong>Ważne:</strong> Soleil nie jest terapeutą ani narzędziem medycznym. W przypadku kryzysu psychicznego skontaktuj się z Telefonem Zaufania: 116 123.</p>
     </div>
 
     <div class="section">
-      <h2>📤 Udostępnianie danych</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 14v7h16v-7"/></svg>Udostępnianie danych</h2>
       <p>Nie sprzedajemy Twoich danych. Współpracujemy wyłącznie z:</p>
       <ul>
         <li><strong>Clerk</strong> — uwierzytelnianie użytkowników</li>
@@ -147,7 +166,7 @@
     </div>
 
     <div class="section">
-      <h2>⚖️ Twoje prawa (RODO)</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M4 7h16"/><path d="M4 7l-3 7h6zM20 7l-3 7h6z"/></svg>Twoje prawa (RODO)</h2>
       <ul>
         <li><strong>Dostęp</strong> — możesz poprosić o kopię swoich danych</li>
         <li><strong>Sprostowanie</strong> — możesz poprawić nieprawidłowe dane</li>
@@ -159,17 +178,17 @@
     </div>
 
     <div class="section">
-      <h2>🍪 Pliki cookie i localStorage</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="13" r="1"/><circle cx="10" cy="15" r="1"/></svg>Pliki cookie i localStorage</h2>
       <p>Używamy localStorage przeglądarki do zapamiętywania Twoich preferencji (wybrany język, data ostatniego nastroju). Nie używamy plików cookie do śledzenia ani reklam.</p>
     </div>
 
     <div class="section">
-      <h2>👶 Dzieci</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="3"/><path d="M12 10v6M8 13h8M9 21l3-5 3 5"/></svg>Dzieci</h2>
       <p>Soleil nie jest przeznaczony dla osób poniżej 14 roku życia. Jeśli masz mniej niż 14 lat, prosimy o nieużywanie aplikacji.</p>
     </div>
 
     <div class="section">
-      <h2>📝 Zmiany polityki</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>Zmiany polityki</h2>
       <p>O istotnych zmianach w polityce prywatności będziemy informować poprzez aplikację. Kontynuowanie korzystania z Soleil po zmianach oznacza ich akceptację.</p>
     </div>
 
@@ -190,13 +209,13 @@
     </div>
 
     <div class="section">
-      <h2>👤 Data Controller</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Data Controller</h2>
       <p>The data controller is Adrian Małysa, an individual operating the Soleil service, available at soleil-sage.vercel.app.</p>
       <p>Contact: adrianmalysa49@gmail.com</p>
     </div>
 
     <div class="section">
-      <h2>📋 What data we collect</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17"/><path d="M9 4V2h6v2M8 10h8M8 14h8M8 18h5"/></svg>What data we collect</h2>
       <ul>
         <li><strong>Account data:</strong> email address, name (optional) — upon registration via Clerk</li>
         <li><strong>Conversation history:</strong> content of your conversations with Soleil — stored in Supabase</li>
@@ -207,7 +226,7 @@
     </div>
 
     <div class="section">
-      <h2>🎯 Purpose of processing</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Purpose of processing</h2>
       <ul>
         <li>Providing Soleil application services</li>
         <li>Remembering conversation history and moods</li>
@@ -217,7 +236,7 @@
     </div>
 
     <div class="section">
-      <h2>🔒 How we protect your data</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>How we protect your data</h2>
       <ul>
         <li>Conversations stored in Supabase encrypted database</li>
         <li>Login via Clerk — we don't store passwords</li>
@@ -227,13 +246,13 @@
     </div>
 
     <div class="section">
-      <h2>🤖 Artificial Intelligence</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Artificial Intelligence</h2>
       <p>The content of your conversations is sent to Anthropic API (Claude) to generate responses. Anthropic processes data according to its own privacy policy. Conversation content is not used to train AI models.</p>
       <p><strong>Important:</strong> Soleil is not a therapist or medical tool. In case of mental health crisis, contact a crisis helpline.</p>
     </div>
 
     <div class="section">
-      <h2>📤 Data sharing</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 14v7h16v-7"/></svg>Data sharing</h2>
       <p>We do not sell your data. We work only with:</p>
       <ul>
         <li><strong>Clerk</strong> — user authentication</li>
@@ -245,7 +264,7 @@
     </div>
 
     <div class="section">
-      <h2>⚖️ Your rights (GDPR)</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M4 7h16"/><path d="M4 7l-3 7h6zM20 7l-3 7h6z"/></svg>Your rights (GDPR)</h2>
       <ul>
         <li><strong>Access</strong> — you can request a copy of your data</li>
         <li><strong>Rectification</strong> — you can correct inaccurate data</li>
@@ -257,17 +276,17 @@
     </div>
 
     <div class="section">
-      <h2>🍪 Cookies and localStorage</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="13" r="1"/><circle cx="10" cy="15" r="1"/></svg>Cookies and localStorage</h2>
       <p>We use browser localStorage to remember your preferences (selected language, last mood date). We do not use cookies for tracking or advertising.</p>
     </div>
 
     <div class="section">
-      <h2>👶 Children</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="3"/><path d="M12 10v6M8 13h8M9 21l3-5 3 5"/></svg>Children</h2>
       <p>Soleil is not intended for persons under 14 years of age. If you are under 14, please do not use the application.</p>
     </div>
 
     <div class="section">
-      <h2>📝 Policy changes</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>Policy changes</h2>
       <p>We will notify you of significant changes to this privacy policy through the application. Continued use of Soleil after changes implies acceptance.</p>
     </div>
 
@@ -288,13 +307,13 @@
     </div>
 
     <div class="section">
-      <h2>👤 Контролер даних</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Контролер даних</h2>
       <p>Контролером твоїх персональних даних є Adrian Małysa, фізична особа, що керує сервісом Soleil за адресою soleil-sage.vercel.app.</p>
       <p>Контакт: adrianmalysa49@gmail.com</p>
     </div>
 
     <div class="section">
-      <h2>📋 Які дані ми збираємо</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17"/><path d="M9 4V2h6v2M8 10h8M8 14h8M8 18h5"/></svg>Які дані ми збираємо</h2>
       <ul>
         <li><strong>Дані облікового запису:</strong> електронна пошта, ім'я (опційно) — при реєстрації через Clerk</li>
         <li><strong>Історія розмов:</strong> зміст твоїх розмов з Soleil — зберігається в Supabase</li>
@@ -305,7 +324,7 @@
     </div>
 
     <div class="section">
-      <h2>🔒 Як ми захищаємо твої дані</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Як ми захищаємо твої дані</h2>
       <ul>
         <li>Розмови зберігаються в зашифрованій базі даних Supabase</li>
         <li>Вхід через Clerk — ми не зберігаємо паролі</li>
@@ -315,13 +334,13 @@
     </div>
 
     <div class="section">
-      <h2>🤖 Штучний інтелект</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Штучний інтелект</h2>
       <p>Зміст твоїх розмов надсилається до API Anthropic (Claude) для генерації відповідей. Вміст розмов не використовується для навчання моделей AI.</p>
       <p><strong>Важливо:</strong> Soleil не є терапевтом або медичним інструментом.</p>
     </div>
 
     <div class="section">
-      <h2>⚖️ Твої права (GDPR)</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M4 7h16"/><path d="M4 7l-3 7h6zM20 7l-3 7h6z"/></svg>Твої права (GDPR)</h2>
       <ul>
         <li><strong>Доступ</strong> — ти можеш запросити копію своїх даних</li>
         <li><strong>Виправлення</strong> — ти можеш виправити неточні дані</li>
@@ -348,13 +367,13 @@
     </div>
 
     <div class="section">
-      <h2>👤 Verantwortlicher</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Verantwortlicher</h2>
       <p>Verantwortlicher für deine personenbezogenen Daten ist Adrian Małysa, eine Privatperson, die den Soleil-Dienst unter soleil-sage.vercel.app betreibt.</p>
       <p>Kontakt: adrianmalysa49@gmail.com</p>
     </div>
 
     <div class="section">
-      <h2>📋 Welche Daten wir erheben</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17"/><path d="M9 4V2h6v2M8 10h8M8 14h8M8 18h5"/></svg>Welche Daten wir erheben</h2>
       <ul>
         <li><strong>Kontodaten:</strong> E-Mail-Adresse, Name (optional) — bei Registrierung über Clerk</li>
         <li><strong>Gesprächsverlauf:</strong> Inhalt deiner Gespräche mit Soleil — gespeichert in Supabase</li>
@@ -365,7 +384,7 @@
     </div>
 
     <div class="section">
-      <h2>🔒 Wie wir deine Daten schützen</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Wie wir deine Daten schützen</h2>
       <ul>
         <li>Gespräche in verschlüsselter Supabase-Datenbank gespeichert</li>
         <li>Anmeldung über Clerk — wir speichern keine Passwörter</li>
@@ -375,13 +394,13 @@
     </div>
 
     <div class="section">
-      <h2>🤖 Künstliche Intelligenz</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Künstliche Intelligenz</h2>
       <p>Der Inhalt deiner Gespräche wird zur Antwortgenerierung an die Anthropic API (Claude) gesendet. Gesprächsinhalte werden nicht zum Training von KI-Modellen verwendet.</p>
       <p><strong>Wichtig:</strong> Soleil ist kein Therapeut oder medizinisches Werkzeug.</p>
     </div>
 
     <div class="section">
-      <h2>⚖️ Deine Rechte (DSGVO)</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M4 7h16"/><path d="M4 7l-3 7h6zM20 7l-3 7h6z"/></svg>Deine Rechte (DSGVO)</h2>
       <ul>
         <li><strong>Auskunft</strong> — du kannst eine Kopie deiner Daten anfordern</li>
         <li><strong>Berichtigung</strong> — du kannst unrichtige Daten korrigieren</li>
@@ -409,13 +428,13 @@
     </div>
 
     <div class="section">
-      <h2>👤 Responsable del tratamiento</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Responsable del tratamiento</h2>
       <p>El responsable de tus datos personales es Adrian Małysa, persona física que opera el servicio Soleil en soleil-sage.vercel.app.</p>
       <p>Contacto: adrianmalysa49@gmail.com</p>
     </div>
 
     <div class="section">
-      <h2>📋 Qué datos recopilamos</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17"/><path d="M9 4V2h6v2M8 10h8M8 14h8M8 18h5"/></svg>Qué datos recopilamos</h2>
       <ul>
         <li><strong>Datos de cuenta:</strong> dirección de correo, nombre (opcional) — al registrarse via Clerk</li>
         <li><strong>Historial de conversaciones:</strong> contenido de tus conversaciones con Soleil — almacenado en Supabase</li>
@@ -426,7 +445,7 @@
     </div>
 
     <div class="section">
-      <h2>🔒 Cómo protegemos tus datos</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Cómo protegemos tus datos</h2>
       <ul>
         <li>Conversaciones almacenadas en base de datos Supabase cifrada</li>
         <li>Inicio de sesión via Clerk — no almacenamos contraseñas</li>
@@ -436,13 +455,13 @@
     </div>
 
     <div class="section">
-      <h2>🤖 Inteligencia Artificial</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Inteligencia Artificial</h2>
       <p>El contenido de tus conversaciones se envía a la API de Anthropic (Claude) para generar respuestas. El contenido no se usa para entrenar modelos de IA.</p>
       <p><strong>Importante:</strong> Soleil no es un terapeuta ni una herramienta médica.</p>
     </div>
 
     <div class="section">
-      <h2>⚖️ Tus derechos (RGPD)</h2>
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M4 7h16"/><path d="M4 7l-3 7h6zM20 7l-3 7h6z"/></svg>Tus derechos (RGPD)</h2>
       <ul>
         <li><strong>Acceso</strong> — puedes solicitar una copia de tus datos</li>
         <li><strong>Rectificación</strong> — puedes corregir datos inexactos</li>
@@ -461,19 +480,30 @@
 
 </div>
 
+<div class="horizon"></div>
 <footer class="footer">
-  <p>© 2026 Soleil · <a href="./">Wróć do aplikacji</a></p>
+  <p id="footerNote">Soleil nie jest lekarzem ani terapeutą. W nagłej sytuacji dzwoń pod <a href="tel:112">112</a>, a w kryzysie psychicznym pod <a href="tel:800702222">800 70 2222</a> (całodobowo).</p>
+  <p class="copy">© 2026 Soleil</p>
 </footer>
 
 <script>
-function showLang(lang) {
+const PRIVACY_UI = {
+  pl: { back: '← Wróć do aplikacji', tag: 'Zawsze tutaj dla Ciebie', note: 'Soleil nie jest lekarzem ani terapeutą. W nagłej sytuacji dzwoń pod <a href="tel:112">112</a>, a w kryzysie psychicznym pod <a href="tel:800702222">800 70 2222</a> (całodobowo).' },
+  en: { back: '← Back to app', tag: 'Always here for you', note: 'Soleil is not a doctor or a therapist. In an emergency call <a href="tel:112">112</a>.' },
+  uk: { back: '← Назад до застосунку', tag: 'Завжди поруч із тобою', note: 'Soleil не є лікарем чи терапевтом. У надзвичайній ситуації телефонуй <a href="tel:112">112</a>.' },
+  de: { back: '← Zurück zur App', tag: 'Immer für dich da', note: 'Soleil ist weder Arzt noch Therapeut. Im Notfall wähle <a href="tel:112">112</a>.' },
+  es: { back: '← Volver a la app', tag: 'Siempre aquí para ti', note: 'Soleil no es médico ni terapeuta. En una emergencia llama al <a href="tel:112">112</a>.' }
+};
+function showLang(lang, btn) {
   document.querySelectorAll('.lang-section').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.lang-pill').forEach(el => el.classList.remove('active'));
   document.getElementById('lang-' + lang).classList.add('active');
-  event.target.classList.add('active');
-  // Zmień link wstecz
-  const backLinks = { pl: '← Wróć do aplikacji', en: '← Back to app', uk: '← Назад до застосунку', de: '← Zurück zur App', es: '← Volver a la app' };
-  document.querySelector('.back-link').textContent = backLinks[lang] || backLinks.pl;
+  if (btn) btn.classList.add('active');
+  const ui = PRIVACY_UI[lang] || PRIVACY_UI.pl;
+  document.querySelector('.back-link').textContent = ui.back;
+  document.getElementById('brandTag').textContent = ui.tag;
+  document.getElementById('footerNote').innerHTML = ui.note;
+  document.documentElement.lang = lang;
 }
 </script>
 </body>
