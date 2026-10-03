@@ -34,7 +34,9 @@ jobs:
           echo "${{ github.sha }}" > _site/version.txt
           cp -r pomysly _site/pomysly
 
-      # The interactive body map (Vite app in src/) lives at /cialo/.
+      # src/ is one Vite project with two apps (src/main.tsx): the interactive body map at /cialo/
+      # and, with VITE_APP=gdzie-boli, the "Gdzie boli?" symptom checker at /gdzie-boli/.
+      # Relative base, so every asset path is relative (tools/sprawdz.py rejects absolute ones).
       - uses: actions/setup-node@v7
         with:
           node-version: lts/*
@@ -48,6 +50,12 @@ jobs:
           # public by design: it ships in the page's JS anyway, and RLS protects the data. Not a secret.
           VITE_SUPABASE_URL: https://yoxnmbflqrppspjdmrks.supabase.co
           VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_xWLqoKLLjgaGuWd_WcbZKg_HUq87CU1
+      - run: npm run build -- --outDir _site/gdzie-boli --emptyOutDir
+        env:
+          BASE_PATH: ./
+          VITE_APP: gdzie-boli
+          VITE_COMMIT_SHA: ${{ github.sha }}
+          VITE_REPO_URL: ${{ github.server_url }}/${{ github.repository }}
 
       # Fallback for the ideas page when the visitor's IP hits GitHub's unauthenticated API limit.
       # Not fatal: a failed snapshot shouldn't block deploying the app.

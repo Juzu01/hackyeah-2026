@@ -1,0 +1,18 @@
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Native <details> dropdown in the header closes when focus leaves it. */
+summary {
+  list-style: none;
+}
+
+@media print {
+  body {
+    background: white;
+  }
+}
