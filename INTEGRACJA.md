@@ -1,6 +1,6 @@
 # Integracja: jak wysyłać zmiany
 
-Co około 15 minut bot (Claude) zbiera wszystko, co wysłaliście, scala w jedną aplikację na `main` i publikuje na https://juzu01.github.io/hackyeah-2026/. Nie trzeba nikomu przydzielać zadań ani pilnować konfliktów. Co weszło i co wymaga decyzji, bot zapisuje w [dzienniku integracji (#1)](https://github.com/Juzu01/hackyeah-2026/issues/1).
+Co około 5 minut bot (Claude) zbiera wszystko, co wysłaliście, scala w jedną aplikację na `main` i publikuje na https://juzu01.github.io/hackyeah-2026/. Nie trzeba nikomu przydzielać zadań ani pilnować konfliktów. Co weszło i co wymaga decyzji, bot zapisuje w [dzienniku integracji (#1)](https://github.com/Juzu01/hackyeah-2026/issues/1).
 
 ## Dla zespołu
 
