@@ -6,9 +6,9 @@
   "frame": "metres; +Y up with the soles at 0; +X = patient's left; +Z = anterior; skin bounding box centred on X and Z",
   "totals": {
     "parts": 106,
-    "triangles": 447866,
-    "vertices": 266918,
-    "fileBytes": 2471292
+    "triangles": 447864,
+    "vertices": 267229,
+    "fileBytes": 2472748
   },
   "parts": {
     "skin": {
@@ -617,23 +617,23 @@
     },
     "external-oblique-left": {
       "triangles": 2922,
-      "vertices": 1780,
+      "vertices": 1919,
       "bboxMin": [
-        0.00272,
-        0.82333,
-        -0.0578
+        0.03083,
+        0.83612,
+        -0.05701
       ],
       "bboxMax": [
-        0.13855,
-        1.24129,
-        0.12208
+        0.13836,
+        1.24093,
+        0.11183
       ],
       "centroid": [
-        0.08383,
-        1.04513,
-        0.06133
+        0.10852,
+        1.05459,
+        0.0399
       ],
-      "simplificationErrorMm": 1.12,
+      "simplificationErrorMm": 0.79,
       "sourcePrimitives": [
         {
           "id": "FMA13337",
@@ -650,27 +650,28 @@
           "via": "side prefix",
           "primitives": 1
         }
-      ]
+      ],
+      "note": "Fleshy belly only: the aponeurosis over the rectus abdominis is trimmed off at the rectus's lateral border."
     },
     "external-oblique-right": {
-      "triangles": 2922,
-      "vertices": 1745,
+      "triangles": 2920,
+      "vertices": 1917,
       "bboxMin": [
-        -0.13848,
-        0.82342,
-        -0.05752
+        -0.13869,
+        0.83616,
+        -0.05672
       ],
       "bboxMax": [
-        -0.00277,
-        1.24212,
-        0.12206
+        -0.03117,
+        1.24132,
+        0.11181
       ],
       "centroid": [
-        -0.08384,
-        1.04505,
-        0.06136
+        -0.10859,
+        1.0547,
+        0.03984
       ],
-      "simplificationErrorMm": 1.14,
+      "simplificationErrorMm": 0.84,
       "sourcePrimitives": [
         {
           "id": "FMA13336",
@@ -687,7 +688,8 @@
           "via": "side prefix",
           "primitives": 1
         }
-      ]
+      ],
+      "note": "Fleshy belly only: the aponeurosis over the rectus abdominis is trimmed off at the rectus's lateral border."
     },
     "biceps-brachii-left": {
       "triangles": 2922,
