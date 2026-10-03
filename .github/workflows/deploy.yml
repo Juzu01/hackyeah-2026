@@ -21,25 +21,17 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v7
-        with:
-          node-version: lts/*
-          cache: npm
-
-      - run: npm ci
-
-      - run: npm run build
-        env:
-          BASE_PATH: /${{ github.event.repository.name }}/
-          VITE_COMMIT_SHA: ${{ github.sha }}
-          VITE_REPO_URL: ${{ github.server_url }}/${{ github.repository }}
-
-      # SPA fallback: unknown paths (e.g. client-side routes on refresh) load the app instead of a 404.
-      - run: cp dist/index.html dist/404.html
+      # Soleil is plain static files, so nothing to build. Pages can't run its api/
+      # serverless functions (those need Vercel), so they're left out of the site.
+      - run: |
+          mkdir _site
+          cp -r soleil-main/. _site/
+          rm -rf _site/api
+          echo "${{ github.sha }}" > _site/version.txt
 
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: dist
+          path: _site
 
   deploy:
     needs: build

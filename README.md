@@ -1,22 +1,22 @@
 # HackYeah 2026 · Sport & Healthcare
 
-Prototyp na HackYeah 2026, kategoria Open Task – Sport & Healthcare.
+Soleil, prototyp na HackYeah 2026, kategoria Open Task – Sport & Healthcare.
 
 **Podgląd na żywo:** https://juzu01.github.io/hackyeah-2026/
 
 ## Uruchomienie lokalnie
 
-Wymagany Node.js 20.19+ lub 22.12+.
+Sam frontend:
 
 ```bash
-npm install
-npm run dev
+cd soleil-main
+python3 -m http.server 5173
 ```
 
-Aplikacja wstanie pod http://localhost:5173.
+Aplikacja wstanie pod http://localhost:5173. Czat, nastroje, zwierzak i płatności wymagają funkcji z `soleil-main/api/`, które działają na Vercelu (`vercel dev`) z ustawionymi zmiennymi `ANTHROPIC_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `STRIPE_*` i `VAPID_*`.
 
 ## Deploy
 
-Każdy push na `main` buduje aplikację i publikuje ją na GitHub Pages (`.github/workflows/deploy.yml`), zwykle w około minutę. W stopce strony widać skrót commita, z którego zbudowana jest aktualna wersja.
+Każdy push na `main` publikuje zawartość `soleil-main/` na GitHub Pages (`.github/workflows/deploy.yml`), zwykle w około minutę. Hash commita, z którego pochodzi aktualna wersja, jest pod [`/version.txt`](https://juzu01.github.io/hackyeah-2026/version.txt).
 
-Stack: Vite, React, TypeScript, Tailwind CSS.
+GitHub Pages serwuje tylko pliki statyczne, więc na Pages widać interfejs, ale funkcje z `api/` tam nie działają.
