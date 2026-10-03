@@ -13,7 +13,7 @@ Kod do bazy, gotowy do użycia też poza panelem:
 | plik | co robi |
 |---|---|
 | [`src/lib/supabase.ts`](../src/lib/supabase.ts) | klient Supabase i `ensureUser()` (anonimowe logowanie, raz na urządzenie) |
-| [`src/lib/painReports.ts`](../src/lib/painReports.ts) | `fetchPainTypes()`, `savePainReport()`, `fetchPainHistory(bodyPartId?)` |
+| [`src/lib/painReports.ts`](../src/lib/painReports.ts) | `fetchPainTypes()`, `savePainReport()`, `fetchPainHistory(bodyPartId?)`, do wykresów `fetchPainDaily()` i `fetchPainTrend()`, dane demo `seedDemoHistory()` / `clearDemoHistory()` |
 | [`src/lib/database.types.ts`](../src/lib/database.types.ts) | typy TS wygenerowane ze schematu (generujemy na nowo po każdej zmianie schematu) |
 
 Bez `.env.local` mapa działa normalnie, tylko panel pokazuje, że zapisywanie jest wyłączone.
@@ -22,7 +22,7 @@ Bez `.env.local` mapa działa normalnie, tylko panel pokazuje, że zapisywanie j
 
 | tabela | co trzyma |
 |---|---|
-| `pain_reports` | jedno zgłoszenie: `body_part_id`, `intensity` (1–10), `note`, `reported_at`, `user_id` |
+| `pain_reports` | jedno zgłoszenie: `body_part_id`, `intensity` (1–10), `note`, `reported_at`, `user_id`, `is_demo` |
 | `pain_report_types` | typy bólu zgłoszenia (może być kilka) |
 | `pain_types` | słownik 11 typów: `throbbing` (pulsujący), `stabbing`, `sharp`, `dull`, `aching`, `burning`, `pressing`, `radiating`, `tearing`, `cramping`, `tingling` |
 | `body_parts` | słownik 60 części z mapy ciała: `id` (np. `biceps-left`, `heart`, `kidney-right`), `info_key`, `name_pl`, `latin`, `system` (`muscle`/`organ`), `side` |
@@ -31,16 +31,33 @@ Bez `.env.local` mapa działa normalnie, tylko panel pokazuje, że zapisywanie j
 
 Zapis idzie przez funkcję `create_pain_report`, która w jednej transakcji tworzy zgłoszenie i jego typy.
 
-## Przykład (do wykresów i trendów)
+## Wykresy i trendy
+
+Baza liczy to sama, tylko dla zalogowanego użytkownika:
+
+- **widok `pain_daily`**: jeden wiersz na dzień (czas polski) i część ciała: `reports`, `avg_intensity`, `max_intensity`. Seria do wykresu „ból w czasie”.
+- **funkcja `pain_trend(p_days = 7)`**: ostatnie `p_days` dni kontra `p_days` dni wcześniej, dla każdej części ciała. `trend` to `up` / `down` (średnia zmieniła się o co najmniej 1 punkt), `flat`, `new` (boli dopiero ostatnio) albo `gone` (przestało boleć).
 
 ```ts
-import { fetchPainHistory, savePainReport } from './lib/painReports.ts'
+import { fetchPainDaily, fetchPainHistory, fetchPainTrend, savePainReport } from './lib/painReports.ts'
 
 await savePainReport({ bodyPartId: 'biceps-left', intensity: 7, painTypeIds: ['throbbing', 'radiating'] })
-const history = await fetchPainHistory()            // wszystkie zgłoszenia użytkownika, najnowsze pierwsze
-const knee = await fetchPainHistory('vastusMedialis-left')
+const history = await fetchPainHistory()                        // pojedyncze zgłoszenia, najnowsze pierwsze
+const series = await fetchPainDaily({ bodyPartId: 'vastusMedialis-left', days: 30 })
+// [{ day: '2026-09-04', avgIntensity: 8, maxIntensity: 8, reports: 1, bodyPartId: 'vastusMedialis-left' }, ...]
+const trends = await fetchPainTrend(7)
+// [{ namePl: 'Mięsień czworoboczny', trend: 'up', recentAvg: 6, previousAvg: 3.5, ... }, ...]
 ```
+
+## Dane demo na pokaz
+
+Nowy (anonimowy) użytkownik ma pustą historię, więc wykresy na prezentacji byłyby puste.
+
+- **https://juzu01.github.io/hackyeah-2026/cialo/?demo** wypełnia historię tej przeglądarki 26 zgłoszeniami z ostatnich 30 dni: kolano po bieganiu słabnie (`down`), kark od biurka narasta (`up`), skurcze łydki minęły (`gone`), goleń boli od niedawna (`new`). Ponowne wejście odświeża daty, nie dubluje danych.
+- **`/cialo/?demo=clear`** usuwa dane demo. Prawdziwe zgłoszenia zostają.
+
+Wiersze demo mają `is_demo = true`, więc w analizach na prawdziwych danych filtrujemy `is_demo = false`.
 
 ## Migracje
 
-Pliki w [`migrations/`](migrations/) są już wgrane do projektu. Zmiany schematu dodajemy jako **nowy** plik migracji, bez edytowania starych.
+Pliki w [`migrations/`](migrations/) są już wgrane do projektu, a ich numery zgadzają się z historią migracji w Supabase (Supabase CLI nie będzie ich wgrywać drugi raz). Zmiany schematu dodajemy jako **nowy** plik migracji, bez edytowania starych.

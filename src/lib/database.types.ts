@@ -82,6 +82,7 @@ export type Database = {
           created_at: string
           id: string
           intensity: number
+          is_demo: boolean
           note: string | null
           reported_at: string
           user_id: string
@@ -91,6 +92,7 @@ export type Database = {
           created_at?: string
           id?: string
           intensity: number
+          is_demo?: boolean
           note?: string | null
           reported_at?: string
           user_id?: string
@@ -100,6 +102,7 @@ export type Database = {
           created_at?: string
           id?: string
           intensity?: number
+          is_demo?: boolean
           note?: string | null
           reported_at?: string
           user_id?: string
@@ -126,9 +129,20 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      pain_daily: {
+        Row: {
+          avg_intensity: number | null
+          body_part_id: string | null
+          day: string | null
+          max_intensity: number | null
+          reports: number | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      clear_demo_history: { Args: never; Returns: number }
       create_pain_report: {
         Args: {
           p_body_part_id: string
@@ -139,6 +153,19 @@ export type Database = {
         }
         Returns: string
       }
+      pain_trend: {
+        Args: { p_days?: number }
+        Returns: {
+          body_part_id: string
+          name_pl: string
+          previous_avg: number
+          previous_reports: number
+          recent_avg: number
+          recent_reports: number
+          trend: string
+        }[]
+      }
+      seed_demo_history: { Args: never; Returns: number }
     }
     Enums: {
       [_ in never]: never
