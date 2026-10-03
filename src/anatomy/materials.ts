@@ -17,7 +17,7 @@ import {
 } from 'three'
 import type { CatalogEntry } from './content.ts'
 
-export const ACCENT = new Color('#F3D488')
+export const ACCENT = new Color('#A6E8C4')
 export const GLASS = new Color('#CFE9DD')
 export const HAIR = new Color('#C4E8DA')
 

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Soleil's app icon: the mark (a sun on a rising horizon) in pastel green on black, full bleed;
+       the mark stays inside the maskable safe zone. Render: sh tools/soleil/icons.sh -->
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="46%" r="50%">
+      <stop offset="0" stop-color="#A6E8C4" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#A6E8C4" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="above"><polygon points="0,0 32,0 32,13.4 0,19.8"/></clipPath>
+  </defs>
+  <rect width="512" height="512" fill="#000"/>
+  <rect width="512" height="512" fill="url(#glow)"/>
+  <g transform="translate(112 104) scale(9)" color="#A6E8C4">
+    <circle cx="16" cy="15.5" r="7.5" fill="currentColor" clip-path="url(#above)"/>
+    <path d="M2 21.5 30 15.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+    <path d="M6 26 22 22.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" opacity=".55"/>
+    <path d="M16 2.5v3M6.8 6.3l2 2M25.2 6.3l-2 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+  </g>
+</svg>

@@ -118,7 +118,7 @@ body {
 /* ── Depth gauge (the layer switch) ────────────────────────────────── */
 
 /* A probe going into the body: top is the surface, each step down is deeper.
-   The lamp-lit bead slides down the line to the layer in view. */
+   The lit bead slides down the line to the layer in view. */
 .layers {
   --step: 42px;
   position: fixed;
@@ -160,7 +160,7 @@ body {
   background: var(--accent);
   box-shadow:
     0 0 0 5px var(--accent-soft),
-    0 0 18px rgb(243 212 136 / 0.45);
+    0 0 18px rgb(166 232 196 / 0.45);
   transform: translateY(calc(var(--i, 0) * var(--step)));
   transition: transform 320ms var(--ease-out);
   pointer-events: none;
@@ -181,7 +181,7 @@ body {
   white-space: nowrap;
   transition: color 200ms var(--ease-out);
 }
-/* Each layer's resting bead, under the sliding lamp. */
+/* Each layer's resting bead, under the sliding light. */
 .layers-btn::before {
   content: '';
   position: absolute;
@@ -236,7 +236,7 @@ body {
   white-space: nowrap;
 }
 
-/* The voice button is a stethoscope's chest piece: a lamp-lit diaphragm in a fine rim.
+/* The voice button is a stethoscope's chest piece: a lit green diaphragm in a fine rim.
    It's the one bold thing on screen, and the easiest way in for anyone. */
 .voice {
   --size: 70px;
@@ -248,13 +248,13 @@ body {
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 34%, #fcecc2 0%, var(--accent) 46%, #d6b25e 100%);
+  background: radial-gradient(circle at 50% 34%, #dcf8e9 0%, var(--accent) 46%, #79c79d 100%);
   color: var(--accent-ink);
   box-shadow:
-    inset 0 0 0 6px rgb(255 248 228 / 0.22),
-    inset 0 -3px 8px rgb(120 86 20 / 0.35),
+    inset 0 0 0 6px rgb(240 255 247 / 0.22),
+    inset 0 -3px 8px rgb(20 80 50 / 0.35),
     0 10px 26px rgb(0 0 0 / 0.45),
-    0 0 44px rgb(243 212 136 / 0.22);
+    0 0 44px rgb(166 232 196 / 0.22);
   transition: transform 180ms var(--ease-out);
 }
 /* The rim. */
@@ -262,7 +262,7 @@ body {
   content: '';
   position: absolute;
   inset: -8px;
-  border: 1.5px solid rgb(243 212 136 / 0.42);
+  border: 1.5px solid rgb(166 232 196 / 0.42);
   border-radius: 50%;
 }
 .voice:active {
@@ -385,7 +385,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: 29;
-  background: rgb(3 12 10 / 0.6);
+  background: rgb(0 0 0 / 0.62);
   animation: fade-in 240ms var(--ease-out);
 }
 .sheet-scrim.is-closing {
@@ -555,7 +555,7 @@ body {
   border: 0;
   background: var(--accent);
   color: var(--accent-ink);
-  box-shadow: inset 0 1px 0 rgb(255 250 235 / 0.5);
+  box-shadow: inset 0 1px 0 rgb(240 255 247 / 0.5);
 }
 .btn-secondary {
   border: 1px solid var(--hair-strong);
@@ -1050,7 +1050,7 @@ body {
 .onboard-art-voice {
   width: 48px;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 34%, #fcecc2 0%, var(--accent) 46%, #d6b25e 100%);
+  background: radial-gradient(circle at 50% 34%, #dcf8e9 0%, var(--accent) 46%, #79c79d 100%);
   color: var(--accent-ink);
 }
 .onboard-art-pain {
@@ -1127,7 +1127,7 @@ body {
 /* ── Conversation ──────────────────────────────────────────────────── */
 
 /* A transcript rather than bubbles: your words are quoted, the atlas's answers
-   sit on a lamp-coloured margin rule, like notes in a chart. */
+   sit on a green margin rule, like notes in a chart. */
 .talk-head {
   position: sticky;
   top: 0;
@@ -1156,7 +1156,7 @@ body {
   margin: 0;
 }
 .talk-tools .icon-btn[aria-pressed='true'] {
-  border-color: rgb(243 212 136 / 0.4);
+  border-color: rgb(166 232 196 / 0.4);
   color: var(--accent);
 }
 

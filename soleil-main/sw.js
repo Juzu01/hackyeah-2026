@@ -4,7 +4,7 @@ self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', (e) => { e.waitUntil(self.clients.claim()); });
 
 self.addEventListener('push', (event) => {
-  let data = { title: 'Soleil ☀️', body: 'Hej, jestem tu dla Ciebie!', url: './' };
+  let data = { title: 'Soleil', body: 'Hej, jestem tu dla Ciebie!', url: './' };
   if (event.data) { try { data = JSON.parse(event.data.text()); } catch {} }
   event.waitUntil(
     self.registration.showNotification(data.title, {

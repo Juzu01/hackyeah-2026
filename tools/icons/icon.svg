@@ -2,8 +2,8 @@
   <!-- The regular icon: rounded square, transparent corners. icon-maskable.svg is the full-bleed variant. -->
   <defs>
     <radialGradient id="bg" cx="50%" cy="42%" r="72%">
-      <stop offset="0" stop-color="#0F2925"/>
-      <stop offset="1" stop-color="#061412"/>
+      <stop offset="0" stop-color="#08140F"/>
+      <stop offset="1" stop-color="#000000"/>
     </radialGradient>
     <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#CFE9DD" stop-opacity="0.95"/>
@@ -17,6 +17,6 @@
     <path d="M242 160 C242 171 235 177 223 179 L199 185 C183 189 175 199 174 213 L164 305 C163 318 177 322 179 309 L193 224 C195 252 197 274 199 298 C201 318 203 331 205 343 L213 419 C214 432 230 432 231 419 L249 334 C250 327 253 325 256 325 C259 325 262 327 263 334 L281 419 C282 432 298 432 299 419 L307 343 C309 331 311 318 313 298 C315 274 317 252 319 224 L333 309 C335 322 349 318 348 305 L338 213 C337 199 329 189 313 185 L289 179 C277 177 270 171 270 160 Z"/>
   </g>
   <!-- The selection marker, on the heart. -->
-  <circle cx="270" cy="234" r="24" fill="#F3D488" fill-opacity="0.16" stroke="#F3D488" stroke-width="5"/>
-  <circle cx="270" cy="234" r="9" fill="#F3D488"/>
+  <circle cx="270" cy="234" r="24" fill="#A6E8C4" fill-opacity="0.16" stroke="#A6E8C4" stroke-width="5"/>
+  <circle cx="270" cy="234" r="9" fill="#A6E8C4"/>
 </svg>

@@ -6,6 +6,8 @@ The art direction and engineering contract for `src/anatomy/` and its app chrome
 
 *Revision 4 (its own look, and a voice):* the near-black-and-mint look read like every other dark app. The atlas is now an **operating theatre**: the body lies on surgical green (red's complement, which is why scrubs are green, so tissue reads cleanly) under a warm lamp, the one accent. Names are set like an anatomical plate (Newsreader, Latin in italic); everything people read and tap is Atkinson Hyperlegible, a face drawn for low vision. The layer switch became a depth gauge at the top left, and the bottom belongs to a voice button shaped like a stethoscope's chest piece: say what hurts and the body shows it (§6).
 
+*Revision 5 (one product with Soleil):* the atlas now lives in a tab of Soleil, the app around it, and shares its palette: black, a faint green light around the body, and a light pastel green `#A6E8C4` as the one accent (no gold). Everything else in revision 4 stands.
+
 ## 1. Principles
 
 1. **Clinical restraint.** Near-black canvas and cool neutral hairlines. Colour appears only where it means something: tissue colour on the active layer, plus one accent for "selected / active".
@@ -25,16 +27,16 @@ The art direction and engineering contract for `src/anatomy/` and its app chrome
 
 | token | value | use |
 |---|---|---|
-| `--bg-0` | `#061412` | page edge (surgical green, deep) |
-| `--bg-1` | `#0F2925` | canvas centre, under a faint warm lamp pool |
-| `--ink-1` | `#EEF5F1` | primary text |
-| `--ink-2` | `#A8C1B9` | secondary text |
-| `--ink-3` | `#6F8D85` | tertiary |
+| `--bg-0` | `#000000` | page edge |
+| `--bg-1` | `#08140F` | canvas centre, under a faint green glow |
+| `--ink-1` | `#EEF6F1` | primary text |
+| `--ink-2` | `#9FB3A8` | secondary text |
+| `--ink-3` | `#62756B` | tertiary |
 | `--hair` | `rgba(196,232,218,0.13)` | hairlines, borders |
-| `--accent` | `#F3D488` | the lamp: selection, active layer, primary action, voice button |
+| `--accent` | `#A6E8C4` | pastel green: selection, active layer, primary action, voice button |
 | `--glass` | `#CFE9DD` | skin shell rim |
-| `--surface-solid` | `#0F2A26` | sheets |
-| `--surface` | `rgba(16,44,39,0.86)` | floating buttons (blurred) |
+| `--surface-solid` | `#08110D` | sheets |
+| `--surface` | `rgba(8,17,13,0.86)` | floating buttons (blurred) |
 
 Tissue palette (desaturated atlas colours, linear-workflow friendly; tune by eye under the final lighting):
 muscle `#B66F66` · bone `#D3C8B4` (revision 3: the whole palette softened towards a calm anatomical model; see `materials.ts`) · brain `#C9A2A5` · heart `#A9323A` · aorta `#B23B40` · lungs `#C98E8B` · trachea `#B8C3C8` · esophagus `#B97870` · thyroid `#9C3E4E` · liver `#6D2923` · gallbladder `#4D6B46` · stomach `#C28E78` · spleen `#5D2D40` · pancreas `#CDA87A` · kidneys `#7E342F` · small intestine `#C9928A` · large intestine `#A97965` · urinary bladder `#C8AF7A`.

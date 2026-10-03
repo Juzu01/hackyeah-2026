@@ -1,25 +1,38 @@
 {
-  "name": "Soleil — Twój przyjaciel",
+  "name": "Soleil",
   "short_name": "Soleil",
-  "description": "Twój przyjaciel AI — zawsze tu, by poprawić Ci nastrój",
+  "description": "Rozmowa o tym, co czujesz, dziennik nastroju, atlas ciała 3D i sprawdzanie objawów.",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#fdf6ee",
-  "theme_color": "#e8845a",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "lang": "pl",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
+  ],
+  "id": "./",
+  "scope": "./",
+  "categories": [
+    "health",
+    "lifestyle",
+    "medical"
   ]
 }

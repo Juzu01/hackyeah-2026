@@ -42,7 +42,7 @@
     ['116111', '116 111', 'telefon zaufania dla dzieci i młodzieży'],
   ];
   const HELP_HTML = '<span class="hy-help">' + HELP_LINES.map(([tel, label, what]) =>
-    `<a class="hy-tel-row" href="tel:${tel}"><strong>📞 ${label}</strong><span>${what}</span></a>`).join('') + '</span>';
+    `<a class="hy-tel-row" href="tel:${tel}"><strong>${label}</strong><span>${what}</span></a>`).join('') + '</span>';
 
   // ---- 2. Urgent body symptoms: point to 112, no diagnosis ----
   const RED_FLAG = [
@@ -116,7 +116,7 @@
       ['ask', 'Słyszę, że jest ci przykro. Emocje po kłótni potrzebują czasu, żeby opaść — nie musisz wszystkiego rozwiązywać dziś. Czego teraz najbardziej potrzebujesz: rozmowy, przeprosin czy po prostu spokoju?'],
     ],
     stress: [
-      ['breath', 'Stres potrafi ścisnąć całe ciało. Zróbmy razem coś małego: 4 sekundy wdechu nosem, 6 sekund spokojnego wydechu ustami — pięć razy. Spróbujesz teraz? 🌿'],
+      ['breath', 'Stres potrafi ścisnąć całe ciało. Zróbmy razem coś małego: 4 sekundy wdechu nosem, 6 sekund spokojnego wydechu ustami — pięć razy. Spróbujesz teraz?'],
       ['ask', 'Brzmi, jakby było tego naprawdę dużo naraz. Co teraz najbardziej cię stresuje — jedna konkretna rzecz czy wszystko po trochu?'],
       ['write', 'To zrozumiałe, że czujesz napięcie. Pomaga wypisać wszystko, co siedzi w głowie, i przy każdej rzeczy zaznaczyć: „mam na to wpływ” albo „nie mam”. Chcesz spróbować?'],
       ['ask', 'Słyszę cię. Twoje ciało robi, co może, żeby cię chronić — tylko czasem przesadza. Kiedy ostatnio udało ci się choć chwilę odpocząć?'],
@@ -152,7 +152,7 @@
       ['ask', 'To w porządku, że nie każdy dzień jest pełen energii. Jaka jedna mała rzecz byłaby dziś wystarczająca?'],
     ],
     joy: [
-      ['ask', 'Jak miło to czytać! 😊 Opowiedz mi więcej — co sprawiło, że tak się czujesz?'],
+      ['ask', 'Jak miło to czytać! Opowiedz mi więcej — co sprawiło, że tak się czujesz?'],
       ['ask', 'To wspaniała wiadomość! Warto zatrzymać się przy takich chwilach. Z kim chcesz się tym podzielić?'],
       ['write', 'Cieszę się razem z tobą! Mały pomysł: zapisz dziś trzy zdania o tym, co było dobre. W gorszy dzień miło będzie do nich wrócić.'],
       ['ask', 'Super! Takie chwile dodają sił na później. Co dziś najbardziej ci pomogło?'],
@@ -169,11 +169,11 @@
     ],
     thanks: [
       ['ask', 'Cieszę się, że ta rozmowa choć trochę pomogła. Jak się czujesz teraz?'],
-      ['end', 'Nie ma za co. Dbaj o siebie — i wpadaj, kiedy tylko zechcesz. 💛'],
+      ['end', 'Nie ma za co. Dbaj o siebie — i wpadaj, kiedy tylko zechcesz.'],
       ['end', 'Dziękuję za twoje zaufanie. Pamiętaj, że możesz tu wrócić o każdej porze.'],
     ],
     bye: [
-      ['end', 'Trzymaj się ciepło. Jestem tu, kiedy tylko zechcesz wrócić. 🌸'],
+      ['end', 'Trzymaj się ciepło. Jestem tu, kiedy tylko zechcesz wrócić.'],
       ['end', 'Do usłyszenia! Zadbaj dziś o siebie choć jedną małą rzeczą.'],
       ['end', 'Odpocznij. Gdyby coś się działo, wiesz, gdzie mnie szukać.'],
     ],
@@ -213,7 +213,7 @@
 
   // Guided small steps, after "tak" in reply to an offer
   const STEP = {
-    breath: 'Dobrze. Usiądź wygodnie. Wdech nosem — raz, dwa, trzy, cztery. Wydech ustami, powoli, przez sześć sekund. Powtórz to pięć razy, bez pośpiechu. Napisz mi potem, jak się czujesz. 🌿',
+    breath: 'Dobrze. Usiądź wygodnie. Wdech nosem — raz, dwa, trzy, cztery. Wydech ustami, powoli, przez sześć sekund. Powtórz to pięć razy, bez pośpiechu. Napisz mi potem, jak się czujesz.',
     walk: 'Super. Wystarczy 10 minut, w dowolnym tempie — bez celu, po prostu ruch i powietrze. Gdy wrócisz, napisz mi, czy coś się zmieniło.',
     write: 'Świetnie. Weź kartkę albo notatki w telefonie i napisz trzy zdania: co się dzieje, co czujesz i czego potrzebujesz. Nie musisz mi ich pokazywać — chyba że zechcesz.',
     text: 'To dobry pomysł. Nie musi to być nic wielkiego — krótkie „hej, co u ciebie?” wystarczy. Kontakt z kimś bliskim naprawdę robi różnicę. Daj znać, jak poszło.',

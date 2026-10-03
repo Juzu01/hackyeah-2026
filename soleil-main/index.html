@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Soleil — Twój przyjaciel</title>
 <meta name="application-name" content="Soleil">
-<meta name="description" content="Twój przyjaciel AI — zawsze tu, by poprawić Ci nastrój">
+<meta name="description" content="Soleil: rozmowa o tym, co czujesz, dziennik nastroju, atlas ciała 3D i sprawdzanie objawów.">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Soleil">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#e8845a">
+<meta name="theme-color" content="#000000">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <!-- HackYeah: the site runs only on GitHub Pages, which has no server (api/*). There, fetch('api/...')
@@ -28,7 +28,6 @@
   };
 })();
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <script
   async
   crossorigin="anonymous"
@@ -36,562 +35,155 @@
   src="https://awaited-mink-45.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
   type="text/javascript"
 ></script>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #fdf6ee; --accent: #e8845a; --accent2: #f2b48a;
-    --accent3: #7dbdb5; --text: #3a2e28; --muted: #9e8e83;
-    --shadow: rgba(180, 120, 80, 0.13);
-    --premium: #8b5cf6; --premium2: #a78bfa;
-  }
-  html, body { height: 100%; height: -webkit-fill-available; font-family: 'Lato', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(242,180,138,0.28) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 85% 85%, rgba(125,189,181,0.2) 0%, transparent 60%);
-    z-index: 0; pointer-events: none; animation: bgShift 12s ease-in-out infinite alternate;
-  }
-  @keyframes bgShift { 0% { opacity: 1; } 100% { opacity: 0.6; } }
-  .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-  .particle { position: absolute; border-radius: 50%; opacity: 0.18; animation: floatUp linear infinite; }
-  @keyframes floatUp { 0% { transform: translateY(110vh); opacity: 0; } 10% { opacity: 0.18; } 90% { opacity: 0.18; } 100% { transform: translateY(-10vh); opacity: 0; } }
-  .app { position: relative; z-index: 1; height: 100vh; height: -webkit-fill-available; display: flex; flex-direction: column; max-width: 760px; margin: 0 auto; padding: 0 14px; padding-bottom: env(safe-area-inset-bottom); }
-  .inapp-banner { flex-shrink: 0; background: #3a2e28; color: #fff; font-size: 0.76rem; line-height: 1.4; padding: 10px 12px; border-radius: 10px; margin-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-  .inapp-banner button { flex-shrink: 0; border: none; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 6px 12px; border-radius: 8px; cursor: pointer; }
-
-  /* HEADER */
-  header { padding: 12px 0 10px; display: flex; align-items: center; gap: 8px; flex-shrink: 0; min-height: 60px; }
-  .back-btn { width: 32px; height: 32px; border-radius: 50%; background: white; border: 1.5px solid rgba(232,132,90,0.25); display: none; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 8px var(--shadow); transition: all 0.22s ease; color: var(--accent); font-size: 1rem; }
-  .back-btn:hover { background: var(--accent); color: white; }
-  .back-btn.visible { display: flex; }
-  .logo-circle { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .header-text { flex: 1; min-width: 0; }
-  .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--accent); line-height: 1; white-space: nowrap; }
-  .header-text p { font-size: 0.7rem; color: var(--muted); font-weight: 300; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .status-dot { width: 6px; height: 6px; background: #5dbf8a; border-radius: 50%; display: inline-block; margin-right: 3px; animation: blink 2s ease-in-out infinite; }
-  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-  .header-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-
-  #streakBadge { display: none; background: linear-gradient(135deg,#ff6b35,#f7c59f); color: white; padding: 4px 9px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; box-shadow: 0 2px 8px rgba(255,107,53,0.3); white-space: nowrap; }
-
-  /* Push notification button */
-  .push-btn { width: 32px; height: 32px; border-radius: 50%; background: white; border: 1.5px solid rgba(232,132,90,0.25); display: none; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 8px var(--shadow); transition: all 0.22s ease; font-size: 0.9rem; }
-  .push-btn:hover { background: var(--accent); }
-  .push-btn.visible { display: flex; }
-  .push-btn.active { background: rgba(232,132,90,0.1); border-color: var(--accent); }
-
-  /* Premium badge */
-  #premiumBadge { display: none; background: linear-gradient(135deg, var(--premium), var(--premium2)); color: white; padding: 4px 9px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; box-shadow: 0 2px 8px rgba(139,92,246,0.3); white-space: nowrap; }
-
-  /* Language selector */
-  .lang-btn { width: 32px; height: 32px; border-radius: 50%; background: white; border: 1.5px solid rgba(232,132,90,0.25); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 8px var(--shadow); transition: all 0.22s ease; font-size: 0.85rem; }
-  .lang-btn:hover { background: rgba(232,132,90,0.08); transform: scale(1.05); }
-  .lang-popup { background: var(--bg); border-radius: 20px; padding: 24px 20px; width: 92%; max-width: 340px; box-shadow: 0 20px 60px rgba(58,46,40,0.2); animation: slideUp 0.3s ease; position: relative; }
-  .lang-popup h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--accent); margin-bottom: 16px; }
-  .lang-options { display: flex; flex-direction: column; gap: 8px; }
-  .lang-option { display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: white; border-radius: 12px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; box-shadow: 0 2px 8px var(--shadow); }
-  .lang-option:hover { border-color: var(--accent2); transform: translateY(-1px); }
-  .lang-option.active { border-color: var(--accent); background: rgba(232,132,90,0.06); }
-  .lang-flag { font-size: 1.4rem; }
-  .lang-name { font-size: 0.88rem; font-weight: 700; color: var(--text); }
-  .lang-native { font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
-
-  .header-icon-btn { width: 32px; height: 32px; border-radius: 50%; background: white; border: 1.5px solid rgba(232,132,90,0.25); display: none; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 8px var(--shadow); transition: all 0.22s ease; font-size: 0.9rem; color: var(--accent); }
-  .header-icon-btn:hover { background: var(--accent); color: white; }
-  .header-icon-btn.visible { display: flex; }
-  .week-btn { background: white; border: 1.5px solid rgba(232,132,90,0.25); color: var(--accent); padding: 0; width: 32px; height: 32px; border-radius: 50%; font-size: 0.9rem; font-family: 'Lato', sans-serif; cursor: pointer; transition: all 0.22s ease; box-shadow: 0 2px 8px var(--shadow); display: none; align-items: center; justify-content: center; flex-shrink: 0; }
-  .week-btn:hover { background: var(--accent); color: white; }
-  .week-btn.visible { display: flex; }
-  .auth-btn { background: white; border: 1.5px solid rgba(232,132,90,0.25); color: var(--accent); padding: 6px 12px; border-radius: 20px; font-size: 0.78rem; font-family: 'Lato', sans-serif; cursor: pointer; transition: all 0.22s ease; box-shadow: 0 2px 8px var(--shadow); white-space: nowrap; flex-shrink: 0; }
-  .auth-btn:hover { background: var(--accent); color: white; }
-  .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--accent3), #5dbfb7); display: none; align-items: center; justify-content: center; font-size: 0.75rem; color: white; font-weight: 700; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 8px var(--shadow); transition: all 0.22s ease; }
-  .user-avatar:hover { transform: scale(1.08); }
-  .user-avatar.visible { display: flex; }
-  .user-avatar.premium { background: linear-gradient(135deg, var(--premium), var(--premium2)); box-shadow: 0 2px 8px rgba(139,92,246,0.3); }
-
-  /* OVERLAYE */
-  .overlay { display: none; position: fixed; inset: 0; background: rgba(58,46,40,0.5); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center; animation: fadeIn 0.2s ease; }
-  .overlay.visible { display: flex; }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  .popup { background: var(--bg); border-radius: 20px; padding: 24px 20px; width: 92%; max-width: 420px; box-shadow: 0 20px 60px rgba(58,46,40,0.2); animation: slideUp 0.3s ease; position: relative; max-height: 90vh; overflow-y: auto; }
-  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  .popup-close { position: absolute; top: 12px; right: 12px; background: none; border: none; font-size: 1.1rem; color: var(--muted); cursor: pointer; padding: 4px; }
-  .popup h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--accent); margin-bottom: 6px; }
-  .popup p { color: var(--muted); font-size: 0.84rem; margin-bottom: 18px; line-height: 1.5; }
-  .popup-btn { width: 100%; padding: 11px; border-radius: 12px; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; border: none; font-family: 'Lato', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.22s ease; box-shadow: 0 4px 16px rgba(232,132,90,0.3); }
-  .popup-btn:hover { transform: translateY(-1px); }
-  .popup-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-  .popup-btn.premium-btn { background: linear-gradient(135deg, var(--premium), var(--premium2)); box-shadow: 0 4px 16px rgba(139,92,246,0.3); }
-
-  /* PREMIUM POPUP */
-  .premium-popup { background: var(--bg); border-radius: 20px; padding: 28px 22px; width: 92%; max-width: 420px; box-shadow: 0 20px 60px rgba(58,46,40,0.2); animation: slideUp 0.3s ease; position: relative; }
-  .premium-header { text-align: center; margin-bottom: 22px; }
-  .premium-icon { font-size: 2.5rem; display: block; margin-bottom: 8px; }
-  .premium-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; background: linear-gradient(135deg, var(--premium), var(--premium2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .premium-header p { color: var(--muted); font-size: 0.84rem; margin-top: 4px; }
-  .premium-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
-  .premium-feature { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: white; border-radius: 12px; border: 1px solid rgba(139,92,246,0.12); }
-  .feature-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
-  .feature-text { flex: 1; }
-  .feature-title { font-size: 0.86rem; font-weight: 700; color: var(--text); }
-  .feature-desc { font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
-  .premium-price { text-align: center; margin-bottom: 18px; }
-  .price-amount { font-size: 2rem; font-weight: 700; color: var(--premium); font-family: 'Playfair Display', serif; }
-  .price-period { font-size: 0.82rem; color: var(--muted); }
-  .premium-divider { height: 1px; background: rgba(139,92,246,0.12); margin-bottom: 18px; }
-
-  /* Rozmowy */
-  .conversations-popup { background: var(--bg); border-radius: 20px; padding: 20px; width: 92%; max-width: 460px; max-height: 85vh; box-shadow: 0 20px 60px rgba(58,46,40,0.2); animation: slideUp 0.3s ease; position: relative; display: flex; flex-direction: column; }
-  .conversations-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding-right: 24px; }
-  .conversations-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--accent); }
-  .new-chat-btn { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; border: none; padding: 7px 12px; border-radius: 10px; font-size: 0.78rem; font-family: 'Lato', sans-serif; cursor: pointer; font-weight: 700; transition: all 0.22s; white-space: nowrap; }
-  .new-chat-btn:hover { transform: translateY(-1px); }
-  .conversations-list { overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 8px; padding-right: 2px; }
-  .conversations-list::-webkit-scrollbar { width: 4px; }
-  .conversations-list::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 4px; }
-  .conv-item { display: flex; align-items: center; gap: 10px; padding: 11px 12px; background: white; border-radius: 12px; cursor: pointer; transition: all 0.2s; border: 1.5px solid transparent; box-shadow: 0 2px 8px var(--shadow); }
-  .conv-item:hover { border-color: var(--accent2); transform: translateY(-1px); }
-  .conv-item.active { border-color: var(--accent); background: rgba(232,132,90,0.06); }
-  .conv-icon { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
-  .conv-info { flex: 1; min-width: 0; }
-  .conv-title { font-size: 0.86rem; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .conv-date { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
-  .conv-delete { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.9rem; padding: 6px; border-radius: 6px; transition: all 0.15s; flex-shrink: 0; }
-  .conv-delete:hover { color: #e05a5a; }
-  .conv-empty { text-align: center; padding: 28px 0; color: var(--muted); font-size: 0.86rem; }
-
-  /* Mood */
-  .mood-picker { display: flex; justify-content: space-between; margin-bottom: 18px; gap: 6px; }
-  .mood-option { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 2px; border-radius: 12px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s ease; background: white; }
-  .mood-option:hover { border-color: var(--accent2); transform: translateY(-2px); }
-  .mood-option.selected { border-color: var(--accent); background: rgba(232,132,90,0.08); }
-  .mood-emoji { font-size: 1.5rem; }
-  .mood-label { font-size: 0.6rem; color: var(--muted); text-align: center; }
-  .mood-note { width: 100%; border: 1.5px solid rgba(232,132,90,0.2); border-radius: 10px; padding: 9px 12px; font-family: 'Lato', sans-serif; font-size: 0.86rem; color: var(--text); background: white; resize: none; outline: none; margin-bottom: 14px; }
-  .mood-note:focus { border-color: var(--accent2); }
-
-  /* Summary */
-  .summary-content { background: white; border-radius: 12px; padding: 14px; margin-bottom: 14px; }
-  .summary-stats { display: flex; gap: 10px; margin-bottom: 12px; }
-  .stat-box { flex: 1; background: rgba(232,132,90,0.06); border-radius: 8px; padding: 8px; text-align: center; }
-  .stat-value { font-size: 1.3rem; font-weight: 700; color: var(--accent); }
-  .stat-label { font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
-  .summary-text { font-size: 0.86rem; color: var(--text); line-height: 1.6; }
-  .summary-actions { display: flex; gap: 8px; }
-  .summary-actions .popup-btn { flex: 1; }
-  .share-btn { background: linear-gradient(135deg, var(--accent3), #5dbfb7); box-shadow: 0 4px 16px rgba(125,189,181,0.3); display: flex; align-items: center; justify-content: center; gap: 6px; }
-  .referral-link-box { display: flex; gap: 8px; align-items: center; background: rgba(232,132,90,0.06); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; }
-  .referral-link-text { flex: 1; font-size: 0.78rem; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; }
-  .referral-copy-btn { border: none; background: var(--accent); color: #fff; font-size: 0.75rem; font-weight: 600; padding: 6px 12px; border-radius: 8px; cursor: pointer; flex-shrink: 0; }
-  .referral-stats { display: flex; gap: 10px; margin-bottom: 4px; }
-
-  /* User menu */
-  .user-menu { display: none; position: fixed; top: 64px; right: 14px; background: white; border-radius: 14px; padding: 8px; box-shadow: 0 8px 32px var(--shadow); border: 1px solid rgba(232,132,90,0.12); z-index: 200; min-width: 200px; animation: slideUp 0.2s ease; }
-  .user-menu.visible { display: block; }
-  .user-menu-header { padding: 8px 10px 10px; border-bottom: 1px solid rgba(232,132,90,0.1); margin-bottom: 4px; }
-  .user-menu-name { font-weight: 700; font-size: 0.86rem; color: var(--text); }
-  .user-menu-email { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
-  .user-menu-btn { width: 100%; text-align: left; background: none; border: none; padding: 8px 10px; border-radius: 8px; font-size: 0.82rem; color: var(--text); cursor: pointer; font-family: 'Lato', sans-serif; transition: background 0.15s; }
-  .user-menu-btn:hover { background: rgba(232,132,90,0.08); }
-  .user-menu-btn.danger { color: #e05a5a; }
-  .user-menu-btn.premium-menu { color: var(--premium); font-weight: 700; }
-
-  /* Chat */
-  .chat-window { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding: 8px 2px 14px; scroll-behavior: smooth; }
-  .chat-window::-webkit-scrollbar { width: 4px; }
-  .chat-window::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 4px; }
-  .welcome { text-align: center; padding: 20px 16px; animation: fadeSlideIn 0.7s ease both; }
-  .welcome .sun { font-size: 2.6rem; display: block; margin-bottom: 10px; animation: spinSlow 20s linear infinite; }
-  @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  .welcome h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--accent); margin-bottom: 8px; }
-  .welcome p { color: var(--muted); font-size: 0.86rem; font-weight: 300; line-height: 1.6; max-width: 380px; margin: 0 auto; }
-  .suggestions { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; margin-top: 16px; }
-  .suggestion-btn { background: white; border: 1.5px solid var(--accent2); color: var(--accent); padding: 6px 12px; border-radius: 18px; font-size: 0.8rem; font-family: 'Lato', sans-serif; cursor: pointer; transition: all 0.22s ease; box-shadow: 0 2px 8px var(--shadow); }
-  .suggestion-btn:hover { background: var(--accent); color: white; border-color: var(--accent); transform: translateY(-2px); }
-  .message-row { display: flex; gap: 8px; animation: fadeSlideIn 0.4s ease both; }
-  @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-  .message-row.user { flex-direction: row-reverse; }
-  .avatar { width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; margin-top: 2px; }
-  .avatar.ai { background: linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow: 0 2px 8px rgba(232,132,90,0.3); }
-  .avatar.user { background: linear-gradient(135deg, var(--accent3), #5dbfb7); }
-  .bubble { max-width: 78%; padding: 11px 14px; border-radius: 16px; font-size: 0.9rem; line-height: 1.6; box-shadow: 0 2px 10px var(--shadow); }
-  .bubble.ai { background: white; border-bottom-left-radius: 4px; color: var(--text); border: 1px solid rgba(232,132,90,0.12); }
-  .bubble.user { background: linear-gradient(135deg, var(--accent), #e8a07a); border-bottom-right-radius: 4px; color: white; }
-  .typing-indicator { display: flex; gap: 5px; padding: 12px 14px; align-items: center; }
-  .typing-dot { width: 6px; height: 6px; background: var(--accent2); border-radius: 50%; animation: typingBounce 1.2s ease-in-out infinite; }
-  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes typingBounce { 0%, 80%, 100% { transform: translateY(0); opacity: 0.5; } 40% { transform: translateY(-6px); opacity: 1; } }
-
-  /* Limit banner */
-  .limit-banner { background: linear-gradient(135deg, var(--premium), var(--premium2)); color: white; padding: 12px 16px; border-radius: 14px; margin: 8px 0; text-align: center; }
-  .limit-banner p { font-size: 0.84rem; margin-bottom: 10px; line-height: 1.4; }
-  .limit-banner button { background: white; color: var(--premium); border: none; padding: 8px 18px; border-radius: 10px; font-family: 'Lato', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
-  .limit-banner button:hover { transform: scale(1.03); }
-
-  .input-area { padding: 10px 0 16px; flex-shrink: 0; }
-  .input-wrapper { display: flex; align-items: flex-end; gap: 8px; background: white; border-radius: 24px; padding: 9px 9px 9px 18px; box-shadow: 0 4px 24px var(--shadow); border: 1.5px solid rgba(232,132,90,0.18); transition: border-color 0.2s; }
-  .input-wrapper:focus-within { border-color: var(--accent2); }
-  #userInput { flex: 1; border: none; outline: none; font-family: 'Lato', sans-serif; font-size: 0.9rem; color: var(--text); background: transparent; resize: none; min-height: 22px; max-height: 100px; line-height: 1.5; }
-  #userInput::placeholder { color: var(--muted); font-weight: 300; }
-  .send-btn { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.22s ease; box-shadow: 0 2px 10px rgba(232,132,90,0.35); }
-  .send-btn:hover { transform: scale(1.08); }
-  .send-btn:active { transform: scale(0.95); }
-  .send-btn svg { width: 16px; height: 16px; fill: white; }
-  .mood-bar { display: flex; justify-content: center; gap: 14px; padding: 5px 0 0; font-size: 0.95rem; opacity: 0.5; }
-
-  /* Daily quote */
-  .daily-card { background: white; border-radius: 14px; padding: 12px 16px; margin-top: 14px; border: 1px solid rgba(232,132,90,0.12); box-shadow: 0 2px 10px var(--shadow); animation: fadeSlideIn 0.8s ease both; animation-delay: 0.3s; display: flex; align-items: flex-start; gap: 10px; }
-  .daily-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; opacity: 0.7; }
-  .daily-inner { flex: 1; min-width: 0; }
-  .daily-label { font-size: 0.62rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
-  .daily-quote { font-family: 'Lato', sans-serif; font-size: 0.82rem; color: var(--text); line-height: 1.55; font-style: italic; margin-bottom: 3px; }
-  .daily-author { font-size: 0.68rem; color: var(--muted); font-weight: 600; }
-  .quick-actions { display: flex; gap: 10px; margin-top: 14px; }
-  .quick-action-card { flex: 1; background: white; border-radius: 14px; padding: 14px 12px; border: 1px solid rgba(232,132,90,0.12); box-shadow: 0 2px 10px var(--shadow); cursor: pointer; text-align: center; transition: transform 0.18s ease, box-shadow 0.18s ease; animation: fadeSlideIn 0.8s ease both; animation-delay: 0.4s; }
-  .quick-action-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--shadow); }
-  .quick-action-icon { font-size: 1.5rem; margin-bottom: 6px; }
-  .quick-action-title { font-size: 0.78rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
-  .quick-action-desc { font-size: 0.68rem; color: var(--muted); line-height: 1.3; }
-
-  /* Zwierzak nastroju */
-  .pet-card { background: white; border-radius: 20px; padding: 20px 16px 16px; margin-top: 14px; text-align: center; box-shadow: 0 4px 16px var(--shadow); animation: fadeSlideIn 0.8s ease both; animation-delay: 0.4s; position: relative; }
-  .pet-unlock-toast { position: absolute; top: -14px; left: 50%; transform: translateX(-50%) translateY(-10px); background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-size: 0.8rem; font-weight: 700; padding: 8px 16px; border-radius: 20px; box-shadow: 0 6px 16px rgba(232,132,90,0.4); white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease; z-index: 5; }
-  .pet-unlock-toast.visible { opacity: 1; transform: translateX(-50%) translateY(-26px); }
-  .pet-stage { position: relative; display: inline-block; cursor: pointer; user-select: none; padding: 10px; }
-  .pet-emoji { line-height: 1; transition: transform 0.15s ease; filter: drop-shadow(0 6px 10px rgba(58,46,40,0.12)); }
-  .pet-emoji img { width: 84px; height: 84px; display: block; }
-  .pet-stage:active .pet-emoji { transform: scale(0.9); }
-  .pet-stage.bounce .pet-emoji { animation: petBounce 0.4s ease; }
-  .pet-accessory { position: absolute; top: -4px; left: 50%; transform: translateX(-50%); font-size: 1.8rem; z-index: 2; pointer-events: none; }
-  .pet-name { font-size: 0.78rem; color: var(--muted); margin-top: 4px; font-weight: 600; }
-  .pet-wardrobe { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
-  .pet-item { width: 46px; height: 46px; border-radius: 12px; background: rgba(232,132,90,0.06); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer; border: 2px solid transparent; transition: transform 0.15s ease, border-color 0.15s ease; position: relative; }
-  .pet-item:hover { transform: translateY(-2px); }
-  .pet-item.equipped { border-color: var(--accent); background: rgba(232,132,90,0.14); }
-  .pet-item.locked { opacity: 0.4; cursor: default; }
-  .pet-item.locked:hover { transform: none; }
-  .pet-item-lock { position: absolute; bottom: -4px; right: -4px; font-size: 0.7rem; }
-  .wardrobe-open-btn { margin-top: 14px; border: none; background: rgba(232,132,90,0.08); color: var(--accent); font-size: 0.78rem; font-weight: 700; padding: 8px 16px; border-radius: 20px; cursor: pointer; }
-  .wardrobe-open-btn:hover { background: rgba(232,132,90,0.16); }
-  .wardrobe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 8px; max-height: 50vh; overflow-y: auto; padding: 4px 2px; }
-  .wardrobe-grid .pet-item { width: auto; aspect-ratio: 1; }
-
-  /* Ruch i ciało */
-  .body-card { background: white; border-radius: 20px; padding: 18px 16px 16px; margin-top: 14px; box-shadow: 0 4px 16px var(--shadow); text-align: left; animation: fadeSlideIn 0.8s ease both; animation-delay: 0.3s; }
-  .body-card-title { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--accent); font-size: 1rem; margin-bottom: 2px; text-align: center; }
-  .body-card-sub { font-size: 0.78rem; color: var(--muted); line-height: 1.4; margin-bottom: 12px; text-align: center; }
-  .body-card-row { display: flex; gap: 14px; align-items: center; }
-  .body-silhouette-wrap { flex-shrink: 0; display: flex; justify-content: center; background: rgba(232,132,90,0.05); border-radius: 16px; padding: 10px; }
-  .body-silhouette { width: 110px; height: auto; }
-  .body-zone { fill: var(--accent2); opacity: 0.55; cursor: pointer; transition: opacity 0.15s ease, fill 0.15s ease; stroke: white; stroke-width: 2; }
-  .body-zone:hover { opacity: 0.8; }
-  .body-zone.selected { fill: var(--accent); opacity: 1; }
-  .body-detail { flex: 1; min-height: 120px; display: flex; align-items: center; }
-  .body-detail-placeholder { width: 100%; text-align: center; color: var(--muted); font-size: 0.85rem; padding: 20px 10px; }
-  .body-detail-card { width: 100%; animation: fadeSlideIn 0.4s ease both; }
-  .body-detail-title { font-weight: 700; color: var(--accent); font-size: 0.95rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-  .body-detail-link { font-size: 0.82rem; color: var(--text); line-height: 1.5; margin-bottom: 10px; }
-  .body-detail-exercise { font-size: 0.82rem; color: var(--text); line-height: 1.5; background: rgba(125,189,181,0.1); border-radius: 10px; padding: 10px 12px; font-weight: 600; }
-  @media (max-width: 520px) {
-    .body-card-row { flex-direction: column; }
-    .body-detail { width: 100%; min-height: 0; }
-  }
-  @keyframes petBounce { 0% { transform: scale(1); } 30% { transform: scale(1.15) rotate(-4deg); } 60% { transform: scale(0.95) rotate(3deg); } 100% { transform: scale(1); } }
-  .heart-particle { position: absolute; font-size: 1.2rem; pointer-events: none; animation: heartFloat 0.9s ease-out forwards; z-index: 3; }
-  @keyframes heartFloat { 0% { transform: translate(-50%, 0) scale(0.6); opacity: 1; } 100% { transform: translate(-50%, -70px) scale(1.1); opacity: 0; } }
-
-  /* Wybór zwierzaka */
-  .pet-select-row { display: flex; gap: 14px; }
-  .pet-select-card { flex: 1; background: rgba(232,132,90,0.06); border: 2px solid transparent; border-radius: 16px; padding: 20px 10px; text-align: center; cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease; }
-  .pet-select-card:hover { transform: translateY(-3px); border-color: var(--accent); }
-  .pet-select-emoji { margin-bottom: 8px; display: flex; justify-content: center; }
-  .pet-select-emoji img { width: 64px; height: 64px; }
-  .pet-select-label { font-weight: 700; color: var(--text); font-size: 0.9rem; }
-  .daily-loading { text-align: center; padding: 8px 0; color: var(--muted); font-size: 0.78rem; }
-  #clerk-sign-in { min-height: 200px; }
-  /* Okno logowania Clerka dopasowane do popupu: bez karty w karcie i bez przewijania, także na telefonie */
-  #clerk-sign-in { width: 100%; }
-  #clerk-sign-in p { margin-bottom: 0; }
-  #clerk-sign-in .cl-card { width: 100%; max-width: 100%; margin: 0; padding: 4px 0 0; gap: 18px; background: transparent; border: none; border-radius: 0; box-shadow: none; }
-  #clerk-sign-in .cl-headerTitle { font-size: 1.1rem; }
-  #clerk-sign-in .cl-main { gap: 16px; }
-  #clerk-sign-in .cl-card > div:last-child:not(.cl-footer) { position: static; transform: none; align-self: center; align-items: center; gap: 4px; background: none; padding: 0; color: var(--muted); opacity: 0.6; }
-  * { scrollbar-width: thin; scrollbar-color: var(--accent2) transparent; }
-
-  /* === Mobile comfort (HackYeah) ===
-     Phone readability and comfort: AA contrast (≥ 4.5:1), body text ≥ 16px, tap targets ≥ 44px,
-     safe areas, calmer background. Plus the 3D atlas / "Gdzie boli?" cards and the offline chat styles.
-     Overrides only: the rules above stay unchanged. */
-  :root {
-    --muted: #6e5d52;        /* was #9e8e83: 2.9:1 on cream, now 5.9:1 */
-    --ink: #a84a22;          /* coral for text: 5.3:1 on cream (--accent #e8845a is 2.5:1) */
-    --accent-deep: #b4532a;  /* fill under white text: 5.0:1 */
-    --cta: linear-gradient(135deg, #a84a22, #b4532a);
-  }
-  * { scrollbar-color: rgba(58,46,40,0.22) transparent; }
-  @supports (height: 100dvh) { html, body, .app { height: 100dvh; } }
-  .app { padding-left: max(14px, env(safe-area-inset-left)); padding-right: max(14px, env(safe-area-inset-right)); }
-  .particles { opacity: 0.6; }
-
-  /* Header */
-  header { padding-top: max(10px, env(safe-area-inset-top)); gap: 6px; }
-  .header-text h1 { color: var(--ink); font-size: 1.4rem; }
-  .header-text p { font-size: 0.8125rem; font-weight: 400; color: var(--muted); }
-  .back-btn, .header-icon-btn, .week-btn, .push-btn, .lang-btn, .user-avatar { width: 44px; height: 44px; font-size: 1.05rem; }
-  .back-btn, .header-icon-btn { color: var(--ink); }
-  .back-btn.visible + .logo-circle { display: none; }
-  .back-btn:hover, .header-icon-btn:hover, .week-btn:hover { background: var(--accent-deep); }
-  .header-icon-btn.hy-labeled { width: auto; padding: 0 14px 0 11px; gap: 6px; border-radius: 22px; font: 700 0.9375rem/1 'Lato', sans-serif; }
-  .auth-btn { min-height: 44px; padding: 0 14px; font-size: 0.9375rem; font-weight: 700; color: var(--ink); background: transparent; border-color: rgba(168,74,34,0.3); box-shadow: none; }
-  .auth-btn:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
-  .inapp-banner { font-size: 0.875rem; }
-  .inapp-banner button { min-height: 44px; font-size: 0.875rem; background: var(--accent-deep); }
-
-  /* User menu and popups */
-  .user-menu { top: calc(max(10px, env(safe-area-inset-top)) + 56px); right: max(14px, env(safe-area-inset-right)); width: max-content; min-width: 240px; max-width: calc(100vw - 28px); padding: 6px; }
-  .user-menu-name { font-size: 1rem; }
-  .user-menu-email { font-size: 0.875rem; }
-  .user-menu-btn { min-height: 48px; padding: 10px 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
-  .popup-close { width: 44px; height: 44px; top: 6px; right: 6px; font-size: 1.2rem; border-radius: 50%; }
-  .popup h2, .lang-popup h2, .conversations-header h2 { color: var(--ink); }
-  .popup p { font-size: 0.9375rem; }
-  .popup-btn, .new-chat-btn { min-height: 48px; font-size: 1rem; background: var(--cta); }
-  .mood-label { font-size: 0.75rem; }
-  .conv-delete { min-width: 44px; min-height: 44px; }
-
-  /* Chat */
-  .chat-window { overscroll-behavior: contain; scrollbar-color: rgba(58,46,40,0.18) transparent; }
-  .chat-window::-webkit-scrollbar-thumb { background: rgba(58,46,40,0.18); }
-  @media (max-width: 600px), (pointer: coarse) {
-    .chat-window { scrollbar-width: none; }
-    .chat-window::-webkit-scrollbar { display: none; }
-  }
-  .bubble { font-size: 1.0625rem; line-height: 1.55; max-width: 84%; overflow-wrap: anywhere; }
-  .bubble.user { background: var(--cta); }
-  .bubble.ai a { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
-  .hy-help { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
-  .bubble.ai a.hy-tel-row { display: flex; flex-direction: column; gap: 2px; min-height: 44px; padding: 10px 14px; border: 1.5px solid #efc2a6; border-radius: 14px; background: #fff6ef; color: var(--text); font-weight: 400; text-decoration: none; }
-  .hy-tel-row strong { font-size: 1.125rem; color: var(--ink); }
-  .hy-tel-row span { font-size: 0.9375rem; line-height: 1.35; color: var(--muted); }
-  .hy-reminder { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; font-size: 0.875rem; color: var(--muted); }
-  .bubble.ai a.hy-tel { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 104px; padding: 0 14px; border-radius: 22px; background: var(--accent-deep); color: #fff; text-decoration: none; font-weight: 700; white-space: nowrap; }
-  .hy-reminder a.hy-tel { min-width: 0; }
-
-  /* Welcome: what Soleil is and what to do */
-  .welcome { padding: 10px 4px 20px; }
-  .welcome .sun { font-size: 2.2rem; margin-bottom: 6px; }
-  .welcome h2 { color: var(--ink); font-size: 1.6rem; line-height: 1.2; }
-  .welcome p { color: #4d3f37; font-size: 1.0625rem; font-weight: 400; line-height: 1.55; max-width: 420px; }
-  .hy-free-note { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 6px 14px; border-radius: 999px; background: #e3f0ec; color: #2c5953; font-size: 0.9375rem; font-weight: 700; }
-  .hy-free-note::before { content: '✓'; }
-  .hy-free-note[hidden] { display: none; }
-  .suggestions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
-  .suggestion-btn { min-height: 56px; padding: 8px 12px; border-radius: 16px; font-size: 1rem; font-weight: 700; line-height: 1.25; color: var(--ink); border-color: #ebb08f; }
-  .suggestion-btn:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
-
-  /* Quote of the day */
-  .daily-card { margin-top: 18px; padding: 14px 16px; text-align: left; }
-  .daily-label { font-size: 0.75rem; color: var(--ink); }
-  .daily-quote { font-family: 'Playfair Display', serif; font-size: 1.125rem; line-height: 1.45; color: var(--text); }
-  .daily-author { font-size: 0.875rem; color: var(--muted); margin-top: 4px; }
-  .daily-loading { text-align: left; font-size: 0.9375rem; color: var(--muted); }
-
-  /* 3D atlas card and "Gdzie boli?" */
-  .hy-atlas-card { margin-top: 16px; background: #fff; border-radius: 22px; overflow: hidden; box-shadow: 0 4px 18px var(--shadow); cursor: pointer; text-align: left; animation: fadeSlideIn 0.8s ease both; animation-delay: 0.35s; }
-  .hy-atlas-visual { position: relative; height: 210px; background: #0b1f1c; overflow: hidden; }
-  .hy-atlas-visual img { position: absolute; top: 0; right: 0; height: 100%; width: auto; }
-  .hy-atlas-head { position: relative; max-width: 64%; padding: 22px 18px; }
-  .hy-atlas-fact { position: absolute; left: 18px; bottom: 16px; max-width: 52%; font-size: 0.875rem; line-height: 1.35; color: #c9d6d2; }
-  .hy-eyebrow { display: block; margin-bottom: 8px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #f3d488; }
-  .hy-atlas-head h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 1.6rem; line-height: 1.15; color: #fdf6ee; }
-  .hy-atlas-body { padding: 14px 18px 18px; }
-  .hy-atlas-body p { margin-bottom: 14px; font-size: 1rem; line-height: 1.5; color: var(--text); }
-  .hy-btn { width: 100%; min-height: 52px; display: flex; align-items: center; justify-content: center; gap: 8px; border: none; border-radius: 16px; background: var(--cta); color: #fff; font: 700 1.0625rem 'Lato', sans-serif; cursor: pointer; box-shadow: 0 4px 14px rgba(168,74,34,0.28); }
-  .hy-atlas-card:hover .hy-btn { filter: brightness(1.06); }
-  .hy-mini-card { width: 100%; min-height: 72px; margin-top: 12px; display: flex; align-items: center; gap: 12px; padding: 14px 12px 14px 14px; background: #fff; border: 1px solid rgba(232,132,90,0.14); border-radius: 18px; box-shadow: 0 2px 10px var(--shadow); text-align: left; cursor: pointer; font-family: 'Lato', sans-serif; color: var(--text); animation: fadeSlideIn 0.8s ease both; animation-delay: 0.4s; }
-  .hy-mini-icon { flex-shrink: 0; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 14px; background: #e3f0ec; font-size: 1.5rem; }
-  .hy-mini-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-  .hy-mini-text strong { font-size: 1.0625rem; }
-  .hy-mini-text span { font-size: 1rem; line-height: 1.4; color: var(--muted); }
-  .hy-mini-arrow { flex-shrink: 0; font-size: 1.8rem; line-height: 1; color: var(--ink); }
-
-  /* Short exercise: chips instead of the figure */
-  .body-card { padding: 18px 16px; }
-  .body-card-title { font-size: 1.15rem; color: var(--ink); }
-  .body-card-sub { margin-bottom: 14px; font-size: 1rem; color: var(--muted); }
-  .body-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .body-chips .body-zone { opacity: 1; min-height: 48px; padding: 6px 10px; line-height: 1.2; border: 1.5px solid #efc2a6; border-radius: 16px; background: #fff8f2; color: var(--text); font: 700 1rem 'Lato', sans-serif; cursor: pointer; transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
-  .body-chips .body-zone:hover { opacity: 1; border-color: var(--accent-deep); }
-  .body-chips .body-zone.selected { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
-  .body-card .body-detail { display: block; min-height: 0; margin-top: 14px; }
-  .body-card .body-detail-placeholder { padding: 4px 0 0; font-size: 1rem; color: var(--muted); }
-  .body-detail-title { font-size: 1.0625rem; color: var(--ink); }
-  .body-detail-link, .body-detail-exercise { font-size: 1rem; }
-
-  /* Input bar: 16px+ text (no zoom on iPhone), 44px buttons, emoji row and footer in one line */
-  .input-area { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; column-gap: 10px; padding: 8px 0 4px; }
-  .input-wrapper { flex: 1 0 100%; align-items: center; padding: 6px 6px 6px 18px; border-color: rgba(168,74,34,0.22); }
-  #userInput { font-size: 1.0625rem; line-height: 1.45; min-height: 26px; }
-  #userInput::placeholder { color: var(--muted); font-weight: 400; opacity: 1; }
-  .send-btn { width: 44px; height: 44px; background: var(--cta); box-shadow: 0 2px 10px rgba(168,74,34,0.3); }
-  .send-btn svg { width: 18px; height: 18px; }
-  .mood-bar { padding: 0; gap: 8px; font-size: 0.8rem; opacity: 0.55; }
-  .hy-footer a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; font-size: 0.875rem; color: var(--muted); text-decoration: underline; text-decoration-color: rgba(110,93,82,0.45); text-underline-offset: 3px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .particles { display: none; }
-    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-  }
-</style>
+<link rel="stylesheet" href="soleil.css">
 <link rel="stylesheet" href="voice.css">
 </head>
 <body>
 
-<div class="particles" id="particles"></div>
+<!-- Icons and the mood faces, drawn for Soleil: sharp mitred lines on a slight slant, the same angle as the tab bar. -->
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="above-horizon"><polygon points="0,0 32,0 32,13.4 0,19.8"/></clipPath>
+    <symbol id="mark" viewBox="0 0 32 32">
+      <circle cx="16" cy="15.5" r="7.5" fill="currentColor" clip-path="url(#above-horizon)"/>
+      <path d="M2 21.5 30 15.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+      <path d="M6 26 22 22.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" opacity=".55"/>
+      <path d="M16 2.5v3M6.8 6.3l2 2M25.2 6.3l-2 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+    </symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4.5 4.5h17L19 15.5h-9l-5 4 1.2-4H2z"/><path d="M8 10h8"/></symbol>
+    <symbol id="i-mood" viewBox="0 0 24 24"><path d="M2 17.5 22 13.5"/><path d="M7 16.5A5.1 5.1 0 0 1 17 14.5"/><path d="M5 21 15 19M12 4v2.5M5.4 7.6l1.7 1.7M18.6 7.6l-1.7 1.7"/></symbol>
+    <symbol id="i-body" viewBox="0 0 24 24"><path d="M12 2.5 14 5l-2 2.5L10 5z"/><path d="M7 9.5h10l-2 5.5H9z"/><path d="M7 9.5 4.5 15.5M17 9.5l2.5 6M10 15l-1 6.5M14 15l1 6.5"/></symbol>
+    <symbol id="i-symptom" viewBox="0 0 24 24"><path d="M12 2.5 21.5 12 12 21.5 2.5 12z"/><path d="M12 8v8M8 12h8"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><path d="M4 8.5 20 5.5M4 13.5l16-3M4 18.5l10-1.9"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M3 20.5 21.5 12 3 3.5 6.5 12z"/><path d="M6.5 12H13"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M4.5 3h5L11 8l-2.6 1.8a12 12 0 0 0 5.8 5.8L16 13l5 1.5v5L18.5 21A17.5 17.5 0 0 1 3 5.5z"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 4 7 12l8 8"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m5.5 5.5 13 13M18.5 5.5l-13 13"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 4 8 8-8 8"/></symbol>
+    <symbol id="i-lang" viewBox="0 0 24 24"><path d="M8.5 3h7L21 8.5v7L15.5 21h-7L3 15.5v-7z"/><path d="M12 3 9 12l3 9 3-9zM3 12h18"/></symbol>
+    <symbol id="i-voice" viewBox="0 0 24 24"><path d="M2 12h3l2-6 3 12 3-14 3 16 2-8h4"/></symbol>
+    <symbol id="i-install" viewBox="0 0 24 24"><path d="M9 3H20v18H4V8z"/><path d="M12 8v8M8.5 12.5 12 16l3.5-3.5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5 20 5.5V12l-8 9.5L4 12V5.5z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-login" viewBox="0 0 24 24"><path d="M10 4h10v16H10"/><path d="M3 12h11M10.5 8.5 14 12l-3.5 3.5"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 4H4v16h10"/><path d="M10 12h11M17.5 8.5 21 12l-3.5 3.5"/></symbol>
+    <symbol id="i-work" viewBox="0 0 24 24"><path d="M3 8h18v11.5H3zM9 8V4.5h6V8M3 13h18"/></symbol>
+    <symbol id="i-heartbreak" viewBox="0 0 24 24"><path d="M12 20.5 3.5 12V6.5L6.5 4h3L12 6.5 14.5 4h3l3 2.5V12z"/><path d="m12 6.5-1.5 3.5 3 2.5-2 4"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2 13h5l2-4 2.5 9 3-13 2 8h5.5"/></symbol>
+    <symbol id="i-sad" viewBox="0 0 24 24"><path d="M8 2.5h8L21.5 8v8L16 21.5H8L2.5 16V8z"/><path d="M8.5 9.5h2M13.5 9.5h2M8 16.5l4-2 4 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12.5 5 5L20 6.5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 22 20.5H2z"/><path d="M12 9.5v5M12 17v.5"/></symbol>
+    <!-- Mood faces: an octagon, eyes and a mouth that bends at one sharp point. -->
+    <symbol id="face-1" viewBox="0 0 40 40"><path d="M13 3h14l10 10v14L27 37H13L3 27V13z"/><path d="M11.5 14.5 17 17.5M28.5 14.5 23 17.5M13 29.5l7-5.5 7 5.5"/></symbol>
+    <symbol id="face-2" viewBox="0 0 40 40"><path d="M13 3h14l10 10v14L27 37H13L3 27V13z"/><path d="M13 16.5h4M23 16.5h4M14 28l6-3 6 3"/></symbol>
+    <symbol id="face-3" viewBox="0 0 40 40"><path d="M13 3h14l10 10v14L27 37H13L3 27V13z"/><path d="M13 16.5h4M23 16.5h4M14 26.5h12"/></symbol>
+    <symbol id="face-4" viewBox="0 0 40 40"><path d="M13 3h14l10 10v14L27 37H13L3 27V13z"/><path d="M13 16.5h4M23 16.5h4M14 25l6 3.2 6-3.2"/></symbol>
+    <symbol id="face-5" viewBox="0 0 40 40"><path d="M13 3h14l10 10v14L27 37H13L3 27V13z"/><path d="m12 18 3-3.5 3 3.5M22 18l3-3.5 3 3.5"/><path d="M12 23.5h16l-8 7z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<div class="particles" id="particles" hidden></div>
 
 <!-- Popup logowania -->
 <div class="overlay" id="authOverlay">
   <div class="popup">
     <button class="popup-close" onclick="closeAuth()">✕</button>
-    <h2>Witaj w Soleil ☀️</h2>
+    <h2>Witaj w Soleil</h2>
     <p>Zaloguj się żeby Soleil pamiętał Twoje rozmowy i nastroje.</p>
     <div id="clerk-sign-in"></div>
   </div>
 </div>
 
-<!-- Popup nastroju -->
-<div class="overlay" id="moodOverlay">
-  <div class="popup">
-    <button class="popup-close" onclick="closeMood()">✕</button>
-    <h2>Jak się dziś czujesz? 🌸</h2>
-    <p>Codzienne śledzenie nastroju pomaga Soleil lepiej Cię zrozumieć.</p>
-    <div class="mood-picker">
-      <div class="mood-option" onclick="selectMood(1)"><span class="mood-emoji">😔</span><span class="mood-label">Bardzo źle</span></div>
-      <div class="mood-option" onclick="selectMood(2)"><span class="mood-emoji">😕</span><span class="mood-label">Źle</span></div>
-      <div class="mood-option" onclick="selectMood(3)"><span class="mood-emoji">😐</span><span class="mood-label">Średnio</span></div>
-      <div class="mood-option" onclick="selectMood(4)"><span class="mood-emoji">🙂</span><span class="mood-label">Dobrze</span></div>
-      <div class="mood-option" onclick="selectMood(5)"><span class="mood-emoji">😊</span><span class="mood-label">Świetnie</span></div>
-    </div>
-    <textarea class="mood-note" id="moodNote" placeholder="Chcesz coś dodać? (opcjonalnie)" rows="2"></textarea>
-    <button class="popup-btn" id="saveMoodBtn" onclick="saveMood()" disabled>Zapisz nastrój</button>
-  </div>
-</div>
-
-<!-- Popup podsumowania -->
-<div class="overlay" id="summaryOverlay">
-  <div class="popup">
-    <button class="popup-close" onclick="closeSummary()">✕</button>
-    <h2>Twój tydzień 📊</h2>
-    <div id="summaryContent"><p style="color:var(--muted);text-align:center;padding:20px 0">Ładowanie...</p></div>
-    <div class="summary-actions">
-      <button class="popup-btn share-btn" id="shareSummaryBtn" onclick="shareWeekSummary()" style="display:none">📤 <span id="shareBtnLabel">Udostępnij</span></button>
-      <button class="popup-btn" onclick="closeSummary()" id="closeSummaryBtn2">Zamknij</button>
-    </div>
-  </div>
-</div>
-
-<!-- Popup referral -->
-<div class="overlay" id="referralOverlay">
-  <div class="popup">
-    <button class="popup-close" onclick="closeReferral()">✕</button>
-    <h2 id="referralTitle">Poleć znajomym 🎁</h2>
-    <p id="referralSubtitle" style="color:var(--muted);font-size:0.85rem;line-height:1.5;margin-bottom:16px">Zaproś znajomego — kiedy zapisze swój pierwszy nastrój, oboje dostajecie 7 dni Premium gratis.</p>
-    <div id="referralContent"><p style="color:var(--muted);text-align:center;padding:20px 0">Ładowanie...</p></div>
-    <div class="summary-actions">
-      <button class="popup-btn share-btn" id="shareReferralBtn" onclick="shareReferralLink()">📤 <span id="shareReferralLabel">Udostępnij link</span></button>
-      <button class="popup-btn" onclick="closeReferral()" id="closeReferralBtn">Zamknij</button>
-    </div>
-  </div>
-</div>
-
-<!-- Popup wyboru zwierzaka -->
-<div class="overlay" id="petSelectOverlay">
-  <div class="popup">
-    <h2 id="petSelectTitle">Wybierz swojego towarzysza 🐾</h2>
-    <p style="color:var(--muted);font-size:0.85rem;line-height:1.5;margin-bottom:16px" id="petSelectSubtitle">Będzie Ci towarzyszyć każdego dnia. Możesz go głaskać i ubierać.</p>
-    <div class="pet-select-row">
-      <div class="pet-select-card" onclick="choosePet('dog')">
-        <div class="pet-select-emoji"><img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f436/128.png" alt="pies"></div>
-        <div class="pet-select-label" id="petLabelDog">Pies</div>
+<!-- Removed from the app (they need a server, or don't fit it): kept in the page, never shown, because the scripts still reference them. -->
+<div class="cut" aria-hidden="true">
+  <div class="overlay" id="moodOverlay">
+    <div class="popup">
+      <button class="popup-close" onclick="closeMood()">✕</button>
+      <h2>Jak się dziś czujesz?</h2>
+      <p>Codzienne śledzenie nastroju pomaga Soleil lepiej Cię zrozumieć.</p>
+      <div class="mood-picker">
+        <div class="mood-option" onclick="selectMood(1)"><span class="mood-label">Bardzo źle</span></div>
+        <div class="mood-option" onclick="selectMood(2)"><span class="mood-label">Źle</span></div>
+        <div class="mood-option" onclick="selectMood(3)"><span class="mood-label">Średnio</span></div>
+        <div class="mood-option" onclick="selectMood(4)"><span class="mood-label">Dobrze</span></div>
+        <div class="mood-option" onclick="selectMood(5)"><span class="mood-label">Świetnie</span></div>
       </div>
-      <div class="pet-select-card" onclick="choosePet('cat')">
-        <div class="pet-select-emoji"><img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f431/128.png" alt="kot"></div>
-        <div class="pet-select-label" id="petLabelCat">Kot</div>
+      <textarea class="mood-note" id="moodNote" rows="2"></textarea>
+      <button class="popup-btn" id="saveMoodBtn" onclick="saveMood()" disabled>Zapisz nastrój</button>
+    </div>
+  </div>
+  <div class="overlay" id="summaryOverlay">
+    <div class="popup">
+      <button class="popup-close" onclick="closeSummary()">✕</button>
+      <h2>Twój tydzień</h2>
+      <div id="summaryContent"></div>
+      <div class="summary-actions">
+        <button class="popup-btn share-btn" id="shareSummaryBtn" onclick="shareWeekSummary()" style="display:none"><span id="shareBtnLabel">Udostępnij</span></button>
+        <button class="popup-btn" onclick="closeSummary()" id="closeSummaryBtn2">Zamknij</button>
       </div>
     </div>
   </div>
-</div>
-
-<!-- Popup pełnej szafki -->
-<div class="overlay" id="wardrobeOverlay">
-  <div class="popup">
-    <button class="popup-close" onclick="closeWardrobe()">✕</button>
-    <h2 id="wardrobeTitle">Szafka 🧥</h2>
-    <p style="color:var(--muted);font-size:0.85rem;line-height:1.5;margin-bottom:14px" id="wardrobeSubtitle">Głaskaj zwierzaka, żeby odblokować kolejne dodatki.</p>
-    <div class="wardrobe-grid" id="wardrobeGrid"></div>
-    <button class="popup-btn" onclick="closeWardrobe()" id="closeWardrobeBtn" style="margin-top:14px">Zamknij</button>
-  </div>
-</div>
-
-<!-- Popup rozmów -->
-<div class="overlay" id="conversationsOverlay">
-  <div class="conversations-popup">
-    <button class="popup-close" onclick="closeConversations()">✕</button>
-    <div class="conversations-header">
-      <h2>💬 Rozmowy</h2>
-      <button class="new-chat-btn" onclick="startNewChat()">+ Nowa</button>
-    </div>
-    <div class="conversations-list" id="conversationsList">
-      <div class="conv-empty">Ładowanie...</div>
+  <div class="overlay" id="referralOverlay">
+    <div class="popup">
+      <button class="popup-close" onclick="closeReferral()">✕</button>
+      <h2 id="referralTitle">Poleć znajomym</h2>
+      <p id="referralSubtitle"></p>
+      <div id="referralContent"></div>
+      <div class="summary-actions">
+        <button class="popup-btn share-btn" id="shareReferralBtn" onclick="shareReferralLink()"><span id="shareReferralLabel">Udostępnij link</span></button>
+        <button class="popup-btn" onclick="closeReferral()" id="closeReferralBtn">Zamknij</button>
+      </div>
     </div>
   </div>
-</div>
-
-<!-- Popup Premium -->
-<div class="overlay" id="premiumOverlay">
-  <div class="premium-popup">
-    <button class="popup-close" onclick="closePremium()">✕</button>
-    <div class="premium-header">
-      <span class="premium-icon">✨</span>
-      <h2>Soleil Premium</h2>
-      <p>Głębsza analiza, prawdziwa relacja, bez ograniczeń</p>
-    </div>
-    <div class="premium-features">
-      <div class="premium-feature">
-        <span class="feature-icon">🧠</span>
-        <div class="feature-text">
-          <div class="feature-title">Analiza wzorców emocjonalnych</div>
-          <div class="feature-desc">Soleil identyfikuje Twoje powtarzające się wzorce i pomaga je zrozumieć</div>
-        </div>
-      </div>
-      <div class="premium-feature">
-        <span class="feature-icon">💬</span>
-        <div class="feature-text">
-          <div class="feature-title">Nielimitowane rozmowy</div>
-          <div class="feature-desc">Rozmawiaj bez ograniczeń — Soleil jest zawsze do dyspozycji</div>
-        </div>
-      </div>
-      <div class="premium-feature">
-        <span class="feature-icon">🔗</span>
-        <div class="feature-text">
-          <div class="feature-title">Głębsza relacja z AI</div>
-          <div class="feature-desc">Bardziej osobiste, wnikliwe i szczere odpowiedzi</div>
-        </div>
-      </div>
-      <div class="premium-feature">
-        <span class="feature-icon">🚀</span>
-        <div class="feature-text">
-          <div class="feature-title">Claude Sonnet (mocniejszy model)</div>
-          <div class="feature-desc">Jeszcze głębsze rozumienie i bardziej trafne spostrzeżenia</div>
-        </div>
+  <div class="overlay" id="petSelectOverlay">
+    <div class="popup">
+      <h2 id="petSelectTitle">Wybierz swojego towarzysza</h2>
+      <p id="petSelectSubtitle"></p>
+      <div class="pet-select-row">
+        <div class="pet-select-card" onclick="choosePet('dog')"><div class="pet-select-label" id="petLabelDog">Pies</div></div>
+        <div class="pet-select-card" onclick="choosePet('cat')"><div class="pet-select-label" id="petLabelCat">Kot</div></div>
       </div>
     </div>
-    <div class="premium-divider"></div>
-    <div class="premium-price">
-      <span class="price-amount">19,99 zł</span>
-      <span class="price-period"> / miesiąc</span>
+  </div>
+  <div class="overlay" id="wardrobeOverlay">
+    <div class="popup">
+      <button class="popup-close" onclick="closeWardrobe()">✕</button>
+      <h2 id="wardrobeTitle">Szafka</h2>
+      <p id="wardrobeSubtitle"></p>
+      <div class="wardrobe-grid" id="wardrobeGrid"></div>
+      <button class="popup-btn" onclick="closeWardrobe()" id="closeWardrobeBtn">Zamknij</button>
     </div>
-    <button class="popup-btn premium-btn" onclick="startCheckout()">✨ Przejdź na Premium</button>
+  </div>
+  <div class="overlay" id="conversationsOverlay">
+    <div class="conversations-popup">
+      <button class="popup-close" onclick="closeConversations()">✕</button>
+      <div class="conversations-header">
+        <h2>Rozmowy</h2>
+        <button class="new-chat-btn" onclick="startNewChat()">+ Nowa</button>
+      </div>
+      <div class="conversations-list" id="conversationsList"></div>
+    </div>
+  </div>
+  <div class="overlay" id="premiumOverlay">
+    <div class="premium-popup">
+      <button class="popup-close" onclick="closePremium()">✕</button>
+      <div class="premium-header"><h2>Soleil Premium</h2><p></p></div>
+      <span class="price-period"></span>
+      <button class="popup-btn premium-btn" onclick="startCheckout()">Przejdź na Premium</button>
+    </div>
+  </div>
+  <span id="premiumBadge"></span>
+  <span id="streakBadge"></span>
+  <button class="header-icon-btn" id="conversationsBtn" onclick="openConversations()" title="Rozmowy"></button>
+  <button id="pushMenuBtn"><span id="menuPushLabel"></span></button>
+  <button id="premiumMenuBtn"><span id="menuPremiumLabel"></span></button>
+  <span id="menuReferralLabel"></span>
+  <div class="pet-card" id="petCard" style="display:none">
+    <div class="pet-unlock-toast" id="petUnlockToast"></div>
+    <div class="pet-stage" id="petStage"><div class="pet-accessory" id="petAccessory"></div><div class="pet-emoji" id="petEmoji"></div></div>
+    <div class="pet-name" id="petAffectionLabel"></div>
+    <div class="pet-wardrobe" id="petWardrobe"></div>
+    <button class="wardrobe-open-btn" id="openWardrobeBtn"></button>
   </div>
 </div>
 
@@ -599,13 +191,13 @@
 <div class="overlay" id="languageOverlay">
   <div class="lang-popup">
     <button class="popup-close" onclick="closeLanguage()">✕</button>
-    <h2>🌍 Wybierz język</h2>
+    <h2>Wybierz język</h2>
     <div class="lang-options">
-      <div class="lang-option" onclick="setLanguage('pl')" id="lang-pl"><span class="lang-flag">🇵🇱</span><div><div class="lang-name">Polski</div><div class="lang-native">Polish</div></div></div>
-      <div class="lang-option" onclick="setLanguage('en')" id="lang-en"><span class="lang-flag">🇬🇧</span><div><div class="lang-name">English</div><div class="lang-native">Angielski</div></div></div>
-      <div class="lang-option" onclick="setLanguage('uk')" id="lang-uk"><span class="lang-flag">🇺🇦</span><div><div class="lang-name">Українська</div><div class="lang-native">Ukraiński</div></div></div>
-      <div class="lang-option" onclick="setLanguage('de')" id="lang-de"><span class="lang-flag">🇩🇪</span><div><div class="lang-name">Deutsch</div><div class="lang-native">Niemiecki</div></div></div>
-      <div class="lang-option" onclick="setLanguage('es')" id="lang-es"><span class="lang-flag">🇪🇸</span><div><div class="lang-name">Español</div><div class="lang-native">Hiszpański</div></div></div>
+      <div class="lang-option" onclick="setLanguage('pl')" id="lang-pl"><span class="lang-flag">PL</span><div><div class="lang-name">Polski</div><div class="lang-native">Polish</div></div></div>
+      <div class="lang-option" onclick="setLanguage('en')" id="lang-en"><span class="lang-flag">EN</span><div><div class="lang-name">English</div><div class="lang-native">Angielski</div></div></div>
+      <div class="lang-option" onclick="setLanguage('uk')" id="lang-uk"><span class="lang-flag">UK</span><div><div class="lang-name">Українська</div><div class="lang-native">Ukraiński</div></div></div>
+      <div class="lang-option" onclick="setLanguage('de')" id="lang-de"><span class="lang-flag">DE</span><div><div class="lang-name">Deutsch</div><div class="lang-native">Niemiecki</div></div></div>
+      <div class="lang-option" onclick="setLanguage('es')" id="lang-es"><span class="lang-flag">ES</span><div><div class="lang-name">Español</div><div class="lang-native">Hiszpański</div></div></div>
     </div>
   </div>
 </div>
@@ -616,137 +208,152 @@
     <div class="user-menu-name" id="userName">—</div>
     <div class="user-menu-email" id="userEmail">—</div>
   </div>
-  <button class="user-menu-btn" onclick="openLanguage(); toggleUserMenu()">🌍 <span id="menuLangLabel">Język</span> <span id="menuLangFlag">🇵🇱</span></button>
-  <button class="user-menu-btn" onclick="openVoicePicker(); toggleUserMenu()">🎙️ <span id="menuVoiceLabel">Głos Soleil</span></button>
-  <button class="user-menu-btn" id="pushMenuBtn" onclick="document.getElementById('userMenu').classList.remove('visible'); setTimeout(togglePushNotifications, 400)">🔔 <span id="menuPushLabel">Włącz powiadomienia</span></button>
-  <button class="user-menu-btn premium-menu" id="premiumMenuBtn" onclick="openPremium()" style="display:none">✨ <span id="menuPremiumLabel">Przejdź na Premium</span></button>
-  <button class="user-menu-btn" onclick="openReferral(); toggleUserMenu()">🎁 <span id="menuReferralLabel">Poleć znajomym</span></button>
-  <button class="user-menu-btn" onclick="location.href='cialo/'">🫀 <span>Atlas ciała 3D</span></button>
-  <button class="user-menu-btn" onclick="location.href='gdzie-boli/'">🩺 <span>Gdzie boli?</span></button>
-  <div style="height:1px;background:rgba(232,132,90,0.1);margin:4px 0;"></div>
-  <button class="user-menu-btn danger" onclick="signOut()">🚪 <span id="menuSignOutLabel">Wyloguj się</span></button>
+  <button class="user-menu-btn" onclick="openLanguage(); toggleUserMenu()"><svg class="ico"><use href="#i-lang"/></svg><span id="menuLangLabel">Język</span> <span id="menuLangFlag" class="lang-code">PL</span></button>
+  <button class="user-menu-btn" onclick="openVoicePicker(); toggleUserMenu()"><svg class="ico"><use href="#i-voice"/></svg><span id="menuVoiceLabel">Głos Soleil</span></button>
+  <button class="user-menu-btn danger" onclick="signOut()"><svg class="ico"><use href="#i-logout"/></svg><span id="menuSignOutLabel">Wyloguj się</span></button>
 </div>
 
-<div class="app">
+<div class="app" id="app" data-view="rozmowa">
   <div class="inapp-banner" id="inappBanner" style="display:none">
     <span id="inappBannerText">Aby się zalogować, otwórz tę stronę w przeglądarce (Safari/Chrome).</span>
     <button onclick="copyPageLink()" id="inappBannerBtn">Kopiuj link</button>
   </div>
-  <header>
-    <button class="back-btn" id="backBtn" onclick="goBack()" aria-label="Wróć do początku">←</button>
-    <div class="logo-circle">
-      <img src="img/logo-soleil.webp" alt="" style="width:90px;height:90px;object-fit:contain;">
-    </div>
+  <header class="top">
+    <button class="back-btn" id="backBtn" onclick="goBack()" aria-label="Zacznij od nowa"><svg class="ico"><use href="#i-back"/></svg></button>
+    <svg class="logo-mark" aria-hidden="true"><use href="#mark"/></svg>
     <div class="header-text">
       <h1>Soleil</h1>
       <p><span class="status-dot"></span>Zawsze tutaj dla Ciebie</p>
     </div>
     <div class="header-actions">
-      <span id="premiumBadge">✨ Premium</span>
-      <span id="streakBadge"></span>
-      <button class="header-icon-btn visible hy-labeled" onclick="openSummary()" title="Mój tydzień" aria-label="Nastrój: mój tydzień"><span aria-hidden="true">📊</span><span class="hy-btn-label" id="hyMoodLabel">Nastrój</span></button>
-      <button class="header-icon-btn" id="conversationsBtn" onclick="openConversations()" title="Rozmowy">💬</button>
       <button class="auth-btn" id="loginBtn" onclick="openAuth()">Zaloguj się</button>
       <div class="user-avatar" id="userAvatar" onclick="toggleUserMenu()"></div>
     </div>
   </header>
 
-  <div class="chat-window" id="chatWindow">
-    <div class="welcome" id="welcomeMsg">
-      <span class="sun">☀️</span>
-      <h2>Hej, jestem tu dla Ciebie</h2>
-      <p>Jestem Soleil, Twój przyjaciel do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz — albo wybierz temat poniżej.&nbsp;💛</p>
-      <div class="hy-free-note" id="hyFreeNote">Możesz pisać od razu — bez logowania.</div>
-      <div class="suggestions">
-        <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s1 || translations.pl.s1)">😔 Jestem smutny/a</button>
-        <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s2 || translations.pl.s2)">💼 Problem w pracy/szkole</button>
-        <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s3 || translations.pl.s3)">💔 Kłótnia z kimś bliskim</button>
-        <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s4 || translations.pl.s4)">😰 Czuję stres</button>
-      </div>
+  <main class="views">
+    <section class="view view-chat" id="view-rozmowa" aria-label="Rozmowa">
+      <div class="chat-window" id="chatWindow">
+        <div class="welcome" id="welcomeMsg">
+          <h2>Hej, jestem tu dla Ciebie</h2>
+          <p>Jestem Soleil, Twój przyjaciel do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz, albo wybierz temat poniżej.</p>
+          <div class="hy-free-note" id="hyFreeNote">Możesz pisać od razu — bez logowania.</div>
+          <div class="suggestions">
+            <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s1 || translations.pl.s1)"><svg class="ico"><use href="#i-sad"/></svg><span class="s-text">Jestem smutny/a</span></button>
+            <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s2 || translations.pl.s2)"><svg class="ico"><use href="#i-work"/></svg><span class="s-text">Problem w pracy/szkole</span></button>
+            <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s3 || translations.pl.s3)"><svg class="ico"><use href="#i-heartbreak"/></svg><span class="s-text">Kłótnia z kimś bliskim</span></button>
+            <button class="suggestion-btn" onclick="sendSuggestion(translations[currentLanguage]?.s4 || translations.pl.s4)"><svg class="ico"><use href="#i-pulse"/></svg><span class="s-text">Czuję stres</span></button>
+          </div>
 
-      <!-- Cytat dnia -->
-      <div class="daily-card" id="dailyCard">
-        <div class="daily-icon">✨</div>
-        <div class="daily-inner">
-          <div class="daily-loading" id="dailyLoading">Ładowanie cytatu dnia...</div>
-          <div id="dailyContent" style="display:none">
-            <div class="daily-label" id="dailyLabel">Cytat dnia</div>
-            <div class="daily-quote" id="dailyQuote"></div>
-            <div class="daily-author" id="dailyAuthor"></div>
+          <!-- Cytat dnia -->
+          <div class="daily-card" id="dailyCard">
+            <div class="daily-inner">
+              <div class="daily-loading" id="dailyLoading">Ładowanie cytatu dnia...</div>
+              <div id="dailyContent" style="display:none">
+                <div class="daily-label" id="dailyLabel">Cytat dnia</div>
+                <div class="daily-quote" id="dailyQuote"></div>
+                <div class="daily-author" id="dailyAuthor"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- HackYeah: entry points to the rest of the product (3D atlas, "Gdzie boli?").
-           Navigation via location.href, as in the user menu: tools/sprawdz.py doesn't build cialo/ and gdzie-boli/ -->
-      <div class="hy-atlas-card" onclick="location.href='cialo/'">
-        <div class="hy-atlas-visual">
-          <img src="img/atlas-3d.webp" width="502" height="630" alt="Trójwymiarowy model ciała człowieka z widocznymi mięśniami" loading="lazy">
-          <div class="hy-atlas-head">
-            <span class="hy-eyebrow">Atlas ciała · 3D</span>
-            <h3>Zobacz swoje ciało w&nbsp;3D</h3>
+      <div class="input-area">
+        <div class="input-wrapper">
+          <textarea id="userInput" placeholder="Napisz mi o swoim dniu..." rows="1" aria-label="Wiadomość do Soleil" enterkeyhint="send"></textarea>
+          <button class="send-btn call-btn" id="voiceCallBtn" onclick="openVoiceCall()" title="Porozmawiaj z Soleil" aria-label="Porozmawiaj z Soleil"><svg class="ico"><use href="#i-phone"/></svg></button>
+          <button class="send-btn" onclick="sendMessage()" aria-label="Wyślij" title="Wyślij"><svg class="ico"><use href="#i-send"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="view view-page" id="view-nastroj" aria-labelledby="moodHeading" hidden>
+      <div class="page">
+        <h2 class="page-title" id="moodHeading">Jak się dziś czujesz?</h2>
+        <p class="page-lead">Wybierz jedną twarz. Zapisuje się tylko na tym urządzeniu.</p>
+        <div class="faces" role="radiogroup" aria-label="Nastrój">
+          <button type="button" class="face" role="radio" aria-checked="false" data-mood="1"><svg><use href="#face-1"/></svg><span>Bardzo źle</span></button>
+          <button type="button" class="face" role="radio" aria-checked="false" data-mood="2"><svg><use href="#face-2"/></svg><span>Źle</span></button>
+          <button type="button" class="face" role="radio" aria-checked="false" data-mood="3"><svg><use href="#face-3"/></svg><span>Średnio</span></button>
+          <button type="button" class="face" role="radio" aria-checked="false" data-mood="4"><svg><use href="#face-4"/></svg><span>Dobrze</span></button>
+          <button type="button" class="face" role="radio" aria-checked="false" data-mood="5"><svg><use href="#face-5"/></svg><span>Świetnie</span></button>
+        </div>
+        <textarea class="field" id="hyMoodNote" rows="2" placeholder="Chcesz coś dodać? (nie musisz)" aria-label="Notatka do nastroju"></textarea>
+        <button type="button" class="btn-green" id="hyMoodSave" disabled>Zapisz nastrój</button>
+        <p class="saved-note" id="hyMoodStatus" role="status"></p>
+
+        <h3 class="page-sub">Ostatnie 7 dni</h3>
+        <ol class="week" id="hyWeek" aria-label="Nastrój w ostatnich 7 dniach"></ol>
+
+        <!-- Ruch i ciało -->
+        <div class="body-card" id="bodyCard">
+          <h3 class="page-sub" id="bodyTitle">Minuta ruchu na lepszy nastrój</h3>
+          <div class="body-card-sub" id="bodySubtitle">Gdzie czujesz napięcie? Wybierz miejsce, a pokażę krótkie ćwiczenie.</div>
+          <div class="body-chips" id="bodySvg" role="group" aria-label="Część ciała">
+            <button type="button" class="body-zone body-chip" data-zone="head_neck">Głowa i kark</button>
+            <button type="button" class="body-zone body-chip" data-zone="shoulders">Barki i ramiona</button>
+            <button type="button" class="body-zone body-chip" data-zone="chest">Klatka piersiowa</button>
+            <button type="button" class="body-zone body-chip" data-zone="core">Brzuch i rdzeń</button>
+            <button type="button" class="body-zone body-chip" data-zone="arms">Ręce i dłonie</button>
+            <button type="button" class="body-zone body-chip" data-zone="legs">Nogi</button>
           </div>
-          <span class="hy-atlas-fact">Ponad 100 części ciała z prostym opisem</span>
-        </div>
-        <div class="hy-atlas-body">
-          <p>Obracaj model palcem i dotknij mięśnia albo narządu — zobaczysz prosty opis, co to jest i do czego służy.</p>
-          <button type="button" class="hy-btn">Otwórz atlas ciała <span aria-hidden="true">→</span></button>
+          <div class="body-detail" id="bodyDetail" aria-live="polite">
+            <div class="body-detail-placeholder"><span id="bodyPlaceholderText">Wybierz część ciała</span></div>
+          </div>
         </div>
       </div>
-      <button type="button" class="hy-mini-card" onclick="location.href='gdzie-boli/'">
-        <span class="hy-mini-icon" aria-hidden="true">🩺</span>
-        <span class="hy-mini-text"><strong>Gdzie boli?</strong><span>Sprawdź objaw krok po kroku: wskaż miejsce na sylwetce i odpowiedz na kilka pytań.</span></span>
-        <span class="hy-mini-arrow" aria-hidden="true">›</span>
-      </button>
+    </section>
 
-      <!-- Ruch i ciało -->
-      <div class="body-card" id="bodyCard">
-        <div class="body-card-title" id="bodyTitle">Minuta ruchu na lepszy nastrój</div>
-        <div class="body-card-sub" id="bodySubtitle">Gdzie czujesz napięcie? Wybierz miejsce, a pokażę krótkie ćwiczenie.</div>
-        <!-- HackYeah: big chips instead of the SVG figure. id="bodySvg" and data-zone stay, because the existing
-             click handler (selectBodyZone) is bound to them; chip labels are translated in the "Mobile comfort" script. -->
-        <div class="body-chips" id="bodySvg" role="group" aria-label="Część ciała">
-          <button type="button" class="body-zone body-chip" data-zone="head_neck">🧠 Głowa i kark</button>
-          <button type="button" class="body-zone body-chip" data-zone="shoulders">💪 Barki i ramiona</button>
-          <button type="button" class="body-zone body-chip" data-zone="chest">🫁 Klatka piersiowa</button>
-          <button type="button" class="body-zone body-chip" data-zone="core">🌀 Brzuch i rdzeń</button>
-          <button type="button" class="body-zone body-chip" data-zone="arms">🙌 Ręce i dłonie</button>
-          <button type="button" class="body-zone body-chip" data-zone="legs">🦵 Nogi</button>
+    <section class="view view-frame" id="view-cialo" aria-label="Atlas ciała" hidden>
+      <iframe data-src="cialo/" title="Atlas ciała" allow="microphone; fullscreen"></iframe>
+    </section>
+
+    <section class="view view-frame" id="view-objawy" aria-label="Gdzie boli?" hidden>
+      <iframe data-src="gdzie-boli/" title="Gdzie boli? Sprawdź objaw"></iframe>
+    </section>
+
+    <section class="view view-page" id="view-wiecej" aria-labelledby="moreHeading" hidden>
+      <div class="page">
+        <h2 class="page-title" id="moreHeading">Więcej</h2>
+
+        <div class="account" id="hyAccount">
+          <p class="account-who" id="hyAccountWho">Piszesz bez konta.</p>
+          <p class="page-lead" id="hyAccountWhy">Z kontem Soleil zapamięta rozmowy, a słuchawka połączy Cię z Soleil głosem.</p>
+          <button type="button" class="btn-green" id="hyAccountBtn" onclick="openAuth()"><svg class="ico"><use href="#i-login"/></svg><span>Zaloguj się</span></button>
         </div>
-        <div class="body-detail" id="bodyDetail" aria-live="polite">
-          <div class="body-detail-placeholder">👆 <span id="bodyPlaceholderText">Wybierz część ciała</span></div>
-        </div>
+
+        <ul class="rows">
+          <li><button type="button" class="row" onclick="openLanguage()"><svg class="ico"><use href="#i-lang"/></svg><span class="row-text">Język</span><span class="row-value" id="hyLangValue">Polski</span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
+          <li><button type="button" class="row" onclick="openVoicePicker()"><svg class="ico"><use href="#i-voice"/></svg><span class="row-text">Głos Soleil w rozmowie telefonicznej</span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
+          <li>
+            <button type="button" class="row" id="hyInstallRow" aria-expanded="false" aria-controls="hyInstallHow"><svg class="ico"><use href="#i-install"/></svg><span class="row-text">Dodaj do ekranu głównego</span><svg class="ico row-go"><use href="#i-next"/></svg></button>
+            <div class="install-how" id="hyInstallHow" hidden>
+              <p id="hyInstallText">Soleil działa jak aplikacja, bez sklepu.</p>
+              <ol class="steps" id="hyInstallSteps"></ol>
+              <button type="button" class="btn-green" id="hyInstallBtn" hidden><svg class="ico"><use href="#i-install"/></svg><span>Dodaj teraz</span></button>
+            </div>
+          </li>
+          <li><a class="row" href="privacy.html" id="privacyLink"><svg class="ico"><use href="#i-shield"/></svg><span class="row-text">Polityka prywatności</span><svg class="ico row-go"><use href="#i-next"/></svg></a></li>
+        </ul>
+
+        <p class="fine">Soleil nie jest lekarzem ani terapeutą. W nagłej sytuacji dzwoń pod <a href="tel:112">112</a>, a w kryzysie psychicznym pod <a href="tel:800702222">800 70 2222</a> (całą dobę).</p>
       </div>
+    </section>
+  </main>
 
-      <!-- Zwierzak nastroju -->
-      <div class="pet-card" id="petCard" style="display:none">
-        <div class="pet-unlock-toast" id="petUnlockToast"></div>
-        <div class="pet-stage" id="petStage" onclick="petTheAnimal()">
-          <div class="pet-accessory" id="petAccessory"></div>
-          <div class="pet-emoji" id="petEmoji">🐶</div>
-        </div>
-        <div class="pet-name" id="petAffectionLabel">Głaskań: 0</div>
-        <div class="pet-wardrobe" id="petWardrobe"></div>
-        <button class="wardrobe-open-btn" id="openWardrobeBtn" onclick="openWardrobe()">🧥 Szafka</button>
-      </div>
+  <!-- The tab bar: a black slab whose top edge rises left to right, like a horizon at sunrise; the open section is lit above it. -->
+  <nav class="tabbar" aria-label="Sekcje aplikacji">
+    <div class="tabbar-slab" aria-hidden="true"></div>
+    <svg class="tabbar-edge" viewBox="0 0 100 16" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="15.5" x2="100" y2="0.5" vector-effect="non-scaling-stroke"/></svg>
+    <div class="tabs">
+      <a class="tab" href="#rozmowa" data-view="rozmowa" style="--k:0"><svg class="ico"><use href="#i-chat"/></svg><span>Rozmowa</span></a>
+      <a class="tab" href="#nastroj" data-view="nastroj" style="--k:1"><svg class="ico"><use href="#i-mood"/></svg><span>Nastrój</span></a>
+      <a class="tab" href="#cialo" data-view="cialo" style="--k:2"><svg class="ico"><use href="#i-body"/></svg><span>Ciało</span></a>
+      <a class="tab" href="#objawy" data-view="objawy" style="--k:3"><svg class="ico"><use href="#i-symptom"/></svg><span>Objawy</span></a>
+      <a class="tab" href="#wiecej" data-view="wiecej" style="--k:4"><svg class="ico"><use href="#i-more"/></svg><span>Więcej</span></a>
     </div>
-  </div>
-
-  <div class="input-area">
-    <div class="input-wrapper">
-      <textarea id="userInput" placeholder="Napisz mi o swoim dniu..." rows="1" aria-label="Wiadomość do Soleil" enterkeyhint="send"></textarea>
-      <button class="send-btn" id="voiceCallBtn" onclick="openVoiceCall()" title="Porozmawiaj z Soleil" aria-label="Porozmawiaj z Soleil">
-        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-      </button>
-      <button class="send-btn" onclick="sendMessage()" aria-label="Wyślij" title="Wyślij">
-        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-      </button>
-    </div>
-    <div class="mood-bar" aria-hidden="true">🌸 🌈 ✨ 🌻 💛 🌿 🤗</div>
-    <div class="hy-footer">
-      <a href="privacy.html" id="privacyLink">Polityka prywatności</a>
-    </div>
-  </div>
+  </nav>
 </div>
 
 <script>
@@ -786,7 +393,7 @@ detectInAppBrowser();
 let currentStreak = 0;
 let lastSummaryData = null;
 let currentLanguage = localStorage.getItem('soleil_language') || 'pl';
-const langFlags = { pl: '🇵🇱', en: '🇬🇧', uk: '🇺🇦', de: '🇩🇪', es: '🇪🇸' };
+const langFlags = { pl: 'PL', en: 'EN', uk: 'UK', de: 'DE', es: 'ES' };
 
 // Funkcje języka
 function openLanguage() { pushOverlayState('languageOverlay'); document.getElementById('languageOverlay').classList.add('visible'); updateLangUI(); }
@@ -795,7 +402,7 @@ function updateLangUI() {
   document.querySelectorAll('.lang-option').forEach(el => el.classList.remove('active'));
   document.getElementById(`lang-${currentLanguage}`)?.classList.add('active');
   const menuFlag = document.getElementById('menuLangFlag');
-  if (menuFlag) menuFlag.textContent = langFlags[currentLanguage] || '🌍';
+  if (menuFlag) menuFlag.textContent = langFlags[currentLanguage] || '';
 }
 function setLanguage(lang) {
   currentLanguage = lang;
@@ -828,7 +435,7 @@ async function loadDailyQuote() {
       data = await res.json();
       localStorage.setItem(cacheKey, JSON.stringify(data));
     } catch (err) {
-      document.getElementById('dailyLoading').textContent = '🌸';
+      document.getElementById('dailyLoading').textContent = '';
       return;
     }
   }
@@ -848,28 +455,28 @@ const translations = {
   pl: {
     tagline: 'Zawsze tutaj dla Ciebie',
     welcomeTitle: 'Hej, jestem tu dla Ciebie',
-    welcomeText: 'Jestem Soleil, Twój przyjaciel do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz — albo wybierz temat poniżej.\u00a0💛',
-    s1: '😔 Jestem smutny/a', s2: '💼 Problem w pracy/szkole', s3: '💔 Kłótnia z kimś bliskim', s4: '😰 Czuję stres',
+    welcomeText: 'Jestem Soleil, Twój przyjaciel do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz — albo wybierz temat poniżej.\u00a0',
+    s1: 'Jestem smutny/a', s2: 'Problem w pracy/szkole', s3: 'Kłótnia z kimś bliskim', s4: 'Czuję stres',
     placeholder: 'Napisz mi o swoim dniu...',
     loginBtn: 'Zaloguj się',
-    weekBtn: '📊',
+    weekBtn: '',
     newChat: '+ Nowa',
-    signOut: '🚪 Wyloguj się',
-    premiumMenu: '✨ Przejdź na Premium',
-    authTitle: 'Witaj w Soleil ☀️',
+    signOut: 'Wyloguj się',
+    premiumMenu: 'Przejdź na Premium',
+    authTitle: 'Witaj w Soleil',
     authDesc: 'Zaloguj się żeby Soleil pamiętał Twoje rozmowy i nastroje.',
-    moodTitle: 'Jak się dziś czujesz? 🌸',
+    moodTitle: 'Jak się dziś czujesz?',
     moodDesc: 'Codzienne śledzenie nastroju pomaga Soleil lepiej Cię zrozumieć.',
     saveMood: 'Zapisz nastrój',
     moodNote: 'Chcesz coś dodać? (opcjonalnie)',
-    weekTitle: 'Twój tydzień 📊',
+    weekTitle: 'Twój tydzień',
     weekClose: 'Zamknij',
     weekLoading: 'Ładowanie...',
     weekError: 'Nie udało się załadować.',
     weekDays: 'dni z nastrojem',
     weekAvg: 'średni nastrój',
-    convsTitle: '💬 Rozmowy',
-    convsEmpty: 'Nie masz jeszcze żadnych rozmów 🌸',
+    convsTitle: 'Rozmowy',
+    convsEmpty: 'Nie masz jeszcze żadnych rozmów',
     convsLoading: 'Ładowanie...',
     convsError: 'Błąd ładowania.',
     convsDelete: 'Usunąć tę rozmowę?',
@@ -883,34 +490,34 @@ const translations = {
     premiumF3desc: 'Bardziej osobiste, wnikliwe i szczere odpowiedzi',
     premiumF4title: 'Claude Sonnet (mocniejszy model)',
     premiumF4desc: 'Jeszcze głębsze rozumienie i bardziej trafne spostrzeżenia',
-    premiumBtn: '✨ Przejdź na Premium',
+    premiumBtn: 'Przejdź na Premium',
     premiumPeriod: '/ miesiąc',
   },
   en: {
     tagline: 'Always here for you',
     welcomeTitle: 'Hey, I\'m here for you',
-    welcomeText: 'I\'m Soleil, your friend to talk to about whatever is on your mind. Write how you feel — or pick a topic below.\u00a0💛',
-    s1: '😔 I\'m sad', s2: '💼 Work/school problem', s3: '💔 Argument with someone', s4: '😰 I feel stressed',
+    welcomeText: 'I\'m Soleil, your friend to talk to about whatever is on your mind. Write how you feel — or pick a topic below.\u00a0',
+    s1: 'I\'m sad', s2: 'Work/school problem', s3: 'Argument with someone', s4: 'I feel stressed',
     placeholder: 'Tell me about your day...',
     loginBtn: 'Sign in',
-    weekBtn: '📊',
+    weekBtn: '',
     newChat: '+ New',
-    signOut: '🚪 Sign out',
-    premiumMenu: '✨ Go Premium',
-    authTitle: 'Welcome to Soleil ☀️',
+    signOut: 'Sign out',
+    premiumMenu: 'Go Premium',
+    authTitle: 'Welcome to Soleil',
     authDesc: 'Sign in so Soleil can remember your conversations and moods.',
-    moodTitle: 'How are you feeling today? 🌸',
+    moodTitle: 'How are you feeling today?',
     moodDesc: 'Daily mood tracking helps Soleil understand you better.',
     saveMood: 'Save mood',
     moodNote: 'Want to add something? (optional)',
-    weekTitle: 'Your week 📊',
+    weekTitle: 'Your week',
     weekClose: 'Close',
     weekLoading: 'Loading...',
     weekError: 'Failed to load.',
     weekDays: 'days with mood',
     weekAvg: 'average mood',
-    convsTitle: '💬 Conversations',
-    convsEmpty: 'You don\'t have any conversations yet 🌸',
+    convsTitle: 'Conversations',
+    convsEmpty: 'You don\'t have any conversations yet',
     convsLoading: 'Loading...',
     convsError: 'Loading error.',
     convsDelete: 'Delete this conversation?',
@@ -924,34 +531,34 @@ const translations = {
     premiumF3desc: 'More personal, insightful and honest responses',
     premiumF4title: 'Claude Sonnet (stronger model)',
     premiumF4desc: 'Even deeper understanding and more accurate insights',
-    premiumBtn: '✨ Go Premium',
+    premiumBtn: 'Go Premium',
     premiumPeriod: '/ month',
   },
   uk: {
     tagline: 'Завжди тут для тебе',
     welcomeTitle: 'Привіт, я тут для тебе',
-    welcomeText: 'Ти можеш розповісти мені все — свої турботи, проблеми, смуток. Я допоможу тобі подивитися на них з нової точки зору. 💛',
-    s1: '😔 Мені сумно', s2: '💼 Проблема на роботі/в школі', s3: '💔 Сварка з близькою людиною', s4: '😰 Я відчуваю стрес',
+    welcomeText: 'Ти можеш розповісти мені все — свої турботи, проблеми, смуток. Я допоможу тобі подивитися на них з нової точки зору.',
+    s1: 'Мені сумно', s2: 'Проблема на роботі/в школі', s3: 'Сварка з близькою людиною', s4: 'Я відчуваю стрес',
     placeholder: 'Розкажи мені про свій день...',
     loginBtn: 'Увійти',
-    weekBtn: '📊',
+    weekBtn: '',
     newChat: '+ Новий',
-    signOut: '🚪 Вийти',
-    premiumMenu: '✨ Перейти на Premium',
-    authTitle: 'Ласкаво просимо до Soleil ☀️',
+    signOut: 'Вийти',
+    premiumMenu: 'Перейти на Premium',
+    authTitle: 'Ласкаво просимо до Soleil',
     authDesc: 'Увійди, щоб Soleil пам\'ятав твої розмови та настрої.',
-    moodTitle: 'Як ти себе почуваєш сьогодні? 🌸',
+    moodTitle: 'Як ти себе почуваєш сьогодні?',
     moodDesc: 'Щоденне відстеження настрою допомагає Soleil краще тебе розуміти.',
     saveMood: 'Зберегти настрій',
     moodNote: 'Хочеш щось додати? (необов\'язково)',
-    weekTitle: 'Твій тиждень 📊',
+    weekTitle: 'Твій тиждень',
     weekClose: 'Закрити',
     weekLoading: 'Завантаження...',
     weekError: 'Не вдалося завантажити.',
     weekDays: 'днів з настроєм',
     weekAvg: 'середній настрій',
-    convsTitle: '💬 Розмови',
-    convsEmpty: 'У тебе ще немає розмов 🌸',
+    convsTitle: 'Розмови',
+    convsEmpty: 'У тебе ще немає розмов',
     convsLoading: 'Завантаження...',
     convsError: 'Помилка завантаження.',
     convsDelete: 'Видалити цю розмову?',
@@ -965,34 +572,34 @@ const translations = {
     premiumF3desc: 'Більш особисті, проникливі та чесні відповіді',
     premiumF4title: 'Claude Sonnet (потужніша модель)',
     premiumF4desc: 'Ще глибше розуміння та точніші спостереження',
-    premiumBtn: '✨ Перейти на Premium',
+    premiumBtn: 'Перейти на Premium',
     premiumPeriod: '/ місяць',
   },
   de: {
     tagline: 'Immer für dich da',
     welcomeTitle: 'Hey, ich bin für dich da',
-    welcomeText: 'Du kannst mir alles erzählen — deine Sorgen, Probleme, Traurigkeit. Ich helfe dir, sie aus einer neuen Perspektive zu sehen. 💛',
-    s1: '😔 Ich bin traurig', s2: '💼 Problem bei der Arbeit/Schule', s3: '💔 Streit mit jemandem', s4: '😰 Ich fühle mich gestresst',
+    welcomeText: 'Du kannst mir alles erzählen — deine Sorgen, Probleme, Traurigkeit. Ich helfe dir, sie aus einer neuen Perspektive zu sehen.',
+    s1: 'Ich bin traurig', s2: 'Problem bei der Arbeit/Schule', s3: 'Streit mit jemandem', s4: 'Ich fühle mich gestresst',
     placeholder: 'Erzähl mir von deinem Tag...',
     loginBtn: 'Anmelden',
-    weekBtn: '📊',
+    weekBtn: '',
     newChat: '+ Neu',
-    signOut: '🚪 Abmelden',
-    premiumMenu: '✨ Zu Premium wechseln',
-    authTitle: 'Willkommen bei Soleil ☀️',
+    signOut: 'Abmelden',
+    premiumMenu: 'Zu Premium wechseln',
+    authTitle: 'Willkommen bei Soleil',
     authDesc: 'Melde dich an, damit Soleil sich an deine Gespräche und Stimmungen erinnert.',
-    moodTitle: 'Wie fühlst du dich heute? 🌸',
+    moodTitle: 'Wie fühlst du dich heute?',
     moodDesc: 'Tägliches Stimmungs-Tracking hilft Soleil, dich besser zu verstehen.',
     saveMood: 'Stimmung speichern',
     moodNote: 'Möchtest du etwas hinzufügen? (optional)',
-    weekTitle: 'Deine Woche 📊',
+    weekTitle: 'Deine Woche',
     weekClose: 'Schließen',
     weekLoading: 'Laden...',
     weekError: 'Laden fehlgeschlagen.',
     weekDays: 'Tage mit Stimmung',
     weekAvg: 'Durchschnittsstimmung',
-    convsTitle: '💬 Gespräche',
-    convsEmpty: 'Du hast noch keine Gespräche 🌸',
+    convsTitle: 'Gespräche',
+    convsEmpty: 'Du hast noch keine Gespräche',
     convsLoading: 'Laden...',
     convsError: 'Ladefehler.',
     convsDelete: 'Dieses Gespräch löschen?',
@@ -1006,34 +613,34 @@ const translations = {
     premiumF3desc: 'Persönlichere, aufschlussreichere und ehrlichere Antworten',
     premiumF4title: 'Claude Sonnet (stärkeres Modell)',
     premiumF4desc: 'Noch tieferes Verständnis und treffendere Einblicke',
-    premiumBtn: '✨ Zu Premium wechseln',
+    premiumBtn: 'Zu Premium wechseln',
     premiumPeriod: '/ Monat',
   },
   es: {
     tagline: 'Siempre aquí para ti',
     welcomeTitle: 'Hola, estoy aquí para ti',
-    welcomeText: 'Puedes contarme todo — tus preocupaciones, problemas, tristezas. Te ayudaré a verlos desde una nueva perspectiva. 💛',
-    s1: '😔 Estoy triste', s2: '💼 Problema en el trabajo/escuela', s3: '💔 Pelea con alguien', s4: '😰 Me siento estresado/a',
+    welcomeText: 'Puedes contarme todo — tus preocupaciones, problemas, tristezas. Te ayudaré a verlos desde una nueva perspectiva.',
+    s1: 'Estoy triste', s2: 'Problema en el trabajo/escuela', s3: 'Pelea con alguien', s4: 'Me siento estresado/a',
     placeholder: 'Cuéntame sobre tu día...',
     loginBtn: 'Iniciar sesión',
-    weekBtn: '📊',
+    weekBtn: '',
     newChat: '+ Nueva',
-    signOut: '🚪 Cerrar sesión',
-    premiumMenu: '✨ Ir a Premium',
-    authTitle: 'Bienvenido a Soleil ☀️',
+    signOut: 'Cerrar sesión',
+    premiumMenu: 'Ir a Premium',
+    authTitle: 'Bienvenido a Soleil',
     authDesc: 'Inicia sesión para que Soleil recuerde tus conversaciones y estados de ánimo.',
-    moodTitle: '¿Cómo te sientes hoy? 🌸',
+    moodTitle: '¿Cómo te sientes hoy?',
     moodDesc: 'El seguimiento diario del estado de ánimo ayuda a Soleil a entenderte mejor.',
     saveMood: 'Guardar estado de ánimo',
     moodNote: '¿Quieres añadir algo? (opcional)',
-    weekTitle: 'Tu semana 📊',
+    weekTitle: 'Tu semana',
     weekClose: 'Cerrar',
     weekLoading: 'Cargando...',
     weekError: 'Error al cargar.',
     weekDays: 'días con estado de ánimo',
     weekAvg: 'estado de ánimo promedio',
-    convsTitle: '💬 Conversaciones',
-    convsEmpty: 'Todavía no tienes conversaciones 🌸',
+    convsTitle: 'Conversaciones',
+    convsEmpty: 'Todavía no tienes conversaciones',
     convsLoading: 'Cargando...',
     convsError: 'Error de carga.',
     convsDelete: '¿Eliminar esta conversación?',
@@ -1047,7 +654,7 @@ const translations = {
     premiumF3desc: 'Respuestas más personales, perspicaces y honestas',
     premiumF4title: 'Claude Sonnet (modelo más potente)',
     premiumF4desc: 'Comprensión aún más profunda y perspectivas más precisas',
-    premiumBtn: '✨ Ir a Premium',
+    premiumBtn: 'Ir a Premium',
     premiumPeriod: '/ mes',
   }
 };
@@ -1062,17 +669,17 @@ function updateInterfaceLanguage(lang) {
   document.querySelector('.welcome p').textContent = t.welcomeText;
   // Suggestions
   const btns = document.querySelectorAll('.suggestion-btn');
-  if (btns[0]) btns[0].textContent = t.s1;
-  if (btns[1]) btns[1].textContent = t.s2;
-  if (btns[2]) btns[2].textContent = t.s3;
-  if (btns[3]) btns[3].textContent = t.s4;
+  if (btns[0]) btns[0].querySelector('.s-text').textContent = t.s1;
+  if (btns[1]) btns[1].querySelector('.s-text').textContent = t.s2;
+  if (btns[2]) btns[2].querySelector('.s-text').textContent = t.s3;
+  if (btns[3]) btns[3].querySelector('.s-text').textContent = t.s4;
   // Input
   document.getElementById('userInput').placeholder = t.placeholder;
   // Rozmowy
   document.querySelector('.new-chat-btn').textContent = t.newChat;
   document.querySelector('.conversations-header h2').textContent = t.convsTitle;
   // Sign out / premium menu
-  document.querySelector('.user-menu-btn.danger').textContent = t.signOut;
+  document.getElementById('menuSignOutLabel').textContent = t.signOut;
   const premBtn = document.getElementById('premiumMenuBtn');
   if (premBtn) premBtn.textContent = t.premiumMenu;
   // Auth popup
@@ -1088,7 +695,7 @@ function updateInterfaceLanguage(lang) {
   const closeSummaryBtnEl = document.getElementById('closeSummaryBtn2');
   if (closeSummaryBtnEl) closeSummaryBtnEl.textContent = t.weekClose;
   // Popup wyboru zwierzaka
-  const petSelTitles = { pl: 'Wybierz swojego towarzysza 🐾', en: 'Choose your companion 🐾', uk: 'Обери свого супутника 🐾', de: 'Wähle deinen Begleiter 🐾', es: 'Elige a tu compañero 🐾' };
+  const petSelTitles = { pl: 'Wybierz swojego towarzysza', en: 'Choose your companion', uk: 'Обери свого супутника', de: 'Wähle deinen Begleiter', es: 'Elige a tu compañero' };
   const petSelSubs = {
     pl: 'Będzie Ci towarzyszyć każdego dnia. Możesz go głaskać i ubierać.',
     en: 'It will keep you company every day. You can pet it and dress it up.',
@@ -1104,7 +711,7 @@ function updateInterfaceLanguage(lang) {
   if (document.getElementById('petLabelCat')) document.getElementById('petLabelCat').textContent = petCatLabels[lang] || petCatLabels.pl;
   if (petState) renderPetCard();
   // Popup szafki
-  const wardrobeTitles = { pl: 'Szafka 🧥', en: 'Wardrobe 🧥', uk: 'Гардероб 🧥', de: 'Kleiderschrank 🧥', es: 'Armario 🧥' };
+  const wardrobeTitles = { pl: 'Szafka', en: 'Wardrobe', uk: 'Гардероб', de: 'Kleiderschrank', es: 'Armario' };
   const wardrobeSubs = {
     pl: 'Głaskaj zwierzaka, żeby odblokować kolejne dodatki.',
     en: 'Pet your animal to unlock more items.',
@@ -1117,7 +724,7 @@ function updateInterfaceLanguage(lang) {
   if (document.getElementById('wardrobeSubtitle')) document.getElementById('wardrobeSubtitle').textContent = wardrobeSubs[lang] || wardrobeSubs.pl;
   if (document.getElementById('closeWardrobeBtn')) document.getElementById('closeWardrobeBtn').textContent = wardrobeClose[lang] || wardrobeClose.pl;
   // Popup ruchu i ciała
-  const bodyTitles = { pl: 'Minuta ruchu na lepszy nastrój', en: 'A minute of movement for your mood', uk: 'Рух і тіло 🧍', de: 'Bewegung & Körper 🧍', es: 'Movimiento y cuerpo 🧍' };
+  const bodyTitles = { pl: 'Minuta ruchu na lepszy nastrój', en: 'A minute of movement for your mood', uk: 'Рух і тіло', de: 'Bewegung & Körper', es: 'Movimiento y cuerpo' };
   const bodySubs = {
     pl: 'Gdzie czujesz napięcie? Wybierz miejsce, a pokażę krótkie ćwiczenie.',
     en: 'Where do you feel tension? Pick a spot and I\'ll show you a short exercise.',
@@ -1130,7 +737,7 @@ function updateInterfaceLanguage(lang) {
   if (document.getElementById('bodySubtitle')) document.getElementById('bodySubtitle').textContent = bodySubs[lang] || bodySubs.pl;
   if (document.getElementById('bodyPlaceholderText')) document.getElementById('bodyPlaceholderText').textContent = bodyPlaceholder[lang] || bodyPlaceholder.pl;
   // Referral popup
-  const refTitles = { pl: 'Poleć znajomym 🎁', en: 'Refer a friend 🎁', uk: 'Запроси друга 🎁', de: 'Freund einladen 🎁', es: 'Invita a un amigo 🎁' };
+  const refTitles = { pl: 'Poleć znajomym', en: 'Refer a friend', uk: 'Запроси друга', de: 'Freund einladen', es: 'Invita a un amigo' };
   const refSubtitles = {
     pl: 'Zaproś znajomego — kiedy zapisze swój pierwszy nastrój, oboje dostajecie 7 dni Premium gratis.',
     en: 'Invite a friend — once they log their first mood, you both get 7 days of Premium for free.',
@@ -1159,7 +766,7 @@ function updateInterfaceLanguage(lang) {
   // Privacy link
   const privacyLinks = { pl: 'Polityka prywatności', en: 'Privacy Policy', uk: 'Політика конфіденційності', de: 'Datenschutzerklärung', es: 'Política de Privacidad' };
   const privacyLink = document.getElementById('privacyLink');
-  if (privacyLink) privacyLink.textContent = privacyLinks[lang] || privacyLinks.pl;
+  if (privacyLink) (privacyLink.querySelector('.row-text') || privacyLink).textContent = privacyLinks[lang] || privacyLinks.pl;
   // Menu items
   const menuWeek = { pl: 'Mój tydzień', en: 'My week', uk: 'Мій тиждень', de: 'Meine Woche', es: 'Mi semana' };
   const menuLang = { pl: 'Język', en: 'Language', uk: 'Мова', de: 'Sprache', es: 'Idioma' };
@@ -1169,7 +776,7 @@ function updateInterfaceLanguage(lang) {
   const menuRef = { pl: 'Poleć znajomym', en: 'Refer a friend', uk: 'Запросити друга', de: 'Freund einladen', es: 'Invita a un amigo' };
   if (document.getElementById('menuWeekLabel')) document.getElementById('menuWeekLabel').textContent = menuWeek[lang] || menuWeek.pl;
   if (document.getElementById('menuLangLabel')) document.getElementById('menuLangLabel').textContent = menuLang[lang] || menuLang.pl;
-  if (document.getElementById('menuLangFlag')) document.getElementById('menuLangFlag').textContent = langFlags[lang] || '🌍';
+  if (document.getElementById('menuLangFlag')) document.getElementById('menuLangFlag').textContent = langFlags[lang] || '';
   if (document.getElementById('menuPushLabel')) document.getElementById('menuPushLabel').textContent = menuPush[lang] || menuPush.pl;
   if (document.getElementById('menuPremiumLabel')) document.getElementById('menuPremiumLabel').textContent = menuPrem[lang] || menuPrem.pl;
   if (document.getElementById('menuSignOutLabel')) document.getElementById('menuSignOutLabel').textContent = menuOut[lang] || menuOut.pl;
@@ -1257,7 +864,7 @@ function updatePremiumUI() {
 }
 
 function showSuccessMessage() {
-  appendMessage('ai', '✨ Witaj w Soleil Premium! Twoje konto zostało aktywowane. Cieszę się że tu jesteś — teraz mogę Cię poznać jeszcze głębiej. Powiedz mi, jak się teraz czujesz?');
+  appendMessage('ai', 'Witaj w Soleil Premium! Twoje konto zostało aktywowane. Cieszę się że tu jesteś — teraz mogę Cię poznać jeszcze głębiej. Powiedz mi, jak się teraz czujesz?');
   loadSubscription(currentUser.id);
 }
 
@@ -1288,7 +895,7 @@ function updateAuthUI(user) {
   if (typeof updateVoiceAuth === 'function') updateVoiceAuth(user);
 }
 
-function openAuth() { pushOverlayState('authOverlay'); document.getElementById('authOverlay').classList.add('visible'); if (clerk) clerk.mountSignIn(document.getElementById('clerk-sign-in'), { routing: 'virtual', appearance: { variables: { colorPrimary: '#e8845a', colorBackground: '#fdf6ee', borderRadius: '12px', fontFamily: 'Lato, sans-serif' } } }); }
+function openAuth() { pushOverlayState('authOverlay'); document.getElementById('authOverlay').classList.add('visible'); if (clerk) clerk.mountSignIn(document.getElementById('clerk-sign-in'), { routing: 'virtual', appearance: { variables: { colorPrimary: '#a6e8c4', colorTextOnPrimaryBackground: '#04140c', colorBackground: '#08110d', colorInputBackground: '#0f1a15', colorInputText: '#eef6f1', colorText: '#eef6f1', colorTextSecondary: '#9fb3a8', colorNeutral: '#eef6f1', colorDanger: '#ff7a6b', borderRadius: '0px', fontFamily: "'Atkinson Hyperlegible Next', system-ui, sans-serif", fontSize: '1rem' }, elements: { rootBox: { width: '100%' }, cardBox: { width: '100%', boxShadow: 'none', border: '1px solid rgba(190,240,215,0.18)' }, card: { boxShadow: 'none' } } } }); }
 function closeAuth() { document.getElementById('authOverlay').classList.remove('visible'); if (clerk) clerk.unmountSignIn(document.getElementById('clerk-sign-in')); }
 function toggleUserMenu() { const menu = document.getElementById('userMenu'); if (!menu.classList.contains('visible')) pushOverlayState('userMenu'); menu.classList.toggle('visible'); }
 async function signOut() { if (clerk) { await clerk.signOut(); document.getElementById('userMenu').classList.remove('visible'); userIsPremium = false; } }
@@ -1309,8 +916,8 @@ async function startCheckout() {
     });
     const data = await res.json();
     if (data.url) window.location.href = data.url;
-    else { btn.textContent = '✨ Przejdź na Premium'; btn.disabled = false; }
-  } catch (err) { btn.textContent = '✨ Przejdź na Premium'; btn.disabled = false; }
+    else { btn.textContent = 'Przejdź na Premium'; btn.disabled = false; }
+  } catch (err) { btn.textContent = 'Przejdź na Premium'; btn.disabled = false; }
 }
 
 // PUSH NOTIFICATIONS
@@ -1395,7 +1002,7 @@ async function loadStreak(userId) {
     const data = await res.json();
     const badge = document.getElementById('streakBadge');
     currentStreak = data.streak || 0;
-    if (data.streak > 0) { badge.textContent = `🔥 ${data.streak}`; badge.style.display = 'block'; }
+    if (data.streak > 0) { badge.textContent = `${data.streak}`; badge.style.display = 'block'; }
     else { badge.style.display = 'none'; }
   } catch (err) { console.error(err); }
 }
@@ -1447,7 +1054,7 @@ async function saveMood() {
       2: 'Czuję że nie jest najlepiej. Co sprawiło że tak się czujesz?',
       3: 'Taki średni dzień... Co go kształtuje?',
       4: 'Cieszę się że jest nieźle! Co dziś sprawiło że czujesz się dobrze?',
-      5: 'Świetnie! Co takiego się dzieje? 😊'
+      5: 'Świetnie! Co takiego się dzieje?'
     };
     setTimeout(() => appendMessage('ai', moodMessages[selectedMood]), 500);
     selectedMood = null;
@@ -1474,8 +1081,8 @@ async function openSummary() {
       fetchDailyMoods(currentUser.id)
     ]);
     const data = await res.json();
-    const moodEmojis = { 1: '😔', 2: '😕', 3: '😐', 4: '🙂', 5: '😊' };
-    const avgEmoji = moodEmojis[Math.round(parseFloat(data.avgMood))] || '😐';
+    const moodEmojis = { 1: '', 2: '', 3: '', 4: '', 5: '' };
+    const avgEmoji = moodEmojis[Math.round(parseFloat(data.avgMood))] || '';
     document.getElementById('summaryContent').innerHTML = `<div class="summary-content"><div class="summary-stats"><div class="stat-box"><div class="stat-value">${data.moodCount || 0}</div><div class="stat-label">${t.weekDays}</div></div><div class="stat-box"><div class="stat-value">${avgEmoji} ${data.avgMood || '—'}</div><div class="stat-label">${t.weekAvg}</div></div></div><div class="summary-text">${data.summary}</div></div>`;
     if (data.moodCount > 0) {
       lastSummaryData = { moodCount: data.moodCount, avgMood: data.avgMood, avgEmoji, streak: currentStreak, dailyMoods };
@@ -1549,56 +1156,56 @@ const PET_IMAGES = {
   cat: 'https://fonts.gstatic.com/s/e/notoemoji/latest/1f431/128.png'
 };
 const PET_ACCESSORIES = [
-  { key: 'hat', emoji: '🎩', threshold: 0 },
-  { key: 'scarf', emoji: '🧣', threshold: 5 },
-  { key: 'bow', emoji: '🎀', threshold: 15 },
-  { key: 'glasses', emoji: '😎', threshold: 30 },
-  { key: 'crown', emoji: '👑', threshold: 45 },
-  { key: 'cap', emoji: '🧢', threshold: 60 },
-  { key: 'flower', emoji: '🌸', threshold: 80 },
-  { key: 'graduation', emoji: '🎓', threshold: 100 },
-  { key: 'star', emoji: '🌟', threshold: 130 },
-  { key: 'butterfly', emoji: '🦋', threshold: 160 },
-  { key: 'sunglasses', emoji: '🕶️', threshold: 175 },
-  { key: 'readingglasses', emoji: '👓', threshold: 190 },
-  { key: 'goggles', emoji: '🥽', threshold: 205 },
-  { key: 'disguise', emoji: '🥸', threshold: 220 },
-  { key: 'helmet', emoji: '⛑️', threshold: 235 },
-  { key: 'militaryhelmet', emoji: '🪖', threshold: 250 },
-  { key: 'hibiscus', emoji: '🌺', threshold: 265 },
-  { key: 'sunflower', emoji: '🌻', threshold: 280 },
-  { key: 'blossom', emoji: '🌼', threshold: 295 },
-  { key: 'wiltedflower', emoji: '🥀', threshold: 310 },
-  { key: 'rose', emoji: '🌹', threshold: 325 },
-  { key: 'lotus', emoji: '🪷', threshold: 340 },
-  { key: 'hyacinth', emoji: '🪻', threshold: 355 },
-  { key: 'whiteflower', emoji: '💮', threshold: 370 },
-  { key: 'sparkles', emoji: '✨', threshold: 385 },
-  { key: 'starclassic', emoji: '⭐', threshold: 400 },
-  { key: 'dizzy', emoji: '💫', threshold: 415 },
-  { key: 'pumpkin', emoji: '🎃', threshold: 430 },
-  { key: 'bee', emoji: '🐝', threshold: 445 },
-  { key: 'ladybug', emoji: '🐞', threshold: 460 },
-  { key: 'leaf', emoji: '🍃', threshold: 475 },
-  { key: 'mapleleaf', emoji: '🍁', threshold: 490 },
-  { key: 'clover', emoji: '🍀', threshold: 505 },
-  { key: 'snowflake', emoji: '❄️', threshold: 520 },
-  { key: 'rainbow', emoji: '🌈', threshold: 535 },
-  { key: 'sun', emoji: '☀️', threshold: 550 },
-  { key: 'moon', emoji: '🌙', threshold: 565 },
-  { key: 'planet', emoji: '🪐', threshold: 580 },
-  { key: 'dove', emoji: '🕊️', threshold: 595 },
-  { key: 'swan', emoji: '🦢', threshold: 610 },
-  { key: 'bird', emoji: '🐦', threshold: 625 },
-  { key: 'owl', emoji: '🦉', threshold: 640 },
-  { key: 'ribbon', emoji: '🎗️', threshold: 655 },
-  { key: 'mushroom', emoji: '🍄', threshold: 670 },
-  { key: 'shell', emoji: '🐚', threshold: 685 },
-  { key: 'seedling', emoji: '🌱', threshold: 700 },
-  { key: 'herb', emoji: '🌿', threshold: 715 },
-  { key: 'tulip', emoji: '🌷', threshold: 730 },
-  { key: 'peacock', emoji: '🦚', threshold: 745 },
-  { key: 'crystalball', emoji: '🔮', threshold: 760 }
+  { key: 'hat', emoji: '', threshold: 0 },
+  { key: 'scarf', emoji: '', threshold: 5 },
+  { key: 'bow', emoji: '', threshold: 15 },
+  { key: 'glasses', emoji: '', threshold: 30 },
+  { key: 'crown', emoji: '', threshold: 45 },
+  { key: 'cap', emoji: '', threshold: 60 },
+  { key: 'flower', emoji: '', threshold: 80 },
+  { key: 'graduation', emoji: '', threshold: 100 },
+  { key: 'star', emoji: '', threshold: 130 },
+  { key: 'butterfly', emoji: '', threshold: 160 },
+  { key: 'sunglasses', emoji: '', threshold: 175 },
+  { key: 'readingglasses', emoji: '', threshold: 190 },
+  { key: 'goggles', emoji: '', threshold: 205 },
+  { key: 'disguise', emoji: '', threshold: 220 },
+  { key: 'helmet', emoji: '', threshold: 235 },
+  { key: 'militaryhelmet', emoji: '', threshold: 250 },
+  { key: 'hibiscus', emoji: '', threshold: 265 },
+  { key: 'sunflower', emoji: '', threshold: 280 },
+  { key: 'blossom', emoji: '', threshold: 295 },
+  { key: 'wiltedflower', emoji: '', threshold: 310 },
+  { key: 'rose', emoji: '', threshold: 325 },
+  { key: 'lotus', emoji: '', threshold: 340 },
+  { key: 'hyacinth', emoji: '', threshold: 355 },
+  { key: 'whiteflower', emoji: '', threshold: 370 },
+  { key: 'sparkles', emoji: '', threshold: 385 },
+  { key: 'starclassic', emoji: '', threshold: 400 },
+  { key: 'dizzy', emoji: '', threshold: 415 },
+  { key: 'pumpkin', emoji: '', threshold: 430 },
+  { key: 'bee', emoji: '', threshold: 445 },
+  { key: 'ladybug', emoji: '', threshold: 460 },
+  { key: 'leaf', emoji: '', threshold: 475 },
+  { key: 'mapleleaf', emoji: '', threshold: 490 },
+  { key: 'clover', emoji: '', threshold: 505 },
+  { key: 'snowflake', emoji: '', threshold: 520 },
+  { key: 'rainbow', emoji: '', threshold: 535 },
+  { key: 'sun', emoji: '', threshold: 550 },
+  { key: 'moon', emoji: '', threshold: 565 },
+  { key: 'planet', emoji: '', threshold: 580 },
+  { key: 'dove', emoji: '', threshold: 595 },
+  { key: 'swan', emoji: '', threshold: 610 },
+  { key: 'bird', emoji: '', threshold: 625 },
+  { key: 'owl', emoji: '', threshold: 640 },
+  { key: 'ribbon', emoji: '', threshold: 655 },
+  { key: 'mushroom', emoji: '', threshold: 670 },
+  { key: 'shell', emoji: '', threshold: 685 },
+  { key: 'seedling', emoji: '', threshold: 700 },
+  { key: 'herb', emoji: '', threshold: 715 },
+  { key: 'tulip', emoji: '', threshold: 730 },
+  { key: 'peacock', emoji: '', threshold: 745 },
+  { key: 'crystalball', emoji: '', threshold: 760 }
 ];
 let petState = null;
 
@@ -1634,7 +1241,7 @@ async function choosePet(species) {
 function renderAccessoryItem(a) {
   const isUnlocked = petState.unlocked.includes(a.key);
   const isEquipped = petState.equipped === a.key;
-  const lock = isUnlocked ? '' : `<span class="pet-item-lock">🔒</span>`;
+  const lock = isUnlocked ? '' : `<span class="pet-item-lock"></span>`;
   const lockedLabels = { pl: 'Odblokowuje się przy', en: 'Unlocks at', uk: 'Розблоковується при', de: 'Freigeschaltet bei', es: 'Se desbloquea con' };
   const petsWord = { pl: 'głaskaniach', en: 'pets', uk: 'погладженнях', de: 'Streicheleinheiten', es: 'caricias' };
   const title = isUnlocked ? '' : `${lockedLabels[currentLanguage] || lockedLabels.pl} ${a.threshold} ${petsWord[currentLanguage] || petsWord.pl}`;
@@ -1658,7 +1265,7 @@ function renderPetCard() {
   const wardrobeBtn = document.getElementById('openWardrobeBtn');
   if (wardrobeBtn) {
     const wardrobeLabels = { pl: 'Szafka', en: 'Wardrobe', uk: 'Гардероб', de: 'Kleiderschrank', es: 'Armario' };
-    wardrobeBtn.textContent = `🧥 ${wardrobeLabels[currentLanguage] || wardrobeLabels.pl} (${petState.unlocked.length}/${PET_ACCESSORIES.length})`;
+    wardrobeBtn.textContent = `${wardrobeLabels[currentLanguage] || wardrobeLabels.pl} (${petState.unlocked.length}/${PET_ACCESSORIES.length})`;
   }
   if (document.getElementById('wardrobeOverlay').classList.contains('visible')) renderWardrobeGrid();
 }
@@ -1675,7 +1282,7 @@ function closeWardrobe() { document.getElementById('wardrobeOverlay').classList.
 // RUCH I CIAŁO — sylwetka interaktywna łącząca ruch z nastrojem
 const BODY_ZONES = {
   head_neck: {
-    icon: '🧠',
+    icon: '',
     title: { pl: 'Głowa i kark', en: 'Head & neck', uk: 'Голова і шия', de: 'Kopf & Nacken', es: 'Cabeza y cuello' },
     link: {
       pl: 'Tu najczęściej najpierw czuć stres i natłok myśli.',
@@ -1685,15 +1292,15 @@ const BODY_ZONES = {
       es: 'Aquí es donde suelen aparecer primero el estrés y los pensamientos acelerados.'
     },
     exercise: {
-      pl: '🏃 Powolne krążenia głową — 8 w każdą stronę (30 sek.)',
-      en: '🏃 Slow neck rolls — 8 each direction (30 sec)',
-      uk: '🏃 Повільні кругові рухи головою — по 8 в кожен бік (30 сек)',
-      de: '🏃 Langsame Nackenrollen — 8 in jede Richtung (30 Sek.)',
-      es: '🏃 Rotaciones lentas de cuello — 8 en cada dirección (30 seg)'
+      pl: 'Powolne krążenia głową — 8 w każdą stronę (30 sek.)',
+      en: 'Slow neck rolls — 8 each direction (30 sec)',
+      uk: 'Повільні кругові рухи головою — по 8 в кожен бік (30 сек)',
+      de: 'Langsame Nackenrollen — 8 in jede Richtung (30 Sek.)',
+      es: 'Rotaciones lentas de cuello — 8 en cada dirección (30 seg)'
     }
   },
   shoulders: {
-    icon: '💪',
+    icon: '',
     title: { pl: 'Barki i ramiona', en: 'Shoulders', uk: 'Плечі', de: 'Schultern', es: 'Hombros' },
     link: {
       pl: 'Spięte barki to klasyczny znak, że nosisz w sobie za dużo.',
@@ -1703,15 +1310,15 @@ const BODY_ZONES = {
       es: 'Los hombros tensos son una señal clásica de que cargas demasiado.'
     },
     exercise: {
-      pl: '🏃 Krążenia ramionami w tył — 10 powtórzeń (40 sek.)',
-      en: '🏃 Shoulder rolls backward — 10 reps (40 sec)',
-      uk: '🏃 Кругові рухи плечима назад — 10 повторень (40 сек)',
-      de: '🏃 Schulterkreisen rückwärts — 10 Wiederholungen (40 Sek.)',
-      es: '🏃 Rotaciones de hombros hacia atrás — 10 repeticiones (40 seg)'
+      pl: 'Krążenia ramionami w tył — 10 powtórzeń (40 sek.)',
+      en: 'Shoulder rolls backward — 10 reps (40 sec)',
+      uk: 'Кругові рухи плечима назад — 10 повторень (40 сек)',
+      de: 'Schulterkreisen rückwärts — 10 Wiederholungen (40 Sek.)',
+      es: 'Rotaciones de hombros hacia atrás — 10 repeticiones (40 seg)'
     }
   },
   chest: {
-    icon: '🫁',
+    icon: '',
     title: { pl: 'Klatka piersiowa', en: 'Chest', uk: 'Грудна клітка', de: 'Brustkorb', es: 'Pecho' },
     link: {
       pl: 'Płytki oddech często idzie w parze z niepokojem.',
@@ -1721,15 +1328,15 @@ const BODY_ZONES = {
       es: 'La respiración superficial suele ir de la mano con la ansiedad.'
     },
     exercise: {
-      pl: '🏃 Oddech 4-7-8 — wdech 4s, zatrzymanie 7s, wydech 8s (3 cykle)',
-      en: '🏃 4-7-8 breathing — inhale 4s, hold 7s, exhale 8s (3 cycles)',
-      uk: '🏃 Дихання 4-7-8 — вдих 4с, затримка 7с, видих 8с (3 цикли)',
-      de: '🏃 4-7-8-Atmung — 4s einatmen, 7s halten, 8s ausatmen (3 Zyklen)',
-      es: '🏃 Respiración 4-7-8 — inhala 4s, retén 7s, exhala 8s (3 ciclos)'
+      pl: 'Oddech 4-7-8 — wdech 4s, zatrzymanie 7s, wydech 8s (3 cykle)',
+      en: '4-7-8 breathing — inhale 4s, hold 7s, exhale 8s (3 cycles)',
+      uk: 'Дихання 4-7-8 — вдих 4с, затримка 7с, видих 8с (3 цикли)',
+      de: '4-7-8-Atmung — 4s einatmen, 7s halten, 8s ausatmen (3 Zyklen)',
+      es: 'Respiración 4-7-8 — inhala 4s, retén 7s, exhala 8s (3 ciclos)'
     }
   },
   core: {
-    icon: '🌀',
+    icon: '',
     title: { pl: 'Brzuch i rdzeń', en: 'Core', uk: 'Корпус', de: 'Rumpf', es: 'Núcleo' },
     link: {
       pl: 'Stabilny rdzeń ciała pomaga też poczuć się stabilniej emocjonalnie.',
@@ -1739,15 +1346,15 @@ const BODY_ZONES = {
       es: 'Un núcleo estable también puede ayudarte a sentirte más estable emocionalmente.'
     },
     exercise: {
-      pl: '🏃 Deska (plank) — 20-30 sek., poczuj oddech w brzuchu',
-      en: '🏃 Plank — 20-30 sec, feel your breath in your belly',
-      uk: '🏃 Планка — 20-30 сек, відчуй дихання животом',
-      de: '🏃 Unterarmstütz (Plank) — 20-30 Sek., spüre den Atem im Bauch',
-      es: '🏃 Plancha (plank) — 20-30 seg, siente la respiración en el vientre'
+      pl: 'Deska (plank) — 20-30 sek., poczuj oddech w brzuchu',
+      en: 'Plank — 20-30 sec, feel your breath in your belly',
+      uk: 'Планка — 20-30 сек, відчуй дихання животом',
+      de: 'Unterarmstütz (Plank) — 20-30 Sek., spüre den Atem im Bauch',
+      es: 'Plancha (plank) — 20-30 seg, siente la respiración en el vientre'
     }
   },
   arms: {
-    icon: '🙌',
+    icon: '',
     title: { pl: 'Ręce i dłonie', en: 'Arms & hands', uk: 'Руки й кисті', de: 'Arme & Hände', es: 'Brazos y manos' },
     link: {
       pl: 'Zaciśnięte dłonie to częsty, niezauważony sygnał stresu.',
@@ -1757,15 +1364,15 @@ const BODY_ZONES = {
       es: 'Los puños apretados son una señal común y a menudo inadvertida de estrés.'
     },
     exercise: {
-      pl: '🏃 Zaciśnij pięści na 5 sek., potem w pełni rozluźnij — powtórz 5 razy',
-      en: '🏃 Clench fists for 5 sec, then fully release — repeat 5 times',
-      uk: '🏃 Стисни кулаки на 5 сек, потім повністю розслаб — повтори 5 разів',
-      de: '🏃 Fäuste 5 Sek. anspannen, dann ganz lösen — 5 Mal wiederholen',
-      es: '🏃 Aprieta los puños 5 seg, luego suelta por completo — repite 5 veces'
+      pl: 'Zaciśnij pięści na 5 sek., potem w pełni rozluźnij — powtórz 5 razy',
+      en: 'Clench fists for 5 sec, then fully release — repeat 5 times',
+      uk: 'Стисни кулаки на 5 сек, потім повністю розслаб — повтори 5 разів',
+      de: 'Fäuste 5 Sek. anspannen, dann ganz lösen — 5 Mal wiederholen',
+      es: 'Aprieta los puños 5 seg, luego suelta por completo — repite 5 veces'
     }
   },
   legs: {
-    icon: '🦵',
+    icon: '',
     title: { pl: 'Nogi', en: 'Legs', uk: 'Ноги', de: 'Beine', es: 'Piernas' },
     link: {
       pl: 'Ruch nóg — nawet krótki spacer — potrafi wyraźnie podbić nastrój.',
@@ -1775,11 +1382,11 @@ const BODY_ZONES = {
       es: 'Mover las piernas — incluso un paseo corto — puede mejorar notablemente el ánimo.'
     },
     exercise: {
-      pl: '🏃 5-minutowy spacer albo 20 przysiadów w swoim tempie',
-      en: '🏃 A 5-minute walk or 20 squats at your own pace',
-      uk: '🏃 5-хвилинна прогулянка або 20 присідань у своєму темпі',
-      de: '🏃 5 Minuten spazieren gehen oder 20 Kniebeugen im eigenen Tempo',
-      es: '🏃 Una caminata de 5 minutos o 20 sentadillas a tu ritmo'
+      pl: '5-minutowy spacer albo 20 przysiadów w swoim tempie',
+      en: 'A 5-minute walk or 20 squats at your own pace',
+      uk: '5-хвилинна прогулянка або 20 присідань у своєму темпі',
+      de: '5 Minuten spazieren gehen oder 20 Kniebeugen im eigenen Tempo',
+      es: 'Una caminata de 5 minutos o 20 sentadillas a tu ritmo'
     }
   }
 };
@@ -1821,7 +1428,7 @@ async function petTheAnimal() {
   // Serduszko unoszące się przy głaskaniu
   const heart = document.createElement('div');
   heart.className = 'heart-particle';
-  heart.textContent = '💗';
+  heart.textContent = '';
   heart.style.left = `${45 + Math.random() * 10}%`;
   heart.style.bottom = '60%';
   stage.appendChild(heart);
@@ -1845,7 +1452,7 @@ async function petTheAnimal() {
 
     // Toast przy odblokowaniu nowego dodatku
     if (data.newlyUnlocked && data.newlyUnlocked.length > 0) {
-      const emoji = PET_ACCESSORIES.find(a => a.key === data.newlyUnlocked[0])?.emoji || '🎁';
+      const emoji = PET_ACCESSORIES.find(a => a.key === data.newlyUnlocked[0])?.emoji || '';
       showUnlockToast(emoji);
     }
   } catch (err) { console.error('Błąd głaskania:', err); }
@@ -1912,11 +1519,11 @@ function copyReferralLink() {
 async function shareReferralLink() {
   if (!currentReferralLink) return;
   const shareTexts = {
-    pl: 'Odkryłam/em Soleil — appkę, która pomaga mi dbać o nastrój każdego dnia. Dołącz, a oboje dostaniemy 7 dni Premium gratis 🎁',
-    en: 'I found Soleil — an app that helps me look after my mood every day. Join and we both get 7 days of Premium free 🎁',
-    uk: 'Я знайшов/ла Soleil — застосунок, який допомагає стежити за настроєм щодня. Приєднуйся, і ми обоє отримаємо 7 днів Premium безкоштовно 🎁',
-    de: 'Ich hab Soleil entdeckt — eine App, die mir hilft, jeden Tag auf meine Stimmung zu achten. Mach mit, dann bekommen wir beide 7 Tage Premium gratis 🎁',
-    es: 'Descubrí Soleil, una app que me ayuda a cuidar mi estado de ánimo cada día. Únete y ambos recibimos 7 días de Premium gratis 🎁'
+    pl: 'Odkryłam/em Soleil — appkę, która pomaga mi dbać o nastrój każdego dnia. Dołącz, a oboje dostaniemy 7 dni Premium gratis',
+    en: 'I found Soleil — an app that helps me look after my mood every day. Join and we both get 7 days of Premium free',
+    uk: 'Я знайшов/ла Soleil — застосунок, який допомагає стежити за настроєм щодня. Приєднуйся, і ми обоє отримаємо 7 днів Premium безкоштовно',
+    de: 'Ich hab Soleil entdeckt — eine App, die mir hilft, jeden Tag auf meine Stimmung zu achten. Mach mit, dann bekommen wir beide 7 Tage Premium gratis',
+    es: 'Descubrí Soleil, una app que me ayuda a cuidar mi estado de ánimo cada día. Únete y ambos recibimos 7 días de Premium gratis'
   };
   const text = shareTexts[currentLanguage] || shareTexts.pl;
   if (navigator.share) {
@@ -1998,7 +1605,7 @@ async function shareWeekSummary() {
 
   // Duży emoji nastroju
   ctx.font = '160px sans-serif';
-  ctx.fillText(lastSummaryData.avgEmoji || '😐', W / 2, cardY + 220);
+  ctx.fillText(lastSummaryData.avgEmoji || '', W / 2, cardY + 220);
 
   ctx.fillStyle = '#e8845a';
   ctx.font = '700 90px "Playfair Display", serif';
@@ -2016,7 +1623,7 @@ async function shareWeekSummary() {
   if (lastSummaryData.streak > 0) {
     ctx.font = '700 44px Lato, sans-serif';
     ctx.fillStyle = '#ff6b35';
-    ctx.fillText(`🔥 ${lastSummaryData.streak} ${texts.streak}`, W / 2, statY + 60);
+    ctx.fillText(`${lastSummaryData.streak} ${texts.streak}`, W / 2, statY + 60);
   }
 
   // Pasek dzień po dniu
@@ -2030,7 +1637,7 @@ async function shareWeekSummary() {
     };
     const dayByDayLabel = { pl: 'Dzień po dniu', en: 'Day by day', uk: 'День за днем', de: 'Tag für Tag', es: 'Día a día' };
     const dowLabels = dayAbbrevs[currentLanguage] || dayAbbrevs.pl;
-    const dayMoodEmojis = { 1: '😔', 2: '😕', 3: '😐', 4: '🙂', 5: '😊' };
+    const dayMoodEmojis = { 1: '', 2: '', 3: '', 4: '', 5: '' };
 
     ctx.fillStyle = '#9e8e83';
     ctx.font = '700 30px Lato, sans-serif';
@@ -2058,7 +1665,7 @@ async function shareWeekSummary() {
       if (day.mood) {
         ctx.font = '42px sans-serif';
         ctx.textBaseline = 'middle';
-        ctx.fillText(dayMoodEmojis[day.mood] || '😐', cx, dotsY + 3);
+        ctx.fillText(dayMoodEmojis[day.mood] || '', cx, dotsY + 3);
         ctx.textBaseline = 'alphabetic';
       } else {
         ctx.strokeStyle = 'rgba(58,46,40,0.28)';
@@ -2128,9 +1735,9 @@ async function loadConversationsList() {
     list.innerHTML = data.conversations.map(conv => {
       const date = new Date(conv.updatedAt).toLocaleDateString('pl-PL', { day: 'numeric', month: 'short' });
       return `<div class="conv-item ${conv.id === currentConversationId ? 'active' : ''}" onclick="loadConversation('${conv.id}')">
-        <div class="conv-icon">💬</div>
+        <div class="conv-icon"></div>
         <div class="conv-info"><div class="conv-title">${conv.title}</div><div class="conv-date">${date}</div></div>
-        <button class="conv-delete" onclick="deleteConversation(event, '${conv.id}')">🗑️</button>
+        <button class="conv-delete" onclick="deleteConversation(event, '${conv.id}')"></button>
       </div>`;
     }).join('');
   } catch (err) { list.innerHTML = `<div class="conv-empty">${t.convsError}</div>`; }
@@ -2212,7 +1819,7 @@ function goBack() {
 function appendMessage(role, text) {
   if (firstMessage) { welcomeMsg.style.display = 'none'; backBtn.classList.add('visible'); firstMessage = false; }
   const row = document.createElement('div'); row.className = `message-row ${role}`;
-  const avatar = document.createElement('div'); avatar.className = `avatar ${role}`; avatar.textContent = role === 'ai' ? '☀️' : '🙂';
+  const avatar = document.createElement('div'); avatar.className = `avatar ${role}`; avatar.textContent = role === 'ai' ? '' : '';
   const bubble = document.createElement('div'); bubble.className = `bubble ${role}`; bubble.innerHTML = text.replace(/\n/g, '<br>');
   row.appendChild(avatar); row.appendChild(bubble); chatWindow.appendChild(row);
   chatWindow.scrollTop = chatWindow.scrollHeight;
@@ -2220,14 +1827,14 @@ function appendMessage(role, text) {
 
 function appendMessageSilent(role, text) {
   const row = document.createElement('div'); row.className = `message-row ${role}`;
-  const avatar = document.createElement('div'); avatar.className = `avatar ${role}`; avatar.textContent = role === 'ai' ? '☀️' : '🙂';
+  const avatar = document.createElement('div'); avatar.className = `avatar ${role}`; avatar.textContent = role === 'ai' ? '' : '';
   const bubble = document.createElement('div'); bubble.className = `bubble ${role}`; bubble.innerHTML = text.replace(/\n/g, '<br>');
   row.appendChild(avatar); row.appendChild(bubble); chatWindow.appendChild(row);
 }
 
 function showTyping() {
   const row = document.createElement('div'); row.className = 'message-row ai'; row.id = 'typingRow';
-  const avatar = document.createElement('div'); avatar.className = 'avatar ai'; avatar.textContent = '☀️';
+  const avatar = document.createElement('div'); avatar.className = 'avatar ai'; avatar.textContent = '';
   const bubble = document.createElement('div'); bubble.className = 'bubble ai typing-indicator';
   bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
   row.appendChild(avatar); row.appendChild(bubble); chatWindow.appendChild(row);
@@ -2256,16 +1863,16 @@ async function sendMessage() {
     if (res.status === 429 && data.error === 'limit') {
       const banner = document.createElement('div');
       banner.className = 'limit-banner';
-      banner.innerHTML = `<p>${data.message}</p><button onclick="openPremium()">✨ Zobacz Premium</button>`;
+      banner.innerHTML = `<p>${data.message}</p><button onclick="openPremium()">Zobacz Premium</button>`;
       chatWindow.appendChild(banner);
       chatWindow.scrollTop = chatWindow.scrollHeight;
       conversationHistory.pop();
       return;
     }
 
-    if (!res.ok) { appendMessage('ai', 'Przepraszam, wystąpił błąd. 🌸'); return; }
+    if (!res.ok) { appendMessage('ai', 'Przepraszam, wystąpił błąd.'); return; }
     if (data.conversationId) currentConversationId = data.conversationId;
-    const reply = data.reply || 'Przepraszam, spróbuj jeszcze raz. 🌸';
+    const reply = data.reply || 'Przepraszam, spróbuj jeszcze raz.';
     conversationHistory.push({ role: 'assistant', content: reply });
     appendMessage('ai', reply);
   } catch (err) {
@@ -2279,7 +1886,7 @@ async function sendMessage() {
       return;
     }
     removeTyping();
-    appendMessage('ai', 'Przepraszam, mam chwilowe trudności z połączeniem. 🌸');
+    appendMessage('ai', 'Przepraszam, mam chwilowe trudności z połączeniem.');
   }
 }
 
@@ -2346,7 +1953,6 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
   const hyUpdateInterfaceLanguage = updateInterfaceLanguage;
   updateInterfaceLanguage = function (lang) {
     hyUpdateInterfaceLanguage(lang);
-    $('hyMoodLabel').textContent = HY_MOOD[lang] || HY_MOOD.pl;
     $('hyFreeNote').textContent = HY_FREE[lang] || HY_FREE.pl;
     document.querySelectorAll('.body-chip').forEach((b) => {
       const z = BODY_ZONES[b.dataset.zone];
@@ -2385,5 +1991,6 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
 </script>
 <script src="offline-companion.js"></script>
 <script src="voice.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
