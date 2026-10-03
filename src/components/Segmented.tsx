@@ -12,13 +12,13 @@ interface Props<T extends string> {
   invalid?: boolean
 }
 
-/** Pill-style radio group (the "Przód / Tył", "Kobieta / Mężczyzna" switches). */
+/** Square segmented radio group (the "Przód / Tył", "Kobieta / Mężczyzna" switches); the chosen segment is green. */
 export default function Segmented<T extends string>({ options, value, onChange, label, size = 'md', invalid }: Props<T>) {
   return (
     <div
       role="radiogroup"
       aria-label={label}
-      className={`inline-flex rounded-full border bg-white p-0.5 ${invalid ? 'border-red-400 ring-2 ring-red-100' : 'border-slate-300'}`}
+      className={`inline-flex border ${invalid ? 'border-alarm' : 'border-line-2'}`}
     >
       {options.map((o) => {
         const checked = o.value === value
@@ -29,8 +29,8 @@ export default function Segmented<T extends string>({ options, value, onChange, 
             role="radio"
             aria-checked={checked}
             onClick={() => onChange(o.value)}
-            className={`rounded-full font-medium transition-colors ${size === 'sm' ? 'px-3 py-1 text-sm' : 'px-4 py-1.5 text-sm sm:text-base'} ${
-              checked ? 'bg-teal-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-100'
+            className={`border-l border-line-2 first:border-l-0 transition-colors ${size === 'sm' ? 'min-h-10 px-3 text-[0.9375rem]' : 'min-h-11 px-4 text-base'} ${
+              checked ? 'bg-green font-bold text-green-ink' : 'font-medium text-ink hover:bg-s2'
             }`}
           >
             {o.label}

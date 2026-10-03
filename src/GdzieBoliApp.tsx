@@ -77,12 +77,12 @@ function GdzieBoliApp() {
   }
 
   return (
-    <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
+    <div className="ambient flex min-h-dvh flex-col font-sans text-ink">
       <Header path={path} />
       <main className="flex-1">{screen}</main>
       <Footer />
       {toast && (
-        <div role="status" className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-lg">
+        <div role="status" className="fixed bottom-5 left-1/2 z-50 max-w-[calc(100%-2rem)] -translate-x-1/2 border border-line-2 bg-s2 px-4 py-2.5 text-[0.9375rem] font-medium text-ink">
           {toast}
         </div>
       )}

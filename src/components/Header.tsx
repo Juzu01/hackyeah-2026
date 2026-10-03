@@ -5,12 +5,12 @@ interface Props {
   path: Path
 }
 
-export function Logo({ className = 'h-7 w-7' }: { className?: string }) {
+/** Soleil's mark language: a sharp green diamond with a black point at its centre ("here it hurts"). */
+export function Logo({ className = 'h-6 w-6' }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" className={className} aria-hidden="true">
-      <rect width="32" height="32" rx="8" className="fill-teal-700" />
-      <path d="M16 6.5c-3.6 0-6.5 2.9-6.5 6.5 0 4.9 6.5 12.5 6.5 12.5s6.5-7.6 6.5-12.5c0-3.6-2.9-6.5-6.5-6.5z" className="fill-white" />
-      <circle cx="16" cy="13" r="2.6" className="fill-teal-700" />
+      <path d="M16 2 30 16 16 30 2 16z" className="fill-green" />
+      <path d="M16 12.5 19.5 16 16 19.5 12.5 16z" className="fill-page" />
     </svg>
   )
 }
@@ -19,7 +19,8 @@ export function Logo({ className = 'h-7 w-7' }: { className?: string }) {
 export default function Header({ path }: Props) {
   const account = useAccount()
   const link = (to: Path, label: string) => (
-    <a href={to === '/' ? '#' : `#${to}`} className={`rounded-lg px-2.5 py-1.5 text-sm font-medium hover:bg-slate-100 ${path === to ? 'text-teal-800' : 'text-slate-600'}`}>
+    <a href={to === '/' ? '#' : `#${to}`} aria-current={path === to ? 'page' : undefined}
+      className={`inline-flex min-h-11 items-center border-b-2 px-2.5 text-[0.9375rem] font-medium hover:text-ink ${path === to ? 'border-green text-ink' : 'border-transparent text-ink-2'}`}>
       {label}
     </a>
   )
@@ -31,12 +32,12 @@ export default function Header({ path }: Props) {
     .toUpperCase()
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur print:hidden">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2.5">
-        <a href="#" className="flex items-center gap-2">
+    <header className="ambient sticky top-0 z-30 border-b border-line print:hidden">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5">
+        <a href="#" className="flex min-h-11 items-center gap-2.5">
           <Logo />
-          <span className="text-lg font-bold tracking-tight text-slate-900">Gdzie boli?</span>
-          <span className="hidden text-xs text-slate-500 sm:inline">wstępna ocena objawów</span>
+          <span className="font-serif text-[1.375rem] leading-none font-medium tracking-tight text-ink">Gdzie boli?</span>
+          <span className="hidden text-sm text-ink-2 sm:inline">wstępna ocena objawów</span>
         </a>
         <nav className="flex items-center gap-1" aria-label="Główna">
           {link('/historia', 'Historia')}
@@ -45,36 +46,36 @@ export default function Header({ path }: Props) {
             <button
               type="button"
               onClick={account.signIn}
-              className="ml-1 rounded-full border border-teal-700 px-3.5 py-1.5 text-sm font-semibold text-teal-800 hover:bg-teal-50"
+              className="btn-secondary is-sm ml-1"
             >
               Zaloguj się
             </button>
           )}
-          {account.status === 'loading' && <span className="ml-1 w-20 animate-pulse rounded-full bg-slate-100 py-1.5 text-center text-xs text-slate-400">…</span>}
+          {account.status === 'loading' && <span className="ml-1 w-20 animate-pulse bg-s2 py-1.5 text-center text-xs text-ink-2">…</span>}
           {account.status === 'signed-in' && account.user && (
             <details className="relative ml-1">
-              <summary className="flex cursor-pointer list-none items-center gap-2 rounded-full border border-slate-200 py-1 pr-3 pl-1 hover:bg-slate-50 [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 border border-line-2 py-1 pr-3 pl-1 hover:bg-s2 [&::-webkit-details-marker]:hidden">
                 {account.user.imageUrl ? (
-                  <img src={account.user.imageUrl} alt="" className="h-7 w-7 rounded-full" />
+                  <img src={account.user.imageUrl} alt="" className="h-7 w-7" />
                 ) : (
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-teal-700 text-xs font-bold text-white">{initials}</span>
+                  <span className="flex h-7 w-7 items-center justify-center bg-green text-xs font-bold text-green-ink">{initials}</span>
                 )}
-                <span className="max-w-[9rem] truncate text-sm font-medium text-slate-800">{account.user.name}</span>
+                <span className="max-w-[9rem] truncate text-[0.9375rem] font-medium text-ink">{account.user.name}</span>
               </summary>
-              <div className="absolute right-0 mt-1 w-52 rounded-xl border border-slate-200 bg-white p-1 shadow-lg">
-                {account.user.email && <p className="truncate px-3 py-1.5 text-xs text-slate-500">{account.user.email}</p>}
-                <a href="#/historia" className="block rounded-lg px-3 py-2 text-sm hover:bg-slate-50">
+              <div className="absolute right-0 mt-1 w-56 border border-line-2 bg-s1 p-1">
+                {account.user.email && <p className="truncate px-3 py-1.5 text-sm text-ink-2">{account.user.email}</p>}
+                <a href="#/historia" className="block px-3 py-2.5 text-[0.9375rem] text-ink hover:bg-s2">
                   Historia analiz
                 </a>
                 {account.provider === 'clerk' && (
-                  <button type="button" onClick={account.openProfile} className="block w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-slate-50">
+                  <button type="button" onClick={account.openProfile} className="block w-full px-3 py-2.5 text-left text-[0.9375rem] text-ink hover:bg-s2">
                     Ustawienia konta
                   </button>
                 )}
-                <button type="button" onClick={() => void account.signOut()} className="block w-full rounded-lg px-3 py-2 text-left text-sm text-red-700 hover:bg-red-50">
+                <button type="button" onClick={() => void account.signOut()} className="block w-full px-3 py-2.5 text-left text-[0.9375rem] text-alarm hover:bg-alarm-soft">
                   Wyloguj się
                 </button>
-                {account.provider === 'local' && <p className="px-3 py-1.5 text-xs text-slate-400">tryb lokalny, bez serwera</p>}
+                {account.provider === 'local' && <p className="px-3 py-1.5 text-sm text-ink-2">tryb lokalny, bez serwera</p>}
               </div>
             </details>
           )}

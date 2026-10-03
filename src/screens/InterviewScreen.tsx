@@ -17,8 +17,8 @@ function Tile({ selected, onClick, children, tone = 'default' }: { selected?: bo
       type="button"
       onClick={onClick}
       aria-pressed={selected}
-      className={`rounded-2xl border-2 px-4 py-4 text-left text-base font-medium shadow-sm transition-colors sm:text-lg ${
-        selected ? 'border-teal-700 bg-teal-50 text-teal-900' : tone === 'yes' ? 'border-slate-200 bg-white text-slate-800 hover:border-red-300 hover:bg-red-50' : 'border-slate-200 bg-white text-slate-800 hover:border-teal-400 hover:bg-teal-50'
+      className={`min-h-14 border px-4 py-3.5 text-left text-base font-medium transition-colors sm:text-lg ${
+        selected ? 'border-green bg-green-soft text-ink' : tone === 'yes' ? 'border-line-2 bg-s2 text-ink hover:border-alarm-line hover:bg-alarm-soft' : 'border-line-2 bg-s2 text-ink hover:border-green/60'
       }`}
     >
       {children}
@@ -59,29 +59,31 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
   if (interrupt) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-8">
-        <section className="overflow-hidden rounded-2xl border-2 border-red-700 bg-red-50 shadow-sm" aria-live="assertive">
-          <div className="bg-red-700 px-5 py-3 text-white">
-            <p className="text-xs font-semibold tracking-wide uppercase opacity-90">Stan nagły</p>
-            <h1 className="text-2xl font-bold">Wezwij pomoc teraz: 112 lub 999</h1>
+        <section className="cut overflow-hidden border border-alarm-line bg-s1" aria-live="assertive">
+          <div className="border-b border-alarm-line bg-alarm-soft px-5 py-4">
+            <p className="eyebrow text-alarm">Stan nagły</p>
+            <h1 className="mt-1 font-serif text-[1.75rem] leading-tight font-medium text-ink">
+              Wezwij pomoc teraz: <span className="text-alarm">112</span> lub <span className="text-alarm">999</span>
+            </h1>
           </div>
-          <div className="space-y-4 px-5 py-4 text-slate-800">
+          <div className="space-y-4 px-5 py-4 text-base text-ink">
             <p>
               Odpowiedź „tak” na to pytanie oznacza możliwe zagrożenie życia ({interrupt.reason}). Nie czekaj na resztę pytań ani na wynik.
             </p>
-            <div className="flex flex-wrap gap-2">
-              <a href="tel:112" className="rounded-xl bg-slate-900 px-5 py-3 text-lg font-semibold text-white shadow hover:bg-slate-800">
+            <div className="grid gap-2 sm:flex sm:flex-wrap">
+              <a href="tel:112" className="btn-primary is-alarm text-lg">
                 Zadzwoń: 112
               </a>
-              <a href="tel:999" className="rounded-xl bg-slate-900 px-5 py-3 text-lg font-semibold text-white shadow hover:bg-slate-800">
+              <a href="tel:999" className="btn-primary is-alarm text-lg">
                 Pogotowie: 999
               </a>
             </div>
-            <p className="text-sm text-slate-600">Jeśli to pomyłka, możesz wrócić i zmienić odpowiedź.</p>
-            <div className="flex flex-wrap gap-3 pt-1 text-sm">
-              <button type="button" onClick={back} className="rounded-full border border-slate-300 bg-white px-4 py-2 font-medium hover:bg-slate-50">
+            <p className="text-ink-2">Jeśli to pomyłka, możesz wrócić i zmienić odpowiedź.</p>
+            <div className="grid gap-2 pt-1 sm:flex sm:flex-wrap">
+              <button type="button" onClick={back} className="btn-secondary">
                 Wróć do pytania
               </button>
-              <button type="button" onClick={onDone} className="rounded-full border border-slate-300 bg-white px-4 py-2 font-medium hover:bg-slate-50">
+              <button type="button" onClick={onDone} className="btn-secondary">
                 Pokaż wynik mimo to
               </button>
             </div>
@@ -96,8 +98,8 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
   return (
     <div className="mx-auto max-w-2xl px-4 py-6 sm:py-8">
       <div className="mb-5">
-        <div className="flex items-center justify-between text-sm text-slate-600">
-          <button type="button" onClick={back} className="inline-flex items-center gap-1 rounded-lg px-2 py-1 font-medium hover:bg-slate-100">
+        <div className="flex items-center justify-between text-[0.9375rem] text-ink-2">
+          <button type="button" onClick={back} className="-ml-2 inline-flex min-h-11 items-center gap-1.5 px-2 font-medium text-ink hover:bg-s2">
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M19 12H5m6 6-6-6 6-6" />
             </svg>
@@ -107,21 +109,21 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
             Pytanie {i + 1} z {steps.length}
           </span>
         </div>
-        <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
-          <div className="h-full rounded-full bg-teal-600 transition-all" style={{ width: `${progress}%` }} />
+        <div className="mt-2 h-0.5 w-full overflow-hidden bg-line-2" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
+          <div className="h-full bg-green transition-all" style={{ width: `${progress}%` }} />
         </div>
       </div>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7" aria-live="polite">
+      <section className="cut border border-line bg-s1 p-5 sm:p-7" aria-live="polite">
         {step.kind === 'flag' && (
           <>
-            <p className="text-xs font-semibold tracking-wide text-red-700 uppercase">Objawy alarmowe</p>
-            <h1 className="mt-1 text-xl font-semibold leading-snug text-slate-900 sm:text-2xl">{step.flag.question}</h1>
-            <button type="button" onClick={() => setWhy((w) => !w)} className="mt-2 text-sm font-medium text-teal-800 hover:underline" aria-expanded={why}>
+            <p className="eyebrow text-alarm">Objawy alarmowe</p>
+            <h1 className="mt-1.5 font-serif text-[1.625rem] leading-tight font-medium text-ink sm:text-[2rem]">{step.flag.question}</h1>
+            <button type="button" onClick={() => setWhy((w) => !w)} className="mt-2 inline-flex min-h-11 items-center text-base font-semibold text-green underline-offset-4 hover:underline" aria-expanded={why}>
               Dlaczego o to pytamy?
             </button>
             {why && (
-              <p className="mt-1 rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-600">
+              <p className="border-l-2 border-green bg-s2 px-3 py-2.5 text-base text-ink-2">
                 Najpierw wykluczamy objawy, które wymagają natychmiastowej pomocy ({step.flag.reason}). Odpowiedź „tak” zmienia zalecenie niezależnie od reszty wywiadu.
               </p>
             )}
@@ -141,8 +143,8 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
 
         {step.kind === 'duration' && (
           <>
-            <p className="text-xs font-semibold tracking-wide text-slate-500 uppercase">Przebieg</p>
-            <h1 className="mt-1 text-xl font-semibold text-slate-900 sm:text-2xl">Od jak dawna trwają objawy?</h1>
+            <p className="eyebrow">Przebieg</p>
+            <h1 className="mt-1.5 font-serif text-[1.625rem] leading-tight font-medium text-ink sm:text-[2rem]">Od jak dawna trwają objawy?</h1>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {(
                 [
@@ -169,8 +171,8 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
 
         {step.kind === 'onset' && (
           <>
-            <p className="text-xs font-semibold tracking-wide text-slate-500 uppercase">Przebieg</p>
-            <h1 className="mt-1 text-xl font-semibold text-slate-900 sm:text-2xl">Jak zaczęły się objawy?</h1>
+            <p className="eyebrow">Przebieg</p>
+            <h1 className="mt-1.5 font-serif text-[1.625rem] leading-tight font-medium text-ink sm:text-[2rem]">Jak zaczęły się objawy?</h1>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {(
                 [
@@ -195,9 +197,9 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
 
         {step.kind === 'severity' && (
           <>
-            <p className="text-xs font-semibold tracking-wide text-slate-500 uppercase">Nasilenie</p>
-            <h1 className="mt-1 text-xl font-semibold text-slate-900 sm:text-2xl">Jak silne są dolegliwości?</h1>
-            <p className="mt-1 text-sm text-slate-600">1 to ledwo odczuwalne, 10 to najgorsze, jakie potrafisz sobie wyobrazić.</p>
+            <p className="eyebrow">Nasilenie</p>
+            <h1 className="mt-1.5 font-serif text-[1.625rem] leading-tight font-medium text-ink sm:text-[2rem]">Jak silne są dolegliwości?</h1>
+            <p className="mt-2 text-base text-ink-2">1 to ledwo odczuwalne, 10 to najgorsze, jakie potrafisz sobie wyobrazić.</p>
             <div className="mt-5 grid grid-cols-5 gap-2 sm:grid-cols-10" role="radiogroup" aria-label="Nasilenie od 1 do 10">
               {Array.from({ length: 10 }, (_, k) => k + 1).map((v) => (
                 <button
@@ -209,15 +211,15 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
                     update({ severity: v })
                     next()
                   }}
-                  className={`aspect-square rounded-xl border-2 text-lg font-semibold ${
-                    draft.severity === v ? 'border-teal-700 bg-teal-700 text-white' : v >= 8 ? 'border-slate-200 bg-white hover:border-red-300 hover:bg-red-50' : 'border-slate-200 bg-white hover:border-teal-400 hover:bg-teal-50'
+                  className={`aspect-square border text-lg font-semibold tabular-nums ${
+                    draft.severity === v ? 'border-green bg-green font-bold text-green-ink' : v >= 8 ? 'border-line-2 bg-s2 text-ink hover:border-alarm-line hover:bg-alarm-soft' : 'border-line-2 bg-s2 text-ink hover:border-green/60'
                   }`}
                 >
                   {v}
                 </button>
               ))}
             </div>
-            <div className="mt-2 flex justify-between text-xs text-slate-500">
+            <div className="mt-2 flex justify-between text-sm text-ink-2">
               <span>Łagodne</span>
               <span>Umiarkowane</span>
               <span>Nie do zniesienia</span>
@@ -227,8 +229,8 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
 
         {step.kind === 'trend' && (
           <>
-            <p className="text-xs font-semibold tracking-wide text-slate-500 uppercase">Przebieg</p>
-            <h1 className="mt-1 text-xl font-semibold text-slate-900 sm:text-2xl">Jak zmieniają się objawy?</h1>
+            <p className="eyebrow">Przebieg</p>
+            <h1 className="mt-1.5 font-serif text-[1.625rem] leading-tight font-medium text-ink sm:text-[2rem]">Jak zmieniają się objawy?</h1>
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
               {(
                 [
@@ -252,7 +254,7 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
           </>
         )}
       </section>
-      <p className="mt-4 text-center text-xs text-slate-500">Twoje odpowiedzi zostają w tej przeglądarce i nie są nigdzie wysyłane.</p>
+      <p className="mt-4 text-center text-sm text-ink-2">Twoje odpowiedzi zostają w tej przeglądarce i nie są nigdzie wysyłane.</p>
     </div>
   )
 }

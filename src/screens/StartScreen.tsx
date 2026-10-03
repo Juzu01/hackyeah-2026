@@ -95,8 +95,8 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
   return (
     <div className="mx-auto max-w-6xl px-4 pb-24 lg:pb-8">
       <div className="pt-4 pb-3 sm:pt-6 sm:pb-4 lg:pt-8">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-4xl">{draft.forWhom === 'me' ? 'Gdzie Cię boli?' : 'Gdzie boli tę osobę?'}</h1>
-        <p className="mt-1.5 max-w-2xl text-slate-600">
+        <h1 className="font-serif text-[2.125rem] leading-[1.1] font-medium tracking-tight text-ink sm:text-5xl">{draft.forWhom === 'me' ? 'Gdzie Cię boli?' : 'Gdzie boli tę osobę?'}</h1>
+        <p className="mt-2 max-w-2xl text-base text-ink-2">
           <span className="sm:hidden">Wskaż miejsce na sylwetce albo wpisz objaw – wstępna ocena w ok. 3 minuty.</span>
           <span className="hidden sm:inline">Wskaż miejsce na sylwetce albo wpisz objaw. Potem kilka pytań i dostaniesz wstępną ocenę: co to może być i gdzie szukać pomocy. Zajmie to około 3 minuty.</span>
         </p>
@@ -107,9 +107,9 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
       </div>
 
       {/* Pre-step: who, sex, age. Inline, so the body stays on screen 1. */}
-      <div ref={preStep} className={`mb-5 flex flex-wrap items-end gap-x-6 gap-y-3 rounded-2xl border bg-white px-4 py-3 shadow-sm ${invalidPerson ? 'border-red-300' : 'border-slate-200'}`}>
+      <div ref={preStep} className={`cut mb-5 flex flex-wrap items-end gap-x-5 gap-y-3.5 border bg-s1 px-4 py-3.5 ${invalidPerson ? 'border-alarm-line' : 'border-line'}`}>
         <div>
-          <p className="mb-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">Dla kogo</p>
+          <p className="eyebrow mb-1.5">Dla kogo</p>
           <Segmented<ForWhom>
             label="Dla kogo jest ta ocena"
             size="sm"
@@ -122,7 +122,7 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
           />
         </div>
         <div>
-          <p className="mb-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">Płeć</p>
+          <p className="eyebrow mb-1.5">Płeć</p>
           <Segmented<Sex>
             label="Płeć"
             size="sm"
@@ -139,7 +139,7 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
           />
         </div>
         <div>
-          <label htmlFor="age" className="mb-1 block text-xs font-semibold tracking-wide text-slate-500 uppercase">
+          <label htmlFor="age" className="eyebrow mb-1.5 block">
             Wiek
           </label>
           <div className="flex items-center gap-2">
@@ -154,12 +154,13 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
                 update({ age: e.target.value === '' ? undefined : Math.max(0, Math.min(120, Number(e.target.value))) })
                 setError(null)
               }}
-              className={`w-20 rounded-full border px-3 py-1 text-center text-sm outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-100 ${invalidPerson && draft.age === undefined ? 'border-red-400' : 'border-slate-300'}`}
+              aria-invalid={invalidPerson && draft.age === undefined}
+              className="field h-10 w-[4.5rem] px-2 text-center text-base"
             />
-            <span className="text-sm text-slate-500">lat</span>
+            <span className="text-base text-ink-2">lat</span>
           </div>
         </div>
-        {draft.age !== undefined && draft.age < 18 && <p className="basis-full text-xs text-amber-700">Narzędzie jest przygotowane dla dorosłych; u dzieci i młodzieży objawy zawsze powinien ocenić lekarz.</p>}
+        {draft.age !== undefined && draft.age < 18 && <p className="basis-full text-sm text-care-urgent">Narzędzie jest przygotowane dla dorosłych; u dzieci i młodzieży objawy zawsze powinien ocenić lekarz.</p>}
       </div>
 
       <div className="grid gap-5 lg:grid-cols-12 lg:grid-rows-[auto_1fr_auto]">
@@ -169,7 +170,7 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
         </div>
 
         {/* The body. */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm lg:col-span-5 lg:col-start-1 lg:row-span-3 lg:row-start-1">
+        <div className="cut border border-line bg-s1 p-3 lg:col-span-5 lg:col-start-1 lg:row-span-3 lg:row-start-1">
           <div className="flex items-center justify-between gap-2">
             <Segmented<View>
               label="Widok"
@@ -184,7 +185,7 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
                 { value: 'back', label: 'Tył' },
               ]}
             />
-            <p className="min-h-5 truncate text-right text-sm text-slate-600" aria-live="polite">
+            <p className="min-h-5 truncate text-right text-[0.9375rem] text-ink-2" aria-live="polite">
               {hover ? regionLabel(hover) : target?.kind === 'region' ? regionLabel(target.region) : 'Kliknij miejsce, które boli'}
             </p>
           </div>
@@ -197,10 +198,10 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
             className="mx-auto mt-2 h-[58vh] max-h-[560px] w-auto max-w-full"
           />
           <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-            <button type="button" onClick={() => setTarget({ kind: 'general' })} className={`rounded-full border px-3 py-1.5 text-sm font-medium ${target?.kind === 'general' ? 'border-teal-700 bg-teal-700 text-white' : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'}`}>
+            <button type="button" onClick={() => setTarget({ kind: 'general' })} aria-pressed={target?.kind === 'general'} className="chip">
               Objawy ogólne
             </button>
-            <button type="button" onClick={() => setTarget({ kind: 'skin' })} className={`rounded-full border px-3 py-1.5 text-sm font-medium ${target?.kind === 'skin' ? 'border-teal-700 bg-teal-700 text-white' : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'}`}>
+            <button type="button" onClick={() => setTarget({ kind: 'skin' })} aria-pressed={target?.kind === 'skin'} className="chip">
               Skóra
             </button>
             <label className="sr-only" htmlFor="region-select">
@@ -213,7 +214,7 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
                 const r = regionsOfView.find((x) => x.id === e.target.value)
                 if (r) selectRegion(r)
               }}
-              className="rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-700"
+              className="field h-10 px-2.5 text-[0.9375rem]"
             >
               <option value="">Wybierz z listy…</option>
               {regionsOfView.map((r) => (
@@ -228,11 +229,11 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
         {/* Symptom list for the chosen place (inline on desktop, bottom sheet on phones). */}
         <div className="lg:col-span-7 lg:col-start-6 lg:row-start-2">
           {isDesktop && target ? (
-            <div className="flex max-h-[560px] flex-col overflow-hidden rounded-2xl border border-teal-200 bg-white shadow-sm">{panel}</div>
+            <div className="cut flex max-h-[560px] flex-col overflow-hidden border border-green/35 bg-s1">{panel}</div>
           ) : (
-            <div className="rounded-2xl border border-dashed border-slate-300 bg-white/60 px-4 py-4 text-sm text-slate-600">
-              <p className="font-medium text-slate-700">Jak to działa</p>
-              <ol className="mt-1 list-decimal space-y-0.5 pl-5">
+            <div className="border border-line px-4 py-4 text-base text-ink-2">
+              <p className="eyebrow">Jak to działa</p>
+              <ol className="mt-2 list-decimal space-y-1.5 pl-5 marker:text-green">
                 <li>Kliknij miejsce na sylwetce – pokaże się krótka lista objawów dla tej okolicy.</li>
                 <li>Zaznacz wszystko, co pasuje; możesz wskazać kilka miejsc.</li>
                 <li>Objawy bez konkretnego miejsca (gorączka, osłabienie, wysypka) znajdziesz pod sylwetką albo w wyszukiwarce.</li>
@@ -240,10 +241,10 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
             </div>
           )}
 
-          <div className="mt-4 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
-            <p className="text-sm font-semibold text-slate-700">Twoje objawy ({draft.picks.length})</p>
+          <div className="cut mt-4 border border-line bg-s1 px-4 py-3.5">
+            <p className="eyebrow">Twoje objawy ({draft.picks.length})</p>
             {draft.picks.length === 0 ? (
-              <p className="mt-1 text-sm text-slate-500">Nie wybrano jeszcze objawów.</p>
+              <p className="mt-1.5 text-base text-ink-2">Nie wybrano jeszcze objawów.</p>
             ) : (
               <ul className="mt-2 flex flex-wrap gap-2">
                 {draft.picks.map((p) => (
@@ -251,13 +252,13 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
                     <button
                       type="button"
                       onClick={() => togglePick(p.symptomId)}
-                      className="group inline-flex items-center gap-1.5 rounded-full bg-teal-50 py-1 pr-2 pl-3 text-sm text-teal-900 ring-1 ring-teal-200 hover:bg-teal-100"
+                      className="group inline-flex min-h-10 items-center gap-2 border border-green/40 bg-green-soft py-1 pr-2 pl-3 text-[0.9375rem] text-ink hover:border-green"
                       aria-label={`Usuń objaw: ${symptomName(p.symptomId)}`}
                     >
                       {symptomName(p.symptomId)}
-                      <span aria-hidden="true" className="rounded-full px-1 text-teal-700 group-hover:bg-teal-200">
-                        ×
-                      </span>
+                      <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4 text-green" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="square">
+                        <path d="M6 6l12 12M18 6 6 18" />
+                      </svg>
                     </button>
                   </li>
                 ))}
@@ -267,21 +268,21 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
         </div>
 
         {/* Next: sticky on phones so it is reachable while scrolling the body. */}
-        <div className="sticky bottom-0 z-20 -mx-4 border-t border-slate-200 bg-white/95 px-4 py-3 backdrop-blur lg:static lg:col-span-7 lg:col-start-6 lg:row-start-3 lg:mx-0 lg:rounded-2xl lg:border lg:shadow-sm">
+        <div className="sticky bottom-0 z-20 -mx-4 border-t border-line-2 bg-page px-4 py-3 lg:static lg:col-span-7 lg:col-start-6 lg:row-start-3 lg:mx-0 lg:border lg:border-line lg:bg-s1">
           {error && (
-            <p role="alert" className="mb-2 text-sm font-medium text-red-700">
+            <p role="alert" className="mb-2 text-base font-medium text-alarm">
               {error}
             </p>
           )}
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <label className="flex items-start gap-2 text-sm text-slate-600">
-              <input type="checkbox" checked={consent} onChange={(e) => setConsentPersist(e.target.checked)} className="mt-0.5 h-4 w-4 accent-teal-700" />
+            <label className="flex cursor-pointer items-start gap-2.5 text-[0.9375rem] leading-snug text-ink-2">
+              <input type="checkbox" checked={consent} onChange={(e) => setConsentPersist(e.target.checked)} className="check mt-0.5" />
               <span>Rozumiem, że wynik to wstępna ocena na podstawie moich odpowiedzi, a nie diagnoza.</span>
             </label>
             <button
               type="button"
               onClick={next}
-              className="inline-flex items-center gap-2 rounded-full bg-teal-700 px-6 py-3 text-base font-semibold text-white shadow-md hover:bg-teal-800 disabled:cursor-not-allowed disabled:bg-slate-300"
+              className="btn-primary px-7"
             >
               Dalej{draft.picks.length > 0 ? ` (${draft.picks.length})` : ''}
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -295,12 +296,12 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
       {/* Bottom sheet on phones. */}
       {!isDesktop && target && (
         <div className="fixed inset-0 z-40 flex items-end" role="dialog" aria-modal="true" aria-label="Lista objawów">
-          <button type="button" aria-label="Zamknij" className="absolute inset-0 bg-slate-900/40" onClick={closePanel} />
-          <div className="relative flex max-h-[78vh] w-full flex-col overflow-hidden rounded-t-2xl bg-white shadow-2xl">
-            <div className="mx-auto mt-2 h-1.5 w-10 shrink-0 rounded-full bg-slate-300" aria-hidden="true" />
+          <button type="button" aria-label="Zamknij" className="absolute inset-0 bg-black/70" onClick={closePanel} />
+          <div className="cut flex max-h-[78vh] w-full flex-col overflow-hidden border-t border-line-2 bg-s1">
+            <div className="mx-auto mt-2 h-1 w-10 shrink-0 bg-line-2" aria-hidden="true" />
             {panel}
-            <div className="shrink-0 border-t border-slate-200 px-4 py-3">
-              <button type="button" onClick={closePanel} className="w-full rounded-full bg-teal-700 py-2.5 text-base font-semibold text-white hover:bg-teal-800">
+            <div className="shrink-0 border-t border-line px-4 py-3">
+              <button type="button" onClick={closePanel} className="btn-primary w-full">
                 Gotowe{draft.picks.length > 0 ? ` (${draft.picks.length})` : ''}
               </button>
             </div>

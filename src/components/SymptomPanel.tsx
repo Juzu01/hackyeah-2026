@@ -18,9 +18,9 @@ const fold = (t: string) => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,
 
 function Row({ s, checked, onChange }: { s: Symptom; checked: boolean; onChange: () => void }) {
   return (
-    <label className={`flex cursor-pointer items-start gap-3 rounded-lg px-2 py-2 transition-colors hover:bg-slate-50 ${checked ? 'bg-teal-50' : ''}`}>
-      <input type="checkbox" checked={checked} onChange={onChange} className="mt-1 h-5 w-5 shrink-0 accent-teal-700" />
-      <span className="text-[15px] leading-snug text-slate-800">{s.name}</span>
+    <label className={`flex min-h-11 cursor-pointer items-start gap-3 px-2 py-2.5 transition-colors ${checked ? 'bg-green-soft' : 'hover:bg-s2'}`}>
+      <input type="checkbox" checked={checked} onChange={onChange} className="check mt-0.5" />
+      <span className="text-base leading-snug text-ink">{s.name}</span>
     </label>
   )
 }
@@ -53,12 +53,12 @@ export default function SymptomPanel({ target, sex, picked, onToggle, onClose }:
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      <div className="flex shrink-0 items-start justify-between gap-3 border-b border-slate-200 px-4 py-3">
+      <div className="flex shrink-0 items-start justify-between gap-3 border-b border-line px-4 py-3">
         <div>
-          <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
-          <p className="text-sm text-slate-500">Zaznacz wszystko, co pasuje.</p>
+          <h2 className="font-serif text-[1.375rem] leading-tight font-medium text-ink">{title}</h2>
+          <p className="mt-0.5 text-[0.9375rem] text-ink-2">Zaznacz wszystko, co pasuje.</p>
         </div>
-        <button type="button" onClick={onClose} aria-label="Zamknij listę" className="rounded-full p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800">
+        <button type="button" onClick={onClose} aria-label="Zamknij listę" className="-mr-1.5 flex h-11 w-11 shrink-0 items-center justify-center text-ink-2 hover:bg-s2 hover:text-ink">
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
             <path d="M6 6l12 12M18 6 6 18" />
           </svg>
@@ -75,7 +75,7 @@ export default function SymptomPanel({ target, sex, picked, onToggle, onClose }:
                 role="tab"
                 aria-selected={sub === a.id}
                 onClick={() => setSub(a.id)}
-                className={`rounded-full border px-3 py-1 text-sm ${sub === a.id ? 'border-teal-700 bg-teal-700 text-white' : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'}`}
+                className="chip"
               >
                 {a.label}
               </button>
@@ -90,19 +90,19 @@ export default function SymptomPanel({ target, sex, picked, onToggle, onClose }:
               onChange={(e) => setFilter(e.target.value)}
               placeholder="Filtruj listę…"
               aria-label="Filtruj listę objawów"
-              className="w-full rounded-lg border border-slate-300 px-3 py-1.5 text-sm outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+              className="field w-full px-3 py-2 text-base"
             />
           </div>
         )}
-        {visible.length === 0 && <p className="px-2 py-3 text-sm text-slate-500">Brak objawów pasujących do filtra.</p>}
+        {visible.length === 0 && <p className="px-2 py-3 text-base text-ink-2">Brak objawów pasujących do filtra.</p>}
         <div>
           {visible.map((s) => (
             <Row key={s.id} s={s} checked={picked.has(s.id)} onChange={() => onToggle(s.id, regionId)} />
           ))}
         </div>
         {general.length > 0 && (
-          <details className="mt-2 border-t border-slate-200 px-2 pt-2">
-            <summary className="cursor-pointer py-1 text-sm font-medium text-slate-700">Objawy ogólne (gorączka, osłabienie, nudności…)</summary>
+          <details className="mt-2 border-t border-line px-2 pt-2">
+            <summary className="flex min-h-11 cursor-pointer items-center text-base font-semibold text-ink-2 hover:text-ink">Objawy ogólne (gorączka, osłabienie, nudności…)</summary>
             <div className="pb-1">
               {general.map((s) => (
                 <Row key={s.id} s={s} checked={picked.has(s.id)} onChange={() => onToggle(s.id)} />
@@ -111,7 +111,7 @@ export default function SymptomPanel({ target, sex, picked, onToggle, onClose }:
           </details>
         )}
       </div>
-      <p className="shrink-0 border-t border-slate-200 px-4 py-2 text-xs text-slate-500">Nie ma Twojego objawu? Użyj wyszukiwarki – przeszukuje wszystkie okolice ciała.</p>
+      <p className="shrink-0 border-t border-line px-4 py-2.5 text-sm text-ink-2">Nie ma Twojego objawu? Użyj wyszukiwarki – przeszukuje wszystkie okolice ciała.</p>
     </div>
   )
 }

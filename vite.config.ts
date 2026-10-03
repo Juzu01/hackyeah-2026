@@ -16,7 +16,7 @@ const gdzieBoliPage: Plugin = {
         : html
             .replace(/\s*<!-- atlas-pwa[\s\S]*?<!-- \/atlas-pwa -->/, '')
             .replace('/src/main.tsx', '/src/gdzie-boli.tsx')
-            .replace(/(name="theme-color" content=")[^"]*/, '$1#0f766e')
+            .replace(/(name="theme-color" content=")[^"]*/, '$1#000000')
             .replace(
               /<title>.*<\/title>/,
               '<meta name="description" content="Gdzie boli? Wskaż miejsce na sylwetce, odpowiedz na kilka pytań i dostań wstępną ocenę objawów: możliwe przyczyny i gdzie szukać pomocy. To nie jest diagnoza." />\n' +

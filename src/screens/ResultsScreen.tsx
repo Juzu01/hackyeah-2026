@@ -74,23 +74,23 @@ export default function ResultsScreen({ draft, savedAt, onRestart, onToast }: Pr
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 sm:py-8">
       <div className="mb-4">
-        <p className="text-xs font-semibold tracking-wide text-slate-500 uppercase">Wstępna ocena · {date.toLocaleDateString('pl-PL')}</p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{where || 'Objawy ogólne'}</h1>
-        <p className="mt-1 text-sm text-slate-600">
+        <p className="eyebrow">Wstępna ocena · {date.toLocaleDateString('pl-PL')}</p>
+        <h1 className="mt-1.5 font-serif text-[2rem] leading-tight font-medium tracking-tight text-ink sm:text-[2.5rem]">{where || 'Objawy ogólne'}</h1>
+        <p className="mt-2 text-base text-ink-2">
           {draft.forWhom === 'other' ? 'Osoba' : 'Ty'}: {draft.sex ? SEX_LABEL[draft.sex] : '—'}, {draft.age ?? '—'} lat · objawy: {symptoms.join(', ')}
         </p>
-        <p className="mt-2 rounded-lg bg-slate-100 px-3 py-2 text-sm text-slate-700">Wynik to wstępna ocena na podstawie Twoich odpowiedzi, a nie diagnoza. O dalszym postępowaniu decyduje lekarz.</p>
+        <p className="mt-3 border-l-2 border-line-2 bg-s1 px-3 py-2.5 text-base text-ink-2">Wynik to wstępna ocena na podstawie Twoich odpowiedzi, a nie diagnoza. O dalszym postępowaniu decyduje lekarz.</p>
       </div>
 
       <TriageCard triage={result.triage} reasons={result.reasons} />
 
       <section className="mt-8" aria-labelledby="causes">
-        <h2 id="causes" className="text-xl font-bold text-slate-900">
+        <h2 id="causes" className="font-serif text-[1.75rem] leading-tight font-medium text-ink">
           Możliwe przyczyny
         </h2>
-        <p className="mt-1 text-sm text-slate-600">Uporządkowane według tego, jak dobrze pasują do zgłoszonych objawów. Rozwiń, żeby zobaczyć dlaczego i co możesz zrobić.</p>
+        <p className="mt-1.5 text-base text-ink-2">Uporządkowane według tego, jak dobrze pasują do zgłoszonych objawów. Rozwiń, żeby zobaczyć dlaczego i co możesz zrobić.</p>
         {result.conditions.length === 0 ? (
-          <p className="mt-4 rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-600">Za mało danych, żeby wskazać konkretne przyczyny. Dodaj więcej objawów albo skonsultuj się z lekarzem.</p>
+          <p className="cut mt-4 border border-line bg-s1 p-4 text-base text-ink-2">Za mało danych, żeby wskazać konkretne przyczyny. Dodaj więcej objawów albo skonsultuj się z lekarzem.</p>
         ) : (
           <div className="mt-4 space-y-3">
             {result.conditions.map((item, idx) => (
@@ -101,12 +101,12 @@ export default function ResultsScreen({ draft, savedAt, onRestart, onToast }: Pr
       </section>
 
       {alarms.length > 0 && (
-        <section className="mt-8 rounded-2xl border border-red-200 bg-white p-4 sm:p-5" aria-labelledby="alarms">
-          <h2 id="alarms" className="text-lg font-bold text-red-800">
+        <section className="cut mt-8 border border-alarm-line bg-alarm-soft p-4 sm:p-5" aria-labelledby="alarms">
+          <h2 id="alarms" className="font-serif text-[1.375rem] leading-tight font-medium text-alarm">
             Kiedy pilnie szukać pomocy
           </h2>
-          <p className="mt-1 text-sm text-slate-600">Jeśli pojawi się którykolwiek z tych objawów, nie czekaj – zadzwoń pod 112 lub 999 albo jedź na SOR.</p>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700">
+          <p className="mt-1.5 text-base text-ink">Jeśli pojawi się którykolwiek z tych objawów, nie czekaj – zadzwoń pod 112 lub 999 albo jedź na SOR.</p>
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-base text-ink-2 marker:text-alarm">
             {alarms.map((f) => (
               <li key={f.id}>{f.question.replace(/\?$/, '')}</li>
             ))}
@@ -114,41 +114,41 @@ export default function ResultsScreen({ draft, savedAt, onRestart, onToast }: Pr
         </section>
       )}
 
-      <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5 print:hidden" aria-labelledby="next">
-        <h2 id="next" className="text-lg font-bold text-slate-900">
+      <section className="cut mt-8 border border-line bg-s1 p-4 sm:p-5 print:hidden" aria-labelledby="next">
+        <h2 id="next" className="font-serif text-[1.375rem] leading-tight font-medium text-ink">
           Co dalej
         </h2>
-        <div className="mt-3 flex flex-wrap gap-2">
-          <button type="button" onClick={onSaveClick} disabled={saved} className="rounded-full bg-teal-700 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-800 disabled:bg-slate-300">
+        <div className="mt-4 grid gap-2 sm:flex sm:flex-wrap">
+          <button type="button" onClick={onSaveClick} disabled={saved} className="btn-primary">
             {saved ? 'Zapisano w historii' : 'Zapisz wynik'}
           </button>
-          <button type="button" onClick={() => window.print()} className="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+          <button type="button" onClick={() => window.print()} className="btn-secondary">
             Pobierz raport (PDF)
           </button>
-          <button type="button" onClick={() => void share()} className="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+          <button type="button" onClick={() => void share()} className="btn-secondary">
             Udostępnij lekarzowi
           </button>
-          <button type="button" onClick={onRestart} className="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+          <button type="button" onClick={onRestart} className="btn-secondary">
             Sprawdź inne objawy
           </button>
         </div>
         {askLogin && (
-          <div className="mt-3 rounded-xl border border-teal-200 bg-teal-50 p-3 text-sm text-slate-700">
+          <div className="mt-3 border border-green/35 bg-green-soft p-3 text-base text-ink">
             <p>Zaloguj się, żeby historia była przypisana do Twojego konta i dostępna po ponownym wejściu.</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              <button type="button" onClick={account.signIn} className="rounded-full bg-teal-700 px-4 py-1.5 font-semibold text-white hover:bg-teal-800">
+            <div className="mt-3 grid gap-2 sm:flex sm:flex-wrap">
+              <button type="button" onClick={account.signIn} className="btn-primary is-sm">
                 Zaloguj się
               </button>
-              <button type="button" onClick={save} className="rounded-full border border-slate-300 bg-white px-4 py-1.5 font-semibold hover:bg-slate-50">
+              <button type="button" onClick={save} className="btn-secondary is-sm">
                 Zapisz tylko na tym urządzeniu
               </button>
             </div>
           </div>
         )}
-        <p className="mt-3 text-xs text-slate-500">Raport możesz pokazać lekarzowi: zawiera objawy, odpowiedzi i możliwe przyczyny. Historia jest zapisywana w tej przeglądarce.</p>
+        <p className="mt-3 text-sm text-ink-2">Raport możesz pokazać lekarzowi: zawiera objawy, odpowiedzi i możliwe przyczyny. Historia jest zapisywana w tej przeglądarce.</p>
       </section>
 
-      <p className="mt-8 text-xs leading-relaxed text-slate-500">
+      <p className="mt-8 text-sm leading-relaxed text-ink-2">
         {DISCLAIMER} Treści edukacyjne mają charakter ogólny i zostały opracowane na podstawie ogólnodostępnych materiałów dla pacjentów (m.in. NHS, MedlinePlus). Przy każdej wątpliwości skontaktuj się z lekarzem.
       </p>
     </div>

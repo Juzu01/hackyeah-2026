@@ -48,7 +48,7 @@ export default function BodyMap({ view, active, counts, onSelect, onHover, class
       </defs>
       <g transform={flip ? 'scale(-1 1)' : undefined}>
         {skin.map((d, i) => (
-          <path key={i} d={d} className="fill-sky-100 stroke-sky-300" strokeWidth={1.2} />
+          <path key={i} d={d} className="fill-[#1c1c1a] stroke-line-2" strokeWidth={1.2} />
         ))}
         <g clipPath={`url(#skin-${view})`}>
           {regions.map((r) => {
@@ -56,11 +56,11 @@ export default function BodyMap({ view, active, counts, onSelect, onHover, class
             const isActive = active === r.id
             const isHover = hovered === r.id
             const cls = isActive
-              ? 'fill-teal-600/75 stroke-teal-800'
+              ? 'fill-green/35 stroke-green'
               : picked
-                ? 'fill-teal-500/45 stroke-teal-700'
+                ? 'fill-green-soft stroke-green'
                 : isHover
-                  ? 'fill-teal-400/40 stroke-teal-600'
+                  ? 'fill-green-soft stroke-green/70'
                   : 'fill-transparent stroke-transparent'
             return (
               <g
@@ -69,7 +69,7 @@ export default function BodyMap({ view, active, counts, onSelect, onHover, class
                 tabIndex={0}
                 aria-pressed={isActive || picked}
                 aria-label={regionLabel(r)}
-                className="cursor-pointer outline-none focus-visible:[&>path]:stroke-teal-700"
+                className="cursor-pointer outline-none focus-visible:[&>path]:stroke-green"
                 onClick={() => onSelect(r)}
                 onKeyDown={(e) => onKey(e, r)}
                 onMouseEnter={() => hover(r)}
@@ -94,8 +94,8 @@ export default function BodyMap({ view, active, counts, onSelect, onHover, class
         const y = r.labelAt[1]
         return (
           <g key={`badge-${r.id}`} pointerEvents="none" aria-hidden="true">
-            <circle cx={x} cy={y} r={13} className="fill-teal-800 stroke-white" strokeWidth={2} />
-            <text x={x} y={y + 5} textAnchor="middle" className="fill-white text-[15px] font-bold" style={{ fontFamily: 'inherit' }}>
+            <rect x={x - 12} y={y - 12} width={24} height={24} className="fill-green stroke-page" strokeWidth={2} />
+            <text x={x} y={y + 5} textAnchor="middle" className="fill-green-ink text-[0.9375rem] font-bold" style={{ fontFamily: 'inherit' }}>
               {n}
             </text>
           </g>

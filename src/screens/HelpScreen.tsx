@@ -2,9 +2,9 @@ import { DISCLAIMER } from '../components/Footer.tsx'
 
 export default function HelpScreen() {
   return (
-    <div className="prose prose-slate mx-auto max-w-3xl px-4 py-6 sm:py-8">
-      <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Jak to działa</h1>
-      <ol className="mt-4 list-decimal space-y-2 pl-5 text-slate-700">
+    <div className="mx-auto max-w-3xl px-4 py-6 text-base leading-relaxed sm:py-8">
+      <h1 className="font-serif text-[2rem] leading-tight font-medium tracking-tight text-ink sm:text-[2.5rem]">Jak to działa</h1>
+      <ol className="mt-4 list-decimal space-y-3 pl-5 text-ink-2 marker:font-serif marker:text-green [&_strong]:text-ink">
         <li>
           <strong>Wskazujesz miejsce na sylwetce</strong> (przód lub tył) albo wpisujesz objaw. Dla każdej okolicy jest krótka lista typowych dolegliwości.
         </li>
@@ -16,28 +16,28 @@ export default function HelpScreen() {
         </li>
       </ol>
 
-      <h2 className="mt-8 text-xl font-bold text-slate-900">Czego to narzędzie nie robi</h2>
-      <p className="mt-2 text-slate-700">{DISCLAIMER} Nie stawia diagnozy, nie przepisuje leków i nie widzi Cię – lekarz ma dostęp do badania, historii choroby i wyników, których tu nie ma.</p>
+      <h2 className="mt-8 border-t border-line pt-6 font-serif text-[1.625rem] leading-tight font-medium text-ink">Czego to narzędzie nie robi</h2>
+      <p className="mt-2 text-ink-2">{DISCLAIMER} Nie stawia diagnozy, nie przepisuje leków i nie widzi Cię – lekarz ma dostęp do badania, historii choroby i wyników, których tu nie ma.</p>
 
-      <h2 className="mt-8 text-xl font-bold text-slate-900">Numery, które warto znać</h2>
-      <ul className="mt-2 list-disc space-y-1 pl-5 text-slate-700">
+      <h2 className="mt-8 border-t border-line pt-6 font-serif text-[1.625rem] leading-tight font-medium text-ink">Numery, które warto znać</h2>
+      <ul className="mt-2 list-disc space-y-2 pl-5 text-ink-2 marker:text-ink-2">
         <li>
-          <a href="tel:112" className="font-semibold">112</a> – ogólnoeuropejski numer alarmowy, <a href="tel:999" className="font-semibold">999</a> – pogotowie ratunkowe.
+          <a href="tel:112" className="font-semibold text-green underline-offset-4 hover:underline">112</a> – ogólnoeuropejski numer alarmowy, <a href="tel:999" className="font-semibold text-green underline-offset-4 hover:underline">999</a> – pogotowie ratunkowe.
         </li>
         <li>
-          <a href="tel:800137200" className="font-semibold">800 137 200</a> – Teleplatforma Pierwszego Kontaktu NFZ (bezpłatna): pon.–pt. 18:00–8:00, w weekendy i święta całą dobę. Teleporada lekarza, pielęgniarki lub położnej, e-recepta.
+          <a href="tel:800137200" className="font-semibold text-green underline-offset-4 hover:underline">800 137 200</a> – Teleplatforma Pierwszego Kontaktu NFZ (bezpłatna): pon.–pt. 18:00–8:00, w weekendy i święta całą dobę. Teleporada lekarza, pielęgniarki lub położnej, e-recepta.
         </li>
         <li>Nocna i świąteczna opieka zdrowotna oraz SOR (szpitalny oddział ratunkowy) – gdy przychodnia jest zamknięta, a sprawa nie może czekać.</li>
       </ul>
 
-      <h2 className="mt-8 text-xl font-bold text-slate-900">Prywatność</h2>
-      <p className="mt-2 text-slate-700">
+      <h2 className="mt-8 border-t border-line pt-6 font-serif text-[1.625rem] leading-tight font-medium text-ink">Prywatność</h2>
+      <p className="mt-2 text-ink-2">
         Odpowiedzi i zapisane analizy zostają w Twojej przeglądarce (localStorage); nic nie jest wysyłane na serwer. Logowanie (Clerk) służy tylko do rozdzielenia historii między osoby korzystające z tego samego urządzenia. To prototyp hackathonowy, nie wyrób medyczny.
       </p>
 
-      <h2 className="mt-8 text-xl font-bold text-slate-900">Na jakich wzorcach się opieramy</h2>
-      <p className="mt-2 text-slate-700">
-        Układ ekranów naśladuje sprawdzone narzędzia: mapę ciała WebMD i Healthwise, kartę zalecenia i poziomy dopasowania Symptomate (Infermedica, Wrocław), pytania alarmowe i kolorowe karty NHS 111 oraz pytania „dlaczego o to pytamy” z Buoy. Szczegóły w pliku <code>docs/badanie-rynku.md</code> w repozytorium.
+      <h2 className="mt-8 border-t border-line pt-6 font-serif text-[1.625rem] leading-tight font-medium text-ink">Na jakich wzorcach się opieramy</h2>
+      <p className="mt-2 text-ink-2">
+        Układ ekranów naśladuje sprawdzone narzędzia: mapę ciała WebMD i Healthwise, kartę zalecenia i poziomy dopasowania Symptomate (Infermedica, Wrocław), pytania alarmowe i kolorowe karty NHS 111 oraz pytania „dlaczego o to pytamy” z Buoy. Szczegóły w pliku <code className="bg-s2 px-1 font-mono text-[0.9375rem] text-ink">docs/badanie-rynku.md</code> w repozytorium.
       </p>
     </div>
   )

@@ -1,18 +1,321 @@
+/* "Gdzie boli?" runs inside Soleil (the "Objawy" tab, in an iframe), so it wears Soleil's
+   look: true black with a faint green cast, one light pastel-green accent, sharp corners.
+   Its own Tailwind entry (src/index.css is the atlas's) so the tokens below can become
+   utilities: bg-s1, text-ink-2, border-line… */
+@import 'tailwindcss';
+
 :root {
-  color-scheme: light;
+  color-scheme: dark;
+
+  --bg: #000000;
+  --s1: #08110d;
+  --s2: #0f1a15;
+  --line: rgba(190, 240, 215, 0.1);
+  --line-2: rgba(190, 240, 215, 0.18);
+
+  --ink: #eef6f1;
+  --ink-2: #9fb3a8;
+  /* 4.3:1 on black: placeholders and disabled things only, never text people must read. */
+  --ink-3: #62756b;
+
+  --green: #a6e8c4;
+  --green-hover: #c2f1d8;
+  --green-ink: #04140c;
+  --green-soft: rgba(166, 232, 196, 0.13);
+
+  --alarm: #ff6b5e;
+  --alarm-soft: rgba(255, 107, 94, 0.1);
+  --alarm-line: rgba(255, 107, 94, 0.35);
+
+  /* Triage levels on black, each ≥ 7:1 against --bg and --s1: red, amber, a calm blue-grey
+     for "see a doctor" (so it does not read as the accent), muted green for self-care. */
+  --care-emergency: var(--alarm);
+  --care-urgent: #f2a03d;
+  --care-gp: #9db4cc;
+  --care-self: #8fbf9a;
+
+  /* Ambient light: a very faint pastel-green glow at the top of the page. */
+  --glow: rgba(166, 232, 196, 0.1);
+
+  --cut: 10px;
 }
 
-html {
-  scroll-behavior: smooth;
+@theme inline {
+  --font-sans: 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif;
+  --font-serif: 'Newsreader Variable', Georgia, serif;
+
+  --color-page: var(--bg);
+  --color-s1: var(--s1);
+  --color-s2: var(--s2);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-green: var(--green);
+  --color-green-ink: var(--green-ink);
+  --color-green-soft: var(--green-soft);
+  --color-alarm: var(--alarm);
+  --color-alarm-soft: var(--alarm-soft);
+  --color-alarm-line: var(--alarm-line);
+  --color-care-emergency: var(--care-emergency);
+  --color-care-urgent: var(--care-urgent);
+  --color-care-gp: var(--care-gp);
+  --color-care-self: var(--care-self);
 }
 
-/* Native <details> dropdown in the header closes when focus leaves it. */
-summary {
-  list-style: none;
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg);
+    scrollbar-color: var(--line-2) transparent;
+  }
 
-@media print {
   body {
-    background: white;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 1rem;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--green);
+    color: var(--green-ink);
+  }
+
+  /* Native <details> dropdown in the header closes when focus leaves it. */
+  summary {
+    list-style: none;
+  }
+}
+
+@layer components {
+  /* The page and the sticky header both carry the same glow, sized from their top edge, so at
+     rest they read as one light and the header keeps it while the page scrolls under. */
+  .ambient {
+    background:
+      radial-gradient(ellipse 85% 100% at 50% 0%, var(--glow), transparent 75%) top center / 100% 22rem no-repeat,
+      var(--bg);
+  }
+
+  /* Cards: one 10px chamfer at the top-right instead of a radius. clip-path also cuts the
+     1px border, so ::after redraws that diagonal in the card's own border colour. */
+  .cut {
+    position: relative;
+    clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
+  }
+  .cut::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: calc(100% - var(--cut) + 1px);
+    width: calc(var(--cut) * 1.4142);
+    border-top: 1px solid;
+    border-top-color: inherit;
+    transform: rotate(45deg);
+    transform-origin: 0 0;
+    pointer-events: none;
+  }
+
+  /* Primary action. The green fill is a clipped pseudo-element rather than the button itself,
+     so the clip-path does not swallow the focus outline. */
+  .btn-primary {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    min-height: 3.25rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 1.5rem;
+    color: var(--green-ink);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--green);
+    clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
+  }
+  .btn-primary:hover::before {
+    background: var(--green-hover);
+  }
+  .btn-primary:disabled {
+    color: var(--ink-2);
+    cursor: default;
+  }
+  .btn-primary:disabled::before {
+    background: var(--s2);
+  }
+  /* Calling 112 / 999: same shape, alarm red. */
+  .btn-primary.is-alarm {
+    color: #1f0604;
+  }
+  .btn-primary.is-alarm::before {
+    background: var(--alarm);
+  }
+  .btn-primary.is-alarm:hover::before {
+    background: #ff857a;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    border: 1px solid var(--line-2);
+    border-radius: 0;
+    background: transparent;
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-secondary:hover {
+    border-color: var(--ink-2);
+    background: var(--s2);
+  }
+
+  /* Smaller variants for rows (history) and the header. */
+  .btn-primary.is-sm,
+  .btn-secondary.is-sm {
+    min-height: 2.75rem;
+    padding: 0 1rem;
+    font-size: 0.9375rem;
+  }
+
+  /* Inputs and the search box: square, raised one step, green ring when focused. */
+  .field {
+    border: 1px solid var(--line-2);
+    border-radius: 0;
+    background: var(--s2);
+    color: var(--ink);
+  }
+  .field::placeholder,
+  .field input::placeholder {
+    color: var(--ink-2);
+  }
+  .field:focus-within {
+    border-color: var(--green);
+    outline: 2px solid var(--green);
+    outline-offset: 2px;
+  }
+  .field input:focus-visible {
+    outline: none;
+  }
+  .field[aria-invalid='true'] {
+    border-color: var(--alarm);
+  }
+  /* The age field: no spinner buttons (arrow keys still step the value). */
+  .field[type='number'] {
+    appearance: textfield;
+  }
+  .field[type='number']::-webkit-inner-spin-button,
+  .field[type='number']::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  /* Square checkbox: hairline box, filled green with a dark tick when on. */
+  .check {
+    display: inline-grid;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    place-content: center;
+    margin: 0;
+    border: 1px solid var(--ink-2);
+    border-radius: 0;
+    background: var(--s2);
+    appearance: none;
+    cursor: pointer;
+  }
+  .check::before {
+    content: '';
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--green-ink);
+    clip-path: polygon(14% 50%, 0 64%, 38% 100%, 100% 22%, 86% 8%, 38% 72%);
+    visibility: hidden;
+  }
+  .check:checked {
+    border-color: var(--green);
+    background: var(--green);
+  }
+  .check:checked::before {
+    visibility: visible;
+  }
+
+  /* Chips and the segments of a radio group: square, hairline, green when on. */
+  .chip {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0 0.875rem;
+    border: 1px solid var(--line-2);
+    background: transparent;
+    color: var(--ink);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .chip:hover {
+    background: var(--s2);
+  }
+  .chip[aria-checked='true'],
+  .chip[aria-selected='true'],
+  .chip[aria-pressed='true'] {
+    border-color: var(--green);
+    background: var(--green);
+    color: var(--green-ink);
+    font-weight: 700;
+  }
+
+  /* Small uppercase label above a field or a section. */
+  .eyebrow {
+    color: var(--ink-2);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+}
+
+/* "Pobierz raport (PDF)" prints the results: same markup, paper colours. */
+@media print {
+  :root {
+    color-scheme: light;
+    --bg: #ffffff;
+    --s1: #ffffff;
+    --s2: #f1f4f2;
+    --line: rgba(0, 0, 0, 0.14);
+    --line-2: rgba(0, 0, 0, 0.24);
+    --ink: #0f1311;
+    --ink-2: #44504a;
+    --ink-3: #66726b;
+    --green: #1d6b45;
+    --green-ink: #ffffff;
+    --green-soft: rgba(29, 107, 69, 0.08);
+    --alarm: #b3261e;
+    --alarm-soft: rgba(179, 38, 30, 0.06);
+    --alarm-line: rgba(179, 38, 30, 0.4);
+    --care-urgent: #9a5a00;
+    --care-gp: #3a5573;
+    --care-self: #2f6b3c;
+  }
+  .ambient {
+    background: var(--bg);
   }
 }

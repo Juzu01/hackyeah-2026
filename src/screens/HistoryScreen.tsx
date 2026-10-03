@@ -10,10 +10,10 @@ interface Props {
 }
 
 const DOT: Record<Triage, string> = {
-  'self-care': 'bg-green-600',
-  gp: 'bg-blue-600',
-  urgent: 'bg-amber-500',
-  emergency: 'bg-red-600',
+  'self-care': 'bg-care-self',
+  gp: 'bg-care-gp',
+  urgent: 'bg-care-urgent',
+  emergency: 'bg-care-emergency',
 }
 
 /** Past checks (date, where, triage colour, top causes), per account. */
@@ -25,42 +25,42 @@ export default function HistoryScreen({ onOpen }: Props) {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 sm:py-8">
-      <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Historia analiz</h1>
-      <p className="mt-1 text-sm text-slate-600">
+      <h1 className="font-serif text-[2rem] leading-tight font-medium tracking-tight text-ink sm:text-[2.5rem]">Historia analiz</h1>
+      <p className="mt-2 text-base text-ink-2">
         {account.status === 'signed-in'
           ? `Analizy zapisane dla konta ${account.user?.name}.`
           : 'Bez logowania historia jest zapisywana tylko w tej przeglądarce. Zaloguj się, żeby przypisać ją do konta.'}
       </p>
       {account.status === 'signed-out' && (
-        <button type="button" onClick={account.signIn} className="mt-3 rounded-full border border-teal-700 px-4 py-1.5 text-sm font-semibold text-teal-800 hover:bg-teal-50">
+        <button type="button" onClick={account.signIn} className="btn-secondary mt-4">
           Zaloguj się
         </button>
       )}
 
       {items.length === 0 ? (
-        <div className="mt-6 rounded-2xl border border-dashed border-slate-300 bg-white/60 p-6 text-center text-sm text-slate-600">
+        <div className="mt-6 border border-line p-6 text-center text-base text-ink-2">
           <p>Brak zapisanych analiz.</p>
-          <a href="#" className="mt-2 inline-block font-semibold text-teal-800 hover:underline">
+          <a href="#" className="mt-2 inline-flex min-h-11 items-center font-semibold text-green underline-offset-4 hover:underline">
             Sprawdź objawy
           </a>
         </div>
       ) : (
         <ul className="mt-6 space-y-3">
           {items.map((item) => (
-            <li key={item.id} className="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-              <span className={`h-3 w-3 shrink-0 rounded-full ${DOT[item.triage]}`} aria-hidden="true" />
-              <div className="min-w-0 flex-1">
-                <p className="font-semibold text-slate-900">{item.where}</p>
-                <p className="text-sm text-slate-600">
+            <li key={item.id} className="cut flex flex-wrap items-start gap-x-3 gap-y-3 border border-line bg-s1 p-4">
+              <span className={`mt-2.5 h-2.5 w-2.5 shrink-0 rotate-45 ${DOT[item.triage]}`} aria-hidden="true" />
+              <div className="min-w-0 flex-1 basis-56">
+                <p className="font-serif text-xl leading-tight font-medium text-ink">{item.where}</p>
+                <p className="mt-1 text-[0.9375rem] text-ink-2">
                   {new Date(item.createdAt).toLocaleString('pl-PL', { dateStyle: 'medium', timeStyle: 'short' })} · {TRIAGE_INFO[item.triage].title}
                   {item.draft.forWhom === 'other' ? ' · dla kogoś innego' : ''}
                 </p>
                 {item.topConditions.length > 0 && (
-                  <p className="mt-0.5 truncate text-sm text-slate-500">{item.topConditions.map((id) => CONDITION_BY_ID.get(id)?.name ?? id).join(', ')}</p>
+                  <p className="mt-0.5 truncate text-[0.9375rem] text-ink-2">{item.topConditions.map((id) => CONDITION_BY_ID.get(id)?.name ?? id).join(', ')}</p>
                 )}
               </div>
-              <div className="flex gap-2">
-                <button type="button" onClick={() => onOpen(item)} className="rounded-full bg-teal-700 px-3.5 py-1.5 text-sm font-semibold text-white hover:bg-teal-800">
+              <div className="ml-[1.375rem] flex gap-2 sm:ml-0 sm:self-center">
+                <button type="button" onClick={() => onOpen(item)} className="btn-primary is-sm">
                   Otwórz
                 </button>
                 <button
@@ -69,7 +69,7 @@ export default function HistoryScreen({ onOpen }: Props) {
                     removeCheck(userId, item.id)
                     setItems(loadHistory(userId))
                   }}
-                  className="rounded-full border border-slate-300 px-3.5 py-1.5 text-sm font-semibold text-slate-600 hover:bg-slate-50"
+                  className="btn-secondary is-sm"
                 >
                   Usuń
                 </button>
