@@ -7,20 +7,20 @@
 :root {
   --bg-0: #000000;
   --bg-1: #08140f;
-  --ink-1: #eef6f1;
-  --ink-2: #9fb3a8;
-  --ink-3: #62756b;
-  --hair: rgb(190 240 215 / 0.12);
-  --hair-strong: rgb(190 240 215 / 0.24);
-  --accent: #a6e8c4;
-  --accent-ink: #04140c;
-  --accent-soft: rgb(166 232 196 / 0.13);
+  --ink-1: #f2f5ed;
+  --ink-2: #a8b1a1;
+  --ink-3: #6b7364;
+  --hair: rgb(211 235 202 / 0.12);
+  --hair-strong: rgb(211 235 202 / 0.24);
+  --accent: #c0e4b2;
+  --accent-ink: #0b1307;
+  --accent-soft: rgb(192 228 178 / 0.13);
   --glass: #cfe9dd;
   /* Raised surfaces: sheets (solid), floating controls (glass). */
-  --surface: rgb(8 17 13 / 0.86);
-  --surface-solid: #08110d;
-  --surface-2: rgb(214 245 230 / 0.06);
-  --surface-3: rgb(214 242 230 / 0.11);
+  --surface: rgb(12 16 11 / 0.86);
+  --surface-solid: #0c100b;
+  --surface-2: rgb(225 243 218 / 0.06);
+  --surface-3: rgb(224 240 218 / 0.11);
   /* Nunito: round and warm, easy on the eyes, with Polish and Cyrillic letters, for what people
      read and tap. Fraunces, soft and a little wonky (body sets the axes), for the names of things;
      Latin in its italic. Ukrainian falls back to Nunito. */
@@ -69,7 +69,7 @@ body {
   -webkit-touch-callout: none;
   overscroll-behavior: none;
   background:
-    radial-gradient(42% 30% at 50% 36%, rgb(166 232 196 / 0.06), transparent 100%),
+    radial-gradient(42% 30% at 50% 36%, rgb(192 228 178 / 0.06), transparent 100%),
     radial-gradient(110% 80% at 50% 40%, var(--bg-1) 0%, #030806 55%, var(--bg-0) 100%);
 }
 
@@ -111,7 +111,7 @@ body {
   stroke-width: 1.5;
 }
 .atlas-marker-ring {
-  fill: rgb(166 232 196 / 0.14);
+  fill: rgb(192 228 178 / 0.14);
   stroke: var(--accent);
   stroke-width: 1.25;
   stroke-opacity: 0.7;
@@ -126,7 +126,7 @@ body {
   padding: 5px 9px 6px;
   border: 1px solid var(--hair);
   border-radius: 8px;
-  background: rgb(10 32 28 / 0.94);
+  background: rgb(21 31 17 / 0.94);
   color: var(--ink-1);
   font-size: 0.8125rem;
   font-weight: 500;

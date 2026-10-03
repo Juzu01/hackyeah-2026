@@ -35,9 +35,9 @@
   src="https://awaited-mink-45.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
   type="text/javascript"
 ></script>
-<link rel="stylesheet" href="soleil.css?v=8">
-<link rel="stylesheet" href="voice.css">
-<link rel="stylesheet" href="diary.css?v=2">
+<link rel="stylesheet" href="soleil.css?v=9">
+<link rel="stylesheet" href="voice.css?v=2">
+<link rel="stylesheet" href="diary.css?v=3">
 </head>
 <body>
 
@@ -74,7 +74,7 @@
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/></symbol>
     <symbol id="i-diary" viewBox="0 0 24 24"><path d="M5 3h13a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5zM8 3v18"/><path d="M10.5 12h1.5l1.2-2.5 1.6 5 1.2-2.5h1.5"/></symbol>
     <symbol id="i-sad" viewBox="0 0 24 24"><path d="M8 2.5h8L21.5 8v8L16 21.5H8L2.5 16V8z"/><path d="M8.5 9.5h2M13.5 9.5h2M8 16.5l4-2 4 2"/></symbol>
-    <symbol id="i-breath" viewBox="0 0 24 24"><path d="M2 17 22 13"/><path d="M7 16a5 5 0 0 1 10-2"/><path d="M12 3v5M9.5 5.5 12 3l2.5 2.5"/></symbol>
+    <symbol id="i-breath" viewBox="0 0 24 24"><path d="M2.5 9h11a3 3 0 1 0-3-3"/><path d="M2.5 13h16a3 3 0 1 1-3 3"/><path d="M2.5 17h7"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12.5 5 5L20 6.5"/></symbol>
     <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 22 20.5H2z"/><path d="M12 9.5v5M12 17v.5"/></symbol>
     <!-- Mood faces: an octagon, eyes and a mouth that bends at one sharp point. -->
@@ -221,7 +221,7 @@
   <button class="user-menu-btn danger" onclick="signOut()"><svg class="ico"><use href="#i-logout"/></svg><span id="menuSignOutLabel">Wyloguj się</span></button>
 </div>
 
-<!-- A minute of breathing: the sun rises while you breathe in (4 s) and sets while you breathe out (6 s), six times. chat.js runs it. -->
+<!-- A minute of breathing: the sprout opens its leaves while you breathe in (4 s) and folds them while you breathe out (6 s), six times. chat.js runs it. -->
 <div class="breathe" id="hyBreathe" role="dialog" aria-modal="true" aria-labelledby="hyBreatheCue" hidden>
   <button type="button" class="breathe-close" id="hyBreatheClose" aria-label="Zakończ"><svg class="ico"><use href="#i-close"/></svg></button>
   <div class="breathe-scene" id="hyBreatheScene"></div>
@@ -262,7 +262,7 @@
   <main class="views">
     <section class="view view-chat" id="view-rozmowa" aria-label="Rozmowa">
       <div class="chat-window" id="chatWindow" role="log" aria-live="polite">
-        <!-- The welcome: a sunrise (tap it to breathe for a minute), how you feel in one tap, topics as tiles.
+        <!-- The welcome: a sprout (tap it to breathe for a minute), how you feel in one tap, topics as tiles.
              chat.js draws the scene, sets the greeting for the time of day and starts the conversation. -->
         <div class="welcome" id="welcomeMsg">
           <button type="button" class="hero" id="hyHero" style="--i:0" aria-label="Oddychaj ze mną przez minutę">
@@ -383,10 +383,13 @@
     </section>
   </main>
 
-  <!-- The tab bar: a black slab whose top edge rises left to right, like a horizon at sunrise; the open section is lit above it. -->
+  <!-- The tab bar: a black slab whose top edge rises left to right; the open section is a patch of light
+       hanging from that edge, and the edge glows brighter above it. app.js fits both to the line. -->
   <nav class="tabbar" aria-label="Sekcje aplikacji">
     <div class="tabbar-slab" aria-hidden="true"></div>
+    <div class="tabbar-lit" aria-hidden="true"></div>
     <svg class="tabbar-edge" viewBox="0 0 100 16" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="15.5" x2="100" y2="0.5" vector-effect="non-scaling-stroke"/></svg>
+    <div class="tabbar-glow" aria-hidden="true"><i class="tabbar-lit-edge"></i></div>
     <div class="tabs">
       <a class="tab" href="#rozmowa" data-view="rozmowa" style="--k:0"><svg class="ico"><use href="#i-chat"/></svg><span>Rozmowa</span></a>
       <a class="tab" href="#dziennik" data-view="dziennik" style="--k:1"><svg class="ico"><use href="#i-diary"/></svg><span>Dziennik</span></a>
@@ -1034,7 +1037,7 @@ function openAuth(mode) {
   document.getElementById('authOverlay').classList.add('visible');
   if (clerk && clerk.loaded) mountClerkSignIn();
 }
-const clerkAppearance = { variables: { colorPrimary: '#a6e8c4', colorTextOnPrimaryBackground: '#04140c', colorBackground: '#08110d', colorInputBackground: '#0f1a15', colorInputText: '#eef6f1', colorText: '#eef6f1', colorTextSecondary: '#9fb3a8', colorNeutral: '#eef6f1', colorDanger: '#ff7a6b', borderRadius: '0px', fontFamily: "'Nunito', system-ui, sans-serif", fontSize: '1rem' }, elements: { rootBox: { width: '100%' }, cardBox: { width: '100%', boxShadow: 'none', border: '1px solid rgba(190,240,215,0.18)' }, card: { boxShadow: 'none' } } };
+const clerkAppearance = { variables: { colorPrimary: '#c0e4b2', colorTextOnPrimaryBackground: '#0b1307', colorBackground: '#0c100b', colorInputBackground: '#141912', colorInputText: '#f2f5ed', colorText: '#f2f5ed', colorTextSecondary: '#a8b1a1', colorNeutral: '#f2f5ed', colorDanger: '#ff7a6b', borderRadius: '0px', fontFamily: "'Nunito', system-ui, sans-serif", fontSize: '1rem' }, elements: { rootBox: { width: '100%' }, cardBox: { width: '100%', boxShadow: 'none', border: '1px solid rgba(211,235,202,0.18)' }, card: { boxShadow: 'none' } } };
 function mountClerkSignIn() {
   const el = document.getElementById('clerk-sign-in'), back = authReturnUrl();
   clerk.unmountSignIn(el);
@@ -1727,8 +1730,8 @@ async function shareWeekSummary() {
   ctx.fillStyle = glow1; ctx.fillRect(0, 0, W, H);
 
   const glow2 = ctx.createRadialGradient(W * 0.85, H * 0.85, 0, W * 0.85, H * 0.85, 650);
-  glow2.addColorStop(0, 'rgba(125,189,181,0.35)');
-  glow2.addColorStop(1, 'rgba(125,189,181,0)');
+  glow2.addColorStop(0, 'rgba(155,185,144,0.35)');
+  glow2.addColorStop(1, 'rgba(155,185,144,0)');
   ctx.fillStyle = glow2; ctx.fillRect(0, 0, W, H);
 
   // Logo + nazwa
@@ -2189,9 +2192,9 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
 <script src="offline-companion.js?v=4"></script>
 <script src="voice.js?v=3"></script>
 <script src="diary.js?v=2"></script>
-<script src="app.js?v=7"></script>
+<script src="app.js?v=8"></script>
 <script src="quotes.js?v=5"></script>
-<script src="art.js?v=4"></script>
-<script src="chat.js?v=6"></script>
+<script src="art.js?v=5"></script>
+<script src="chat.js?v=7"></script>
 </body>
 </html>

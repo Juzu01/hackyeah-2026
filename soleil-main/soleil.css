@@ -1,6 +1,6 @@
-/* Doco: black with a light, pastel green that glows softly, like a monitor in a dark room.
+/* Doco: black with a light, warm sage green that glows softly, like a lamp in a dark room.
    Shapes are sharp: no rounded pills, corners are cut at an angle instead. The tab bar's
-   top edge rises left to right, a horizon at sunrise; the open section is lit above it.
+   top edge rises left to right like a horizon; the open section is a patch of light under it.
    Type: Fraunces for titles, greetings, topics and quotes, at its softest and with its wonky
    letters; Nunito, round and warm, for everything people read in passing and tap. */
 
@@ -80,18 +80,18 @@
 
 :root {
   --bg: #000;
-  --s1: #08110d;
-  --s2: #0f1a15;
-  --s3: #16231d;
-  --line: rgb(190 240 215 / 0.1);
-  --line-2: rgb(190 240 215 / 0.18);
-  --ink: #eef6f1;
-  --ink-2: #9fb3a8;
-  --ink-3: #62756b;
-  --green: #a6e8c4;
-  --green-ink: #04140c;
-  --green-soft: rgb(166 232 196 / 0.13);
-  --green-glow: rgb(166 232 196 / 0.28);
+  --s1: #0c100b;
+  --s2: #141912;
+  --s3: #1c2219;
+  --line: rgb(211 235 202 / 0.1);
+  --line-2: rgb(211 235 202 / 0.18);
+  --ink: #f2f5ed;
+  --ink-2: #a8b1a1;
+  --ink-3: #6b7364;
+  --green: #c0e4b2;
+  --green-ink: #0b1307;
+  --green-soft: rgb(192 228 178 / 0.13);
+  --green-glow: rgb(192 228 178 / 0.28);
   --alarm: #ff7a6b;
   --cut: 12px;
   --sat: env(safe-area-inset-top, 0px);
@@ -187,8 +187,8 @@ a {
   grid-template-columns: minmax(0, 1fr);
   /* Ambient light: a faint pastel glow from the top left and under the horizon. */
   background:
-    radial-gradient(70% 38% at 12% 0%, rgb(166 232 196 / 0.09), transparent 70%),
-    radial-gradient(80% 30% at 85% 100%, rgb(166 232 196 / 0.07), transparent 70%),
+    radial-gradient(70% 38% at 12% 0%, rgb(192 228 178 / 0.09), transparent 70%),
+    radial-gradient(80% 30% at 85% 100%, rgb(192 228 178 / 0.07), transparent 70%),
     var(--bg);
 }
 .app[data-view='cialo'] .top,
@@ -395,7 +395,7 @@ a {
   }
 }
 
-/* The sunrise. Tapping it starts a minute of breathing. */
+/* The sprout. Tapping it starts a minute of breathing. */
 .hero {
   position: relative;
   display: block;
@@ -422,7 +422,7 @@ a {
   min-height: 40px;
   padding: 0 16px 0 13px;
   border: 1px solid var(--line-2);
-  background: rgb(8 17 13 / 0.86);
+  background: rgb(12 16 11 / 0.86);
   color: var(--green);
   font-size: 0.875rem;
   font-weight: 650;
@@ -463,7 +463,7 @@ a {
 }
 /* A glint of light runs along the horizon now and then. */
 .sc-glint {
-  stroke: #f1fcf6;
+  stroke: #f5fbed;
   stroke-width: 2.4;
   stroke-dasharray: 7 193;
   stroke-dashoffset: 7;
@@ -478,43 +478,62 @@ a {
     stroke-dashoffset: -100;
   }
 }
-/* The sun breathes on its own: up for 4 s, down for 6 s. */
-.sc-sun,
-.sc-rays {
+/* The sprout breathes on its own: the leaves open for 4 s and fold for 6 s, and the plant sways a little. */
+.sc-plant,
+.sc-leaf {
   transform-box: view-box;
-  transform-origin: 180px 96px;
 }
-.sc-sun {
-  animation: sun-idle 10s ease-in-out infinite;
+.sc-plant {
+  transform-origin: 180px 108px;
+  animation: plant-idle 10s ease-in-out infinite;
 }
-@keyframes sun-idle {
+@keyframes plant-idle {
   0%,
   100% {
-    transform: translateY(3px);
+    transform: rotate(-1.2deg) scale(0.97);
   }
   40% {
-    transform: translateY(-8px);
+    transform: rotate(1.2deg) scale(1.02);
   }
 }
-.sc-rays {
-  animation: rays-idle 10s ease-in-out infinite;
+.sc-leaf-l {
+  transform-origin: 180px 74px;
+  animation: leaf-l-idle 10s ease-in-out infinite;
 }
-@keyframes rays-idle {
+.sc-leaf-r {
+  transform-origin: 180px 69px;
+  animation: leaf-r-idle 10s ease-in-out infinite;
+}
+@keyframes leaf-l-idle {
   0%,
   100% {
-    opacity: 0.55;
-    transform: rotate(-5deg) scale(0.95);
+    transform: rotate(5deg);
   }
   40% {
-    opacity: 1;
-    transform: rotate(5deg) scale(1.06);
+    transform: rotate(-4deg);
   }
 }
-.sc-rays path {
+@keyframes leaf-r-idle {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  40% {
+    transform: rotate(4deg);
+  }
+}
+.sc-stem {
   fill: none;
   stroke: var(--green);
-  stroke-width: 2.6;
-  stroke-linecap: square;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.sc-light {
+  fill: var(--green);
+}
+.sc-shade {
+  fill: var(--green);
+  opacity: 0.55;
 }
 .sc-glow {
   transform-box: fill-box;
@@ -532,34 +551,26 @@ a {
     transform: scale(1.06);
   }
 }
-.sc-stars path {
+/* Specks of light drift up from the ground and fade. */
+.sc-motes circle {
   fill: var(--green);
-  opacity: 0.18;
-  animation: twinkle 4s ease-in-out infinite;
+  opacity: 0;
+  transform-box: fill-box;
+  animation: mote 7s ease-in-out infinite;
   animation-delay: calc(var(--d) * -1s);
 }
-@keyframes twinkle {
-  50% {
-    opacity: 0.8;
+@keyframes mote {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
   }
-}
-/* The sun's reflection on the water below the horizon. */
-.sc-sea {
-  transition: opacity 1s ease-in-out;
-}
-.sc-sea line {
-  stroke: var(--green);
-  stroke-width: 2;
-  opacity: 0.55;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: sea 3.4s ease-in-out infinite;
-  animation-delay: calc(var(--d) * -0.85s);
-}
-@keyframes sea {
-  50% {
-    opacity: 0.15;
-    transform: scaleX(0.6);
+  30%,
+  60% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-22px);
   }
 }
 
@@ -645,10 +656,10 @@ a {
   --tone: #9fb8bb;
 }
 .cface[data-mood='3'] {
-  --tone: #b9c9bf;
+  --tone: #bac5b7;
 }
 .cface[data-mood='4'] {
-  --tone: #b4e3c8;
+  --tone: #bdddb9;
 }
 .cface[data-mood='5'] {
   --tone: var(--green);
@@ -791,7 +802,7 @@ a {
 }
 .art .f,
 .sprout .f {
-  fill: rgb(166 232 196 / 0.15);
+  fill: rgb(192 228 178 / 0.15);
 }
 .art .s {
   fill: var(--green);
@@ -1572,7 +1583,7 @@ a {
 }
 .input-wrapper:focus-within {
   border-color: var(--green);
-  box-shadow: 0 0 24px rgb(166 232 196 / 0.12);
+  box-shadow: 0 0 24px rgb(192 228 178 / 0.12);
 }
 #userInput {
   flex: 1;
@@ -1665,10 +1676,10 @@ a {
   --tone: #9fb8bb;
 }
 .face[data-mood='3'] {
-  --tone: #b9c9bf;
+  --tone: #bac5b7;
 }
 .face[data-mood='4'] {
-  --tone: #b4e3c8;
+  --tone: #bdddb9;
 }
 .face[data-mood='5'] {
   --tone: var(--green);
@@ -1936,9 +1947,9 @@ a {
 
 /* ── Tab bar ───────────────────────────────────────────────────────── */
 
-/* A black slab with a rising top edge drawn as one green hairline. Each section is a
-   slanted blade; the blades climb with the edge, and the open one is lit and stands
-   above the horizon. */
+/* A black slab with a rising top edge drawn as one green hairline. The open section is a soft
+   patch of light hanging from that edge: its top lies on the line, its sides lean with it, and the
+   line glows brighter above it. app.js measures the line and moves the light when the tab changes. */
 .tabbar {
   grid-row: 4;
   --slant: 18px;
@@ -1966,7 +1977,37 @@ a {
 .tabbar-edge line {
   stroke: var(--green);
   stroke-width: 1;
-  filter: drop-shadow(0 0 4px var(--green));
+  opacity: 0.75;
+  filter: drop-shadow(0 0 4px var(--green-glow));
+}
+/* The light under the open tab, and the brighter piece of the edge above it (clip-paths set by app.js). */
+.tabbar-lit,
+.tabbar-glow,
+.tabbar-lit-edge {
+  position: absolute;
+  inset: 0;
+}
+.tabbar-lit {
+  background: linear-gradient(
+    to bottom,
+    rgb(192 228 178 / 0.2),
+    rgb(192 228 178 / 0.07) 55%,
+    rgb(192 228 178 / 0) 85%
+  );
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+  transition: clip-path 420ms var(--ease);
+}
+.tabbar-glow {
+  filter: drop-shadow(0 0 5px var(--green-glow)) drop-shadow(0 0 2px var(--green-glow));
+}
+.tabbar-lit-edge {
+  background: var(--green);
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+  transition: clip-path 420ms var(--ease);
+}
+.tabbar.lit-still .tabbar-lit,
+.tabbar.lit-still .tabbar-lit-edge {
+  transition: none;
 }
 .tabs {
   position: absolute;
@@ -1978,7 +2019,7 @@ a {
   height: 62px;
   pointer-events: auto;
 }
-/* The open tab takes more room, so its label always fits on the slanted blade, even on a 320 px screen. */
+/* Six equal sections; each sits the same distance under the rising edge. */
 .tab {
   position: relative;
   flex: 1 1 0;
@@ -1995,42 +2036,29 @@ a {
   white-space: nowrap;
   text-decoration: none;
   transform: translateY(calc(var(--k) * var(--rise) * -1));
-  transition: color 200ms var(--ease), flex-grow 380ms var(--ease);
-}
-.tab[aria-current='page'] {
-  flex-grow: 1.55;
-}
-/* The blade. */
-.tab::before {
-  content: '';
-  position: absolute;
-  inset: 4px 7px 2px;
-  border: 1px solid transparent;
-  transform: skewX(-14deg);
-  transition:
-    background-color 220ms var(--ease),
-    inset 260ms var(--ease),
-    box-shadow 260ms var(--ease);
-}
-.tab .ico,
-.tab span {
-  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 220ms var(--ease);
 }
 .tab .ico {
   width: 24px;
   height: 24px;
+  transition: transform 160ms var(--ease);
 }
-.tab:active::before {
-  background: var(--s2);
+.tab:active .ico {
+  transform: scale(0.9);
+}
+@media (hover: hover) {
+  .tab:hover {
+    color: var(--ink);
+  }
 }
 .tab:focus-visible {
-  outline: 0;
-}
-.tab:focus-visible::before {
-  border-color: var(--green);
+  outline: 2px solid var(--green);
+  outline-offset: -2px;
 }
 .tab[aria-current='page'] {
-  color: var(--green-ink);
+  color: var(--green);
+  font-weight: 800;
 }
 .tab[aria-current='page'] .ico {
   stroke-width: 2.1;
@@ -2040,11 +2068,6 @@ a {
   40% {
     transform: translateY(-3px) scale(1.12);
   }
-}
-.tab[aria-current='page']::before {
-  inset: -12px 5px 2px;
-  background: var(--green);
-  box-shadow: 0 0 28px var(--green-glow);
 }
 
 /* Six tabs on a phone: slightly smaller labels. */
@@ -2080,7 +2103,7 @@ a {
 
 /* ── A minute of breathing ─────────────────────────────────────────── */
 
-/* Full screen and quiet: the sun rises for the in-breath (4 s) and sets for the out-breath (6 s);
+/* Full screen and quiet: the sprout opens its leaves for the in-breath (4 s) and folds them for the out-breath (6 s);
    chat.js sets data-phase and --dur. */
 .breathe {
   --dur: 4000ms;
@@ -2093,7 +2116,7 @@ a {
   justify-content: center;
   padding: calc(var(--sat) + 64px) 20px calc(var(--sab) + 84px);
   background:
-    radial-gradient(80% 50% at 50% 42%, rgb(166 232 196 / 0.1), transparent 70%),
+    radial-gradient(80% 50% at 50% 42%, rgb(192 228 178 / 0.1), transparent 70%),
     var(--bg);
   opacity: 0;
   transition: opacity 500ms var(--ease);
@@ -2115,23 +2138,37 @@ a {
   width: min(100% + 40px, 560px);
   margin-top: 40px;
 }
-.breathe .sc-sun,
-.breathe .sc-rays,
+.breathe .sc-plant,
+.breathe .sc-leaf,
 .breathe .sc-glow {
   animation: none;
   transition:
     transform var(--dur) cubic-bezier(0.45, 0, 0.35, 1),
     opacity var(--dur) cubic-bezier(0.45, 0, 0.35, 1);
 }
-.breathe[data-phase='ready'] .sc-sun,
-.breathe[data-phase='out'] .sc-sun {
-  transform: translateY(16px);
+.breathe[data-phase='ready'] .sc-plant,
+.breathe[data-phase='out'] .sc-plant {
+  transform: scale(0.94);
 }
-.breathe[data-phase='in'] .sc-sun {
-  transform: translateY(-34px);
+.breathe[data-phase='in'] .sc-plant {
+  transform: scale(1.08);
 }
-.breathe[data-phase='done'] .sc-sun {
-  transform: translateY(-12px);
+.breathe[data-phase='done'] .sc-plant {
+  transform: scale(1.02);
+}
+.breathe[data-phase='in'] .sc-leaf-l {
+  transform: rotate(-8deg);
+}
+.breathe[data-phase='in'] .sc-leaf-r {
+  transform: rotate(8deg);
+}
+.breathe[data-phase='ready'] .sc-leaf-l,
+.breathe[data-phase='out'] .sc-leaf-l {
+  transform: rotate(9deg);
+}
+.breathe[data-phase='ready'] .sc-leaf-r,
+.breathe[data-phase='out'] .sc-leaf-r {
+  transform: rotate(-9deg);
 }
 .breathe[data-phase='in'] .sc-glow {
   opacity: 1;
@@ -2142,22 +2179,7 @@ a {
   opacity: 0.4;
   transform: scale(0.85);
 }
-.breathe[data-phase='in'] .sc-rays {
-  opacity: 1;
-  transform: rotate(10deg) scale(1.14);
-}
-.breathe[data-phase='ready'] .sc-rays,
-.breathe[data-phase='out'] .sc-rays {
-  opacity: 0.35;
-  transform: rotate(-6deg) scale(0.9);
-}
-.breathe .sc-sea {
-  transition-duration: var(--dur);
-}
-.breathe[data-phase='ready'] .sc-sea,
-.breathe[data-phase='out'] .sc-sea {
-  opacity: 0.35;
-}
+
 .breathe-text {
   margin-top: 26px;
   text-align: center;
@@ -2259,7 +2281,7 @@ a {
   padding: 26px 22px 22px;
   border: 1px solid var(--line-2);
   background: var(--s1);
-  box-shadow: 0 0 60px rgb(166 232 196 / 0.08);
+  box-shadow: 0 0 60px rgb(192 228 178 / 0.08);
   clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
   animation: view-in 240ms var(--ease);
 }

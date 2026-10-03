@@ -147,6 +147,38 @@
     document.documentElement.lang = typeof currentLanguage !== 'undefined' ? currentLanguage : 'pl';
   }
 
+  // ── The light under the open tab ────────────────────────────────────
+  // Its top lies exactly on the tab bar's slanted edge and its sides lean the same way, so the
+  // open tab looks cut out of the bar rather than stuck onto it. Measured, so it fits any width.
+  const bar = document.querySelector('.tabbar');
+  const light = bar?.querySelector('.tabbar-lit');
+  const lightEdge = bar?.querySelector('.tabbar-lit-edge');
+  let lightPlaced = false;
+  function placeLight(animate) {
+    const tab = bar?.querySelector('.tab[aria-current="page"]');
+    const b = bar?.getBoundingClientRect();
+    if (!tab || !light || !lightEdge || !b.width) return;
+    const r = tab.getBoundingClientRect();
+    const slant = parseFloat(getComputedStyle(bar).getPropertyValue('--slant')) || 18;
+    // The edge runs from (0, 15.5/16 of the slant) to (width, 0.5/16 of it); see .tabbar-edge.
+    const edgeY = (x) => (slant * (15.5 - (15 * x) / b.width)) / 16;
+    const left = r.left - b.left + 2;
+    const right = r.right - b.left - 2;
+    const bottom = r.bottom - b.top;
+    const lean = (Math.tan((12 * Math.PI) / 180) * (bottom - edgeY(left))) / 2;
+    const tl = left + lean;
+    const tr = right + lean;
+    const p = (x, y) => `${x.toFixed(1)}px ${y.toFixed(1)}px`;
+    const poly = (...pts) => `polygon(${pts.join(', ')})`;
+    bar.classList.toggle('lit-still', !animate || !lightPlaced);
+    light.style.clipPath = poly(p(tl, edgeY(tl)), p(tr, edgeY(tr)), p(right - lean, bottom), p(left - lean, bottom));
+    lightEdge.style.clipPath = poly(p(tl, edgeY(tl) - 1.2), p(tr, edgeY(tr) - 1.2), p(tr, edgeY(tr) + 1.6), p(tl, edgeY(tl) + 1.6));
+    lightPlaced = true;
+    void light.offsetWidth;
+    bar.classList.remove('lit-still');
+  }
+  window.addEventListener('resize', () => placeLight(false));
+
   // ── Sections ────────────────────────────────────────────────────────
   // The atlas and "Gdzie boli?" are their own pages, shown in a frame so the tab bar stays;
   // each loads the first time its tab is opened.
@@ -163,6 +195,7 @@
       if (t.dataset.view === view) t.setAttribute('aria-current', 'page');
       else t.removeAttribute('aria-current');
     });
+    placeLight(true);
     $('userMenu')?.classList.remove('visible');
     if (view === 'nastroj') renderWeek();
     if (view === 'wiecej') renderMore();
@@ -200,7 +233,7 @@
   // ── Mood diary (this device only) ───────────────────────────────────
   const KEY = 'soleil_moods_v1';
   const moodName = (n) => T().faces[n - 1];
-  const TONES = { 1: '#8fa3c2', 2: '#9fb8bb', 3: '#b9c9bf', 4: '#b4e3c8', 5: '#a6e8c4' };
+  const TONES = { 1: '#8fa3c2', 2: '#9fb8bb', 3: '#bac5b7', 4: '#bdddb9', 5: '#c0e4b2' };
   const dayKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   const load = () => {
     try {

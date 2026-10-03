@@ -1,4 +1,4 @@
-// Doco's chat screen: the sunrise scene, a greeting for the time of day, the topic tiles that
+// Doco's chat screen: the sprout scene, a greeting for the time of day, the topic tiles that
 // start a conversation, a minute of guided breathing, and quick replies under the offline
 // companion's answers. Loaded last; it wraps the page's functions (the original runs first) and
 // never rewrites them.
@@ -107,45 +107,37 @@
   };
   const t = (k) => (L[lang()] || L.pl)[k] ?? L.pl[k];
 
-  // ── The scene: a sun over a horizon that rises left to right, like the tab bar's edge ──
-  // viewBox 360×160; the horizon runs from (0,116) to (360,100), so it crosses the sun's x at y=108.
+  // ── The scene: a sprout on a horizon that rises left to right, like the tab bar's edge ──
+  // viewBox 360×160; the horizon runs from (0,116) to (360,100), so the stem stands on it at (180,108).
+  // Each leaf is two halves either side of its midrib, one in light and one in shade; both leaves
+  // pivot at their base, so they can open on the in-breath and fold on the out-breath.
   function scene(id) {
-    const rays = [-80, -60, -40, -20, 0, 20, 40, 60, 80]
-      .map((a, i) => {
-        const r = (a * Math.PI) / 180;
-        const p = (d) => `${(180 + Math.sin(r) * d).toFixed(1)} ${(96 - Math.cos(r) * d).toFixed(1)}`;
-        return `<path d="M${p(38)} L${p(i % 2 ? 45 : 49)}" style="--d:${i}"/>`;
-      })
-      .join('');
-    const sea = [[116, 30], [123, 22], [130, 14], [137, 7]]
-      .map(([y, w], i) => {
-        const dy = (w * 16) / 360;
-        return `<line x1="${180 - w}" y1="${(y + dy).toFixed(1)}" x2="${180 + w}" y2="${(y - dy).toFixed(1)}" style="--d:${i}"/>`;
-      })
-      .join('');
-    const stars = [[46, 34], [92, 62], [128, 18], [246, 26], [292, 54], [326, 20], [20, 78]]
-      .map(([x, y], i) => `<path d="M${x} ${y - 2.4}l2.4 2.4-2.4 2.4-2.4-2.4z" style="--d:${(i * 0.7) % 4}"/>`)
+    const motes = [[64, 92, 1.6], [104, 70, 1.2], [132, 96, 1.8], [236, 88, 1.4], [268, 62, 1.9], [302, 84, 1.2], [36, 64, 1.3]]
+      .map(([x, y, r], i) => `<circle cx="${x}" cy="${y}" r="${r}" style="--d:${(i * 1.3) % 7}"/>`)
       .join('');
     return `<svg class="scene" viewBox="0 0 360 160" aria-hidden="true" focusable="false">
   <defs>
-    <radialGradient id="${id}-disc" cx="50%" cy="38%" r="62%"><stop offset="0" stop-color="#f1fcf6"/><stop offset=".5" stop-color="#c6f2da"/><stop offset="1" stop-color="#a6e8c4"/></radialGradient>
-    <radialGradient id="${id}-glow"><stop offset="0" stop-color="#a6e8c4" stop-opacity=".5"/><stop offset=".4" stop-color="#a6e8c4" stop-opacity=".14"/><stop offset="1" stop-color="#a6e8c4" stop-opacity="0"/></radialGradient>
-    <clipPath id="${id}-sky"><polygon points="0,-60 360,-60 360,100 0,116"/></clipPath>
+    <radialGradient id="${id}-glow"><stop offset="0" stop-color="#c0e4b2" stop-opacity=".34"/><stop offset=".45" stop-color="#c0e4b2" stop-opacity=".1"/><stop offset="1" stop-color="#c0e4b2" stop-opacity="0"/></radialGradient>
   </defs>
-  <g class="sc-stars">${stars}</g>
-  <g clip-path="url(#${id}-sky)">
-    <g class="sc-sun">
-      <circle class="sc-glow" cx="180" cy="96" r="84" fill="url(#${id}-glow)"/>
-      <g class="sc-rays">${rays}</g>
-      <circle class="sc-disc" cx="180" cy="96" r="27" fill="url(#${id}-disc)"/>
+  <circle class="sc-glow" cx="180" cy="72" r="86" fill="url(#${id}-glow)"/>
+  <g class="sc-motes">${motes}</g>
+  <g class="sc-plant">
+    <path class="sc-stem" d="M180 108C181.5 97 177.5 86 180 71"/>
+    <g class="sc-leaf sc-leaf-l">
+      <path class="sc-shade" d="M180 74C165 77 145 69 132 52Q156 59 180 74Z"/>
+      <path class="sc-light" d="M180 74C171 54 151 45 132 52Q156 59 180 74Z"/>
+    </g>
+    <g class="sc-leaf sc-leaf-r">
+      <path class="sc-shade" d="M180 69C200 75 227 61 238 35Q207 47 180 69Z"/>
+      <path class="sc-light" d="M180 69C187 42 214 29 238 35Q207 47 180 69Z"/>
     </g>
   </g>
-  <g class="sc-sea">${sea}</g>
   <line class="sc-horizon" x1="-20" y1="116.9" x2="380" y2="99.1"/>
   <line class="sc-glint" x1="0" y1="116" x2="360" y2="100" pathLength="100"/>
   <line class="sc-horizon2" x1="24" y1="141" x2="336" y2="127"/>
 </svg>`;
   }
+
   $('hyHeroScene').innerHTML = scene('hs');
   $('hyBreatheScene').innerHTML = scene('bs');
 

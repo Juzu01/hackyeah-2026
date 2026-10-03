@@ -8,20 +8,20 @@
   color-scheme: dark;
 
   --bg: #000000;
-  --s1: #08110d;
-  --s2: #0f1a15;
-  --line: rgba(190, 240, 215, 0.1);
-  --line-2: rgba(190, 240, 215, 0.18);
+  --s1: #0c100b;
+  --s2: #141912;
+  --line: rgba(211, 235, 202, 0.1);
+  --line-2: rgba(211, 235, 202, 0.18);
 
-  --ink: #eef6f1;
-  --ink-2: #9fb3a8;
+  --ink: #f2f5ed;
+  --ink-2: #a8b1a1;
   /* 4.3:1 on black: placeholders and disabled things only, never text people must read. */
-  --ink-3: #62756b;
+  --ink-3: #6b7364;
 
-  --green: #a6e8c4;
+  --green: #c0e4b2;
   --green-hover: #c2f1d8;
-  --green-ink: #04140c;
-  --green-soft: rgba(166, 232, 196, 0.13);
+  --green-ink: #0b1307;
+  --green-soft: rgba(192, 228, 178, 0.13);
 
   --alarm: #ff6b5e;
   --alarm-soft: rgba(255, 107, 94, 0.1);
@@ -35,7 +35,7 @@
   --care-self: #8fbf9a;
 
   /* Ambient light: a very faint pastel-green glow at the top of the page. */
-  --glow: rgba(166, 232, 196, 0.1);
+  --glow: rgba(192, 228, 178, 0.1);
 
   --cut: 10px;
 }
@@ -333,7 +333,7 @@ header nav :is(a, button) {
     --ink-3: #66726b;
     --green: #1d6b45;
     --green-ink: #ffffff;
-    --green-soft: rgba(29, 107, 69, 0.08);
+    --green-soft: rgba(63, 103, 46, 0.08);
     --alarm: #b3261e;
     --alarm-soft: rgba(179, 38, 30, 0.06);
     --alarm-line: rgba(179, 38, 30, 0.4);
