@@ -1,6 +1,7 @@
 // The title bar: the app's name and its buttons: search, turn the body round
 // (a pill that says which side you'll see, so nobody has to guess the icon), info.
 
+import { Logo } from '../components/Logo.tsx'
 import { FlipIcon, InfoIcon, SearchIcon } from './icons.tsx'
 
 interface Props {
@@ -14,7 +15,10 @@ export default function TopBar({ back, onSearch, onFlip, onInfo }: Props) {
   const flipLabel = back ? 'Pokaż przód ciała' : 'Pokaż tył ciała'
   return (
     <header className="topbar">
-      <h1 className="topbar-title">Atlas ciała</h1>
+      <div className="topbar-brand">
+        <Logo className="topbar-logo" />
+        <h1 className="topbar-title">Atlas ciała</h1>
+      </div>
       <div className="topbar-actions">
         <button type="button" className="round-btn" aria-label="Szukaj części ciała" title="Szukaj" onClick={onSearch}>
           <SearchIcon />

@@ -1,18 +1,9 @@
 import { useAccount } from '../lib/account.ts'
 import type { Path } from '../lib/router.ts'
+import { Logo } from './Logo.tsx'
 
 interface Props {
   path: Path
-}
-
-/** Doco's mark language: a sharp green diamond with a black point at its centre ("here it hurts"). */
-export function Logo({ className = 'h-6 w-6' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 32 32" className={className} aria-hidden="true">
-      <path d="M16 2 30 16 16 30 2 16z" className="fill-green" />
-      <path d="M16 12.5 19.5 16 16 19.5 12.5 16z" className="fill-page" />
-    </svg>
-  )
 }
 
 /** Logo left, "Historia" and the optional account on the right: login never gates the checker. */
@@ -35,7 +26,7 @@ export default function Header({ path }: Props) {
     <header className="ambient sticky top-0 z-30 border-b border-line print:hidden">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5">
         <a href="#" className="flex min-h-11 items-center gap-2.5">
-          <Logo />
+          <Logo className="h-9 w-9 shrink-0 text-green" />
           <span className="font-serif text-[1.375rem] leading-none font-medium tracking-tight text-ink">Gdzie boli?</span>
           <span className="hidden text-sm text-ink-2 sm:inline">wstępna ocena objawów</span>
         </a>

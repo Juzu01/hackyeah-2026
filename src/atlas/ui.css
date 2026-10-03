@@ -73,6 +73,49 @@ body {
   letter-spacing: -0.01em;
   line-height: 1;
 }
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.topbar-logo {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  color: var(--accent);
+}
+.topbar-brand .topbar-title {
+  white-space: nowrap;
+}
+/* Logo, name and the three buttons only just fit a phone; a notch smaller title keeps them apart. */
+@media (max-width: 400px) {
+  .topbar-title {
+    font-size: 1.375rem;
+  }
+}
+@media (max-width: 370px) {
+  .topbar-brand {
+    gap: 6px;
+  }
+  .topbar-logo {
+    width: 30px;
+    height: 30px;
+  }
+  .topbar-title {
+    font-size: 1.1875rem;
+  }
+}
+/* The oldest small phones: the logo stays, the name is left to screen readers. */
+@media (max-width: 340px) {
+  .topbar-brand .topbar-title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
 .topbar-actions {
   display: flex;
   gap: 8px;

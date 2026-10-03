@@ -227,8 +227,8 @@ a {
   padding: var(--sat) 16px 0;
 }
 .logo-mark {
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   flex: none;
   color: var(--green);
   filter: drop-shadow(0 0 10px var(--green-glow));
