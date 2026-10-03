@@ -3,10 +3,14 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Refresh the /pomysly/ snapshot (ideas.json) whenever an idea or its comments change.
+  issues:
+  issue_comment:
   workflow_dispatch:
 
 permissions:
   contents: read
+  issues: read
   pages: write
   id-token: write
 
@@ -28,6 +32,16 @@ jobs:
           cp -r soleil-main/. _site/
           rm -rf _site/api
           echo "${{ github.sha }}" > _site/version.txt
+          cp -r pomysly _site/pomysly
+
+      # Fallback for the ideas page when the visitor's IP hits GitHub's unauthenticated API limit.
+      # Not fatal: a failed snapshot shouldn't block deploying the app.
+      - run: |
+          gh api "repos/${{ github.repository }}/issues?labels=pomys%C5%82&state=all&per_page=100" > ideas.json \
+            && mv ideas.json _site/pomysly/ideas.json \
+            || echo "::warning::Could not snapshot ideas"
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - uses: actions/upload-pages-artifact@v5
         with:

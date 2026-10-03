@@ -1,0 +1,10 @@
+name: 💡 Pomysł
+description: Dorzuć pomysł do zarysu projektu. Pojawi się na https://juzu01.github.io/hackyeah-2026/pomysly/
+labels: ["pomysł"]
+body:
+  # The id is the query parameter the /pomysly/ page uses to prefill this field.
+  - type: textarea
+    id: opis
+    attributes:
+      label: Opis
+      description: Co to daje, dla kogo, jak by to działało. Może być jedno zdanie.

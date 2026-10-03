@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomysły · Soleil</title>
+<meta name="description" content="Zbiór pomysłów zespołu na HackYeah 2026.">
+<link rel="icon" href="../icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #fdf6ee; --card: #ffffff; --text: #3a2e28; --muted: #76665c;
+  --accent: #e8845a; --accent-strong: #b9572c; --accent-soft: rgba(232,132,90,0.12);
+  --line: rgba(232,132,90,0.22); --shadow: 0 6px 24px rgba(180,120,80,0.10);
+  --error: #b3261e;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1613; --card: #28201c; --text: #f3e9e1; --muted: #b3a296;
+    --accent: #f0946b; --accent-strong: #c8653a; --accent-soft: rgba(240,148,107,0.14);
+    --line: rgba(240,148,107,0.22); --shadow: none; --error: #f2b8b5;
+  }
+}
+body { font-family: 'Lato', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+main { max-width: 680px; margin: 0 auto; padding: 48px 16px 64px; }
+a { color: var(--accent-strong); }
+@media (prefers-color-scheme: dark) { a { color: var(--accent); } }
+
+.eyebrow { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-strong); }
+@media (prefers-color-scheme: dark) { .eyebrow { color: var(--accent); } }
+h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 7vw, 3rem); line-height: 1.1; margin: 8px 0 12px; }
+.lead { color: var(--muted); font-size: 1.05rem; max-width: 52ch; }
+
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+
+form { margin: 32px 0 40px; padding: 20px; display: grid; gap: 8px; }
+label { font-weight: 700; font-size: 0.92rem; }
+label .optional { font-weight: 400; color: var(--muted); }
+input, textarea {
+  width: 100%; font: inherit; color: inherit; background: var(--bg);
+  border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 14px; margin-bottom: 8px;
+}
+textarea { resize: vertical; min-height: 96px; }
+input:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+button {
+  font: inherit; font-weight: 700; cursor: pointer; border: none; border-radius: 999px;
+  background: var(--accent-strong); color: #fff; padding: 11px 22px; justify-self: start;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+button:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(185,87,44,0.3); }
+.hint { font-size: 0.85rem; color: var(--muted); }
+.notice { font-size: 0.92rem; padding: 10px 14px; border-radius: 12px; background: var(--accent-soft); }
+
+.list-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; }
+.ghost { background: none; color: var(--accent-strong); padding: 4px 0; font-weight: 700; }
+.ghost:hover { transform: none; box-shadow: none; text-decoration: underline; }
+@media (prefers-color-scheme: dark) { .ghost { color: var(--accent); } }
+.status { font-size: 0.85rem; color: var(--muted); margin-bottom: 16px; }
+.status.error { color: var(--error); }
+
+.ideas { display: grid; gap: 12px; }
+.idea { padding: 16px 18px; }
+.idea-title { font-size: 1.08rem; font-weight: 700; overflow-wrap: anywhere; }
+.idea-body { margin-top: 6px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.idea-body:empty { display: none; }
+.idea-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-top: 12px; font-size: 0.85rem; color: var(--muted); }
+.avatar { width: 20px; height: 20px; border-radius: 50%; background: var(--accent-soft); }
+.idea-link { margin-left: auto; text-decoration: none; font-weight: 700; white-space: nowrap; }
+.idea-link:hover { text-decoration: underline; }
+.empty { padding: 28px 18px; text-align: center; color: var(--muted); }
+
+details { margin-top: 28px; }
+summary { cursor: pointer; color: var(--muted); font-weight: 700; margin-bottom: 12px; }
+details .idea { opacity: 0.7; }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">HackYeah 2026 · Soleil</p>
+  <h1>Pomysły</h1>
+  <p class="lead">Wrzucaj wszystko, co przyjdzie Ci do głowy: funkcje, problemy do rozwiązania, pomysły na pitch. Z tego złożymy zarys projektu.</p>
+
+  <form id="idea-form" class="card">
+    <label for="title">Pomysł w jednym zdaniu</label>
+    <input id="title" name="title" required maxlength="140" autocomplete="off" placeholder="np. Zwierzak zachęca do spaceru, gdy nastrój spada">
+    <label for="opis">Szczegóły <span class="optional">(opcjonalnie)</span></label>
+    <textarea id="opis" name="opis" placeholder="Co to daje, dla kogo, jak by to działało…"></textarea>
+    <button type="submit">Dodaj przez GitHub ↗</button>
+    <p class="hint">Otworzy się GitHub z wypełnionym pomysłem. Kliknij tam <b>Create</b>, a pomysł pojawi się poniżej.</p>
+    <p class="notice" id="submitted" hidden>Dokończ na GitHubie w nowej karcie. Lista odświeży się, gdy tu wrócisz.</p>
+  </form>
+
+  <section aria-labelledby="ideas-heading">
+    <div class="list-head">
+      <h2 id="ideas-heading">Zebrane pomysły</h2>
+      <button type="button" class="ghost" id="refresh">Odśwież</button>
+    </div>
+    <p class="status" id="status" role="status">Wczytuję…</p>
+    <div class="ideas" id="open-ideas"></div>
+    <details id="closed" hidden>
+      <summary></summary>
+      <div class="ideas" id="closed-ideas"></div>
+    </details>
+  </section>
+</main>
+
+<template id="idea-tpl">
+  <article class="idea card">
+    <h3 class="idea-title"></h3>
+    <p class="idea-body"></p>
+    <footer class="idea-meta">
+      <img class="avatar" alt="">
+      <span class="author"></span>
+      <span aria-hidden="true">·</span>
+      <time></time>
+      <a class="idea-link" target="_blank" rel="noopener"></a>
+    </footer>
+  </article>
+</template>
+
+<script>
+// Ideas are GitHub issues created from .github/ISSUE_TEMPLATE/pomysl.yml, which adds this label.
+const REPO = 'Juzu01/hackyeah-2026'
+const LABEL = 'pomysł'
+const TEMPLATE = 'pomysl.yml'
+
+const $ = (id) => document.getElementById(id)
+const rtf = new Intl.RelativeTimeFormat('pl', { numeric: 'auto' })
+const votes = (issue) => issue.reactions?.['+1'] ?? 0
+
+function timeAgo(iso) {
+  let value = (new Date(iso) - Date.now()) / 1000
+  for (const [size, unit] of [[60, 'second'], [60, 'minute'], [24, 'hour'], [7, 'day'], [4.35, 'week'], [12, 'month']]) {
+    if (Math.abs(value) < size) return rtf.format(Math.round(value), unit)
+    value /= size
+  }
+  return rtf.format(Math.round(value), 'year')
+}
+
+// The issue form renders the body as "### Opis\n\n<text>", or "_No response_" when left empty.
+function ideaText(body) {
+  const text = (body ?? '').replace(/^###\s*Opis\s*/, '').trim()
+  return text === '_No response_' ? '' : text
+}
+
+async function fetchIdeas() {
+  const api = `https://api.github.com/repos/${REPO}/issues?labels=${encodeURIComponent(LABEL)}&state=all&per_page=100`
+  try {
+    // no-cache revalidates with an ETag; 304s don't count against the rate limit.
+    const res = await fetch(api, { cache: 'no-cache', headers: { Accept: 'application/vnd.github+json' } })
+    if (!res.ok) throw new Error(`GitHub API ${res.status}`)
+    return { issues: await res.json() }
+  } catch {
+    // Unauthenticated API calls are capped at 60/h per IP, which a shared venue network can use up.
+    // The deploy workflow saves a snapshot of the same query on every issue change.
+    const res = await fetch('ideas.json', { cache: 'no-cache' })
+    if (!res.ok) throw new Error('no snapshot')
+    return { issues: await res.json(), snapshotAt: res.headers.get('last-modified') }
+  }
+}
+
+function renderIdea(issue) {
+  const node = $('idea-tpl').content.cloneNode(true)
+  node.querySelector('.idea-title').textContent = issue.title
+  node.querySelector('.idea-body').textContent = ideaText(issue.body)
+  node.querySelector('.avatar').src = `${issue.user.avatar_url}&s=40`
+  node.querySelector('.author').textContent = issue.user.login
+  const time = node.querySelector('time')
+  time.dateTime = issue.created_at
+  time.textContent = timeAgo(issue.created_at)
+  time.title = new Date(issue.created_at).toLocaleString('pl')
+  const link = node.querySelector('.idea-link')
+  link.href = issue.html_url
+  link.textContent = `👍 ${votes(issue)} · 💬 ${issue.comments} · Otwórz ↗`
+  link.setAttribute('aria-label', `${votes(issue)} głosów, ${issue.comments} komentarzy. Otwórz na GitHubie`)
+  return node
+}
+
+function renderList(container, issues) {
+  container.replaceChildren(...issues.map(renderIdea))
+}
+
+async function load() {
+  const status = $('status')
+  status.classList.remove('error')
+  try {
+    const { issues, snapshotAt } = await fetchIdeas()
+    const ideas = issues
+      .filter((issue) => !issue.pull_request)
+      .sort((a, b) => votes(b) - votes(a) || new Date(b.created_at) - new Date(a.created_at))
+    const open = ideas.filter((issue) => issue.state === 'open')
+    const closed = ideas.filter((issue) => issue.state === 'closed')
+
+    renderList($('open-ideas'), open)
+    if (!open.length) {
+      $('open-ideas').innerHTML = '<p class="empty card">Jeszcze nic tu nie ma. Wrzuć pierwszy pomysł!</p>'
+    }
+    renderList($('closed-ideas'), closed)
+    $('closed').hidden = !closed.length
+    $('closed').querySelector('summary').textContent = `Zamknięte (${closed.length})`
+
+    const hint = 'Głosuj 👍 pod pomysłem na GitHubie, najpopularniejsze są na górze.'
+    status.textContent = snapshotAt
+      ? `Kopia z ${new Date(snapshotAt).toLocaleTimeString('pl', { hour: '2-digit', minute: '2-digit' })} (GitHub chwilowo ogranicza zapytania). ${hint}`
+      : hint
+  } catch {
+    status.classList.add('error')
+    status.innerHTML = `Nie udało się wczytać pomysłów. <a href="https://github.com/${REPO}/issues?q=label%3A${encodeURIComponent(LABEL)}" target="_blank" rel="noopener">Zobacz je na GitHubie ↗</a>`
+  }
+}
+
+let awaitingSubmit = false
+
+$('idea-form').addEventListener('submit', (event) => {
+  event.preventDefault()
+  const form = event.currentTarget
+  const url = new URL(`https://github.com/${REPO}/issues/new`)
+  url.searchParams.set('template', TEMPLATE)
+  url.searchParams.set('title', form.elements.title.value.trim())
+  // Field ids from the issue form prefill its fields.
+  if (form.elements.opis.value.trim()) url.searchParams.set('opis', form.elements.opis.value.trim())
+  window.open(url, '_blank', 'noopener')
+  form.reset()
+  $('submitted').hidden = false
+  awaitingSubmit = true
+})
+
+// Coming back from the GitHub tab: pick up the idea that was just created.
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && awaitingSubmit) {
+    awaitingSubmit = false
+    $('submitted').hidden = true
+    load()
+  }
+})
+
+$('refresh').addEventListener('click', load)
+load()
+</script>
+</body>
+</html>
