@@ -1,4 +1,5 @@
 import '@fontsource-variable/nunito'
+import '@fontsource-variable/fraunces/full.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './gdzie-boli.css'

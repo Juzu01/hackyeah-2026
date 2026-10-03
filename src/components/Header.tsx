@@ -5,7 +5,7 @@ interface Props {
   path: Path
 }
 
-/** Soleil's mark language: a sharp green diamond with a black point at its centre ("here it hurts"). */
+/** Doco's mark language: a sharp green diamond with a black point at its centre ("here it hurts"). */
 export function Logo({ className = 'h-6 w-6' }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" className={className} aria-hidden="true">

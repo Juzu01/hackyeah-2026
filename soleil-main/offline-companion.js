@@ -1,4 +1,4 @@
-/* Soleil offline: a simple conversation companion that runs in the browser, with no server.
+/* Doco offline: a simple conversation companion that runs in the browser, with no server.
    index.html uses it when api/chat doesn't respond (e.g. on GitHub Pages, which has no server functions).
    It is NOT AI: it recognises the topic from the words and answers with ready-made, warm replies.
    Order: 1) crisis signals (always crisis-line numbers), 2) urgent body symptoms (112),

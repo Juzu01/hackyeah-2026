@@ -82,7 +82,7 @@ export default function Chat({ talk, onFocus, onClose }: Props) {
           <a className="talk-soleil" href="../">
             <PhoneIcon />
             <span>
-              Chcesz po prostu porozmawiać? <strong>Zadzwoń do Soleil</strong>
+              Chcesz po prostu porozmawiać? <strong>Zadzwoń do Doco</strong>
             </span>
           </a>
           <p className="talk-note">To nie jest porada lekarska. W nagłej sytuacji dzwoń pod 112.</p>

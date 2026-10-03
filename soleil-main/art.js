@@ -1,4 +1,4 @@
-// Soleil's drawings: one small animated vector scene per conversation topic, the pool the chat
+// Doco's drawings: one small animated vector scene per conversation topic, the pool the chat
 // screen draws its topic tiles from, the mood sky above the mood diary and the sprout on the
 // thought of the day. Drawn in the app's pastel green: lines (.l), soft fills (.f), solid
 // shapes (.s); classes such as .fall or .bob animate them (soleil.css, "Drawings").

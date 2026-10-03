@@ -1,5 +1,5 @@
-// The app shell around Soleil: the tab bar and its sections (#rozmowa, #nastroj, #cialo,
-// #objawy, #wiecej), the mood diary kept on this device, and adding Soleil to the home screen.
+// The app shell around Doco: the tab bar and its sections (#rozmowa, #nastroj, #cialo,
+// #objawy, #wiecej), the mood diary kept on this device, and adding Doco to the home screen.
 // Loaded after the page's own scripts; it only adds to them.
 (function () {
   const $ = (id) => document.getElementById(id);
@@ -143,10 +143,10 @@
   function renderMore() {
     const user = user$();
     const name = user && (`${user.firstName || ''} ${user.lastName || ''}`.trim() || user.emailAddresses?.[0]?.emailAddress);
-    $('hyAccountWho').textContent = user ? `Zalogowano: ${name || 'konto Soleil'}` : 'Piszesz bez konta.';
+    $('hyAccountWho').textContent = user ? `Zalogowano: ${name || 'konto Doco'}` : 'Piszesz bez konta.';
     $('hyAccountWhy').textContent = user
-      ? 'Soleil pamięta Twoje rozmowy, a słuchawka przy polu pisania łączy Cię z Soleil głosem.'
-      : 'Z kontem Soleil zapamięta rozmowy, a słuchawka połączy Cię z Soleil głosem.';
+      ? 'Doco pamięta Twoje rozmowy, a słuchawka przy polu pisania łączy Cię z Doco głosem.'
+      : 'Z kontem Doco zapamięta rozmowy, a słuchawka połączy Cię z Doco głosem.';
     const btn = $('hyAccountBtn');
     btn.querySelector('span').textContent = user ? 'Wyloguj się' : 'Zaloguj się';
     btn.querySelector('use').setAttribute('href', user ? '#i-logout' : '#i-login');
@@ -184,11 +184,11 @@
     const btn = $('hyInstallBtn');
     btn.hidden = !promptEvent;
     if (standalone()) {
-      $('hyInstallText').textContent = 'Soleil jest już na ekranie głównym tego urządzenia.';
+      $('hyInstallText').textContent = 'Doco jest już na ekranie głównym tego urządzenia.';
       steps.innerHTML = '';
       return;
     }
-    $('hyInstallText').textContent = 'Soleil działa jak aplikacja, bez sklepu i bez instalowania czegokolwiek.';
+    $('hyInstallText').textContent = 'Doco działa jak aplikacja, bez sklepu i bez instalowania czegokolwiek.';
     steps.innerHTML = isIOS
       ? '<li>Otwórz tę stronę w <strong>Safari</strong>.</li><li>Stuknij <strong>Udostępnij</strong> (kwadrat ze strzałką w górę).</li><li>Wybierz <strong>Do ekranu początkowego</strong>, potem <strong>Dodaj</strong>.</li>'
       : promptEvent

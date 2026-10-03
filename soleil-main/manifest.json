@@ -1,6 +1,6 @@
 {
-  "name": "Soleil",
-  "short_name": "Soleil",
+  "name": "Doco",
+  "short_name": "Doco",
   "description": "Rozmowa o tym, co czujesz, dziennik nastroju, atlas ciała 3D i sprawdzanie objawów.",
   "start_url": "./",
   "display": "standalone",

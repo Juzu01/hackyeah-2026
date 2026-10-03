@@ -1,4 +1,4 @@
-/* "Gdzie boli?" runs inside Soleil (the "Objawy" tab, in an iframe), so it wears Soleil's
+/* "Gdzie boli?" runs inside Doco (the "Objawy" tab, in an iframe), so it wears Doco's
    look: true black with a faint green cast, one light pastel-green accent, sharp corners.
    Its own Tailwind entry (src/index.css is the atlas's) so the tokens below can become
    utilities: bg-s1, text-ink-2, border-line… */
@@ -42,7 +42,7 @@
 
 @theme inline {
   --font-sans: 'Nunito Variable', system-ui, sans-serif;
-  --font-serif: 'Nunito Variable', system-ui, sans-serif;
+  --font-serif: 'Fraunces Variable', 'Nunito Variable', Georgia, serif;
 
   --color-page: var(--bg);
   --color-s1: var(--s1);
@@ -64,11 +64,14 @@
   --color-care-self: var(--care-self);
 }
 
-/* Titles: the title face is Nunito like the text, so they get its heavy weights. Unlayered, so it wins
-   over the font-medium utility on the headings. */
+/* Titles in Fraunces at its softest, with its wonky letters (Nunito ignores both axes). Unlayered,
+   so the weight wins over the font-medium utility on the headings. */
+body {
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+}
 .font-serif {
-  font-weight: 800;
-  letter-spacing: -0.01em;
+  font-weight: 640;
+  letter-spacing: -0.015em;
 }
 /* The bar at the top stays on one line on a phone; Nunito's heavy title is wider than the old serif. */
 header .font-serif {

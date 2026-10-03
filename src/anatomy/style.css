@@ -21,10 +21,11 @@
   --surface-solid: #08110d;
   --surface-2: rgb(214 245 230 / 0.06);
   --surface-3: rgb(214 242 230 / 0.11);
-  /* Nunito: round and warm, easy on the eyes, with Polish and Cyrillic letters. The names of
-     things use the same face (the token keeps its name); Latin stays in italic. */
+  /* Nunito: round and warm, easy on the eyes, with Polish and Cyrillic letters, for what people
+     read and tap. Fraunces, soft and a little wonky (body sets the axes), for the names of things;
+     Latin in its italic. Ukrainian falls back to Nunito. */
   --font-sans: 'Nunito Variable', system-ui, sans-serif;
-  --font-serif: 'Nunito Variable', system-ui, sans-serif;
+  --font-serif: 'Fraunces Variable', 'Nunito Variable', Georgia, serif;
   --gutter: 16px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -46,6 +47,8 @@
 html,
 body {
   background: var(--bg-0);
+  /* Fraunces at its softest, with its wonky letters; Nunito has neither axis and ignores them. */
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
   overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;

@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Soleil — Twój przyjaciel</title>
-<meta name="application-name" content="Soleil">
-<meta name="description" content="Soleil: rozmowa o tym, co czujesz, dziennik nastroju, atlas ciała 3D i sprawdzanie objawów.">
+<title>Doco — Twój przyjaciel</title>
+<meta name="application-name" content="Doco">
+<meta name="description" content="Doco: rozmowa o tym, co czujesz, dziennik nastroju, atlas ciała 3D i sprawdzanie objawów.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Soleil">
+<meta name="apple-mobile-web-app-title" content="Doco">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#000000">
 <link rel="manifest" href="manifest.json">
@@ -35,12 +35,12 @@
   src="https://awaited-mink-45.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
   type="text/javascript"
 ></script>
-<link rel="stylesheet" href="soleil.css?v=3">
+<link rel="stylesheet" href="soleil.css?v=4">
 <link rel="stylesheet" href="voice.css">
 </head>
 <body>
 
-<!-- Icons and the mood faces, drawn for Soleil: sharp mitred lines on a slight slant, the same angle as the tab bar. -->
+<!-- Icons and the mood faces, drawn for Doco: sharp mitred lines on a slight slant, the same angle as the tab bar. -->
 <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
   <defs>
     <clipPath id="above-horizon"><polygon points="0,0 32,0 32,13.4 0,19.8"/></clipPath>
@@ -89,8 +89,8 @@
 <div class="overlay" id="authOverlay">
   <div class="popup">
     <button class="popup-close" onclick="closeAuth()">✕</button>
-    <h2>Witaj w Soleil</h2>
-    <p>Zaloguj się żeby Soleil pamiętał Twoje rozmowy i nastroje.</p>
+    <h2>Witaj w Doco</h2>
+    <p>Zaloguj się żeby Doco pamiętał Twoje rozmowy i nastroje.</p>
     <div id="clerk-sign-in"></div>
   </div>
 </div>
@@ -101,7 +101,7 @@
     <div class="popup">
       <button class="popup-close" onclick="closeMood()">✕</button>
       <h2>Jak się dziś czujesz?</h2>
-      <p>Codzienne śledzenie nastroju pomaga Soleil lepiej Cię zrozumieć.</p>
+      <p>Codzienne śledzenie nastroju pomaga Doco lepiej Cię zrozumieć.</p>
       <div class="mood-picker">
         <div class="mood-option" onclick="selectMood(1)"><span class="mood-label">Bardzo źle</span></div>
         <div class="mood-option" onclick="selectMood(2)"><span class="mood-label">Źle</span></div>
@@ -168,7 +168,7 @@
   <div class="overlay" id="premiumOverlay">
     <div class="premium-popup">
       <button class="popup-close" onclick="closePremium()">✕</button>
-      <div class="premium-header"><h2>Soleil Premium</h2><p></p></div>
+      <div class="premium-header"><h2>Doco Premium</h2><p></p></div>
       <span class="price-period"></span>
       <button class="popup-btn premium-btn" onclick="startCheckout()">Przejdź na Premium</button>
     </div>
@@ -210,7 +210,7 @@
     <div class="user-menu-email" id="userEmail">—</div>
   </div>
   <button class="user-menu-btn" onclick="openLanguage(); toggleUserMenu()"><svg class="ico"><use href="#i-lang"/></svg><span id="menuLangLabel">Język</span> <span id="menuLangFlag" class="lang-code">PL</span></button>
-  <button class="user-menu-btn" onclick="openVoicePicker(); toggleUserMenu()"><svg class="ico"><use href="#i-voice"/></svg><span id="menuVoiceLabel">Głos Soleil</span></button>
+  <button class="user-menu-btn" onclick="openVoicePicker(); toggleUserMenu()"><svg class="ico"><use href="#i-voice"/></svg><span id="menuVoiceLabel">Głos Doco</span></button>
   <button class="user-menu-btn danger" onclick="signOut()"><svg class="ico"><use href="#i-logout"/></svg><span id="menuSignOutLabel">Wyloguj się</span></button>
 </div>
 
@@ -243,7 +243,7 @@
     <button class="back-btn" id="backBtn" onclick="goBack()" aria-label="Zacznij od nowa"><svg class="ico"><use href="#i-back"/></svg></button>
     <svg class="logo-mark" aria-hidden="true"><use href="#mark"/></svg>
     <div class="header-text">
-      <h1>Soleil</h1>
+      <h1>Doco</h1>
       <p><span class="status-dot"></span>Zawsze tutaj dla Ciebie</p>
     </div>
     <div class="header-actions">
@@ -288,8 +288,9 @@
               <div class="daily-loading" id="dailyLoading">Ładowanie cytatu dnia...</div>
               <div id="dailyContent" style="display:none">
                 <div class="daily-label" id="dailyLabel">Cytat dnia</div>
-                <div class="daily-quote" id="dailyQuote"></div>
+                <blockquote class="daily-quote" id="dailyQuote"></blockquote>
                 <div class="daily-author" id="dailyAuthor"></div>
+                <button type="button" class="daily-next" id="hyQuoteNext" hidden><svg class="ico" aria-hidden="true"><use href="#i-next"/></svg><span>Kolejny cytat</span></button>
               </div>
             </div>
           </div>
@@ -298,8 +299,8 @@
 
       <div class="input-area">
         <div class="input-wrapper">
-          <textarea id="userInput" placeholder="Napisz mi o swoim dniu..." rows="1" aria-label="Wiadomość do Soleil" enterkeyhint="send"></textarea>
-          <button class="send-btn call-btn" id="voiceCallBtn" onclick="openVoiceCall()" title="Porozmawiaj z Soleil" aria-label="Porozmawiaj z Soleil"><svg class="ico"><use href="#i-phone"/></svg></button>
+          <textarea id="userInput" placeholder="Napisz mi o swoim dniu..." rows="1" aria-label="Wiadomość do Doco" enterkeyhint="send"></textarea>
+          <button class="send-btn call-btn" id="voiceCallBtn" onclick="openVoiceCall()" title="Porozmawiaj z Doco" aria-label="Porozmawiaj z Doco"><svg class="ico"><use href="#i-phone"/></svg></button>
           <button class="send-btn" onclick="sendMessage()" aria-label="Wyślij" title="Wyślij"><svg class="ico"><use href="#i-send"/></svg></button>
         </div>
       </div>
@@ -356,17 +357,17 @@
 
         <div class="account" id="hyAccount">
           <p class="account-who" id="hyAccountWho">Piszesz bez konta.</p>
-          <p class="page-lead" id="hyAccountWhy">Z kontem Soleil zapamięta rozmowy, a słuchawka połączy Cię z Soleil głosem.</p>
+          <p class="page-lead" id="hyAccountWhy">Z kontem Doco zapamięta rozmowy, a słuchawka połączy Cię z Doco głosem.</p>
           <button type="button" class="btn-green" id="hyAccountBtn" onclick="openAuth()"><svg class="ico"><use href="#i-login"/></svg><span>Zaloguj się</span></button>
         </div>
 
         <ul class="rows">
           <li><button type="button" class="row" onclick="openLanguage()"><svg class="ico"><use href="#i-lang"/></svg><span class="row-text">Język</span><span class="row-value" id="hyLangValue">Polski</span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
-          <li><button type="button" class="row" onclick="openVoicePicker()"><svg class="ico"><use href="#i-voice"/></svg><span class="row-text">Głos Soleil w rozmowie telefonicznej</span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
+          <li><button type="button" class="row" onclick="openVoicePicker()"><svg class="ico"><use href="#i-voice"/></svg><span class="row-text">Głos Doco w rozmowie telefonicznej</span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
           <li>
             <button type="button" class="row" id="hyInstallRow" aria-expanded="false" aria-controls="hyInstallHow"><svg class="ico"><use href="#i-install"/></svg><span class="row-text">Dodaj do ekranu głównego</span><svg class="ico row-go"><use href="#i-next"/></svg></button>
             <div class="install-how" id="hyInstallHow" hidden>
-              <p id="hyInstallText">Soleil działa jak aplikacja, bez sklepu.</p>
+              <p id="hyInstallText">Doco działa jak aplikacja, bez sklepu.</p>
               <ol class="steps" id="hyInstallSteps"></ol>
               <button type="button" class="btn-green" id="hyInstallBtn" hidden><svg class="ico"><use href="#i-install"/></svg><span>Dodaj teraz</span></button>
             </div>
@@ -374,7 +375,7 @@
           <li><a class="row" href="privacy.html" id="privacyLink"><svg class="ico"><use href="#i-shield"/></svg><span class="row-text">Polityka prywatności</span><svg class="ico row-go"><use href="#i-next"/></svg></a></li>
         </ul>
 
-        <p class="fine">Soleil nie jest lekarzem ani terapeutą. W nagłej sytuacji dzwoń pod <a href="tel:112">112</a>, a w kryzysie psychicznym pod <a href="tel:800702222">800 70 2222</a> (całą dobę).</p>
+        <p class="fine">Doco nie jest lekarzem ani terapeutą. W nagłej sytuacji dzwoń pod <a href="tel:112">112</a>, a w kryzysie psychicznym pod <a href="tel:800702222">800 70 2222</a> (całą dobę).</p>
       </div>
     </section>
   </main>
@@ -492,7 +493,7 @@ const translations = {
   pl: {
     tagline: 'Zawsze tutaj dla Ciebie',
     welcomeTitle: 'Hej, jestem tu dla Ciebie',
-    welcomeText: 'Jestem Soleil, Twój przyjaciel do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz — albo wybierz temat poniżej.\u00a0',
+    welcomeText: 'Jestem Doco, Twój przyjaciel do rozmowy o tym, co leży Ci na sercu. Napisz, co czujesz — albo wybierz temat poniżej.\u00a0',
     s1: 'Jestem smutny/a', s2: 'Problem w pracy/szkole', s3: 'Kłótnia z kimś bliskim', s4: 'Czuję stres',
     placeholder: 'Napisz mi o swoim dniu...',
     loginBtn: 'Zaloguj się',
@@ -500,10 +501,10 @@ const translations = {
     newChat: '+ Nowa',
     signOut: 'Wyloguj się',
     premiumMenu: 'Przejdź na Premium',
-    authTitle: 'Witaj w Soleil',
-    authDesc: 'Zaloguj się żeby Soleil pamiętał Twoje rozmowy i nastroje.',
+    authTitle: 'Witaj w Doco',
+    authDesc: 'Zaloguj się żeby Doco pamiętał Twoje rozmowy i nastroje.',
     moodTitle: 'Jak się dziś czujesz?',
-    moodDesc: 'Codzienne śledzenie nastroju pomaga Soleil lepiej Cię zrozumieć.',
+    moodDesc: 'Codzienne śledzenie nastroju pomaga Doco lepiej Cię zrozumieć.',
     saveMood: 'Zapisz nastrój',
     moodNote: 'Chcesz coś dodać? (opcjonalnie)',
     weekTitle: 'Twój tydzień',
@@ -517,12 +518,12 @@ const translations = {
     convsLoading: 'Ładowanie...',
     convsError: 'Błąd ładowania.',
     convsDelete: 'Usunąć tę rozmowę?',
-    premiumTitle: 'Soleil Premium',
+    premiumTitle: 'Doco Premium',
     premiumSubtitle: 'Głębsza analiza, prawdziwa relacja, bez ograniczeń',
     premiumF1title: 'Analiza wzorców emocjonalnych',
-    premiumF1desc: 'Soleil identyfikuje Twoje powtarzające się wzorce i pomaga je zrozumieć',
+    premiumF1desc: 'Doco identyfikuje Twoje powtarzające się wzorce i pomaga je zrozumieć',
     premiumF2title: 'Nielimitowane rozmowy',
-    premiumF2desc: 'Rozmawiaj bez ograniczeń — Soleil jest zawsze do dyspozycji',
+    premiumF2desc: 'Rozmawiaj bez ograniczeń — Doco jest zawsze do dyspozycji',
     premiumF3title: 'Głębsza relacja z AI',
     premiumF3desc: 'Bardziej osobiste, wnikliwe i szczere odpowiedzi',
     premiumF4title: 'Claude Sonnet (mocniejszy model)',
@@ -533,7 +534,7 @@ const translations = {
   en: {
     tagline: 'Always here for you',
     welcomeTitle: 'Hey, I\'m here for you',
-    welcomeText: 'I\'m Soleil, your friend to talk to about whatever is on your mind. Write how you feel — or pick a topic below.\u00a0',
+    welcomeText: 'I\'m Doco, your friend to talk to about whatever is on your mind. Write how you feel — or pick a topic below.\u00a0',
     s1: 'I\'m sad', s2: 'Work/school problem', s3: 'Argument with someone', s4: 'I feel stressed',
     placeholder: 'Tell me about your day...',
     loginBtn: 'Sign in',
@@ -541,10 +542,10 @@ const translations = {
     newChat: '+ New',
     signOut: 'Sign out',
     premiumMenu: 'Go Premium',
-    authTitle: 'Welcome to Soleil',
-    authDesc: 'Sign in so Soleil can remember your conversations and moods.',
+    authTitle: 'Welcome to Doco',
+    authDesc: 'Sign in so Doco can remember your conversations and moods.',
     moodTitle: 'How are you feeling today?',
-    moodDesc: 'Daily mood tracking helps Soleil understand you better.',
+    moodDesc: 'Daily mood tracking helps Doco understand you better.',
     saveMood: 'Save mood',
     moodNote: 'Want to add something? (optional)',
     weekTitle: 'Your week',
@@ -558,12 +559,12 @@ const translations = {
     convsLoading: 'Loading...',
     convsError: 'Loading error.',
     convsDelete: 'Delete this conversation?',
-    premiumTitle: 'Soleil Premium',
+    premiumTitle: 'Doco Premium',
     premiumSubtitle: 'Deeper analysis, real connection, unlimited',
     premiumF1title: 'Emotional pattern analysis',
-    premiumF1desc: 'Soleil identifies your recurring patterns and helps you understand them',
+    premiumF1desc: 'Doco identifies your recurring patterns and helps you understand them',
     premiumF2title: 'Unlimited conversations',
-    premiumF2desc: 'Talk without limits — Soleil is always available',
+    premiumF2desc: 'Talk without limits — Doco is always available',
     premiumF3title: 'Deeper AI relationship',
     premiumF3desc: 'More personal, insightful and honest responses',
     premiumF4title: 'Claude Sonnet (stronger model)',
@@ -582,10 +583,10 @@ const translations = {
     newChat: '+ Новий',
     signOut: 'Вийти',
     premiumMenu: 'Перейти на Premium',
-    authTitle: 'Ласкаво просимо до Soleil',
-    authDesc: 'Увійди, щоб Soleil пам\'ятав твої розмови та настрої.',
+    authTitle: 'Ласкаво просимо до Doco',
+    authDesc: 'Увійди, щоб Doco пам\'ятав твої розмови та настрої.',
     moodTitle: 'Як ти себе почуваєш сьогодні?',
-    moodDesc: 'Щоденне відстеження настрою допомагає Soleil краще тебе розуміти.',
+    moodDesc: 'Щоденне відстеження настрою допомагає Doco краще тебе розуміти.',
     saveMood: 'Зберегти настрій',
     moodNote: 'Хочеш щось додати? (необов\'язково)',
     weekTitle: 'Твій тиждень',
@@ -599,12 +600,12 @@ const translations = {
     convsLoading: 'Завантаження...',
     convsError: 'Помилка завантаження.',
     convsDelete: 'Видалити цю розмову?',
-    premiumTitle: 'Soleil Premium',
+    premiumTitle: 'Doco Premium',
     premiumSubtitle: 'Глибший аналіз, справжній зв\'язок, без обмежень',
     premiumF1title: 'Аналіз емоційних патернів',
-    premiumF1desc: 'Soleil визначає твої повторювані патерни і допомагає їх зрозуміти',
+    premiumF1desc: 'Doco визначає твої повторювані патерни і допомагає їх зрозуміти',
     premiumF2title: 'Необмежені розмови',
-    premiumF2desc: 'Спілкуйся без обмежень — Soleil завжди доступний',
+    premiumF2desc: 'Спілкуйся без обмежень — Doco завжди доступний',
     premiumF3title: 'Глибші стосунки з AI',
     premiumF3desc: 'Більш особисті, проникливі та чесні відповіді',
     premiumF4title: 'Claude Sonnet (потужніша модель)',
@@ -623,10 +624,10 @@ const translations = {
     newChat: '+ Neu',
     signOut: 'Abmelden',
     premiumMenu: 'Zu Premium wechseln',
-    authTitle: 'Willkommen bei Soleil',
-    authDesc: 'Melde dich an, damit Soleil sich an deine Gespräche und Stimmungen erinnert.',
+    authTitle: 'Willkommen bei Doco',
+    authDesc: 'Melde dich an, damit Doco sich an deine Gespräche und Stimmungen erinnert.',
     moodTitle: 'Wie fühlst du dich heute?',
-    moodDesc: 'Tägliches Stimmungs-Tracking hilft Soleil, dich besser zu verstehen.',
+    moodDesc: 'Tägliches Stimmungs-Tracking hilft Doco, dich besser zu verstehen.',
     saveMood: 'Stimmung speichern',
     moodNote: 'Möchtest du etwas hinzufügen? (optional)',
     weekTitle: 'Deine Woche',
@@ -640,12 +641,12 @@ const translations = {
     convsLoading: 'Laden...',
     convsError: 'Ladefehler.',
     convsDelete: 'Dieses Gespräch löschen?',
-    premiumTitle: 'Soleil Premium',
+    premiumTitle: 'Doco Premium',
     premiumSubtitle: 'Tiefere Analyse, echte Verbindung, unbegrenzt',
     premiumF1title: 'Analyse emotionaler Muster',
-    premiumF1desc: 'Soleil identifiziert deine wiederkehrenden Muster und hilft dir, sie zu verstehen',
+    premiumF1desc: 'Doco identifiziert deine wiederkehrenden Muster und hilft dir, sie zu verstehen',
     premiumF2title: 'Unbegrenzte Gespräche',
-    premiumF2desc: 'Chatte ohne Einschränkungen — Soleil ist immer verfügbar',
+    premiumF2desc: 'Chatte ohne Einschränkungen — Doco ist immer verfügbar',
     premiumF3title: 'Tiefere KI-Beziehung',
     premiumF3desc: 'Persönlichere, aufschlussreichere und ehrlichere Antworten',
     premiumF4title: 'Claude Sonnet (stärkeres Modell)',
@@ -664,10 +665,10 @@ const translations = {
     newChat: '+ Nueva',
     signOut: 'Cerrar sesión',
     premiumMenu: 'Ir a Premium',
-    authTitle: 'Bienvenido a Soleil',
-    authDesc: 'Inicia sesión para que Soleil recuerde tus conversaciones y estados de ánimo.',
+    authTitle: 'Bienvenido a Doco',
+    authDesc: 'Inicia sesión para que Doco recuerde tus conversaciones y estados de ánimo.',
     moodTitle: '¿Cómo te sientes hoy?',
-    moodDesc: 'El seguimiento diario del estado de ánimo ayuda a Soleil a entenderte mejor.',
+    moodDesc: 'El seguimiento diario del estado de ánimo ayuda a Doco a entenderte mejor.',
     saveMood: 'Guardar estado de ánimo',
     moodNote: '¿Quieres añadir algo? (opcional)',
     weekTitle: 'Tu semana',
@@ -681,12 +682,12 @@ const translations = {
     convsLoading: 'Cargando...',
     convsError: 'Error de carga.',
     convsDelete: '¿Eliminar esta conversación?',
-    premiumTitle: 'Soleil Premium',
+    premiumTitle: 'Doco Premium',
     premiumSubtitle: 'Análisis más profundo, conexión real, sin límites',
     premiumF1title: 'Análisis de patrones emocionales',
-    premiumF1desc: 'Soleil identifica tus patrones recurrentes y te ayuda a entenderlos',
+    premiumF1desc: 'Doco identifica tus patrones recurrentes y te ayuda a entenderlos',
     premiumF2title: 'Conversaciones ilimitadas',
-    premiumF2desc: 'Habla sin límites — Soleil siempre está disponible',
+    premiumF2desc: 'Habla sin límites — Doco siempre está disponible',
     premiumF3title: 'Relación más profunda con IA',
     premiumF3desc: 'Respuestas más personales, perspicaces y honestas',
     premiumF4title: 'Claude Sonnet (modelo más potente)',
@@ -901,7 +902,7 @@ function updatePremiumUI() {
 }
 
 function showSuccessMessage() {
-  appendMessage('ai', 'Witaj w Soleil Premium! Twoje konto zostało aktywowane. Cieszę się że tu jesteś — teraz mogę Cię poznać jeszcze głębiej. Powiedz mi, jak się teraz czujesz?');
+  appendMessage('ai', 'Witaj w Doco Premium! Twoje konto zostało aktywowane. Cieszę się że tu jesteś — teraz mogę Cię poznać jeszcze głębiej. Powiedz mi, jak się teraz czujesz?');
   loadSubscription(currentUser.id);
 }
 
@@ -1556,26 +1557,26 @@ function copyReferralLink() {
 async function shareReferralLink() {
   if (!currentReferralLink) return;
   const shareTexts = {
-    pl: 'Odkryłam/em Soleil — appkę, która pomaga mi dbać o nastrój każdego dnia. Dołącz, a oboje dostaniemy 7 dni Premium gratis',
-    en: 'I found Soleil — an app that helps me look after my mood every day. Join and we both get 7 days of Premium free',
-    uk: 'Я знайшов/ла Soleil — застосунок, який допомагає стежити за настроєм щодня. Приєднуйся, і ми обоє отримаємо 7 днів Premium безкоштовно',
-    de: 'Ich hab Soleil entdeckt — eine App, die mir hilft, jeden Tag auf meine Stimmung zu achten. Mach mit, dann bekommen wir beide 7 Tage Premium gratis',
-    es: 'Descubrí Soleil, una app que me ayuda a cuidar mi estado de ánimo cada día. Únete y ambos recibimos 7 días de Premium gratis'
+    pl: 'Odkryłam/em Doco — appkę, która pomaga mi dbać o nastrój każdego dnia. Dołącz, a oboje dostaniemy 7 dni Premium gratis',
+    en: 'I found Doco — an app that helps me look after my mood every day. Join and we both get 7 days of Premium free',
+    uk: 'Я знайшов/ла Doco — застосунок, який допомагає стежити за настроєм щодня. Приєднуйся, і ми обоє отримаємо 7 днів Premium безкоштовно',
+    de: 'Ich hab Doco entdeckt — eine App, die mir hilft, jeden Tag auf meine Stimmung zu achten. Mach mit, dann bekommen wir beide 7 Tage Premium gratis',
+    es: 'Descubrí Doco, una app que me ayuda a cuidar mi estado de ánimo cada día. Únete y ambos recibimos 7 días de Premium gratis'
   };
   const text = shareTexts[currentLanguage] || shareTexts.pl;
   if (navigator.share) {
-    try { await navigator.share({ title: 'Soleil', text, url: currentReferralLink }); return; } catch (e) { /* anulowano */ }
+    try { await navigator.share({ title: 'Doco', text, url: currentReferralLink }); return; } catch (e) { /* anulowano */ }
   }
   copyReferralLink();
 }
 
 // KARTA DO UDOSTĘPNIENIA
 const shareCardTexts = {
-  pl: { title: 'Mój tydzień z Soleil', days: 'dni z zapisanym nastrojem', avg: 'średni nastrój', streak: 'dni passy', cta: 'Twój przyjaciel AI, zawsze pod ręką', fileName: 'soleil-moj-tydzien.png' },
-  en: { title: 'My week with Soleil', days: 'days with tracked mood', avg: 'average mood', streak: 'day streak', cta: 'Your AI friend, always there', fileName: 'soleil-my-week.png' },
-  uk: { title: 'Мій тиждень із Soleil', days: 'днів із записаним настроєм', avg: 'середній настрій', streak: 'днів поспіль', cta: 'Твій AI-друг завжди поруч', fileName: 'soleil-tyzhden.png' },
-  de: { title: 'Meine Woche mit Soleil', days: 'Tage mit Stimmung', avg: 'Durchschnittsstimmung', streak: 'Tage in Folge', cta: 'Dein KI-Freund, immer da', fileName: 'soleil-meine-woche.png' },
-  es: { title: 'Mi semana con Soleil', days: 'días con estado de ánimo', avg: 'estado de ánimo promedio', streak: 'días seguidos', cta: 'Tu amigo IA, siempre presente', fileName: 'soleil-mi-semana.png' }
+  pl: { title: 'Mój tydzień z Doco', days: 'dni z zapisanym nastrojem', avg: 'średni nastrój', streak: 'dni passy', cta: 'Twój przyjaciel AI, zawsze pod ręką', fileName: 'doco-moj-tydzien.png' },
+  en: { title: 'My week with Doco', days: 'days with tracked mood', avg: 'average mood', streak: 'day streak', cta: 'Your AI friend, always there', fileName: 'doco-my-week.png' },
+  uk: { title: 'Мій тиждень із Doco', days: 'днів із записаним настроєм', avg: 'середній настрій', streak: 'днів поспіль', cta: 'Твій AI-друг завжди поруч', fileName: 'doco-tyzhden.png' },
+  de: { title: 'Meine Woche mit Doco', days: 'Tage mit Stimmung', avg: 'Durchschnittsstimmung', streak: 'Tage in Folge', cta: 'Dein KI-Freund, immer da', fileName: 'doco-meine-woche.png' },
+  es: { title: 'Mi semana con Doco', days: 'días con estado de ánimo', avg: 'estado de ánimo promedio', streak: 'días seguidos', cta: 'Tu amigo IA, siempre presente', fileName: 'doco-mi-semana.png' }
 };
 
 function drawRoundedRect(ctx, x, y, w, h, r) {
@@ -1628,7 +1629,7 @@ async function shareWeekSummary() {
   ctx.textAlign = 'center';
   ctx.fillStyle = '#e8845a';
   ctx.font = '700 56px "Playfair Display", serif';
-  ctx.fillText('Soleil', W / 2, 320);
+  ctx.fillText('Doco', W / 2, 320);
 
   ctx.fillStyle = '#3a2e28';
   ctx.font = '600 46px "Playfair Display", serif';
@@ -1731,7 +1732,7 @@ async function shareWeekSummary() {
     const file = new File([blob], texts.fileName, { type: 'image/png' });
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
-        await navigator.share({ files: [file], title: 'Soleil', text: texts.title });
+        await navigator.share({ files: [file], title: 'Doco', text: texts.title });
         return;
       } catch (e) { /* użytkownik anulował lub brak wsparcia — pobierz plik */ }
     }
@@ -1936,53 +1937,28 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
    Small additions to the main page; Clerk/Stripe/push/pet/voice logic is unchanged.
    Existing functions are wrapped, not rewritten: the original runs first, then the addition. */
 (function () {
-  // 1. Quote of the day: when the API doesn't respond (e.g. on GitHub Pages), a local quote, one per day.
-  //    Never an empty card. Real quotes with their sources; the rest are thoughts without an author.
-  const HY_QUOTES = [
-    ['Czemu ty się, zła godzino, z niepotrzebnym mieszasz lękiem? Jesteś — a więc musisz minąć. Miniesz — a więc to jest piękne.', 'Wisława Szymborska, „Nic dwa razy”'],
-    ['W środku zimy wreszcie zrozumiałem, że jest we mnie niezwyciężone lato.', 'Albert Camus, „Powrót do Tipasy”'],
-    ['Człowiek jest jak rower: tylko w ruchu łatwo utrzymuje równowagę.', 'Albert Einstein, w liście do syna'],
-    ['Podróż tysiąca mil zaczyna się od pierwszego kroku.', 'Laozi'],
-    ['Nie same rzeczy nas niepokoją, lecz nasze wyobrażenia o nich.', 'Epiktet'],
-    ['Nie dlatego nie mamy odwagi, że rzeczy są trudne. Są trudne, bo nie mamy odwagi.', 'Seneka'],
-    ['Kiedy nie możemy już zmienić sytuacji, stajemy przed wyzwaniem, by zmienić siebie.', 'Viktor E. Frankl'],
-    ['Dobrze widzi się tylko sercem. Najważniejsze jest niewidoczne dla oczu.', 'Antoine de Saint-Exupéry, „Mały Książę”'],
-    ['Wszystko ma w sobie pęknięcie — i właśnie tędy wpada światło.', 'Leonard Cohen, „Anthem”'],
-    ['Musimy tylko zdecydować, co zrobić z czasem, który został nam dany.', 'J.R.R. Tolkien, „Władca Pierścieni”'],
-    ['Gorszy dzień to nie gorsze życie. Jutro możesz zacząć od nowa.', ''],
-    ['Nie musisz dziś zrobić wszystkiego. Wystarczy jeden mały krok.', ''],
-    ['Traktuj siebie z taką życzliwością, jaką okazujesz przyjaciołom.', ''],
-    ['Odpoczynek to nie strata czasu. To część drogi.', ''],
-    ['Kilka spokojnych oddechów i krótki spacer potrafią zmienić cały dzień.', ''],
-  ];
+  // 1. Quote of the day: signed words from famous thinkers (quotes.js), one per day, Polish only.
+  //    There's no server on GitHub Pages, so the API isn't asked; "Kolejny cytat" shows the next one.
   const $ = (id) => document.getElementById(id);
-  function hyQuoteShown() {
-    const q = ($('dailyQuote').textContent || '').replace(/["„”\s]/g, '');
-    return $('dailyContent').style.display !== 'none' && q !== '' && q !== 'undefined' && q !== 'null';
-  }
+  let hyQuoteStep = 0;
   function hyShowLocalQuote() {
-    if (currentLanguage !== 'pl') { $('dailyCard').style.display = 'none'; return; } // local quotes are Polish only
-    try { // drop a broken API response cached for today, so the API is retried next time
-      const key = `soleil_daily_${new Date().toISOString().split('T')[0]}_${currentLanguage}`;
-      const cached = JSON.parse(localStorage.getItem(key) || 'null');
-      if (cached && !cached.quote) localStorage.removeItem(key);
-    } catch (e) {}
-    const d = new Date();
-    const [quote, author] = HY_QUOTES[Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5) % HY_QUOTES.length];
-    $('dailyLabel').textContent = author ? 'Cytat dnia' : 'Przemyślenie dnia';
+    if (currentLanguage !== 'pl' || !window.DocoQuotes) { $('dailyCard').style.display = 'none'; return; }
+    const [quote, author, who] = window.DocoQuotes.pick(hyQuoteStep);
+    $('dailyLabel').textContent = 'Cytat dnia';
     $('dailyQuote').textContent = `„${quote}”`;
-    $('dailyAuthor').textContent = author ? `— ${author}` : '';
+    const sign = $('dailyAuthor');
+    sign.replaceChildren(Object.assign(document.createElement('strong'), { textContent: author }), Object.assign(document.createElement('span'), { textContent: who }));
     $('dailyLoading').style.display = 'none';
     $('dailyContent').style.display = 'block';
     $('dailyCard').style.display = '';
+    $('hyQuoteNext').hidden = false;
+    const box = $('dailyContent');
+    box.classList.remove('swap');
+    void box.offsetWidth; // restart the fade
+    box.classList.add('swap');
   }
-  const hyLoadDailyQuote = loadDailyQuote;
-  loadDailyQuote = async function () {
-    $('dailyCard').style.display = '';
-    const run = hyLoadDailyQuote().catch(() => {}).then(() => { if (!hyQuoteShown()) hyShowLocalQuote(); });
-    await Promise.race([run, new Promise((r) => setTimeout(r, 5000))]);
-    if (!hyQuoteShown()) hyShowLocalQuote();
-  };
+  $('hyQuoteNext').addEventListener('click', () => { hyQuoteStep++; hyShowLocalQuote(); });
+  loadDailyQuote = async function () { hyShowLocalQuote(); };
 
   // 2. Translated labels: "Nastrój" in the header, "no login needed", exercise chips (from BODY_ZONES)
   const HY_MOOD = { pl: 'Nastrój', en: 'Mood', uk: 'Настрій', de: 'Stimmung', es: 'Ánimo' };
@@ -2026,10 +2002,11 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
   window.addEventListener('load', hyLabelButtons);
 })();
 </script>
-<script src="offline-companion.js?v=2"></script>
+<script src="offline-companion.js?v=4"></script>
 <script src="voice.js"></script>
-<script src="app.js?v=2"></script>
-<script src="art.js?v=3"></script>
-<script src="chat.js?v=3"></script>
+<script src="app.js?v=4"></script>
+<script src="quotes.js?v=4"></script>
+<script src="art.js?v=4"></script>
+<script src="chat.js?v=4"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* ROZMOWA GŁOSOWA, in Soleil's black and pastel green (tokens in soleil.css). The phone button
+/* ROZMOWA GŁOSOWA, in Doco's black and pastel green (tokens in soleil.css). The phone button
    on the input bar uses .send-btn.call-btn from soleil.css. */
 .voice-call {
   position: relative;
@@ -31,7 +31,7 @@
 .voice-title {
   font-family: var(--serif);
   font-size: 1.625rem;
-  font-weight: 800;
+  font-weight: 640;
 }
 .voice-status {
   min-height: 1.4em;

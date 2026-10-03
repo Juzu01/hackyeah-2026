@@ -7,8 +7,8 @@ const ELEVENLABS_SDK_URL = 'https://cdn.jsdelivr.net/npm/@elevenlabs/client@1.26
 
 const voiceTexts = {
   pl: {
-    button: 'Porozmawiaj z Soleil', title: 'Rozmowa z Soleil', credit: 'Głos: ElevenLabs',
-    connecting: 'Łączę…', listening: 'Słucham cię…', speaking: 'Soleil mówi…', ended: 'Rozmowa zakończona',
+    button: 'Porozmawiaj z Doco', title: 'Rozmowa z Doco', credit: 'Głos: ElevenLabs',
+    connecting: 'Łączę…', listening: 'Słucham cię…', speaking: 'Doco mówi…', ended: 'Rozmowa zakończona',
     hint: 'Mów normalnie — możesz mi przerwać w każdej chwili.',
     mic: 'Potrzebuję dostępu do mikrofonu, żeby cię słyszeć. Zezwól na niego w przeglądarce.',
     error: 'Nie udało się połączyć. Spróbuj jeszcze raz.',
@@ -16,17 +16,17 @@ const voiceTexts = {
     loginNeeded: 'Rozmowa głosowa jest dostępna po zalogowaniu.',
     micLabel: 'Mikrofon', soundLabel: 'Głośnik', endLabel: 'Zakończ', callLabel: 'Zadzwoń',
     micMute: 'Wycisz mikrofon', micUnmute: 'Włącz mikrofon',
-    soundMute: 'Wycisz Soleil', soundUnmute: 'Włącz głos Soleil',
+    soundMute: 'Wycisz Doco', soundUnmute: 'Włącz głos Doco',
     hangup: 'Zakończ rozmowę', call: 'Zadzwoń jeszcze raz',
-    menu: 'Głos Soleil', pickerTitle: 'Głos Soleil', pickerDesc: 'Wybierz, jakim głosem Soleil ma z tobą rozmawiać.',
-    listen: 'Posłuchaj', pickerNote: 'Próbki są po angielsku — w rozmowie Soleil mówi w twoim języku.',
+    menu: 'Głos Doco', pickerTitle: 'Głos Doco', pickerDesc: 'Wybierz, jakim głosem Doco ma z tobą rozmawiać.',
+    listen: 'Posłuchaj', pickerNote: 'Próbki są po angielsku — w rozmowie Doco mówi w twoim języku.',
     gender: { f: 'kobiecy', m: 'męski' },
     traits: { upbeat: 'pogodny', warm: 'ciepły', soothing: 'kojący', deep: 'głęboki', calm: 'spokojny', relaxed: 'swobodny' },
-    firstMessage: 'Hej, tu Soleil. Jestem tu dla ciebie. Jak się dziś czujesz?'
+    firstMessage: 'Hej, tu Doco. Jestem tu dla ciebie. Jak się dziś czujesz?'
   },
   en: {
-    button: 'Talk to Soleil', title: 'Call with Soleil', credit: 'Voice: ElevenLabs',
-    connecting: 'Connecting…', listening: 'I\'m listening…', speaking: 'Soleil is speaking…', ended: 'Call ended',
+    button: 'Talk to Doco', title: 'Call with Doco', credit: 'Voice: ElevenLabs',
+    connecting: 'Connecting…', listening: 'I\'m listening…', speaking: 'Doco is speaking…', ended: 'Call ended',
     hint: 'Just talk normally — you can interrupt me anytime.',
     mic: 'I need microphone access to hear you. Please allow it in your browser.',
     error: 'Couldn\'t connect. Please try again.',
@@ -34,17 +34,17 @@ const voiceTexts = {
     loginNeeded: 'Voice calls are available once you sign in.',
     micLabel: 'Microphone', soundLabel: 'Speaker', endLabel: 'End', callLabel: 'Call',
     micMute: 'Mute microphone', micUnmute: 'Unmute microphone',
-    soundMute: 'Mute Soleil', soundUnmute: 'Unmute Soleil',
+    soundMute: 'Mute Doco', soundUnmute: 'Unmute Doco',
     hangup: 'End call', call: 'Call again',
-    menu: 'Soleil\'s voice', pickerTitle: 'Soleil\'s voice', pickerDesc: 'Choose the voice Soleil uses when you talk.',
-    listen: 'Listen', pickerNote: 'Samples are in English — in the call Soleil speaks your language.',
+    menu: 'Doco\'s voice', pickerTitle: 'Doco\'s voice', pickerDesc: 'Choose the voice Doco uses when you talk.',
+    listen: 'Listen', pickerNote: 'Samples are in English — in the call Doco speaks your language.',
     gender: { f: 'female', m: 'male' },
     traits: { upbeat: 'upbeat', warm: 'warm', soothing: 'reassuring', deep: 'deep', calm: 'calm', relaxed: 'relaxed' },
-    firstMessage: 'Hey, it\'s Soleil. I\'m here for you. How are you feeling today?'
+    firstMessage: 'Hey, it\'s Doco. I\'m here for you. How are you feeling today?'
   },
   uk: {
-    button: 'Поговори з Soleil', title: 'Розмова з Soleil', credit: 'Голос: ElevenLabs',
-    connecting: 'З\'єднуюся…', listening: 'Слухаю тебе…', speaking: 'Soleil говорить…', ended: 'Розмову завершено',
+    button: 'Поговори з Doco', title: 'Розмова з Doco', credit: 'Голос: ElevenLabs',
+    connecting: 'З\'єднуюся…', listening: 'Слухаю тебе…', speaking: 'Doco говорить…', ended: 'Розмову завершено',
     hint: 'Говори як завжди — можеш перебити мене будь-коли.',
     mic: 'Мені потрібен доступ до мікрофона, щоб тебе чути. Дозволь його в браузері.',
     error: 'Не вдалося з\'єднатися. Спробуй ще раз.',
@@ -52,17 +52,17 @@ const voiceTexts = {
     loginNeeded: 'Голосова розмова доступна після входу.',
     micLabel: 'Мікрофон', soundLabel: 'Динамік', endLabel: 'Завершити', callLabel: 'Подзвонити',
     micMute: 'Вимкнути мікрофон', micUnmute: 'Увімкнути мікрофон',
-    soundMute: 'Вимкнути звук Soleil', soundUnmute: 'Увімкнути звук Soleil',
+    soundMute: 'Вимкнути звук Doco', soundUnmute: 'Увімкнути звук Doco',
     hangup: 'Завершити розмову', call: 'Подзвонити ще раз',
-    menu: 'Голос Soleil', pickerTitle: 'Голос Soleil', pickerDesc: 'Обери, яким голосом Soleil говоритиме з тобою.',
-    listen: 'Послухати', pickerNote: 'Зразки англійською — у розмові Soleil говорить твоєю мовою.',
+    menu: 'Голос Doco', pickerTitle: 'Голос Doco', pickerDesc: 'Обери, яким голосом Doco говоритиме з тобою.',
+    listen: 'Послухати', pickerNote: 'Зразки англійською — у розмові Doco говорить твоєю мовою.',
     gender: { f: 'жіночий', m: 'чоловічий' },
     traits: { upbeat: 'бадьорий', warm: 'теплий', soothing: 'заспокійливий', deep: 'глибокий', calm: 'спокійний', relaxed: 'невимушений' },
-    firstMessage: 'Привіт, це Soleil. Я тут для тебе. Як ти сьогодні почуваєшся?'
+    firstMessage: 'Привіт, це Doco. Я тут для тебе. Як ти сьогодні почуваєшся?'
   },
   de: {
-    button: 'Mit Soleil sprechen', title: 'Gespräch mit Soleil', credit: 'Stimme: ElevenLabs',
-    connecting: 'Verbinde…', listening: 'Ich höre dir zu…', speaking: 'Soleil spricht…', ended: 'Gespräch beendet',
+    button: 'Mit Doco sprechen', title: 'Gespräch mit Doco', credit: 'Stimme: ElevenLabs',
+    connecting: 'Verbinde…', listening: 'Ich höre dir zu…', speaking: 'Doco spricht…', ended: 'Gespräch beendet',
     hint: 'Sprich ganz normal — du kannst mich jederzeit unterbrechen.',
     mic: 'Ich brauche Zugriff auf dein Mikrofon, um dich zu hören. Erlaube ihn im Browser.',
     error: 'Verbindung fehlgeschlagen. Versuch es noch einmal.',
@@ -70,17 +70,17 @@ const voiceTexts = {
     loginNeeded: 'Sprachgespräche sind nach der Anmeldung verfügbar.',
     micLabel: 'Mikrofon', soundLabel: 'Lautsprecher', endLabel: 'Beenden', callLabel: 'Anrufen',
     micMute: 'Mikrofon stummschalten', micUnmute: 'Mikrofon einschalten',
-    soundMute: 'Soleil stummschalten', soundUnmute: 'Soleil wieder hören',
+    soundMute: 'Doco stummschalten', soundUnmute: 'Doco wieder hören',
     hangup: 'Gespräch beenden', call: 'Erneut anrufen',
-    menu: 'Soleils Stimme', pickerTitle: 'Soleils Stimme', pickerDesc: 'Wähle, mit welcher Stimme Soleil mit dir spricht.',
-    listen: 'Anhören', pickerNote: 'Die Hörproben sind auf Englisch — im Gespräch spricht Soleil deine Sprache.',
+    menu: 'Docos Stimme', pickerTitle: 'Docos Stimme', pickerDesc: 'Wähle, mit welcher Stimme Doco mit dir spricht.',
+    listen: 'Anhören', pickerNote: 'Die Hörproben sind auf Englisch — im Gespräch spricht Doco deine Sprache.',
     gender: { f: 'weiblich', m: 'männlich' },
     traits: { upbeat: 'fröhlich', warm: 'warm', soothing: 'beruhigend', deep: 'tief', calm: 'ruhig', relaxed: 'entspannt' },
-    firstMessage: 'Hey, hier ist Soleil. Ich bin für dich da. Wie fühlst du dich heute?'
+    firstMessage: 'Hey, hier ist Doco. Ich bin für dich da. Wie fühlst du dich heute?'
   },
   es: {
-    button: 'Habla con Soleil', title: 'Llamada con Soleil', credit: 'Voz: ElevenLabs',
-    connecting: 'Conectando…', listening: 'Te escucho…', speaking: 'Soleil está hablando…', ended: 'Llamada terminada',
+    button: 'Habla con Doco', title: 'Llamada con Doco', credit: 'Voz: ElevenLabs',
+    connecting: 'Conectando…', listening: 'Te escucho…', speaking: 'Doco está hablando…', ended: 'Llamada terminada',
     hint: 'Habla con normalidad — puedes interrumpirme cuando quieras.',
     mic: 'Necesito acceso al micrófono para escucharte. Permítelo en tu navegador.',
     error: 'No se pudo conectar. Inténtalo de nuevo.',
@@ -88,20 +88,20 @@ const voiceTexts = {
     loginNeeded: 'Las llamadas de voz están disponibles al iniciar sesión.',
     micLabel: 'Micrófono', soundLabel: 'Altavoz', endLabel: 'Colgar', callLabel: 'Llamar',
     micMute: 'Silenciar micrófono', micUnmute: 'Activar micrófono',
-    soundMute: 'Silenciar a Soleil', soundUnmute: 'Volver a oír a Soleil',
+    soundMute: 'Silenciar a Doco', soundUnmute: 'Volver a oír a Doco',
     hangup: 'Terminar llamada', call: 'Llamar de nuevo',
-    menu: 'Voz de Soleil', pickerTitle: 'Voz de Soleil', pickerDesc: 'Elige con qué voz te habla Soleil.',
-    listen: 'Escuchar', pickerNote: 'Las muestras están en inglés; en la llamada Soleil habla tu idioma.',
+    menu: 'Voz de Doco', pickerTitle: 'Voz de Doco', pickerDesc: 'Elige con qué voz te habla Doco.',
+    listen: 'Escuchar', pickerNote: 'Las muestras están en inglés; en la llamada Doco habla tu idioma.',
     gender: { f: 'femenina', m: 'masculina' },
     traits: { upbeat: 'alegre', warm: 'cálida', soothing: 'tranquilizadora', deep: 'profunda', calm: 'tranquila', relaxed: 'relajada' },
-    firstMessage: 'Hola, soy Soleil. Estoy aquí para ti. ¿Cómo te sientes hoy?'
+    firstMessage: 'Hola, soy Doco. Estoy aquí para ti. ¿Cómo te sientes hoy?'
   }
 };
 
 const VOICE_SUN_IMG = 'https://fonts.gstatic.com/s/e/notoemoji/latest/2600_fe0f/128.png';
 
 // Głosy do wyboru w menu użytkownika (gotowe głosy ElevenLabs, dostępne na każdym koncie).
-// Pierwszy jest domyślnym głosem agenta. Płeć głosu decyduje o rodzaju gramatycznym, w jakim Soleil mówi o sobie.
+// Pierwszy jest domyślnym głosem agenta. Płeć głosu decyduje o rodzaju gramatycznym, w jakim Doco mówi o sobie.
 const VOICE_PREVIEW_BASE = 'https://storage.googleapis.com/eleven-public-prod/premade/voices/';
 const VOICE_OPTIONS = [
   { id: 'XrExE9yKIg1WjnnlVkGX', name: 'Matilda', gender: 'f', trait: 'upbeat', preview: 'b930e18d-6b4d-466e-bab2-0ae97c6d8535.mp3' },
@@ -310,14 +310,14 @@ async function startVoiceCall() {
       onModeChange: ({ mode }) => { if (current()) setVoiceState(mode); },
       onMessage: ({ message, role }) => { if (current()) addVoiceLine(role === 'agent' ? 'ai' : 'user', message); },
       onDisconnect: (details) => { if (current()) finishVoiceCall(details.reason === 'error' ? t.error : null); },
-      onError: (message) => console.error('Soleil voice:', message)
+      onError: (message) => console.error('Doco voice:', message)
     });
     if (!current()) { conversation.endSession().catch(() => {}); return; }
     voiceConversation = conversation;
     if (voiceState === 'connecting') setVoiceState('listening');
     startVoiceLevels();
   } catch (err) {
-    console.error('Soleil voice:', err);
+    console.error('Doco voice:', err);
     if (current()) finishVoiceCall(t.error);
   }
 }
@@ -367,7 +367,7 @@ function setVoiceState(state, message) {
   });
 }
 
-// Mikrofon: Soleil przestaje cię słyszeć, ale dalej mówi
+// Mikrofon: Doco przestaje cię słyszeć, ale dalej mówi
 function toggleVoiceMic() {
   if (!voiceConversation) return;
   voiceMicOff = !voiceMicOff;
@@ -375,7 +375,7 @@ function toggleVoiceMic() {
   setVoiceState(voiceState);
 }
 
-// Głośnik: ty przestajesz słyszeć Soleil, ale on dalej cię słucha, a zapis rozmowy leci na ekranie
+// Głośnik: ty przestajesz słyszeć Doco, ale on dalej cię słucha, a zapis rozmowy leci na ekranie
 function toggleVoiceSound() {
   if (!voiceConversation) return;
   voiceSoundOff = !voiceSoundOff;
@@ -406,7 +406,7 @@ function copyVoiceLinesToChat() {
   voiceLines = [];
 }
 
-// Pierścienie wokół słońca pulsują w rytm głosu: Soleil, gdy mówi, użytkownika, gdy słucha
+// Pierścienie wokół słońca pulsują w rytm głosu: Doco, gdy mówi, użytkownika, gdy słucha
 function startVoiceLevels() {
   const orb = document.getElementById('voiceOrb');
   let level = 0;

@@ -1,4 +1,4 @@
-// Soleil's chat screen: the sunrise scene, a greeting for the time of day, the mood faces and topic
+// Doco's chat screen: the sunrise scene, a greeting for the time of day, the mood faces and topic
 // tiles that start a conversation, a minute of guided breathing, and quick replies under the offline
 // companion's answers. Loaded last; it wraps the page's functions (the original runs first) and
 // never rewrites them.
@@ -11,7 +11,7 @@
   const L = {
     pl: {
       greet: { morning: 'Dzień dobry', day: 'Cześć', evening: 'Dobry wieczór', night: 'Nie możesz zasnąć?' },
-      intro: 'Jestem Soleil. Napisz, co czujesz, albo stuknij poniżej.',
+      intro: 'Jestem Doco. Napisz, co czujesz, albo stuknij poniżej.',
       introNight: 'Jestem tu też w nocy. Napisz, co nie daje Ci spać.',
       checkin: 'Jak się dziś czujesz?',
       breathe: 'Oddychaj ze mną · 1 min',
@@ -31,7 +31,7 @@
     },
     en: {
       greet: { morning: 'Good morning', day: 'Hi there', evening: 'Good evening', night: "Can't sleep?" },
-      intro: "I'm Soleil. Write how you feel, or tap below.",
+      intro: "I'm Doco. Write how you feel, or tap below.",
       introNight: "I'm here at night too. Tell me what keeps you awake.",
       checkin: 'How are you feeling today?',
       breathe: 'Breathe with me · 1 min',
@@ -51,7 +51,7 @@
     },
     uk: {
       greet: { morning: 'Доброго ранку', day: 'Привіт', evening: 'Добрий вечір', night: 'Не можеш заснути?' },
-      intro: 'Я Soleil. Напиши, що відчуваєш, або торкнися нижче.',
+      intro: 'Я Doco. Напиши, що відчуваєш, або торкнися нижче.',
       introNight: 'Я тут і вночі. Напиши, що не дає тобі спати.',
       checkin: 'Як ти сьогодні почуваєшся?',
       breathe: 'Дихай зі мною · 1 хв',
@@ -71,7 +71,7 @@
     },
     de: {
       greet: { morning: 'Guten Morgen', day: 'Hallo', evening: 'Guten Abend', night: 'Kannst du nicht schlafen?' },
-      intro: 'Ich bin Soleil. Schreib, wie es dir geht, oder tippe unten.',
+      intro: 'Ich bin Doco. Schreib, wie es dir geht, oder tippe unten.',
       introNight: 'Ich bin auch nachts da. Schreib, was dich wach hält.',
       checkin: 'Wie fühlst du dich heute?',
       breathe: 'Atme mit mir · 1 Min.',
@@ -91,7 +91,7 @@
     },
     es: {
       greet: { morning: 'Buenos días', day: 'Hola', evening: 'Buenas tardes', night: '¿No puedes dormir?' },
-      intro: 'Soy Soleil. Escribe cómo te sientes o toca abajo.',
+      intro: 'Soy Doco. Escribe cómo te sientes o toca abajo.',
       introNight: 'También estoy aquí de noche. Cuéntame qué no te deja dormir.',
       checkin: '¿Cómo te sientes hoy?',
       breathe: 'Respira conmigo · 1 min',

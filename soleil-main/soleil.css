@@ -1,7 +1,8 @@
-/* Soleil: black with a light, pastel green that glows softly, like a monitor in a dark room.
+/* Doco: black with a light, pastel green that glows softly, like a monitor in a dark room.
    Shapes are sharp: no rounded pills, corners are cut at an angle instead. The tab bar's
    top edge rises left to right, a horizon at sunrise; the open section is lit above it.
-   Type: Nunito, round and warm, for everything; titles in its heavy weights. */
+   Type: Fraunces for titles, greetings, topics and quotes, at its softest and with its wonky
+   letters; Nunito, round and warm, for everything people read in passing and tap. */
 
 @font-face {
   font-family: 'Nunito';
@@ -44,6 +45,39 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(fonts/fraunces-latin-ext-full-normal.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(fonts/fraunces-latin-full-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(fonts/fraunces-latin-ext-full-italic.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(fonts/fraunces-latin-full-italic.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   --bg: #000;
   --s1: #08110d;
@@ -63,8 +97,9 @@
   --sat: env(safe-area-inset-top, 0px);
   --sab: env(safe-area-inset-bottom, 0px);
   --sans: 'Nunito', system-ui, sans-serif;
-  /* Titles use the same rounded face, only heavier; the name stays for the rules that use it. */
-  --serif: 'Nunito', system-ui, sans-serif;
+  /* Titles, greetings, topics and quotes: Fraunces, soft and a little wonky (see body). Ukrainian
+     letters fall back to Nunito. */
+  --serif: 'Fraunces', 'Nunito', Georgia, serif;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   /* voice.js and older bits read these names */
   --accent: var(--green);
@@ -91,6 +126,7 @@ body {
   font-size: 100%;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior: none;
@@ -204,7 +240,7 @@ a {
 .header-text h1 {
   font-family: var(--serif);
   font-size: 1.625rem;
-  font-weight: 800;
+  font-weight: 640;
   line-height: 1;
   letter-spacing: -0.01em;
 }
@@ -305,9 +341,9 @@ a {
 .page-title {
   font-family: var(--serif);
   font-size: 2.125rem;
-  font-weight: 800;
+  font-weight: 640;
   line-height: 1.1;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
 }
 .page-lead {
   margin-top: 8px;
@@ -318,7 +354,7 @@ a {
   margin: 34px 0 12px;
   font-family: var(--serif);
   font-size: 1.375rem;
-  font-weight: 800;
+  font-weight: 640;
 }
 .view-frame iframe {
   flex: 1;
@@ -531,9 +567,9 @@ a {
   margin-top: 10px;
   font-family: var(--serif);
   font-size: 2.375rem;
-  font-weight: 800;
+  font-weight: 640;
   line-height: 1.05;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
   text-align: center;
   text-wrap: balance;
 }
@@ -703,6 +739,10 @@ a {
 }
 .topic-text {
   margin-top: auto;
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 .topic:active {
   transform: scale(0.97);
@@ -818,12 +858,13 @@ a {
   stroke-dasharray: 260;
   animation: draw 6s ease-in-out infinite;
 }
+/* Drawn in quickly, left whole most of the time, then wiped and drawn again. */
 @keyframes draw {
   0% {
     stroke-dashoffset: 260;
   }
-  45%,
-  80% {
+  22%,
+  88% {
     stroke-dashoffset: 0;
   }
   100% {
@@ -1248,19 +1289,71 @@ a {
 .daily-quote {
   margin-top: 10px;
   font-family: var(--serif);
-  font-weight: 640;
+  font-weight: 420;
   font-size: 1.3125rem;
   font-style: italic;
   line-height: 1.4;
   text-wrap: pretty;
 }
+/* The signature: who said it, and who they were. */
 .daily-author {
-  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 14px;
+  padding-left: 22px;
+  position: relative;
+}
+.daily-author::before {
+  content: '';
+  position: absolute;
+  top: 0.7em;
+  left: 0;
+  width: 14px;
+  height: 2px;
+  background: var(--green);
+}
+.daily-author strong {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 800;
+}
+.daily-author span {
   color: var(--ink-2);
   font-size: 0.875rem;
+  line-height: 1.4;
+}
+.daily-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  margin: 8px 0 -10px auto;
+  padding: 0 4px 0 10px;
+  color: var(--green);
+  font-size: 0.875rem;
+  font-weight: 750;
+  float: right;
+}
+.daily-next .ico {
+  order: 1;
+  width: 16px;
+  height: 16px;
+}
+#dailyContent::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+#dailyContent.swap .daily-quote,
+#dailyContent.swap .daily-author {
+  animation: rise 560ms var(--ease) both;
+}
+#dailyContent.swap .daily-author {
+  animation-delay: 90ms;
 }
 
-/* Messages: Soleil on the left on a green margin rule, you on the right on a cut slab. */
+/* Messages: Doco on the left on a green margin rule, you on the right on a cut slab. */
 .message-row {
   display: flex;
   align-items: flex-start;
@@ -1310,7 +1403,7 @@ a {
 .bubble.ai {
   background: linear-gradient(90deg, var(--s2), var(--s1) 70%);
 }
-/* Soleil's rule draws itself down as the answer arrives. */
+/* Doco's rule draws itself down as the answer arrives. */
 .bubble.ai::before {
   content: '';
   position: absolute;
@@ -1360,7 +1453,7 @@ a {
   }
 }
 
-/* Quick replies under Soleil's answer, and short notes that aren't messages. */
+/* Quick replies under Doco's answer, and short notes that aren't messages. */
 .message-row.hy-chips {
   flex-wrap: wrap;
   gap: 8px;
@@ -1731,7 +1824,7 @@ a {
 .body-detail-title {
   font-family: var(--serif);
   font-size: 1.25rem;
-  font-weight: 800;
+  font-weight: 640;
 }
 .body-detail-link {
   margin-top: 4px;
@@ -1756,7 +1849,7 @@ a {
 .account-who {
   font-family: var(--serif);
   font-size: 1.25rem;
-  font-weight: 800;
+  font-weight: 640;
 }
 .account .page-lead {
   font-size: 1rem;
@@ -2045,9 +2138,9 @@ a {
 .breathe-cue {
   font-family: var(--serif);
   font-size: clamp(2.5rem, 11vw, 3.5rem);
-  font-weight: 800;
+  font-weight: 640;
   line-height: 1.05;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
 }
 .breathe-sub {
   margin-top: 6px;
@@ -2142,7 +2235,7 @@ a {
   padding-right: 40px;
   font-family: var(--serif);
   font-size: 1.75rem;
-  font-weight: 800;
+  font-weight: 640;
   line-height: 1.1;
 }
 .popup > p {
