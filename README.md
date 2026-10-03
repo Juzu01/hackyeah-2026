@@ -39,6 +39,10 @@ Gdzie co jest:
 
 Zmienne środowiskowe (opcjonalne): `VITE_CLERK_PUBLISHABLE_KEY` – klucz Clerk (domyślnie ta sama instancja deweloperska co Soleil; `off` włącza tryb lokalny bez logowania przez serwer).
 
+## Baza wiedzy czatu
+
+Na pytania o zdrowie („jak zmierzyć ciśnienie?”, „co na ból głowy?”) czat Soleil odpowiada z bazy `soleil-main/data/wiedza.json`. Każdy wpis zbiera, sprawdza w źródłach, testuje i zapisuje zespół czterech agentów Claude Code (`.claude/agents/`: badacz, weryfikator, tester, archiwista). Kolejne tematy dodaje się komendą `/baza-wiedzy` w Claude Code. Opis, zasady i stan bazy: [`docs/baza-wiedzy.md`](docs/baza-wiedzy.md).
+
 ## Rozmowa głosowa
 
 Słuchawka na pasku pisania (obok wysyłania) otwiera rozmowę głosową z Soleil. Rozmawiać mogą tylko zalogowani. Rozmowę prowadzi agent ElevenLabs, którego mózgiem jest Claude, z tym samym charakterem co czat, w języku wybranym w aplikacji. Po rozłączeniu zapis rozmowy trafia do czatu.

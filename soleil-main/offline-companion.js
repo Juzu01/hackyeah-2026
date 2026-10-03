@@ -2,11 +2,12 @@
    index.html uses it when api/chat doesn't respond (e.g. on GitHub Pages, which has no server functions).
    It is NOT AI: it recognises the topic from the words and answers with ready-made, warm replies.
    Order: 1) crisis signals (always crisis-line numbers), 2) urgent body symptoms (112),
-   3) topics, 4) short answers in the context of the previous topic, 5) open question.
-   Never diagnoses or gives medical advice. Never repeats the user's words (safe for innerHTML).
+   3) questions about something in the knowledge base (data/wiedza.json, built and checked by the agent team,
+   see tools/wiedza/ZASADY.md), 4) topics, 5) short answers in the context of the previous topic, 6) open question.
+   Never diagnoses. Never repeats the user's words; knowledge-base text is escaped (safe for innerHTML).
    In the browser: window.SoleilOffline.reply(text) -> { topic, kind, html, text, delay };
-   kind is what the reply offers ('ask', a small step such as 'breath', 'done', 'end'), for chat.js's quick replies.
-   In Node: require('./offline-companion.js').create() (see offline-companion.test.mjs). */
+   kind is what the reply offers ('ask', a small step such as 'breath', 'done', 'end', 'info'), for chat.js's quick replies.
+   In Node: require('./offline-companion.js').create({ knowledge }) (see offline-companion.test.mjs, tools/wiedza/wiedza.test.mjs). */
 (function (root) {
   'use strict';
 
@@ -34,6 +35,16 @@
     /\b(powiesic|powiesze) sie\b/, /\bsie powiesic\b/, /\bwyskocz\w* (z okna|z mostu|z balkonu)/, /\brzuc\w* sie pod (pociag|auto|samochod)/,
     /\bnie chce sie (juz )?obudzic\b/, /\b(lepiej|lzej) (by )?(bylo|bedzie) (wszystkim )?beze mnie\b/, /\b(lepiej|lzej) beze mnie\b/, /\bbeze mnie (\w+ ){0,2}(lepiej|lzej)\b/,
     /\btargnac sie\b/, /\bzniknac na zawsze\b/, /\bnie dam rady (dluzej |dalej )?zyc\b/,
+    // Sleep and pills ('zasnąć i się nie obudzić', 'wszystkie tabletki naraz'); 'zasnąłem i nie obudziłem się na czas' is not crisis
+    /\b(za|u)sn(ac|e) (i )?((sie|juz|nigdy|wiecej) ){0,3}nie (obudzic|obudze|budzic)\b/, /\b(za|u)sn(ac|e) na (zawsze|wieki)\b/,
+    /\b(obym|zebym|abym|bym) (\w+ ){0,3}nie obudzil\w*/, /\bnadziej\w* (ze )?(\w+ ){0,2}nie obudze\b/,
+    /\b(zeby|aby|by|zebym|abym) (juz )?(umrzec|umarl\w*|nie zyc)\b/, /\bsmierteln\w* dawk/, /\bdawk\w* (\w+ ){0,2}smierteln/,
+    /\b(wszystkie|cale opakowanie|cala paczke|caly blister) (\w+ ){0,2}(tabletek|tabletki|tabsow|tabsy|lekow|leki|pigulek|pigulki|proszki|proszkow|nasenn\w*|przeciwbolow\w*|zolpidem\w*|zopiklon\w*|benzo\w*|xanax\w*|relanium\w*|antydepresant\w*)( \w+){0,4} naraz\b/,
+    /\b(lyknac|lykne|polknac|polkne|wziac|wezme|zazyc|zazyje|zjesc|zjem) (\w+ )?(cale opakowanie|cala paczke|caly blister|cala fiolke)\b/,
+    /\b(chce|zamierzam|zaraz) (sie )?przedawkowac\b/, /\bprzedawkuje\b/,
+    /\bbym (\w+ )?(za|u)sn\w* (i )?((sie|juz|nigdy|wiecej) ){0,3}nie obudz/,
+    /\b(chce|chcialbym|chcialabym|wolalbym|wolalabym|marze|zeby|bym) (\w+ ){0,2}(sie )?nie obudzic\b/,
+    /\b(lyknac|lykne|polknac|polkne|zjesc|zjem) (\w+ )?wszystkie (\w+ ){0,2}(tabletki|tabsy|leki|pigulki)\b/,
     /\bkill myself\b/, /\bsuicid/, /\bwant to die\b/, /\bself harm\b/,
   ];
   const HELP_LINES = [
@@ -47,9 +58,21 @@
 
   // ---- 2. Urgent body symptoms: point to 112, no diagnosis ----
   const RED_FLAG = [
-    /\bbol\w* (w|na) klat/, /\bklatk\w* piersiow/, /\bdusz(nosc|nosci|e sie|i mnie)\b/,
+    /\bbol\w* (\w+ ){0,2}(w|na) klat/, /\b(kluje|klucie|sciska|ucisk\w*|gniecie|piecze) (\w+ ){0,2}(w|na) klat/,
+    /\bklat\w* (\w+ )?(boli|bola|kluje|sciska|piecze)\b/, /\bbol\w* (\w+ )?klatk/, /\bklat\w* piersiow/,
+    /\bdusz(nosc\w*|e sie|i mnie)\b/, /\bsie dusze\b/, /\bbrak\w* (mi )?(tchu|powietrza)\b/, /\b(dusi|dlawi) (mnie|go|ja|sie)\b/,
+    /\boddycha\w* (\w+ )?(wolno|plytko|slabo|chrapliwie|nieregularnie)\b/, /\bnie oddycha\b/, /\bprzesta\w* oddychac\b/,
     /\bnie moge (zlapac )?(oddechu|oddychac)\b/, /\btrudno (mi )?(oddychac|zlapac oddech)/,
     /\bdretwie\w* (mi )?(twarz|reka|noga|polowa)/, /\bopadl\w* (mi )?kacik/, /\bzemdl/, /\bstracil\w* przytomnosc/,
+    // Stroke signs ('opadający kącik ust', 'mówi niewyraźnie', 'bełkocze')
+    /\bkrzyw\w* (\w+ )?(buzi\w*|twarz\w*|usta)\b/, /\b(mama|tata|maz|zona|dziecko|syn|corka|babcia|dziadek|brat|siostra)\w* (\w+ )?nie reaguje( na nic)?$/,
+    /\bopada\w* (\w+ )?kacik/, /\bkacik\w* (\w+ ){0,2}opad/, /\bmowi\w* (\w+ )?niewyrazn/, /\bbelko(cz|t)\w*/, /\bnagle (\w+ )?nie (moze|moge) (nic )?(powiedziec|mowic)\b/,
+    // Overdose or poisoning, also someone else's ('nie mogę dobudzić mamy po tabletkach', 'dziecko zjadło leki')
+    /\bprzedawkowal\w*/, /\bnieprzytomn\w*/, /\b(nie (moge|mozemy|da sie)|nie umiem) (?!sie\b)(\w+ )?dobudzic\b/,
+    /\bnie (moge|mozemy|da sie) (go|jej|ich|mamy|taty|meza|zony|dziecka|syna|corki|babci|dziadka|brata|siostry) obudzic\b/,
+    /\bnie reaguj\w* na (glos|bodzc\w*|wolanie|dotyk|potrzasani\w*|szczypani\w*)/, /\bledwo (\w+ )?oddycha/,
+    /\b(dziecko|synek|syn|corka|coreczka|maluch|niemowle|wnuk|wnuczka)\w* (\w+ ){0,2}(zjadl|polkn|lykn)\w* (\w+ ){0,2}(tabletk\w*|leki|lekow|lekarstw\w*|pigulk\w*|melatonin\w*|kapsulk\w*)/, /\bzatru\w* (\w+ )?(lekami|lekiem|tabletkami)\b/,
+    /\b(zjadl|polkn|lykn|wzi[ae]l|zazyl)\w* (\w+ ){0,2}(cale opakowanie|cala paczke|caly blister|wszystkie|garsc|duzo|kilkanascie|kilkadziesiat) (\w+ ){0,2}(tabletek|tabletki|lekow|leki|pigulek|pigulki|tabsow|tabsy|kapsulek|kapsulki|melatonin\w*)\b/,
   ];
 
   // ---- 3. Topics ----
@@ -87,7 +110,7 @@
   const FINE = /^(dobrze|ok|okej|oki|spoko|dobra|w porzadku|niezle|calkiem dobrze|git)$/;
   const NEGATED_JOY = /\bnie (jest |czuje sie |bylo |jestem |mam )?(dobrze|super|fajnie|swietnie|wesolo|szczesliw\w*|dobry)\b/;
   const PAIN_WORD = /\b(boli|bola|bolal\w*|bolec|bol|bolu|bole|bolem|bolow|obolal\w*|kluje|klucie|rwie|piecze|kontuzj\w*|uraz\w*|skrecil\w*|naciagn\w*|migren\w*)\b/;
-  const BODY_PART = /\b(glowa|glowe|glowy|kolan\w*|plecy|plecach|plecami|kregoslup\w*|brzuch\w*|zoladek|zoladk\w*|szyj\w*|kark\w*|bark\w*|ramie|ramion\w*|nog[aiei]|nogach|nodze|stop[aey]|stopie|kostk\w*|lydk\w*|reka|reke|reki|rece|dlon\w*|nadgarst\w*|lokie\w*|lokci\w*|biodr\w*|zeby|zab|zeba|ucho|uszy|ucha|gardl\w*|miesn\w*|staw\w*|kosc\w*|udo|uda)\b/;
+  const BODY_PART = /\b(glowa|glowe|glowy|kolan\w*|plecy|plecach|plecami|kregoslup\w*|brzuch\w*|zoladek|zoladk\w*|szyj\w*|kark\w*|bark\w*|ramie|ramion\w*|nog[aiei]|nogach|nodze|stop[aey]|stopie|kostk\w*|lydk\w*|reka|reke|reki|rece|dlon\w*|nadgarst\w*|lokie\w*|lokci\w*|biodr\w*|zab|zeba|zebow|zebach|ucho|uszy|ucha|gardl\w*|miesn\w*|staw\w*|kosc\w*|udo|uda)\b/;
   const GREETING = /^(hej\w*|czesc|witaj\w*|dzien dobry|dobry wieczor|siema\w*|elo|halo|hello|hi|hey|yo|serwus|dobry)\b/;
   const THANKS = /\b(dzieki|dziekuje|dziekuj\w*|dzieks|thx|thanks|wdzieczn\w*)\b/;
   const BYE = /\b(pa pa|papa|dobranoc|do zobaczenia|do uslyszenia|na razie|narazie|lece|ide spac|bywaj)\b|^pa$/;
@@ -249,9 +272,53 @@
     'Możesz dalej do mnie pisać. Ale proszę, zadzwoń też do jednego z tych numerów — tam po drugiej stronie jest człowiek:',
   ];
   const REMINDER = '<span class="hy-reminder">Gdyby znów było bardzo ciężko: <a class="hy-tel" href="tel:116123">116 123</a> <a class="hy-tel" href="tel:800702222">800 70 2222</a> <a class="hy-tel" href="tel:112">112</a></span>';
-  const RED_FLAG_REPLY = `To może być pilne. Jeśli ból w klatce piersiowej jest silny, trudno ci oddychać, coś nagle drętwieje albo ktoś traci przytomność — nie czekaj, dzwoń pod <a class="hy-tel" href="tel:112">112</a>. Nie postawię diagnozy, ale gdy sytuacja jest spokojna, możesz sprawdzić objaw w „${CHECKER}”.`;
+  const RED_FLAG_REPLY = `To może być pilne. Jeśli ból w klatce piersiowej jest silny, trudno ci oddychać, nagle opada kącik ust, drętwieje ręka albo mowa staje się niewyraźna, ktoś traci przytomność albo mógł przedawkować leki — nie czekaj, dzwoń pod <a class="hy-tel" href="tel:112">112</a>. Nie postawię diagnozy, ale gdy sytuacja jest spokojna, możesz sprawdzić objaw w „${CHECKER}”.`;
 
   const strip = (html) => html.replace(/<\/?a\b[^>]*>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').replace(/ ([,.?!:])/g, '$1').trim();
+
+  // ---- 3. Knowledge base: data/wiedza.json (entries verified and tested before they get here) ----
+  // An entry answers when the message hits one of its keywords AND is a question ("jak zmierzyć ciśnienie?")
+  // or has no feeling in it ("ciśnienie"). Plain feelings ("nie mogę spać") stay with the conversation.
+  const QUESTION = /^(jak\w*|co|czy|kiedy|ile|dlaczego|czemu|gdzie|po co|czym|kto|ktor\w+|w jaki sposob)\b|\b(dlaczego|czemu)$|\b(co (robic|zrobic|pomaga|oznacza|to jest|to znaczy|moge|mam|warto|wziac|brac)|jak (sie )?\w+|czy (to|moge|mozna|warto|trzeba|powinien\w*|musze)|powiedz|wyjasnij|wytlumacz|opowiedz|porad\w*|informacj\w*)\b/;
+  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const lowerFirst = (s) => (/^\p{Lu}\p{Ll}/u.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
+
+  // "cisnieni* krwi" -> / cisnieni[a-z0-9]* krwi / on the normalized text
+  function compileKnowledge(db) {
+    if (!db || !Array.isArray(db.entries)) return null;
+    return db.entries.filter((e) => e && Array.isArray(e.keywords) && e.answer).map((e) => ({
+      entry: e,
+      keys: e.keywords.map((k) => ({
+        words: k.split(' ').length,
+        re: new RegExp('(?:^| )' + k.split(' ').map((w) => w.replace(/[^a-z0-9*]/g, '').replace(/\*/g, '[a-z0-9]*')).join(' ') + '(?= |$)'),
+      })),
+    }));
+  }
+
+  // Best entry for the message, or null. Score = matched keyword words, so longer phrases win.
+  function findInfo(kb, raw, d) {
+    if (!kb || !kb.length) return null;
+    if (!(raw.includes('?') || QUESTION.test(d.n) || d.topic === 'open')) return null;
+    let best = null, bestScore = 0;
+    for (const item of kb) {
+      const score = item.keys.reduce((s, k) => s + (k.re.test(d.n) ? k.words : 0), 0);
+      if (score > bestScore) { best = item.entry; bestScore = score; }
+    }
+    return best;
+  }
+
+  function infoReply(e) {
+    let html = esc(e.answer);
+    const now = (e.warningSigns || []).filter((w) => w.triage === 'emergency').slice(0, 3);
+    if (now.length) html += ` Nie czekaj, dzwoń pod <a class="hy-tel" href="tel:112">112</a>, jeśli: ${now.map((w) => esc(lowerFirst(w.sign.replace(/\.$/, '')))).join('; ')}.`;
+    const links = (e.sources || []).filter((s) => /^https:\/\//.test(s.url)).slice(0, 3)
+      .map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.publisher)}</a>`);
+    if (links.length) html += `<span class="hy-reminder">Źródła: ${links.join(' ')}</span>`;
+    return html;
+  }
+
+  let sharedKnowledge = null; // loaded in the browser, see the end of this file
+  function setKnowledge(db) { sharedKnowledge = compileKnowledge(db); }
 
   function detect(raw) {
     const n = normalize(raw);
@@ -263,7 +330,8 @@
     if (score.joy && NEGATED_JOY.test(n)) { score.joy = 0; score.sad += 1; }
     if (/lęk/i.test(raw)) score.anxiety += 1; // 'lęk' only with diacritics: without them it collides with 'lek' (medicine)
     // Pain alone weighs less than an emotional topic: 'boli mnie, że się pokłóciliśmy' -> conflict
-    score.pain = (PAIN_WORD.test(n) ? 0.6 : 0) + (BODY_PART.test(n) ? 0.6 : 0);
+    // 'zęby' (teeth) only with diacritics: without them it collides with 'żeby' (so that)
+    score.pain = (PAIN_WORD.test(n) ? 0.6 : 0) + (BODY_PART.test(n) || /zęby/i.test(raw) ? 0.6 : 0);
     // Ties: the more specific/emotional topic wins
     const order = ['pain', 'conflict', 'anxiety', 'lonely', 'anger', 'stress', 'sad', 'tired', 'work', 'motivation', 'joy'];
     let best = null;
@@ -282,6 +350,7 @@
 
   function create(opts = {}) {
     const rand = opts.random || Math.random;
+    const ownKnowledge = opts.knowledge ? compileKnowledge(opts.knowledge) : null;
     const used = {};
     let topic = null; // current conversation topic
     let lastKind = null; // what the last reply offered ('ask' or the step name)
@@ -300,7 +369,7 @@
     function respond(raw) {
       const d = detect(raw);
       let t = d.topic;
-      let html, kind = 'ask';
+      let html, info, kind = 'ask';
       if (t === 'crisis') {
         const again = topic === 'crisis';
         html = (again ? pick('crisisF', CRISIS_FOLLOW) : pick('crisis', CRISIS_REPLIES)) + HELP_HTML +
@@ -313,6 +382,11 @@
       } else if (t === 'redflag') {
         html = RED_FLAG_REPLY;
         topic = 'pain';
+      } else if ((info = findInfo(ownKnowledge || sharedKnowledge, raw, d))) {
+        html = infoReply(info);
+        kind = 'info';
+        t = `info:${info.id}`;
+        topic = 'info';
       } else if (t === 'fine' && topic && STEP[lastKind]) {
         html = STEP[lastKind]; kind = 'done'; t = `${topic}:yes`;
       } else if (t === 'yes' || t === 'no' || t === 'dunno') {
@@ -353,6 +427,11 @@
   api.create = create;
   api.detect = detect;
   api.normalize = normalize;
+  api.setKnowledge = setKnowledge;
   root.SoleilOffline = api;
   if (typeof module === 'object' && module.exports) module.exports = api;
+  // In the browser the knowledge base loads in the background; until it arrives (or if it's missing) the chat works without it
+  if (typeof document !== 'undefined' && typeof fetch === 'function') {
+    fetch('data/wiedza.json').then((r) => (r.ok ? r.json() : null)).then((db) => { if (db) setKnowledge(db); }).catch(() => {});
+  }
 })(typeof window !== 'undefined' ? window : globalThis);

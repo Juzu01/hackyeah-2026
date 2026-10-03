@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Working files of the knowledge-base agent team (tools/wiedza/ZASADY.md)
+tools/wiedza/robocze/

@@ -1,0 +1,498 @@
+[
+  {
+    "id": "bezsennosc",
+    "name": "Bezsenność i higiena snu",
+    "domain": "psychika",
+    "tier": 1,
+    "focus": "kiedy problemy ze snem to już bezsenność (kryteria: jak często, jak długo), higiena snu i czego nie robić, CBT-I jako leczenie pierwszego wyboru (AASM, European Insomnia Guideline 2023), dlaczego nie leki nasenne na stałe i bez lekarza, melatonina (status w Polsce), kiedy do lekarza (bezdech senny: chrapanie z przerwami w oddychaniu, senność za kierownicą; depresja, myśli samobójcze), dostęp w Polsce (POZ, poradnie zaburzeń snu)",
+    "status": "w-bazie"
+  },
+  {
+    "id": "stres-na-co-dzien",
+    "name": "Stres na co dzień i jak go obniżyć",
+    "domain": "psychika",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "obnizony-nastroj-czy-depresja",
+    "name": "Obniżony nastrój czy już depresja",
+    "domain": "psychika",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "lek-i-niepokoj",
+    "name": "Lęk i niepokój: kiedy to norma, a kiedy zaburzenie",
+    "domain": "psychika",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "stres-przed-egzaminem",
+    "name": "Stres przed egzaminem i wystąpieniem",
+    "domain": "psychika",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "atak-paniki",
+    "name": "Atak paniki: co robić w trakcie i po",
+    "domain": "psychika",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "wypalenie-zawodowe",
+    "name": "Wypalenie zawodowe",
+    "domain": "psychika",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "zaloba",
+    "name": "Żałoba i strata bliskiej osoby",
+    "domain": "psychika",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "jak-pomoc-osobie-w-kryzysie",
+    "name": "Jak pomóc bliskiej osobie w kryzysie psychicznym",
+    "domain": "psychika",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "gdzie-szukac-pomocy-psychologicznej",
+    "name": "Gdzie szukać pomocy psychologicznej w Polsce (NFZ, CZP, telefony)",
+    "domain": "psychika",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "depresja-poporodowa",
+    "name": "Depresja poporodowa",
+    "domain": "psychika",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "zaburzenia-odzywiania",
+    "name": "Zaburzenia odżywiania: sygnały ostrzegawcze",
+    "domain": "psychika",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "ptsd",
+    "name": "Zespół stresu pourazowego (PTSD)",
+    "domain": "psychika",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "adhd-u-doroslych",
+    "name": "ADHD u dorosłych",
+    "domain": "psychika",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "bol-glowy",
+    "name": "Ból głowy: rodzaje, domowe sposoby i sygnały alarmowe",
+    "domain": "objawy",
+    "tier": 1,
+    "focus": "najczęstsze bóle głowy (napięciowy, migrena, z nadużywania leków przeciwbólowych: ile dni w miesiącu to za dużo), co pomaga bez recepty i bezpieczne limity, dzienniczek bólu, sygnały alarmowe wg aktualnych źródeł (np. SNNOOP10: nagły „najgorszy w życiu” ból piorunujący, z gorączką i sztywnością karku, po urazie głowy, z objawami neurologicznymi, nowy ból po 50. r.ż., w ciąży, u osób z obniżoną odpornością, nasilający się przy kaszlu lub wysiłku), kiedy 112, kiedy SOR, kiedy POZ albo neurolog",
+    "status": "w-bazie"
+  },
+  {
+    "id": "goraczka",
+    "name": "Gorączka u dorosłych i dzieci",
+    "domain": "objawy",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "bol-gardla",
+    "name": "Ból gardła i przeziębienie",
+    "domain": "objawy",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "bol-brzucha",
+    "name": "Ból brzucha: kiedy pilnie",
+    "domain": "objawy",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "bol-plecow",
+    "name": "Ból pleców i kręgosłupa",
+    "domain": "objawy",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "kaszel",
+    "name": "Kaszel: ostry i przewlekły",
+    "domain": "objawy",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "bol-w-klatce-piersiowej",
+    "name": "Ból w klatce piersiowej: zawał i inne przyczyny",
+    "domain": "objawy",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "dusznosc",
+    "name": "Duszność",
+    "domain": "objawy",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "zawroty-glowy",
+    "name": "Zawroty głowy",
+    "domain": "objawy",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "omdlenie",
+    "name": "Omdlenie i utrata przytomności",
+    "domain": "objawy",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "kolatanie-serca",
+    "name": "Kołatanie serca",
+    "domain": "objawy",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "biegunka-i-odwodnienie",
+    "name": "Biegunka, wymioty i odwodnienie",
+    "domain": "objawy",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "udar-rozpoznawanie",
+    "name": "Rozpoznawanie udaru (BE-FAST)",
+    "domain": "objawy",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "sepsa",
+    "name": "Sepsa: objawy, których nie wolno przeoczyć",
+    "domain": "objawy",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "zatorowosc-plucna",
+    "name": "Zatorowość płucna i zakrzepica żył głębokich",
+    "domain": "objawy",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "rozgrzewka",
+    "name": "Rozgrzewka i schłodzenie",
+    "domain": "sport",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "zakwasy",
+    "name": "Zakwasy (DOMS)",
+    "domain": "sport",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "aktywnosc-fizyczna-ile",
+    "name": "Ile ruchu potrzebujesz (zalecenia WHO)",
+    "domain": "sport",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "nawodnienie-przy-wysilku",
+    "name": "Nawodnienie przy wysiłku",
+    "domain": "sport",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "skrecenie-stawu-skokowego",
+    "name": "Skręcenie stawu skokowego",
+    "domain": "sport",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "kolano-biegacza",
+    "name": "Ból kolana u biegaczy",
+    "domain": "sport",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "udar-cieplny",
+    "name": "Przegrzanie i udar cieplny podczas wysiłku",
+    "domain": "sport",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "skurcze-miesni",
+    "name": "Skurcze mięśni",
+    "domain": "sport",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "wstrzasnienie-mozgu-w-sporcie",
+    "name": "Wstrząśnienie mózgu w sporcie",
+    "domain": "sport",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "rabdomioliza-wysilkowa",
+    "name": "Rabdomioliza wysiłkowa",
+    "domain": "sport",
+    "tier": 3,
+    "focus": "czym jest (rozpad mięśni szkieletowych), kto jest w grupie ryzyka (nowe, bardzo intensywne treningi np. crossfit, spinning, ćwiczenia ekscentryczne, upał, odwodnienie, alkohol, niektóre leki i suplementy, cecha sierpowatokrwinkowa, infekcja), objawy (ból i obrzęk mięśni nieproporcjonalny do wysiłku, osłabienie, ciemny mocz „kolor coli”, mało moczu), czym różni się od zwykłych zakwasów, dlaczego to stan pilny (ostre uszkodzenie nerek, hiperkaliemia, zespół ciasnoty przedziałów powięziowych), co robić (SOR, przerwać trening, nie brać NLPZ na własną rękę), powrót do treningu (stopniowo, po decyzji lekarza), zapobieganie (progresja obciążeń, nawodnienie, upał)",
+    "status": "w-bazie"
+  },
+  {
+    "id": "red-s",
+    "name": "Niedobór energii u sportowców (RED-S)",
+    "domain": "sport",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "hiponatremia-wysilkowa",
+    "name": "Hiponatremia wysiłkowa (przewodnienie)",
+    "domain": "sport",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "nagle-zatrzymanie-krazenia-sportowcy",
+    "name": "Nagłe zatrzymanie krążenia u sportowców i badania przed sportem",
+    "domain": "sport",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "zespol-przetrenowania",
+    "name": "Zespół przetrenowania",
+    "domain": "sport",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "pomiar-temperatury",
+    "name": "Pomiar temperatury ciała",
+    "domain": "samobadanie",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "pomiar-tetna",
+    "name": "Pomiar tętna i miarowości rytmu",
+    "domain": "samobadanie",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "samobadanie-skory",
+    "name": "Samobadanie skóry i znamion (ABCDE)",
+    "domain": "samobadanie",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "samobadanie-piersi",
+    "name": "Samobadanie piersi",
+    "domain": "samobadanie",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "pomiar-cisnienia",
+    "name": "Domowy pomiar ciśnienia tętniczego",
+    "domain": "samobadanie",
+    "tier": 2,
+    "focus": "protokół pomiarów domowych wg najnowszych wytycznych (ESH 2023, ESC 2024, PTNT/PTK): ile dni, rano i wieczorem, ile pomiarów i w jakim odstępie, warunki (odpoczynek, bez kawy i papierosów przed pomiarem, pusty pęcherz, bez rozmowy, plecy oparte, ramię na wysokości serca, mankiet na gołe ramię, właściwy rozmiar mankietu), aparat walidowany (np. STRIDE BP, validatebp.org), aparaty nadgarstkowe; domowe progi nadciśnienia i wartości wymagające pilnej pomocy (bardzo wysokie ciśnienie z objawami: 112), niedociśnienie z objawami, różnica między ramionami, dzienniczek; program NFZ Moje Zdrowie",
+    "status": "w-bazie"
+  },
+  {
+    "id": "samobadanie-jader",
+    "name": "Samobadanie jąder",
+    "domain": "samobadanie",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "pomiar-glikemii",
+    "name": "Pomiar glikemii glukometrem",
+    "domain": "samobadanie",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "pulsoksymetria",
+    "name": "Pomiar saturacji pulsoksymetrem",
+    "domain": "samobadanie",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "samobadanie-jamy-ustnej",
+    "name": "Samobadanie jamy ustnej",
+    "domain": "samobadanie",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "kontrola-stop-cukrzyca",
+    "name": "Codzienna kontrola stóp przy cukrzycy",
+    "domain": "samobadanie",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "siatka-amslera",
+    "name": "Test siatki Amslera",
+    "domain": "samobadanie",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "pomiar-pef",
+    "name": "Pomiar szczytowego przepływu wydechowego (PEF)",
+    "domain": "samobadanie",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "zdrowe-odzywianie",
+    "name": "Zdrowe odżywianie na co dzień",
+    "domain": "profilaktyka",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "alkohol-ile-to-za-duzo",
+    "name": "Alkohol: ile to za dużo",
+    "domain": "profilaktyka",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "rzucanie-palenia",
+    "name": "Rzucanie palenia i e-papierosów",
+    "domain": "profilaktyka",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "czas-przed-ekranem",
+    "name": "Czas przed ekranem a zdrowie",
+    "domain": "profilaktyka",
+    "tier": 1,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "badania-profilaktyczne-nfz",
+    "name": "Bezpłatne badania profilaktyczne NFZ (Moje Zdrowie i inne)",
+    "domain": "profilaktyka",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "szczepienia-doroslych",
+    "name": "Szczepienia dorosłych",
+    "domain": "profilaktyka",
+    "tier": 2,
+    "focus": "",
+    "status": "do-zbadania"
+  },
+  {
+    "id": "ryzyko-sercowo-naczyniowe",
+    "name": "Ocena ryzyka sercowo-naczyniowego (SCORE2)",
+    "domain": "profilaktyka",
+    "tier": 3,
+    "focus": "",
+    "status": "do-zbadania"
+  }
+]

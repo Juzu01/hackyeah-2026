@@ -1,0 +1,2811 @@
+{
+  "version": 1,
+  "updated": "2026-10-03",
+  "disclaimer": "Informacje edukacyjne, sprawdzone w źródłach medycznych. Nie zastępują porady lekarza. W nagłej sytuacji dzwoń pod 112.",
+  "entries": [
+    {
+      "id": "bol-glowy",
+      "title": "Ból głowy: rodzaje, domowe sposoby i sygnały alarmowe",
+      "domain": "objawy",
+      "tier": 1,
+      "audience": "dorośli i nastolatki z bólem głowy; osobne sygnały dla dzieci, kobiet w ciąży i po porodzie oraz osób po 50. roku życia",
+      "keywords": [
+        "bol* glow*",
+        "bol* mnie glow*",
+        "glowa mnie bol*",
+        "leb mnie bol*",
+        "bol* mnie leb*",
+        "migren*",
+        "napieciow* bol*",
+        "klasterow*",
+        "polekow* bol*",
+        "naduzyw* lek* przeciwbolow*",
+        "tablet* przeciwbolow*",
+        "tablet* na glow*",
+        "dzienniczek* bol*",
+        "piorunujac* bol*",
+        "bol* skron*",
+        "wziac na glow*",
+        "lek* na glow*",
+        "bul* glow*",
+        "glowa mi peka",
+        "peka mi glow*",
+        "glowa bol*",
+        "aura trwa*",
+        "aura nie mij*",
+        "mam aur*",
+        "aur* migren*",
+        "aur* wzrokow*",
+        "zygzak*",
+        "zatru* czad*",
+        "czujnik* czad*",
+        "czadem",
+        "zaczadz*",
+        "tlenk* wegla",
+        "ibuprofen* na glow*",
+        "paracetamol* na glow*",
+        "apap* na glow*",
+        "brac na glow*",
+        "bol* mnie skron*",
+        "leb mi peka",
+        "rozsadza mi glow*",
+        "lupie mnie w glow*",
+        "aura to udar*",
+        "aura czy udar*"
+      ],
+      "questions": [
+        "Co pomaga na ból głowy?",
+        "Boli mnie głowa, co robić?",
+        "Ile dni w miesiącu mogę brać tabletki przeciwbólowe na ból głowy?",
+        "Jak odróżnić migrenę od zwykłego bólu głowy?",
+        "Kiedy ból głowy jest groźny i trzeba jechać na SOR?",
+        "Czy częste branie leków przeciwbólowych może powodować ból głowy?",
+        "Co to jest napięciowy ból głowy?",
+        "Co mogę wziąć na głowę, jak mnie boli?",
+        "Głowa mi pęka, co robić?",
+        "Czy ból głowy u dziecka może być groźny?",
+        "Co mogę wziąć na ból głowy w ciąży?",
+        "Czy ból głowy może być od czadu?",
+        "Czy przy aurze migrenowej trzeba dzwonić pod 112?",
+        "Aura trwa już ponad godzinę, co robić?",
+        "Głowa boli mnie od rana, co robić?",
+        "Ile razy w tygodniu mogę brać ibuprofen na głowę?",
+        "Bolą mnie skronie, co robić?"
+      ],
+      "summary": "Ból głowy to jedna z najczęstszych dolegliwości. Zwykle jest to ból napięciowy albo migrena, które można łagodzić w domu, ale niektóre objawy towarzyszące wymagają pilnej pomocy.",
+      "answer": "Zwykle ból głowy mija sam. Pomaga woda, posiłek, odpoczynek i paracetamol lub ibuprofen w dawce z ulotki. W ciąży bierz paracetamol, ibuprofen tylko od lekarza, a z silnym, niemijającym bólem (też po porodzie) jedź od razu do szpitala. Dzieciom i nastolatkom nie dawaj aspiryny. Chorujesz przewlekle? Spytaj farmaceutę. Gdy bóle wracają, bierz leki najwyżej 2 dni w tygodniu, bo nadużywane wywołują ból. Dzwoń pod 112 przy nagłym, najgorszym w życiu bólu, bardzo wysokiej gorączce, sztywnym karku, osłabieniu twarzy, ręki lub nogi, splątaniu, drgawkach, po urazie głowy, gdy ból słabnie poza domem (możliwy czad: wyjdź na powietrze) i gdy drętwienie, kłopot z mową lub wzrokiem są nowe, inne niż zwykła aura albo trwają ponad godzinę. Masz wątpliwości? Dzwoń.",
+      "facts": [
+        {
+          "text": "Większość bólów głowy nie jest groźna i mija sama. Ból może trwać 30 minut, kilka godzin, a czasem kilka dni.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Zaburzenia z bólem głowy dotyczą około 40% ludzi na świecie (3,1 mld osób w 2021 roku). Epizodyczny ból głowy typu napięciowego zgłasza w niektórych populacjach ponad 70% osób.",
+          "sources": [
+            "s8"
+          ]
+        },
+        {
+          "text": "Częste przyczyny bólu głowy to przeziębienie lub grypa, stres, alkohol, zła postawa, wady wzroku, nieregularne posiłki, odwodnienie, za dużo leków przeciwbólowych oraz miesiączka lub menopauza.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Ból głowy typu napięciowego jest obustronny, uciskający lub opasujący (nie pulsuje), łagodny albo umiarkowany i nie nasila się przy zwykłych czynnościach. Trwa od 30 minut do wielu dni.",
+          "sources": [
+            "s1",
+            "s9"
+          ]
+        },
+        {
+          "text": "Migrena to zwykle pulsujący, umiarkowany lub silny ból, często po jednej stronie głowy, nasilający się przy ruchu, z nudnościami albo wymiotami lub nadwrażliwością na światło i dźwięk. U dorosłych napad trwa od 4 do 72 godzin.",
+          "sources": [
+            "s1",
+            "s3"
+          ]
+        },
+        {
+          "text": "Typowa aura migrenowa to zaburzenia widzenia (migoczące światła, zygzaki, mroczki, częściowa utrata widzenia), czucia (mrowienie, drętwienie) lub mowy. Narasta stopniowo przez co najmniej 5 minut, każdy objaw trwa od 5 do 60 minut i całkowicie mija. Osłabienie (niedowład) ręki, nogi lub twarzy nie należy do typowej aury.",
+          "sources": [
+            "s1",
+            "s3",
+            "s32",
+            "s33"
+          ]
+        },
+        {
+          "text": "Aura nietypowa, czyli z osłabieniem ręki lub nogi, podwójnym widzeniem, zaburzeniami widzenia tylko w jednym oku, zaburzeniami równowagi albo świadomości, wymaga dalszej diagnostyki u lekarza, a przy osłabieniu jednej strony ciała, podwójnym widzeniu, utracie wzroku lub splątaniu NHS każe dzwonić po pogotowie. Gdy objawy aury trwają dłużej niż godzinę, NHS kieruje pilnie do lekarza. Tak długa aura może towarzyszyć udarowi niedokrwiennemu w czasie napadu migreny (tzw. zawałowi migrenowemu), który rozpoznaje się w badaniu obrazowym mózgu.",
+          "sources": [
+            "s1",
+            "s3",
+            "s36"
+          ]
+        },
+        {
+          "text": "Migrenę z aurą rozpoznaje się dopiero po co najmniej 2 podobnych napadach i po wykluczeniu przemijającego niedokrwienia mózgu (TIA, tzw. mini-udaru). TIA daje nagłe objawy podobne do udaru, np. zaburzenia mowy i widzenia, drętwienie lub osłabienie twarzy, ręki albo nogi, które mijają w ciągu minut lub godzin, a na początku nie da się odróżnić TIA od udaru.",
+          "sources": [
+            "s11",
+            "s32",
+            "s34",
+            "s35"
+          ]
+        },
+        {
+          "text": "Przy objawach udaru lub mini-udaru trzeba od razu dzwonić pod 112 i nie czekać, czy objawy ustąpią. Ocena w szpitalu jest potrzebna, nawet jeśli objawy miną, bo po mini-udarze w ciągu 48 godzin może dojść do udaru.",
+          "sources": [
+            "s34",
+            "s35"
+          ]
+        },
+        {
+          "text": "Klasterowy ból głowy to bardzo silny, jednostronny ból wokół lub nad okiem, trwający 15–180 minut, powtarzający się od raz na dwa dni do 8 razy na dobę, z łzawieniem i zaczerwienieniem oka, zatkanym nosem lub opadającą powieką po tej samej stronie. Jeśli powieka opadnie albo źrenica się zwęzi po raz pierwszy w życiu, nawet przy rozpoznanym bólu klasterowym, potrzebna jest natychmiastowa pomoc (112 lub SOR).",
+          "sources": [
+            "s1",
+            "s9",
+            "s28"
+          ]
+        },
+        {
+          "text": "W napadzie klasterowego bólu głowy wytyczne NICE nie zalecają paracetamolu, NLPZ (niesteroidowych leków przeciwzapalnych, np. ibuprofenu), opioidów ani tryptanów w tabletkach, więc taki ból wymaga leczenia ustalonego z lekarzem.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Ból głowy nazywa się przewlekłym, gdy występuje w co najmniej 15 dniach w miesiącu przez ponad 3 miesiące.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Ból głowy z nadużywania leków (polekowy) rozpoznaje się, gdy osoba z wcześniejszymi bólami głowy ma ból w co najmniej 15 dniach w miesiącu i od ponad 3 miesięcy regularnie bierze leki doraźne na ból głowy.",
+          "sources": [
+            "s5",
+            "s9"
+          ]
+        },
+        {
+          "text": "Ryzyko bólu z nadużywania leków rośnie, gdy przez 3 miesiące lub dłużej bierzesz paracetamol, aspirynę albo inny NLPZ (np. ibuprofen) w 15 lub więcej dniach w miesiącu, a tryptany, opioidy, ergotaminę lub leki złożone w 10 lub więcej dniach w miesiącu. Lek złożony to np. lek przeciwbólowy z kofeiną albo z kodeiną.",
+          "sources": [
+            "s1",
+            "s5",
+            "s6",
+            "s11"
+          ]
+        },
+        {
+          "text": "Polskie rekomendacje leczenia migreny (Polskie Towarzystwo Bólów Głowy, Sekcja Bólów Głowy PTN i Polskie Towarzystwo Badania Bólu, 2021) zalecają ograniczenie leków doraźnych do 2 dni w tygodniu i 9 dni w miesiącu, a NHS radzi nie brać leków przeciwbólowych na migrenę częściej niż 2 dni w tygodniu, bo może to nasilić bóle głowy i utrudnić leczenie. To bezpieczny limit na co dzień, niższy niż progi, przy których rozpoznaje się ból z nadużywania leków.",
+          "sources": [
+            "s11",
+            "s3"
+          ]
+        },
+        {
+          "text": "Ponad połowa osób z bólem głowy w co najmniej 15 dniach w miesiącu ma ból z nadużywania leków, a u większości z nich ból zmniejsza się po odstawieniu nadużywanego leku.",
+          "sources": [
+            "s5"
+          ]
+        },
+        {
+          "text": "Ból z nadużywania leków leczy się odstawieniem nadużywanych leków doraźnych na co najmniej miesiąc; wytyczne NICE i polskie rekomendacje opisują odstawienie nagłe, a nie stopniowe. Przez pierwsze dni ból zwykle się nasila, zanim zacznie się poprawiać, a lekarz ocenia efekt po 4–8 tygodniach. Odstawienie zaplanuj z lekarzem, a leki z opioidami (np. z kodeiną lub tramadolem) odstawiaj tylko pod jego opieką.",
+          "sources": [
+            "s1",
+            "s11"
+          ]
+        },
+        {
+          "text": "Dzienniczek bólu głowy prowadzi się przez co najmniej 8 tygodni. Zapisuje się w nim, jak często, jak długo i jak mocno boli, objawy towarzyszące, wszystkie leki (także bez recepty), możliwe wyzwalacze i związek z miesiączką.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Migrenę menstruacyjną podejrzewa się, gdy napady pojawiają się głównie od 2 dni przed do 3 dni po początku miesiączki w co najmniej 2 z 3 kolejnych cykli. Do rozpoznania potrzebny jest dzienniczek z co najmniej 2 cykli.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Na ostry ból głowy typu napięciowego zalecane są aspiryna, paracetamol albo NLPZ. Opioidy (silne leki przeciwbólowe na receptę, np. z kodeiną lub tramadolem) nie są zalecane ani w bólu napięciowym, ani w migrenie.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Lek przeciwbólowy na migrenę działa najlepiej, gdy weźmiesz go jak najwcześniej, gdy ból dopiero się zaczyna. W napadach umiarkowanych i silnych lekami pierwszego wyboru są tryptany (specjalne leki przeciwmigrenowe), a sumatryptan uważa się za złoty standard w silnych napadach.",
+          "sources": [
+            "s3",
+            "s11"
+          ]
+        },
+        {
+          "text": "Aspiryny (kwasu acetylosalicylowego) nie podaje się dzieciom i młodzieży bez zalecenia lekarza z powodu ryzyka zespołu Reye'a (rzadkiego, groźnego uszkodzenia wątroby i mózgu). Wytyczne NICE i NHS mówią o wieku poniżej 16 lat, a polska charakterystyka leku Aspirin zabrania jej poniżej 12 lat i u starszej młodzieży dopuszcza tylko na zlecenie lekarza.",
+          "sources": [
+            "s1",
+            "s4",
+            "s24"
+          ]
+        },
+        {
+          "text": "Paracetamol u dorosłych: zwykle 1–2 tabletki po 500 mg na dawkę, co najmniej 4 godziny przerwy. Maksymalna dawka dobowa zależy od preparatu (w polskich charakterystykach leków dla dorosłych 3 g, czyli 6 tabletek, albo 4 g, czyli 8 tabletek), więc sprawdź ją w ulotce swojego leku. Przy wadze poniżej 50 kg, chorobie wątroby, odwodnieniu, niedożywieniu lub przewlekłym piciu alkoholu dawka dobowa jest niższa (najwyżej 2 g), a chorobę wątroby najpierw omów z lekarzem. Bez porady lekarza nie bierz go dłużej niż 3 dni.",
+          "sources": [
+            "s12",
+            "s20",
+            "s21"
+          ]
+        },
+        {
+          "text": "Nie łącz paracetamolu z innymi lekami, które go zawierają (np. z proszkami na przeziębienie i grypę), bo łatwo przekroczyć bezpieczną dawkę i uszkodzić wątrobę.",
+          "sources": [
+            "s12",
+            "s20"
+          ]
+        },
+        {
+          "text": "Ibuprofen bez recepty u dorosłych: 1–2 tabletki po 200 mg na dawkę, najwyżej 1200 mg (6 tabletek po 200 mg) na dobę, z przerwą między dawkami podaną w ulotce (4–6 godzin, zależnie od preparatu), najlepiej po jedzeniu. Jeśli na ból trzeba go brać dłużej niż 3 dni albo objawy się nasilają, skonsultuj się z lekarzem.",
+          "sources": [
+            "s13",
+            "s22",
+            "s23"
+          ]
+        },
+        {
+          "text": "Nie bierz ibuprofenu bez rozmowy z lekarzem lub farmaceutą, jeśli masz lub miałeś wrzody żołądka albo krwawienie z przewodu pokarmowego, astmę (zwłaszcza po lekach przeciwbólowych), chorobę serca, nerek lub wątroby albo przebyty udar. W ciąży nie bierz go bez zalecenia lekarza. Nie łącz go z innymi NLPZ, np. aspiryną lub naproksenem.",
+          "sources": [
+            "s13",
+            "s23"
+          ]
+        },
+        {
+          "text": "W ciąży lekiem pierwszego wyboru na ból głowy jest paracetamol; polskie charakterystyki leku zalecają wtedy najmniejszą skuteczną dawkę, jak najkrócej i jak najrzadziej. Ibuprofenu w I i II trymestrze nie stosuje się, chyba że jest to bezwzględnie konieczne (decyduje lekarz), bo od 20. tygodnia ciąży może zaburzać pracę nerek płodu i zmniejszać ilość płynu owodniowego. W III trymestrze ibuprofen jest przeciwwskazany, a tryptanów polskie rekomendacje w ciąży nie zalecają.",
+          "sources": [
+            "s4",
+            "s11",
+            "s20",
+            "s21",
+            "s23",
+            "s37"
+          ]
+        },
+        {
+          "text": "Jeśli nie wiesz, który lek przeciwbólowy jest dla ciebie odpowiedni, zapytaj farmaceutę. Z farmaceutą lub lekarzem porozmawiaj przed wzięciem leku zwłaszcza w ciąży, przy chorobie wątroby, nerek lub serca, wrzodach żołądka, astmie albo zależności od alkoholu.",
+          "sources": [
+            "s4",
+            "s12",
+            "s13"
+          ]
+        },
+        {
+          "text": "Leczenie zapobiegawcze migreny warto omówić z lekarzem, gdy ból występuje w 4 lub więcej dniach w miesiącu, gdy leki doraźne nie działają albo gdy bierzesz je częściej niż 2 razy w tygodniu.",
+          "sources": [
+            "s11"
+          ]
+        },
+        {
+          "text": "Napad migreny trwający ponad 72 godziny to stan migrenowy. NHS kieruje wtedy pilnie do lekarza, a polskie rekomendacje zalecają leczenie w szpitalu, zwłaszcza przy wymiotach i odwodnieniu.",
+          "sources": [
+            "s3",
+            "s11"
+          ]
+        },
+        {
+          "text": "Do lekarza POZ warto pójść, gdy bóle głowy pojawiają się kilka razy w tygodniu, są silne, napady migreny są częstsze niż raz w tygodniu albo leki przeciwbólowe i odpoczynek nie pomagają.",
+          "sources": [
+            "s3",
+            "s4"
+          ]
+        },
+        {
+          "text": "Wytyczne NICE i lista czerwonych flag SNNOOP10 wymieniają objawy, które wymagają oceny lekarza: m.in. gorączkę i objawy ogólne, nagły ból osiągający szczyt w ciągu 5 minut, nowe objawy neurologiczne, zaburzenia myślenia, świadomości lub zmianę osobowości, uraz głowy w ostatnich 3 miesiącach, ból wywoływany kaszlem, kichaniem, parciem lub wysiłkiem, ból zależny od pozycji ciała, wyraźną zmianę dotychczasowego bólu, nowy ból w starszym wieku, chorobę nowotworową, osłabioną odporność, ciążę i połóg oraz nadużywanie leków przeciwbólowych.",
+          "sources": [
+            "s1",
+            "s7"
+          ]
+        },
+        {
+          "text": "Pierwszy w życiu ból głowy po 50. roku życia albo zmiana charakteru dotychczasowego bólu wymaga oceny lekarza.",
+          "sources": [
+            "s9",
+            "s10"
+          ]
+        },
+        {
+          "text": "Zapalenie tętnicy skroniowej (olbrzymiokomórkowe zapalenie tętnic) daje częste, silne bóle głowy, bolesność skroni lub skóry głowy, ból żuchwy przy jedzeniu lub mówieniu i zaburzenia widzenia. Nieleczone szybko może doprowadzić do udaru lub ślepoty.",
+          "sources": [
+            "s14"
+          ]
+        },
+        {
+          "text": "Stan przedrzucawkowy (groźne nadciśnienie w ciąży) może dawać silny ból głowy, który nie mija po zwykłych lekach, zaburzenia widzenia (zamazane widzenie, błyski), ból pod żebrami i nagły obrzęk twarzy, rąk lub stóp. Najczęściej pojawia się od 20. tygodnia ciąży, ale bywa też do kilku tygodni po porodzie. Każdy z tych objawów wymaga natychmiastowej oceny lekarskiej.",
+          "sources": [
+            "s15",
+            "s37"
+          ]
+        },
+        {
+          "text": "Zatrucie czadem (tlenkiem węgla) daje ból i zawroty głowy, zmęczenie, osłabienie, duszność, nudności i senność, ale nie daje gorączki. Objawy mogą przychodzić i odchodzić.",
+          "sources": [
+            "s18",
+            "s19",
+            "s29",
+            "s30"
+          ]
+        },
+        {
+          "text": "Na czad wskazuje to, że objawy słabną po wyjściu z domu i wracają po powrocie, nasilają się w jednym pomieszczeniu, częściej pojawiają się w sezonie grzewczym albo że podobne objawy mają naraz inni domownicy lub zwierzęta domowe (często chorują pierwsze). Źródłem bywają piecyki i kotły gazowe, gazowe podgrzewacze wody (junkersy), kominki, piece na węgiel lub drewno i kuchenki gazowe.",
+          "sources": [
+            "s18",
+            "s19",
+            "s29",
+            "s30"
+          ]
+        },
+        {
+          "text": "Osoba zatruta czadem staje się osłabiona, senna i zdezorientowana, nie ocenia zagrożenia i nie ucieka z miejsca zatrucia, a jeśli nikt jej nie pomoże, traci przytomność i może umrzeć.",
+          "sources": [
+            "s18"
+          ]
+        },
+        {
+          "text": "Przy podejrzeniu zatrucia czadem, także u siebie, trzeba natychmiast przewietrzyć pomieszczenie, wyjść i wyprowadzić innych na świeże powietrze, nie wracać do środka i wezwać pomoc pod numerem 112. Straż pożarna zaleca czujniki tlenku węgla w domu, zwłaszcza tam, gdzie się śpi.",
+          "sources": [
+            "s18",
+            "s30",
+            "s31"
+          ]
+        },
+        {
+          "text": "Sezon grzewczy to czas największego ryzyka zatruć czadem: od 1 października do 21 listopada 2025 roku straż pożarna odnotowała 546 interwencji związanych z tlenkiem węgla, 201 osób się podtruło, a 13 zmarło.",
+          "sources": [
+            "s31"
+          ]
+        },
+        {
+          "text": "Ostry atak jaskry (zamknięcia kąta) może dawać ból głowy z bolesnym, zaczerwienionym okiem, zamglonym widzeniem lub tęczowymi obwódkami wokół świateł. To stan nagły, który wymaga natychmiastowej pomocy.",
+          "sources": [
+            "s1",
+            "s10",
+            "s27"
+          ]
+        },
+        {
+          "text": "U osób z rozpoznaną migreną, bólem napięciowym, klasterowym lub z nadużywania leków nie zleca się tomografii ani rezonansu głowy tylko dla uspokojenia.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Nocna i świąteczna opieka zdrowotna działa od poniedziałku do piątku w godzinach 18:00–8:00 oraz całą dobę w dni wolne od pracy. Możesz pójść do dowolnego punktu, bez względu na to, gdzie mieszkasz i gdzie masz lekarza POZ. Na SOR i do izby przyjęć zgłaszasz się bez skierowania.",
+          "sources": [
+            "s16",
+            "s26"
+          ]
+        },
+        {
+          "text": "Bezpłatna infolinia NFZ (Telefoniczna Informacja Pacjenta) 800 190 590 działa całą dobę i podpowiada, gdzie jest najbliższa nocna i świąteczna opieka, SOR albo dyżurująca apteka.",
+          "sources": [
+            "s16",
+            "s25"
+          ]
+        },
+        {
+          "text": "Na NFZ bez skierowania przyjmują m.in. psychiatra, ginekolog i położnik, onkolog, wenerolog, dentysta i lekarz medycyny sportowej. Neurologa nie ma na tej liście, więc do neurologa na NFZ potrzebne jest skierowanie, np. od lekarza POZ.",
+          "sources": [
+            "s17"
+          ]
+        },
+        {
+          "text": "Dla zmniejszenia liczby bólów głowy WHO zaleca ograniczenie alkoholu, regularny sen i ruch, zdrową dietę, picie wody i prowadzenie kalendarza bólu, żeby wychwycić wyzwalacze.",
+          "sources": [
+            "s8"
+          ]
+        }
+      ],
+      "selfCare": [
+        "Pij wodę i nie pomijaj posiłków, nawet jeśli nie masz apetytu.",
+        "Odpocznij i spróbuj się zrelaksować, ale nie śpij dłużej niż zwykle, bo to może nasilić ból.",
+        "Zrób przerwę od ekranu i nie pij alkoholu.",
+        "Przy migrenie połóż się w zaciemnionym, cichym pokoju.",
+        "Lek przeciwbólowy bez recepty (paracetamol albo ibuprofen) weź jak najwcześniej, w dawce z ulotki, i nie przekraczaj dawki dobowej.",
+        "Jeśli chorujesz przewlekle (np. na wątrobę, nerki, serce, wrzody, astmę) albo nie wiesz, który lek wybrać, przed jego wzięciem zapytaj farmaceutę lub lekarza.",
+        "W ciąży sięgaj po paracetamol (najmniejsza dawka, która pomaga, jak najkrócej), a ibuprofenu nie bierz bez zalecenia lekarza. O każdym silnym bólu głowy od razu powiedz położnej lub lekarzowi.",
+        "Nie podawaj aspiryny dzieciom ani nastolatkom bez zalecenia lekarza.",
+        "Sprawdzaj skład leków: nie łącz kilku preparatów z paracetamolem (np. tabletek na przeziębienie) ani kilku leków przeciwzapalnych naraz (NLPZ, np. ibuprofenu z aspiryną).",
+        "Gdy bóle głowy wracają, bierz leki przeciwbólowe najwyżej 2 dni w tygodniu (przy migrenie najwyżej 9 dni w miesiącu); leki z kofeiną lub kodeiną szybciej prowadzą do bólu z nadużywania.",
+        "Ogranicz kawę, mocną herbatę i colę.",
+        "Gdy bóle wracają, prowadź dzienniczek bólu przez co najmniej 8 tygodni i zabierz go do lekarza.",
+        "Jeśli masz migrenę z aurą, zapisuj, jak wygląda i ile trwa twoja aura, żeby łatwiej zauważyć, kiedy jest inna niż zwykle.",
+        "Dbaj o regularny sen, ruch i stałe pory posiłków.",
+        "Jeśli w domu masz piecyk gazowy, kocioł lub kominek, zamontuj czujnik czadu.",
+        "W sezonie grzewczym często wietrz pomieszczenia z piecykiem gazowym lub junkersem i nie zasłaniaj kratek wentylacyjnych."
+      ],
+      "warningSigns": [
+        {
+          "sign": "Ból głowy zaczął się nagle i jest ekstremalnie silny (najgorszy w życiu), dochodzi do szczytu w ciągu kilku minut",
+          "triage": "emergency",
+          "action": "Dzwoń pod 112. Nie jedź sam samochodem. Taki ból może oznaczać krwawienie wokół mózgu (krwotok podpajęczynówkowy)."
+        },
+        {
+          "sign": "Ból głowy z osłabieniem lub opadnięciem twarzy, ręki albo nogi (zwykle po jednej stronie ciała), zaburzeniami równowagi lub chodzenia, podwójnym widzeniem, nagłą utratą wzroku w jednym oku, nowym opadnięciem powieki lub zwężeniem źrenicy, splątaniem, sennością albo drgawkami",
+          "triage": "emergency",
+          "action": "Dzwoń pod 112, także gdy masz migrenę i gdy objawy zaczynają mijać. Zapamiętaj, o której godzinie się zaczęły."
+        },
+        {
+          "sign": "Ból głowy z bardzo wysoką gorączką lub sztywnym karkiem (często razi wtedy światło) albo z wysypką, która nie blednie pod dociśniętą szklanką",
+          "triage": "emergency",
+          "action": "Dzwoń pod 112. To może być zapalenie opon mózgowych lub sepsa."
+        },
+        {
+          "sign": "Drętwienie lub mrowienie (np. ręki albo połowy twarzy), kłopot z mówieniem albo zaburzenia widzenia (mroczki, zygzaki, zamazane widzenie), które masz pierwszy raz w życiu, które przyszły nagle, są inne niż twoja zwykła aura migrenowa albo nie mijają w ciągu godziny",
+          "triage": "emergency",
+          "action": "Dzwoń pod 112, nawet jeśli objawy zaczną mijać: samemu nie da się pewnie odróżnić aury od udaru lub mini-udaru (TIA), a przy udarze liczy się każda minuta. Nie musisz dzwonić przy swojej znanej aurze, która jak zwykle narasta przez kilka minut i mija w ciągu godziny. Jeśli nie masz pewności, dzwoń."
+        },
+        {
+          "sign": "Ból głowy po urazie głowy, nawet do 3 miesięcy wstecz (np. po upadku albo wypadku)",
+          "triage": "emergency",
+          "action": "Jedź na SOR (niech ktoś cię zawiezie) albo dzwoń pod 112, zwłaszcza gdy są wymioty, senność lub splątanie."
+        },
+        {
+          "sign": "Ból głowy, często z zawrotami głowy, nudnościami, osłabieniem lub sennością, który słabnie po wyjściu z domu i wraca po powrocie albo nasila się w pomieszczeniu z piecykiem gazowym, junkersem, kotłem, kominkiem lub piecem, zwłaszcza w sezonie grzewczym albo gdy podobnie źle czują się domownicy lub zwierzęta; dotyczy też osoby mieszkającej samotnie (możliwe zatrucie czadem)",
+          "triage": "emergency",
+          "action": "Wyłącz urządzenie i otwórz okna, jeśli możesz to zrobić od razu, wyjdź na świeże powietrze, wyprowadź innych i nie wracaj do środka. Dzwoń pod 112. Nie czekaj, aż przejdzie: czad otumania i usypia, więc osoba sama w domu może stracić przytomność, zanim wezwie pomoc."
+        },
+        {
+          "sign": "W ciąży lub do kilku tygodni po porodzie silny ból głowy, który nie mija po paracetamolu, zwłaszcza z zaburzeniami widzenia, bólem pod żebrami albo nagłym obrzękiem twarzy, rąk lub stóp",
+          "triage": "emergency",
+          "action": "Jedź od razu na izbę przyjęć szpitala z oddziałem położniczym albo na SOR; przy drgawkach lub utracie przytomności dzwoń pod 112."
+        },
+        {
+          "sign": "Ból głowy z silnym bólem i zaczerwienieniem oka, nagłym zamgleniem widzenia lub tęczowymi obwódkami wokół świateł",
+          "triage": "emergency",
+          "action": "Jedź od razu na SOR (najlepiej w szpitalu z okulistą) albo dzwoń pod 112. To może być ostry atak jaskry, który szybko uszkadza wzrok."
+        },
+        {
+          "sign": "Ból głowy, który narasta z dnia na dzień, albo ból z wymiotami, zwłaszcza porannymi",
+          "triage": "urgent",
+          "action": "Zgłoś się do lekarza w ciągu 24 godzin (POZ albo nocna i świąteczna opieka zdrowotna)."
+        },
+        {
+          "sign": "Ból głowy, który wywołuje lub nasila kaszel, kichanie, schylanie się, wysiłek fizyczny lub aktywność seksualna, albo ból wyraźnie zmieniający się przy zmianie pozycji ciała",
+          "triage": "urgent",
+          "action": "Zgłoś się do lekarza w ciągu 24 godzin (POZ albo nocna i świąteczna opieka). Jeśli ból przyszedł nagle i jest bardzo silny, dzwoń pod 112."
+        },
+        {
+          "sign": "Dziecko ma ból głowy, który się nasila, budzi je w nocy albo pojawia się rano po przebudzeniu, albo ból głowy z wymiotami lub z zezem",
+          "triage": "urgent",
+          "action": "Zgłoś się z dzieckiem do lekarza w ciągu 24 godzin (POZ albo nocna i świąteczna opieka zdrowotna)."
+        },
+        {
+          "sign": "Napad migreny trwa ponad 72 godziny albo masz napad migreny w ciąży lub krótko po porodzie",
+          "triage": "urgent",
+          "action": "Zgłoś się do lekarza w ciągu 24 godzin (POZ albo nocna i świąteczna opieka); tak długi napad często leczy się w szpitalu. Przy wymiotach i odwodnieniu jedź na SOR."
+        },
+        {
+          "sign": "Bardzo silny, jednostronny ból wokół oka trwający od kwadransa do 3 godzin, z łzawieniem i zaczerwienieniem oka lub zatkanym nosem po tej samej stronie, powracający nawet kilka razy na dobę",
+          "triage": "urgent",
+          "action": "Zgłoś się do lekarza w ciągu 24 godzin. To może być klasterowy ból głowy, na który zwykłe tabletki przeciwbólowe nie działają i potrzebne jest inne leczenie."
+        },
+        {
+          "sign": "Bolesność skroni lub skóry głowy (np. przy czesaniu) albo ból żuchwy przy jedzeniu lub mówieniu",
+          "triage": "urgent",
+          "action": "Skontaktuj się z lekarzem jeszcze dziś: POZ, a wieczorem i w weekend nocna i świąteczna opieka zdrowotna. Jeśli pogarsza się wzrok, jedź od razu na SOR."
+        },
+        {
+          "sign": "Nowy ból głowy u osoby z chorobą nowotworową, zakażeniem HIV albo biorącej leki osłabiające odporność",
+          "triage": "urgent",
+          "action": "Skontaktuj się z lekarzem prowadzącym albo POZ w ciągu 24 godzin."
+        },
+        {
+          "sign": "Pierwszy w życiu ból głowy po 50. roku życia albo wyraźna zmiana dotychczasowego bólu (inny charakter, częstszy, silniejszy)",
+          "triage": "gp",
+          "action": "Umów wizytę u lekarza POZ w ciągu kilku dni."
+        },
+        {
+          "sign": "Bóle głowy kilka razy w tygodniu albo leki przeciwbólowe bierzesz częściej niż 2 dni w tygodniu",
+          "triage": "gp",
+          "action": "Umów wizytę u lekarza POZ i zabierz dzienniczek bólu. Nie zwiększaj sam dawek; lekarz może zaproponować leczenie zapobiegawcze lub skierować cię do neurologa."
+        },
+        {
+          "sign": "Ból głowy nie mija mimo domowych sposobów albo regularnie wraca",
+          "triage": "gp",
+          "action": "Umów wizytę u lekarza POZ w ciągu kilku dni."
+        }
+      ],
+      "related": [
+        "zawroty-glowy",
+        "udar-rozpoznawanie",
+        "goraczka",
+        "wstrzasnienie-mozgu-w-sporcie",
+        "pomiar-cisnienia",
+        "stres-na-co-dzien",
+        "czas-przed-ekranem",
+        "alkohol-ile-to-za-duzo"
+      ],
+      "sources": [
+        {
+          "id": "s1",
+          "title": "Headaches in over 12s: diagnosis and management (CG150), Recommendations",
+          "publisher": "National Institute for Health and Care Excellence (NICE)",
+          "url": "https://www.nice.org.uk/guidance/cg150/chapter/Recommendations",
+          "year": 2025
+        },
+        {
+          "id": "s2",
+          "title": "Headaches",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/symptoms/headaches/",
+          "year": 2024
+        },
+        {
+          "id": "s3",
+          "title": "Migraine",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/migraine/",
+          "year": 2026
+        },
+        {
+          "id": "s4",
+          "title": "Tension headaches",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/tension-headaches/",
+          "year": 2025
+        },
+        {
+          "id": "s5",
+          "title": "ICHD-3: 8.2 Medication-overuse headache (MOH)",
+          "publisher": "International Headache Society",
+          "url": "https://ichd-3.org/8-headache-attributed-to-a-substance-or-its-withdrawal/8-2-medication-overuse-headache-moh/",
+          "year": 2018
+        },
+        {
+          "id": "s6",
+          "title": "ICHD-3: 8.2.5 Combination-analgesic-overuse headache",
+          "publisher": "International Headache Society",
+          "url": "https://ichd-3.org/8-headache-attributed-to-a-substance-or-its-withdrawal/8-2-medication-overuse-headache-moh/8-2-5-combination-analgesic-overuse-headache/",
+          "year": 2018
+        },
+        {
+          "id": "s7",
+          "title": "Red and orange flags for secondary headaches in clinical practice: SNNOOP10 list (Do TP i wsp., Neurology 2019;92:134-144)",
+          "publisher": "Neurology (American Academy of Neurology)",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6340385",
+          "year": 2019
+        },
+        {
+          "id": "s8",
+          "title": "Migraine and other headache disorders (fact sheet)",
+          "publisher": "World Health Organization",
+          "url": "https://www.who.int/news-room/fact-sheets/detail/headache-disorders",
+          "year": 2025
+        },
+        {
+          "id": "s9",
+          "title": "Bóle głowy: przyczyny, rodzaje, jak sobie z nimi radzić?",
+          "publisher": "Medycyna Praktyczna (mp.pl)",
+          "url": "https://www.mp.pl/pacjent/objawy/152658,bol-glowy",
+          "year": 2022
+        },
+        {
+          "id": "s10",
+          "title": "Overview of Headaches (Quick Facts)",
+          "publisher": "MSD Manual Consumer Version",
+          "url": "https://www.msdmanuals.com/home/quick-facts-brain-spinal-cord-and-nerve-disorders/headaches/overview-of-headaches",
+          "year": 2026
+        },
+        {
+          "id": "s11",
+          "title": "Migraine treatment recommendations developed by an Expert Group of the Polish Headache Society, the Headache Section of the Polish Neurological Society, and the Polish Pain Society (Stępień A i wsp., Neurol Neurochir Pol 2021;55(1):33-51)",
+          "publisher": "Neurologia i Neurochirurgia Polska (Via Medica)",
+          "url": "https://journals.viamedica.pl/neurologia_neurochirurgia_polska/article/view/71354",
+          "year": 2021
+        },
+        {
+          "id": "s12",
+          "title": "Paracetamol for adults",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/medicines/paracetamol-for-adults/",
+          "year": 2026
+        },
+        {
+          "id": "s13",
+          "title": "Ibuprofen for adults",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/medicines/ibuprofen-for-adults/",
+          "year": 2025
+        },
+        {
+          "id": "s14",
+          "title": "Temporal arteritis",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/temporal-arteritis/",
+          "year": 2023
+        },
+        {
+          "id": "s15",
+          "title": "Pre-eclampsia",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/pre-eclampsia/",
+          "year": 2026
+        },
+        {
+          "id": "s16",
+          "title": "Nocna i świąteczna opieka zdrowotna (Na ratunek)",
+          "publisher": "Narodowy Fundusz Zdrowia",
+          "url": "https://nfz.gov.pl/dla-pacjenta/na-ratunek/"
+        },
+        {
+          "id": "s17",
+          "title": "Kto i kiedy nie potrzebuje skierowania",
+          "publisher": "pacjent.gov.pl (Ministerstwo Zdrowia i NFZ)",
+          "url": "https://pacjent.gov.pl/kto-i-kiedy-nie-potrzebuje-skierowania",
+          "year": 2026
+        },
+        {
+          "id": "s18",
+          "title": "Nie dla czadu",
+          "publisher": "Komenda Miejska Państwowej Straży Pożarnej w Białymstoku (gov.pl)",
+          "url": "https://www.gov.pl/web/kmpsp-bialystok/nie-dla-czadu"
+        },
+        {
+          "id": "s19",
+          "title": "Carbon monoxide poisoning",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/carbon-monoxide-poisoning/",
+          "year": 2025
+        },
+        {
+          "id": "s20",
+          "title": "Charakterystyka Produktu Leczniczego: Laboratoria PolfaŁódź Paracetamol, 500 mg, tabletki",
+          "publisher": "Rejestr Produktów Leczniczych (Centrum e-Zdrowia, ChPL zatwierdzona przez URPL)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/5149/characteristic",
+          "year": 2024
+        },
+        {
+          "id": "s21",
+          "title": "Charakterystyka Produktu Leczniczego: Fevio, 500 mg, tabletki (paracetamol)",
+          "publisher": "Rejestr Produktów Leczniczych (Centrum e-Zdrowia, ChPL zatwierdzona przez URPL)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/46654/characteristic",
+          "year": 2026
+        },
+        {
+          "id": "s22",
+          "title": "Charakterystyka Produktu Leczniczego: Ibuprofen MODAFEN, 200 mg i 400 mg, tabletki powlekane",
+          "publisher": "Rejestr Produktów Leczniczych (Centrum e-Zdrowia, ChPL zatwierdzona przez URPL)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/45231/characteristic",
+          "year": 2025
+        },
+        {
+          "id": "s23",
+          "title": "Charakterystyka Produktu Leczniczego: Ibumax 200 mg, tabletki powlekane (ibuprofen)",
+          "publisher": "Rejestr Produktów Leczniczych (Centrum e-Zdrowia, ChPL zatwierdzona przez URPL)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/19363/characteristic"
+        },
+        {
+          "id": "s24",
+          "title": "Charakterystyka Produktu Leczniczego: ASPIRIN, 500 mg, tabletki (kwas acetylosalicylowy)",
+          "publisher": "Rejestr Produktów Leczniczych (Centrum e-Zdrowia, ChPL zatwierdzona przez URPL)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/783/characteristic",
+          "year": 2026
+        },
+        {
+          "id": "s25",
+          "title": "Telefoniczna Informacja Pacjenta",
+          "publisher": "Narodowy Fundusz Zdrowia",
+          "url": "https://www.nfz.gov.pl/kontakt/telefoniczna-informacja-pacjenta/",
+          "year": 2026
+        },
+        {
+          "id": "s26",
+          "title": "Nocna i świąteczna opieka zdrowotna",
+          "publisher": "pacjent.gov.pl (Ministerstwo Zdrowia i NFZ)",
+          "url": "https://pacjent.gov.pl/nocna-i-swiateczna-opieka-zdrowotna",
+          "year": 2026
+        },
+        {
+          "id": "s27",
+          "title": "Glaucoma",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/glaucoma/",
+          "year": 2025
+        },
+        {
+          "id": "s28",
+          "title": "Cluster headaches",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/cluster-headaches/",
+          "year": 2023
+        },
+        {
+          "id": "s29",
+          "title": "Clinical Guidance for Carbon Monoxide Poisoning Following Disasters and Severe Weather",
+          "publisher": "Centers for Disease Control and Prevention (CDC)",
+          "url": "https://www.cdc.gov/carbon-monoxide/hcp/clinical-guidance/index.html",
+          "year": 2026
+        },
+        {
+          "id": "s30",
+          "title": "Carbon monoxide poisoning",
+          "publisher": "Health Service Executive (HSE, publiczna służba zdrowia Irlandii)",
+          "url": "https://www2.hse.ie/conditions/carbon-monoxide-poisoning/",
+          "year": 2024
+        },
+        {
+          "id": "s31",
+          "title": "Sezon grzewczy 2025-2026. Sprawdź, jak chronić siebie i swoich bliskich",
+          "publisher": "Komenda Powiatowa Państwowej Straży Pożarnej w Sztumie (gov.pl)",
+          "url": "https://www.gov.pl/web/kppsp-sztum/sezon-grzewczy-2025-2026-sprawdz-jak-chronic-siebie-i-swoich-bliskich",
+          "year": 2025
+        },
+        {
+          "id": "s32",
+          "title": "ICHD-3: 1.2 Migraine with aura",
+          "publisher": "International Headache Society",
+          "url": "https://ichd-3.org/1-migraine/1-2-migraine-with-aura/",
+          "year": 2018
+        },
+        {
+          "id": "s33",
+          "title": "ICHD-3: 1.2.1 Migraine with typical aura",
+          "publisher": "International Headache Society",
+          "url": "https://ichd-3.org/1-migraine/1-2-migraine-with-aura/1-2-1-migraine-with-typical-aura/",
+          "year": 2018
+        },
+        {
+          "id": "s34",
+          "title": "Transient ischaemic attack (TIA)",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/transient-ischaemic-attack-tia/",
+          "year": 2023
+        },
+        {
+          "id": "s35",
+          "title": "Niespodziewany udar",
+          "publisher": "pacjent.gov.pl (Ministerstwo Zdrowia i NFZ)",
+          "url": "https://pacjent.gov.pl/zapobiegaj/niespodziewany-udar",
+          "year": 2024
+        },
+        {
+          "id": "s36",
+          "title": "ICHD-3: 1.4.3 Migrainous infarction",
+          "publisher": "International Headache Society",
+          "url": "https://ichd-3.org/1-migraine/1-4-complications-of-migraine/1-4-3-migrainous-infarction-2/",
+          "year": 2018
+        },
+        {
+          "id": "s37",
+          "title": "Headaches in pregnancy",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/pregnancy/common-symptoms/headaches/",
+          "year": 2024
+        }
+      ],
+      "review": {
+        "researched": "2026-10-03",
+        "verified": "2026-10-03",
+        "tested": "2026-10-03",
+        "claims": {
+          "confirmed": 79,
+          "corrected": 5,
+          "removed": 0,
+          "unverifiable": 0
+        },
+        "tests": {
+          "passed": 28,
+          "total": 28
+        },
+        "revisions": 2
+      }
+    },
+    {
+      "id": "bezsennosc",
+      "title": "Bezsenność i higiena snu",
+      "domain": "psychika",
+      "tier": 1,
+      "audience": "dorośli, którzy mają kłopot z zasypianiem albo budzą się w nocy lub za wcześnie (wytyczne dotyczą osób od 18. roku życia)",
+      "keywords": [
+        "bezsennosc*",
+        "higien* snu",
+        "nie moge zasn*",
+        "szybko zasn*",
+        "nie moge spac",
+        "nie moge sie wysp*",
+        "problem* ze snem",
+        "problem* ze spani*",
+        "problem* z zasypiani*",
+        "budz* sie w nocy",
+        "budz* sie za wczesnie",
+        "lek* nasenn*",
+        "tabletk* nasenn*",
+        "melatonin*",
+        "zolpidem*",
+        "zopiklon*",
+        "cbt i",
+        "ile godzin snu",
+        "ile godzin spac",
+        "jak zasn*",
+        "szybciej zasn*",
+        "najszybciej zasn*",
+        "latwiej zasn*",
+        "trudno zasn*",
+        "trudno mi zasn*",
+        "zeby zasn*",
+        "pomaga zasn*",
+        "pomoze zasn*",
+        "sie wysp*",
+        "zle spi*",
+        "slabo spi*",
+        "kiepsko spi*",
+        "zle sypia*",
+        "kiepsko sypia*",
+        "nie spi* po noc*",
+        "na sen",
+        "tabletek nasenn*",
+        "bezsenos*",
+        "zasn* za kierownic*",
+        "zasypi* za kierownic*",
+        "senn* za kierownic*",
+        "chrap*",
+        "bezdech* senn*",
+        "przerw* w oddychani*",
+        "przerw* w oddechu",
+        "tabletce nasenn*"
+      ],
+      "questions": [
+        "Co robić, gdy nie mogę zasnąć?",
+        "Czy melatonina pomaga na bezsenność?",
+        "Kiedy z bezsennością trzeba iść do lekarza?",
+        "Czy mogę brać tabletki nasenne codziennie?",
+        "Jak zadbać o higienę snu?",
+        "Budzę się w nocy i nie mogę znowu zasnąć, co robić?",
+        "Ile godzin snu potrzebuje dorosły?",
+        "Na czym polega terapia CBT-I?",
+        "Jak szybciej zasnąć?",
+        "Co zrobić, żeby zasnąć?",
+        "Źle śpię, co robić?",
+        "Zasnąłem za kierownicą, co robić?",
+        "Czy chrapanie z przerwami w oddychaniu jest groźne?",
+        "Czy w ciąży mogę brać melatoninę?",
+        "Czy nastolatek może brać melatoninę?",
+        "Czy po tabletce nasennej mogę wypić alkohol?",
+        "Co zrobić, gdy wezmę za dużo leku nasennego?"
+      ],
+      "summary": "Bezsenność to kłopot z zasypianiem, częste budzenie się w nocy albo zbyt wczesne budzenie się rano, przez które gorzej funkcjonujesz w ciągu dnia. Przewlekłą bezsenność leczy się przede wszystkim terapią poznawczo-behawioralną (CBT-I), a nie lekami nasennymi.",
+      "answer": "Gdy od miesiąca źle śpisz co najmniej 3 noce w tygodniu i gorzej funkcjonujesz w dzień, idź do lekarza rodzinnego lub psychiatry. Najlepiej działa terapia poznawczo-behawioralna (CBT-I); leki nasenne na receptę bierze się zwykle do 4 tygodni. Melatonina rzadko leczy bezsenność; nie bierz jej w ciąży i przy karmieniu, a poniżej 18 lat tylko z lekarzem. Wstawaj o stałej porze; gdy długo nie zasypiasz, wstań z łóżka. Przy chrapaniu z przerwami w oddechu lub senności za kierownicą nie prowadź i idź do lekarza. Dzwoń pod 112, gdy weźmiesz za dużo leku nasennego, popijesz go alkoholem, dziecko połknie taki lek lub melatoninę albo masz myśli samobójcze (też 800 70 2222, dzieci i młodzież: 116 111).",
+      "facts": [
+        {
+          "text": "Bezsenność to trudności z zasypianiem, z utrzymaniem snu albo zbyt wczesne budzenie się, którym towarzyszą kłopoty w ciągu dnia: zmęczenie, rozdrażnienie lub obniżony nastrój i gorsza koncentracja.",
+          "sources": [
+            "s1",
+            "s3"
+          ]
+        },
+        {
+          "text": "Przewlekłą bezsenność rozpoznaje się, gdy kłopoty ze snem i ich skutki w ciągu dnia występują co najmniej 3 razy w tygodniu przez co najmniej 3 miesiące (kryteria ICSD-3, podobne w DSM-5 i ICD-11); bezsenność trwającą krócej niż 3 miesiące nazywa się krótkotrwałą.",
+          "sources": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "text": "W polskiej praktyce lekarze często przyjmują niższy próg: bezsenność przewlekła to kłopoty ze snem z gorszym funkcjonowaniem w dzień co najmniej 3 dni w tygodniu przez co najmniej miesiąc.",
+          "sources": [
+            "s3"
+          ]
+        },
+        {
+          "text": "O bezsenności mówi się wtedy, gdy masz czas i dobre warunki do snu (bezpiecznie, ciemno, cicho, wygodnie), a mimo to źle śpisz.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Do rozpoznania bezsenności nie są potrzebne specjalistyczne badania snu; wystarczy rozmowa z lekarzem i twój opis snu.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Dorośli potrzebują zwykle 7–9 godzin snu.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Przewlekła bezsenność dotyczy do ok. 10% dorosłych w Europie.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "W badaniu reprezentatywnym dla Polski objawy bezsenności miała mniej więcej połowa dorosłych (50,5%), choć nie u wszystkich była to choroba.",
+          "sources": [
+            "s6"
+          ]
+        },
+        {
+          "text": "Długotrwała bezsenność około dwukrotnie zwiększa ryzyko depresji, a także zwiększa ryzyko zaburzeń lękowych, upadków i wypadków drogowych.",
+          "sources": [
+            "s6",
+            "s1"
+          ]
+        },
+        {
+          "text": "U osób chorujących psychicznie bezsenność wiąże się z większym ryzykiem samobójstwa.",
+          "sources": [
+            "s6"
+          ]
+        },
+        {
+          "text": "Terapia poznawczo-behawioralna bezsenności (CBT-I) jest zalecana jako pierwsze leczenie przewlekłej bezsenności u dorosłych w każdym wieku, także gdy chorują na inne choroby.",
+          "sources": [
+            "s1",
+            "s4"
+          ]
+        },
+        {
+          "text": "CBT-I to zwykle 4–8 sesji indywidualnych lub grupowych; może być prowadzona osobiście albo cyfrowo, przez sprawdzony naukowo program internetowy lub aplikację, najlepiej ze wsparciem terapeuty.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "W Polsce terapeutów CBT-I jest niewielu, dlatego polskie zalecenia wskazują też aplikacje i programy internetowe oparte na CBT-I, w tym program w języku polskim.",
+          "sources": [
+            "s7"
+          ]
+        },
+        {
+          "text": "Najskuteczniejsze składniki CBT-I to ograniczenie czasu spędzanego w łóżku (restrykcja snu) i kontrola bodźców (łóżko ma się kojarzyć tylko ze snem).",
+          "sources": [
+            "s1",
+            "s7"
+          ]
+        },
+        {
+          "text": "Restrykcja snu może na początku przejściowo nasilać senność i zmęczenie w ciągu dnia, dlatego bezpieczeństwo (np. prowadzenie auta) trzeba omówić z terapeutą.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Same zasady higieny snu, bez pozostałych elementów CBT-I, nie są skutecznym leczeniem przewlekłej bezsenności.",
+          "sources": [
+            "s1",
+            "s4",
+            "s7"
+          ]
+        },
+        {
+          "text": "CBT-I zmniejsza też towarzyszące bezsenności objawy depresyjne i lękowe oraz senność i zmęczenie w ciągu dnia.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Ćwiczenia fizyczne i terapia światłem mogą być przydatne jako dodatek do CBT-I.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Leki nasenne proponuje się, gdy CBT-I nie pomaga wystarczająco; benzodiazepiny (starsza grupa leków uspokajających i nasennych) i leki „Z” (np. zolpidem, zopiklon) stosuje się krótko, zwykle do 4 tygodni.",
+          "sources": [
+            "s1",
+            "s8"
+          ]
+        },
+        {
+          "text": "Dłuższe leczenie lekami nasennymi lekarz rozważa tylko w wybranych przypadkach, po omówieniu korzyści i ryzyka, i najlepiej z przerwami, a nie codziennie.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Tolerancja na leki nasenne (ta sama dawka działa coraz słabiej) rozwija się w ciągu dni lub tygodni, a zwiększanie dawki nie jest zalecane, bo może przyspieszać uzależnienie.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Działania niepożądane benzodiazepin i leków „Z” to m.in. tolerancja i uzależnienie, nocne splątanie i upadki, kłopoty z pamięcią oraz poranna senność, która pogarsza prowadzenie auta.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Po zażyciu zopiklonu nie wolno prowadzić auta, jeździć na rowerze ani obsługiwać maszyn przez 12 godzin i nie wolno go łączyć z alkoholem.",
+          "sources": [
+            "s8"
+          ]
+        },
+        {
+          "text": "Leków nasennych nie odstawia się nagle: lekarz stopniowo zmniejsza dawkę, bo nagłe odstawienie może wywołać objawy odstawienia, np. pobudzenie i lęk.",
+          "sources": [
+            "s8",
+            "s1"
+          ]
+        },
+        {
+          "text": "Wzięcie większej dawki leku nasennego (np. zopiklonu lub zolpidemu), niż przepisał lekarz, może być niebezpieczne; trzeba wtedy od razu zasięgnąć porady medycznej, nawet jeśli nie czujesz żadnej różnicy.",
+          "sources": [
+            "s8",
+            "s32",
+            "s39"
+          ]
+        },
+        {
+          "text": "Objawy zbyt dużej dawki zolpidemu to m.in. senność i splątanie, bardzo głęboki sen aż do śpiączki, zawroty głowy lub omdlenie z powodu niskiego ciśnienia, wiotkie mięśnie, upadki lub utrata równowagi oraz płytki albo utrudniony oddech.",
+          "sources": [
+            "s32"
+          ]
+        },
+        {
+          "text": "Według charakterystyk zopiklonu i zolpidemu przedawkowanie hamuje czynność mózgu (od senności do śpiączki), może zaburzać oddychanie i wymaga leczenia w szpitalu; najgroźniejsze jest razem z alkoholem albo innymi lekami działającymi uspokajająco, a opisywano też zgony.",
+          "sources": [
+            "s33",
+            "s34"
+          ]
+        },
+        {
+          "text": "Alkohol nasila działanie leków nasennych: po zopiklonie z alkoholem mogą pojawić się kłopoty z oddychaniem i tak głęboki sen, że bardzo trudno się dobudzić; charakterystyki zopiklonu i zolpidemu odradzają picie alkoholu w czasie leczenia.",
+          "sources": [
+            "s8",
+            "s33",
+            "s34"
+          ]
+        },
+        {
+          "text": "Łączenie leków nasennych, takich jak zopiklon czy zolpidem, z opioidowymi lekami przeciwbólowymi (np. kodeiną, morfiną, oksykodonem) zwiększa ryzyko silnego uspokojenia, zahamowania oddychania, śpiączki i zgonu.",
+          "sources": [
+            "s33",
+            "s34",
+            "s8"
+          ]
+        },
+        {
+          "text": "Leki przeciwhistaminowe (np. difenhydramina, doksylamina, hydroksyzyna), leki przeciwpsychotyczne i preparaty ziołowe (np. waleriana) nie są zalecane w leczeniu bezsenności.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Środki nasenne bez recepty nie leczą bezsenności; mogą poprawić sen najwyżej na 1–2 tygodnie i nie należy ich brać dłużej.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Melatonina o szybkim uwalnianiu (bez recepty lub na receptę) zasadniczo nie jest skuteczna w leczeniu bezsenności, chyba że problem wynika z przesunięcia rytmu dobowego.",
+          "sources": [
+            "s1",
+            "s31",
+            "s3"
+          ]
+        },
+        {
+          "text": "Melatonina o przedłużonym uwalnianiu (Circadin 2 mg) to lek na receptę do krótkotrwałego leczenia bezsenności u osób w wieku 55 lat i starszych, stosowany najwyżej 13 tygodni.",
+          "sources": [
+            "s9",
+            "s1",
+            "s7"
+          ]
+        },
+        {
+          "text": "W Polsce melatonina jest dostępna bez recepty jako lek w dawkach 1, 3 i 5 mg, wskazany przy zmianie stref czasowych (jet lag), pracy zmianowej i zaburzeniach rytmu dobowego u osób niewidomych.",
+          "sources": [
+            "s10",
+            "s20"
+          ]
+        },
+        {
+          "text": "Według charakterystyk leków z melatoniną bez recepty po jej zażyciu nie należy prowadzić pojazdów ani obsługiwać maszyn, bo może wywołać senność; nie wolno jej też łączyć z alkoholem ani stosować w ciąży i podczas karmienia piersią. Melatoniny na receptę o przedłużonym uwalnianiu (Circadin) w ciąży i przy karmieniu piersią również się nie zaleca.",
+          "sources": [
+            "s20",
+            "s10",
+            "s22"
+          ]
+        },
+        {
+          "text": "Charakterystyki leków z melatoniną różnią się: w leku bez recepty Melabiorytm (charakterystyka z 2025 r.) przeciwwskazaniami są też wiek poniżej 18 lat (u dzieci i młodzieży nie ustalono bezpieczeństwa ani skuteczności), zaburzenia czynności wątroby lub nerek oraz depresja, a np. w Melatoninie LEK-AM przy chorobach wątroby, nerek i depresji trzeba zachować ostrożność i skonsultować się z lekarzem.",
+          "sources": [
+            "s20",
+            "s10"
+          ]
+        },
+        {
+          "text": "Dzieciom i nastolatkom z kłopotami ze snem melatoninę podaje się tylko wtedy, gdy zaleci ją lekarz specjalista.",
+          "sources": [
+            "s23",
+            "s20"
+          ]
+        },
+        {
+          "text": "Melatoniny trzeba używać ostrożnie, najlepiej po rozmowie z lekarzem, przy zaburzeniach odporności, zaburzeniach hormonalnych, padaczce i lekach przeciwzakrzepowych; przy chorobach autoimmunologicznych (np. reumatoidalne zapalenie stawów, stwardnienie rozsiane, toczeń) melatonina na receptę o przedłużonym uwalnianiu nie jest zalecana.",
+          "sources": [
+            "s20",
+            "s10",
+            "s22",
+            "s23"
+          ]
+        },
+        {
+          "text": "Melatoniny nie należy łączyć z fluwoksaminą (lek przeciwdepresyjny), która wielokrotnie zwiększa jej stężenie we krwi; ostrożność jest potrzebna także przy estrogenach (antykoncepcja hormonalna, hormonalna terapia zastępcza), cymetydynie (lek zmniejszający wydzielanie kwasu w żołądku) i antybiotykach z grupy chinolonów, które też zwiększają jej stężenie.",
+          "sources": [
+            "s20",
+            "s22"
+          ]
+        },
+        {
+          "text": "Melatonina może nasilać działanie uspokajające innych leków nasennych, np. benzodiazepin, zolpidemu i zopiklonu.",
+          "sources": [
+            "s20",
+            "s22"
+          ]
+        },
+        {
+          "text": "Jedna lub dwie dodatkowe tabletki melatoniny raczej nie zaszkodzą, ale ulotka melatoniny bez recepty zaleca po przypadkowym przyjęciu zbyt dużej dawki jak najszybciej skontaktować się z lekarzem lub farmaceutą; jeśli po większej dawce źle się czujesz, porady medycznej trzeba od razu.",
+          "sources": [
+            "s35",
+            "s38"
+          ]
+        },
+        {
+          "text": "Melatonina z różnych źródeł (sklepy, internet) bywa różnej jakości, dlatego eksperci radzą kupować ją w aptece albo na receptę.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Kawy, herbaty, alkoholu i papierosów należy unikać co najmniej 6 godzin przed snem, a ćwiczeń w ciągu 4 godzin przed snem.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Jeśli długo nie możesz zasnąć (mniej więcej 20 minut, bez patrzenia na zegarek) albo zaczynasz się tym denerwować, lepiej wstać z łóżka, zająć się czymś spokojnym przy słabym świetle, bez elektroniki, i wrócić, gdy poczujesz senność.",
+          "sources": [
+            "s5",
+            "s4",
+            "s7"
+          ]
+        },
+        {
+          "text": "Łóżko powinno służyć tylko do snu i seksu, a urządzenia elektroniczne warto wyłączyć co najmniej 30 minut przed snem.",
+          "sources": [
+            "s5",
+            "s4"
+          ]
+        },
+        {
+          "text": "Lekarz może poprosić o prowadzenie dzienniczka snu przez 7–14 dni.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Przyczyny bezsenności szuka zwykle najpierw lekarz rodzinny; gdy podejrzewa inne zaburzenie snu, np. bezdech senny, może skierować do poradni leczenia zaburzeń snu.",
+          "sources": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Badanie snu (polisomnografię) wykonuje się przy podejrzeniu innych zaburzeń snu, np. bezdechu sennego, i przy bezsenności opornej na leczenie.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Głośne chrapanie, przerwy w oddychaniu w czasie snu, chrapanie z łapaniem powietrza lub dławieniem się oraz duża senność w dzień mogą oznaczać bezdech senny.",
+          "sources": [
+            "s11"
+          ]
+        },
+        {
+          "text": "Przy bezdechu sennym nie wolno prowadzić auta, dopóki duża senność nie zostanie opanowana.",
+          "sources": [
+            "s11"
+          ]
+        },
+        {
+          "text": "Gdy ktoś jest bardzo senny w dzień i miał wypadek albo sytuację „o włos” przez senność za kierownicą, lekarz powinien od razu ostrzec go przed prowadzeniem do czasu skutecznego leczenia, a badania i leczenie powinny zacząć się jak najszybciej.",
+          "sources": [
+            "s21"
+          ]
+        },
+        {
+          "text": "Nagły ból lub dyskomfort w klatce piersiowej, który nie mija (ucisk, ściskanie, pieczenie), ból promieniujący do ręki, szyi, żuchwy, brzucha lub pleców albo ból w klatce z potami, nudnościami, zawrotami głowy lub dusznością mogą oznaczać zawał serca i wymagają natychmiastowego wezwania pomocy.",
+          "sources": [
+            "s24",
+            "s27"
+          ]
+        },
+        {
+          "text": "Przy podejrzeniu zawału trzeba od razu dzwonić pod 112 albo 999 i nie jechać do szpitala samemu; bezpiecznym transportem jest karetka, w której można już zacząć leczenie.",
+          "sources": [
+            "s27",
+            "s25"
+          ]
+        },
+        {
+          "text": "Bardzo silna duszność (łapiesz powietrze z trudem albo nie możesz mówić), ucisk w klatce piersiowej, sine, blade lub szare usta albo nagłe splątanie wymagają natychmiastowego wezwania pomocy; tak samo duszność, której towarzyszy ból w klatce piersiowej.",
+          "sources": [
+            "s25",
+            "s24"
+          ]
+        },
+        {
+          "text": "Duszność, która pojawia się po położeniu się i mija, gdy usiądziesz (ortopnoë), oraz ciężka duszność budząca ze snu po 2–3 godzinach od położenia się (napadowa duszność nocna) to objawy niewydolności serca; mogą im towarzyszyć nocny kaszel, obrzęki wokół kostek i szybki przyrost masy ciała (ponad 2 kg w tydzień).",
+          "sources": [
+            "s29",
+            "s26"
+          ]
+        },
+        {
+          "text": "Duszność na leżąco wymaga pilnej porady lekarza (w ciągu doby), a nagłe pojawienie się objawów niewydolności serca albo ich nagłe, znaczne nasilenie zagraża życiu i wymaga natychmiastowego wezwania pogotowia.",
+          "sources": [
+            "s26",
+            "s29"
+          ]
+        },
+        {
+          "text": "Według pacjent.gov.pl (NFZ), gdy podejrzewasz zatrucie, od razu dzwoń pod 112 albo zawieź chorego na SOR i nie czekaj, aż pojawią się objawy; wymiotów nie wywołuj bez rozmowy z operatorem numeru 112 albo lekarzem.",
+          "sources": [
+            "s36"
+          ]
+        },
+        {
+          "text": "Pogotowie albo SOR są potrzebne od razu, gdy dziecko lub ktoś inny mógł połknąć coś szkodliwego, stracił przytomność, przestał oddychać, bardzo trudno mu oddychać albo ma drgawki; do szpitala nie jedź sam autem: niech ktoś cię zawiezie albo wezwij karetkę.",
+          "sources": [
+            "s37"
+          ]
+        },
+        {
+          "text": "Czekając na pomoc: jeśli ktoś nie reaguje i nie oddycha, zacznij resuscytację (reanimację); jeśli jest nieprzytomny, ale oddycha, ułóż go na boku (pozycja bezpieczna) i stale sprawdzaj oddech; nie wywołuj wymiotów, nie dawaj nic do jedzenia ani picia i zabierz dla lekarzy opakowanie leku.",
+          "sources": [
+            "s37"
+          ]
+        },
+        {
+          "text": "Mało snu przy dużej energii, niepokoju i gonitwie myśli może być objawem manii (np. w chorobie afektywnej dwubiegunowej).",
+          "sources": [
+            "s12"
+          ]
+        },
+        {
+          "text": "Smutek utrzymujący się tygodniami lub miesiącami, utrata zainteresowań, zmęczenie i zaburzenia snu mogą być objawami depresji; warto wtedy zgłosić się do lekarza.",
+          "sources": [
+            "s13"
+          ]
+        },
+        {
+          "text": "Do psychiatry w ramach NFZ nie potrzebujesz skierowania.",
+          "sources": [
+            "s14"
+          ]
+        },
+        {
+          "text": "Od 17 września 2025 r. do psychologa w placówce, która ma umowę z NFZ, też nie potrzebujesz skierowania.",
+          "sources": [
+            "s19",
+            "s14"
+          ]
+        },
+        {
+          "text": "Na psychoterapię w ramach NFZ potrzebujesz skierowania: wystawia je psychiatra (np. w poradni zdrowia psychicznego) albo inny lekarz ubezpieczenia zdrowotnego, który rozpozna zaburzenie psychiczne.",
+          "sources": [
+            "s15"
+          ]
+        },
+        {
+          "text": "Dzieci i młodzież do 18 lat nie potrzebują skierowania do psychologa, psychiatry ani psychoterapeuty.",
+          "sources": [
+            "s15"
+          ]
+        },
+        {
+          "text": "Centra Zdrowia Psychicznego, jeśli działają w twojej okolicy, pomagają dorosłym bezpłatnie, bez skierowania i bez wcześniejszego umawiania wizyty.",
+          "sources": [
+            "s16",
+            "s15"
+          ]
+        },
+        {
+          "text": "Nocna i świąteczna opieka zdrowotna działa w dni powszednie od 18:00 do 8:00 rano oraz całą dobę w soboty, niedziele i święta, bez skierowania; najbliższy punkt podpowie całodobowa infolinia NFZ 800 190 590.",
+          "sources": [
+            "s30"
+          ]
+        },
+        {
+          "text": "Bezpłatnie i całą dobę działają: 800 70 2222 (Centrum Wsparcia dla dorosłych w kryzysie psychicznym), 116 123 (telefon zaufania dla dorosłych w kryzysie emocjonalnym) i 116 111 (telefon zaufania dla dzieci i młodzieży).",
+          "sources": [
+            "s17",
+            "s18"
+          ]
+        }
+      ],
+      "selfCare": [
+        "Wstawaj codziennie o tej samej porze, także w weekend i po źle przespanej nocy.",
+        "Kładź się do łóżka dopiero wtedy, gdy chce ci się spać.",
+        "Jeśli długo nie możesz zasnąć (mniej więcej 20 minut, oceń to na oko, bez patrzenia na zegarek) albo zaczynasz się denerwować, wstań, zajmij się czymś spokojnym przy słabym świetle i bez telefonu, a wróć do łóżka, gdy poczujesz senność.",
+        "Używaj łóżka tylko do snu i seksu, nie do pracy, jedzenia czy przeglądania telefonu.",
+        "Daj sobie godzinę na wyciszenie przed snem, np. ciepła kąpiel albo książka.",
+        "Zadbaj, żeby w sypialni było ciemno, cicho i chłodno; pomóc mogą zasłony, opaska na oczy albo zatyczki do uszu.",
+        "Nie pij kawy, herbaty ani alkoholu i nie pal co najmniej 6 godzin przed snem.",
+        "Nie jedz dużego posiłku późnym wieczorem.",
+        "Ruszaj się regularnie w ciągu dnia, ale nie ćwicz w ciągu 4 godzin przed snem.",
+        "Odłóż telefon, komputer i telewizor co najmniej 30 minut przed snem.",
+        "Nie drzemij w ciągu dnia.",
+        "Postaw zegar tak, żeby nie widzieć go z łóżka, i nie sprawdzaj w nocy godziny.",
+        "Przez 1–2 tygodnie zapisuj w dzienniczku, o której się kładziesz, kiedy zasypiasz, ile razy się budzisz i jak się czujesz w dzień, i pokaż to lekarzowi.",
+        "Nie bierz środków nasennych bez recepty dłużej niż 1–2 tygodnie i nie łącz leków nasennych ani melatoniny z alkoholem.",
+        "Nie bierz drugiej dawki leku nasennego ani melatoniny tej samej nocy, nawet gdy nie możesz zasnąć.",
+        "Trzymaj leki nasenne i melatoninę (także żelki) w oryginalnym opakowaniu, w szafce poza zasięgiem dzieci.",
+        "Nie bierz melatoniny w ciąży ani podczas karmienia piersią, a dziecku lub nastolatkowi podawaj ją tylko wtedy, gdy zaleci to lekarz.",
+        "Jeśli chorujesz na wątrobę, nerki, depresję, padaczkę albo chorobę autoimmunologiczną lub bierzesz inne leki (zwłaszcza fluwoksaminę, leki przeciwzakrzepowe, hormonalne albo nasenne), nie bierz melatoniny bez rozmowy z lekarzem lub farmaceutą.",
+        "Nie prowadź auta, gdy czujesz się senny, także rano po zażyciu leku nasennego albo melatoniny."
+      ],
+      "warningSigns": [
+        {
+          "sign": "Masz myśli samobójcze albo myślisz, że lepiej byłoby nie żyć",
+          "triage": "emergency",
+          "action": "Jeśli grozi ci niebezpieczeństwo teraz, dzwoń pod 112. Porozmawiaj z kimś od razu, bezpłatnie i o każdej porze: 800 70 2222 (Centrum Wsparcia), 116 123 (telefon zaufania dla dorosłych), 116 111 (dzieci i młodzież)."
+        },
+        {
+          "sign": "Ktoś po leku nasennym lub melatoninie (zwłaszcza popitych alkoholem albo wziętych z opioidowym lekiem przeciwbólowym, np. kodeiną lub morfiną) jest bardzo senny i trudno go dobudzić, w ogóle nie daje się dobudzić albo oddycha wolno lub płytko",
+          "triage": "emergency",
+          "action": "Dzwoń od razu pod 112. Zostań przy tej osobie i cały czas sprawdzaj, czy oddycha. Jeśli jest nieprzytomna, ale oddycha, ułóż ją na boku (pozycja bezpieczna); jeśli nie reaguje i nie oddycha, zacznij resuscytację (reanimację). Nie wywołuj wymiotów i nie dawaj nic do picia. Przygotuj dla ratowników opakowania leków i powiedz, czy piła alkohol."
+        },
+        {
+          "sign": "Nagle boli cię, uciska lub piecze w klatce piersiowej, a ból nie mija, promieniuje do ręki, szyi, żuchwy lub pleców albo towarzyszą mu duszność, poty lub nudności, albo masz nagłą, silną duszność (z trudem łapiesz powietrze lub mówisz albo masz sine lub szare usta), także jeśli obudziło cię to w nocy",
+          "triage": "emergency",
+          "action": "Dzwoń od razu pod 112, nie czekaj do rana. Nie jedź sam do szpitala, poczekaj na karetkę."
+        },
+        {
+          "sign": "Wziąłeś naraz więcej leku nasennego, niż przepisał lekarz (np. 2–3 tabletki zamiast jednej), albo popiłeś lek nasenny alkoholem, nawet jeśli na razie czujesz się dobrze, lub wziąłeś więcej melatoniny, niż zalecono, i źle się czujesz",
+          "triage": "emergency",
+          "action": "Od razu zadzwoń pod 112, powiedz, jaki lek, ile i kiedy wziąłeś oraz czy piłeś alkohol, i postępuj według wskazówek operatora. Nie czekaj, aż pojawią się objawy, nie bierz już niczego na sen i nie wywołuj wymiotów. Nie prowadź auta: jeśli trzeba jechać na SOR, niech ktoś cię zawiezie albo poczekaj na karetkę, i weź opakowanie leku. Do czasu pomocy niech ktoś przy tobie będzie i sprawdza, czy normalnie oddychasz. Jeśli wziąłeś tylko jedną lub dwie dodatkowe tabletki melatoniny i czujesz się dobrze, raczej ci to nie zaszkodzi, ale jak najszybciej zapytaj lekarza lub farmaceutę, co dalej."
+        },
+        {
+          "sign": "Dziecko połknęło lek nasenny albo melatoninę (także żelki z melatoniną), nawet jeśli na razie nic mu nie jest",
+          "triage": "emergency",
+          "action": "Od razu zadzwoń pod 112 albo jedź z dzieckiem na SOR, nie czekaj na objawy. Nie wywołuj wymiotów i nie dawaj dziecku nic do jedzenia ani picia. Weź opakowanie, żeby powiedzieć, co i ile dziecko mogło połknąć. Nie prowadź sam: niech ktoś was zawiezie albo wezwij karetkę."
+        },
+        {
+          "sign": "Od kilku nocy prawie nie śpisz, a mimo to masz mnóstwo energii, gonitwę myśli albo robisz ryzykowne rzeczy",
+          "triage": "urgent",
+          "action": "Jeszcze dziś skontaktuj się z psychiatrą (nie potrzebujesz skierowania) albo z Centrum Zdrowia Psychicznego. Jeśli ktoś jest w niebezpieczeństwie, dzwoń pod 112."
+        },
+        {
+          "sign": "Brakuje ci tchu, gdy leżysz, albo budzisz się w nocy z dusznością lub kaszlem i musisz usiąść, żeby złapać oddech (zwłaszcza gdy puchną ci kostki albo szybko przybierasz na wadze)",
+          "triage": "urgent",
+          "action": "Jeszcze dziś, najpóźniej w ciągu doby, zgłoś się do lekarza rodzinnego, a wieczorem, w nocy, w weekend lub święto do nocnej i świątecznej opieki zdrowotnej (bez skierowania; najbliższy punkt podpowie infolinia NFZ 800 190 590). Jeśli duszność jest silna, nie mija, gdy usiądziesz albo dochodzi ból w klatce piersiowej, dzwoń pod 112."
+        },
+        {
+          "sign": "Zasnąłeś albo prawie zasnąłeś za kierownicą lub jesteś tak senny w dzień, że zasypiasz w nieodpowiednich sytuacjach",
+          "triage": "gp",
+          "action": "Od razu przestań prowadzić auto i nie siadaj za kierownicą, dopóki lekarz nie sprawdzi przyczyny senności (np. bezdechu sennego albo działania leków). Umów się do lekarza rodzinnego w ciągu kilku dni."
+        },
+        {
+          "sign": "Głośno chrapiesz z przerwami w oddychaniu, budzisz się z dławieniem lub łapaniem powietrza albo rano boli cię głowa i jesteś bardzo senny",
+          "triage": "gp",
+          "action": "Umów się do lekarza rodzinnego; jeśli możesz, weź ze sobą osobę, która widziała, jak śpisz. Do czasu oceny nie prowadź auta, gdy jesteś senny."
+        },
+        {
+          "sign": "Źle śpisz co najmniej 3 noce w tygodniu od miesiąca lub dłużej, zmiana nawyków nie pomaga albo bezsenność psuje ci pracę, naukę lub relacje",
+          "triage": "gp",
+          "action": "Idź do lekarza rodzinnego i zapytaj o terapię poznawczo-behawioralną bezsenności (CBT-I). Bez skierowania możesz też pójść do psychologa albo psychiatry w placówce z umową NFZ."
+        },
+        {
+          "sign": "Bezsenności od tygodni towarzyszą smutek, utrata zainteresowań, poczucie beznadziei albo silny lęk",
+          "triage": "gp",
+          "action": "Umów się do lekarza rodzinnego, psychiatry albo psychologa (do dwóch ostatnich bez skierowania) lub zgłoś się do Centrum Zdrowia Psychicznego. Jeśli pojawią się myśli samobójcze, dzwoń pod 112 albo 800 70 2222."
+        },
+        {
+          "sign": "Bierzesz leki nasenne dłużej niż 4 tygodnie, potrzebujesz coraz większej dawki albo nie umiesz bez nich zasnąć",
+          "triage": "gp",
+          "action": "Porozmawiaj z lekarzem o planie stopniowego odstawiania. Nie odstawiaj leków nagle na własną rękę."
+        }
+      ],
+      "related": [
+        "obnizony-nastroj-czy-depresja",
+        "lek-i-niepokoj",
+        "stres-na-co-dzien",
+        "czas-przed-ekranem",
+        "alkohol-ile-to-za-duzo",
+        "gdzie-szukac-pomocy-psychologicznej",
+        "bol-w-klatce-piersiowej",
+        "dusznosc"
+      ],
+      "sources": [
+        {
+          "id": "s1",
+          "title": "The European Insomnia Guideline: An update on the diagnosis and treatment of insomnia 2023 (J Sleep Res 2023;32:e14035)",
+          "publisher": "European Sleep Research Society",
+          "url": "https://pure.uva.nl/ws/files/260029353/Journal_of_Sleep_Research_-_2023_-_Riemann_-_The_European_Insomnia_Guideline.pdf",
+          "year": 2023
+        },
+        {
+          "id": "s2",
+          "title": "Insomnia",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/insomnia/",
+          "year": 2024
+        },
+        {
+          "id": "s3",
+          "title": "Bezsenność – kiedy jest chorobą i jakie ma konsekwencje dla zdrowia? (wywiad z dr hab. Dorotą Wołyńczyk-Gmaj, WUM)",
+          "publisher": "Medycyna Praktyczna (mp.pl)",
+          "url": "https://www.mp.pl/pacjent/psychiatria/wywiady/403027,bezsennosc-kiedy-jest-choroba-i-jakie-ma-konsekwencje-dla-zdrowia",
+          "year": 2026
+        },
+        {
+          "id": "s4",
+          "title": "Behavioral and psychological treatments for chronic insomnia disorder in adults: an American Academy of Sleep Medicine clinical practice guideline (Edinger i wsp., J Clin Sleep Med 2021;17(2):255)",
+          "publisher": "American Academy of Sleep Medicine",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7853203/",
+          "year": 2021
+        },
+        {
+          "id": "s5",
+          "title": "Healthy Sleep Habits",
+          "publisher": "American Academy of Sleep Medicine (sleepeducation.org)",
+          "url": "https://sleepeducation.org/healthy-sleep/healthy-sleep-habits/",
+          "year": 2020
+        },
+        {
+          "id": "s6",
+          "title": "Leczenie bezsenności – wpływ trazodonu i leków nasennych na sen (Wichniak, Wierzbicka, Jarema; Psychiatr. Pol. 2021;55(4):743–755)",
+          "publisher": "Psychiatria Polska (Polskie Towarzystwo Psychiatryczne)",
+          "url": "https://psychiatriapolska.pl/pdf-125650-79806",
+          "year": 2021
+        },
+        {
+          "id": "s7",
+          "title": "Leczenie bezsenności osób w starszym wieku. Zalecenia Polskiego Towarzystwa Badań nad Snem, Polskiego Towarzystwa Medycyny Rodzinnej i Polskiego Towarzystwa Psychiatrycznego (Psychiatr. Pol. 2023;57(3):495–516)",
+          "publisher": "Psychiatria Polska (Polskie Towarzystwo Psychiatryczne)",
+          "url": "https://www.psychiatriapolska.pl/Treatment-of-insomnia-in-older-adults-Recommendations-of-the-Polish-Sleep-Research,161597,0,2.html",
+          "year": 2023
+        },
+        {
+          "id": "s8",
+          "title": "Zopiclone",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/medicines/zopiclone/",
+          "year": 2026
+        },
+        {
+          "id": "s9",
+          "title": "Circadin (melatonin): EPAR – medicine overview",
+          "publisher": "European Medicines Agency",
+          "url": "https://www.ema.europa.eu/en/medicines/human/EPAR/Circadin",
+          "year": 2025
+        },
+        {
+          "id": "s10",
+          "title": "Melatonina LEK-AM – tabletki",
+          "publisher": "Medycyna Praktyczna (mp.pl)",
+          "url": "https://www.mp.pl/pacjent/leki/lek/105867,Melatonina-LEK-AM-tabletki"
+        },
+        {
+          "id": "s11",
+          "title": "Sleep apnoea",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/sleep-apnoea/",
+          "year": 2026
+        },
+        {
+          "id": "s12",
+          "title": "Bipolar disorder – symptoms",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/mental-health/conditions/bipolar-disorder/symptoms/",
+          "year": 2024
+        },
+        {
+          "id": "s13",
+          "title": "Depression in adults – overview",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/mental-health/conditions/depression-in-adults/overview/",
+          "year": 2023
+        },
+        {
+          "id": "s14",
+          "title": "Kto i kiedy nie potrzebuje skierowania",
+          "publisher": "pacjent.gov.pl (Centrum e-Zdrowia)",
+          "url": "https://pacjent.gov.pl/artykul/kto-i-kiedy-nie-potrzebuje-skierowania",
+          "year": 2026
+        },
+        {
+          "id": "s15",
+          "title": "Psychoterapia",
+          "publisher": "pacjent.gov.pl (Centrum e-Zdrowia)",
+          "url": "https://pacjent.gov.pl/psychoterapia",
+          "year": 2025
+        },
+        {
+          "id": "s16",
+          "title": "Centra Zdrowia Psychicznego",
+          "publisher": "Ministerstwo Zdrowia (gov.pl)",
+          "url": "https://www.gov.pl/web/zdrowie/centra-zdrowia-psychicznego",
+          "year": 2026
+        },
+        {
+          "id": "s17",
+          "title": "Pomoc psychologiczna",
+          "publisher": "Ministerstwo Zdrowia (gov.pl)",
+          "url": "https://www.gov.pl/web/zdrowie/pomoc-psychologiczna"
+        },
+        {
+          "id": "s18",
+          "title": "116 SOS – wsparcie psychologiczne dla dorosłych, telefon 116 123",
+          "publisher": "NASK i Instytut Psychologii Zdrowia PTP (116sos.pl, finansowanie Ministerstwa Cyfryzacji)",
+          "url": "https://116sos.pl/"
+        },
+        {
+          "id": "s19",
+          "title": "Nowa lista lekarzy specjalistów dostępnych bez skierowania od 17 września 2025 r.",
+          "publisher": "Rzecznik Praw Pacjenta (gov.pl)",
+          "url": "https://www.gov.pl/web/rpp/nowa-lista-lekarzy-specjalistow-dostepnych-bez-skierowania-od-17-wrzesnia-2025-r",
+          "year": 2025
+        },
+        {
+          "id": "s20",
+          "title": "Charakterystyka Produktu Leczniczego Melabiorytm 5 mg, tabletki (melatonina)",
+          "publisher": "Rejestr Produktów Leczniczych (rejestry.ezdrowie.gov.pl)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/34688/characteristic",
+          "year": 2025
+        },
+        {
+          "id": "s21",
+          "title": "An Official American Thoracic Society Clinical Practice Guideline: Sleep Apnea, Sleepiness, and Driving Risk in Noncommercial Drivers (Am J Respir Crit Care Med 2013;187(11):1259)",
+          "publisher": "American Thoracic Society",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5446185/",
+          "year": 2013
+        },
+        {
+          "id": "s22",
+          "title": "Circadin 2 mg tabletki o przedłużonym uwalnianiu – Charakterystyka Produktu Leczniczego (Aneks I, wersja polska)",
+          "publisher": "European Medicines Agency",
+          "url": "https://www.ema.europa.eu/pl/documents/product-information/circadin-epar-product-information_pl.pdf",
+          "year": 2025
+        },
+        {
+          "id": "s23",
+          "title": "Who can and cannot take melatonin",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/medicines/melatonin/who-can-and-cannot-take-melatonin/",
+          "year": 2023
+        },
+        {
+          "id": "s24",
+          "title": "Chest pain",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/symptoms/chest-pain/",
+          "year": 2023
+        },
+        {
+          "id": "s25",
+          "title": "Shortness of breath",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/symptoms/shortness-of-breath/",
+          "year": 2024
+        },
+        {
+          "id": "s26",
+          "title": "Heart failure",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/heart-failure/",
+          "year": 2026
+        },
+        {
+          "id": "s27",
+          "title": "Zawał serca (atak serca) – przyczyny, objawy i leczenie",
+          "publisher": "Medycyna Praktyczna (mp.pl)",
+          "url": "https://www.mp.pl/pacjent/chorobawiencowa/zawal/62035,zawal-serca",
+          "year": 2024
+        },
+        {
+          "id": "s29",
+          "title": "Niewydolność serca",
+          "publisher": "Medycyna Praktyczna (mp.pl)",
+          "url": "https://www.mp.pl/pacjent/choroby-ukladu-krazenia/choroby/191351,niewydolnosc-serca",
+          "year": 2018
+        },
+        {
+          "id": "s30",
+          "title": "NFZ przypomina, gdzie się leczyć w czasie weekendu i dni świątecznych",
+          "publisher": "Narodowy Fundusz Zdrowia (nfz.gov.pl)",
+          "url": "https://www.nfz.gov.pl/aktualnosci/aktualnosci-centrali/nfz-przypomina-gdzie-sie-leczyc-w-czasie-weekendu-i-dni-swiatecznych,8845.html",
+          "year": 2025
+        },
+        {
+          "id": "s31",
+          "title": "Clinical Practice Guideline for the Pharmacologic Treatment of Chronic Insomnia in Adults: An American Academy of Sleep Medicine Clinical Practice Guideline (Sateia i wsp., J Clin Sleep Med 2017;13(2):307–349)",
+          "publisher": "American Academy of Sleep Medicine",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5263087/",
+          "year": 2017
+        },
+        {
+          "id": "s32",
+          "title": "How and when to take zolpidem",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/medicines/zolpidem/how-and-when-to-take-zolpidem/",
+          "year": 2023
+        },
+        {
+          "id": "s33",
+          "title": "Charakterystyka Produktu Leczniczego Imovane 7,5 mg, tabletki powlekane (zopiklon)",
+          "publisher": "Rejestr Produktów Leczniczych (rejestry.ezdrowie.gov.pl)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/88/characteristic"
+        },
+        {
+          "id": "s34",
+          "title": "Charakterystyka Produktu Leczniczego Stilnox 10 mg, tabletki powlekane (zolpidem)",
+          "publisher": "Rejestr Produktów Leczniczych (rejestry.ezdrowie.gov.pl)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/6398/characteristic",
+          "year": 2023
+        },
+        {
+          "id": "s35",
+          "title": "How and when to take melatonin",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/medicines/melatonin/how-and-when-to-take-melatonin/",
+          "year": 2023
+        },
+        {
+          "id": "s36",
+          "title": "Co robić w przypadku zatrucia?",
+          "publisher": "pacjent.gov.pl (Narodowy Fundusz Zdrowia)",
+          "url": "https://pacjent.gov.pl/aktualnosc/co-robic-w-przypadku-zatrucia",
+          "year": 2024
+        },
+        {
+          "id": "s37",
+          "title": "Poisoning",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/poisoning/",
+          "year": 2025
+        },
+        {
+          "id": "s38",
+          "title": "Ulotka dla pacjenta Melabiorytm 5 mg, tabletki (melatonina)",
+          "publisher": "Rejestr Produktów Leczniczych (rejestry.ezdrowie.gov.pl)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/34688/leaflet",
+          "year": 2025
+        },
+        {
+          "id": "s39",
+          "title": "Ulotka dla pacjenta Stilnox 10 mg, tabletki powlekane (zolpidem)",
+          "publisher": "Rejestr Produktów Leczniczych (rejestry.ezdrowie.gov.pl)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/6398/leaflet"
+        }
+      ],
+      "review": {
+        "researched": "2026-10-03",
+        "verified": "2026-10-03",
+        "tested": "2026-10-03",
+        "claims": {
+          "confirmed": 119,
+          "corrected": 3,
+          "removed": 0,
+          "unverifiable": 0
+        },
+        "tests": {
+          "passed": 30,
+          "total": 30
+        },
+        "revisions": 2
+      }
+    },
+    {
+      "id": "pomiar-cisnienia",
+      "title": "Domowy pomiar ciśnienia tętniczego",
+      "domain": "samobadanie",
+      "tier": 2,
+      "audience": "dorośli mierzący ciśnienie w domu, zwłaszcza osoby z nadciśnieniem lub podwyższonym ciśnieniem, osoby starsze i kobiety w ciąży",
+      "keywords": [
+        "cisnieniom*",
+        "cisnieni* krwi",
+        "cisnieni* tetnicz*",
+        "pomiar* cisnieni*",
+        "mierz* cisnieni*",
+        "zmierz* cisnieni*",
+        "cisnieni* mierz*",
+        "cisnieni* zmierz*",
+        "nadcisnieni*",
+        "niedocisnieni*",
+        "przelom nadcisnieniow*",
+        "bialego fartucha",
+        "hipotoni* ortostatyczn*",
+        "dzienniczek cisnieni*",
+        "wysok* cisnieni*",
+        "nisk* cisnieni*",
+        "wyzsz* cisnieni*",
+        "nizsz* cisnieni*",
+        "cisnieni* wysok*",
+        "cisnieni* nisk*",
+        "cisnieni* za wysok*",
+        "cisnieni* za nisk*",
+        "podwyzsz* cisnieni*",
+        "cisnieni* podwyzsz*",
+        "podnos* cisnieni*",
+        "podnies* cisnieni*",
+        "obniz* cisnieni*",
+        "cisnieni* obniz*",
+        "spad* cisnieni*",
+        "cisnieni* spad*",
+        "skok* cisnieni*",
+        "skacz* cisnieni*",
+        "cisnieni* skacz*",
+        "skacz* mi cisnieni*",
+        "skoczy* mi cisnieni*",
+        "podskoczy* mi cisnieni*",
+        "spad* mi cisnieni*",
+        "ros* mi cisnieni*",
+        "cisnieni* mi skacz*",
+        "cisnieni* mi skoczy*",
+        "cisnieni* mi podskoczy*",
+        "cisnieni* mi spad*",
+        "cisnieni* mi ros*",
+        "prawidlow* cisnieni*",
+        "cisnieni* prawidlow*",
+        "norm* cisnieni*",
+        "cisnieni* norm*",
+        "cisnieni* w norm*",
+        "jakie cisnieni*",
+        "powin* byc cisnieni*",
+        "cisnieni* powin*",
+        "na cisnieni*",
+        "cisnieni* w ciaz*",
+        "cisnieni* po",
+        "cisnieni* 1*",
+        "cisnieni* 2*",
+        "cisnieni* 8*",
+        "cisnieni* 9*",
+        "cisnieni* skurczow*",
+        "skurczow* cisnieni*",
+        "cisnieni* rozkurczow*",
+        "rozkurczow* cisnieni*",
+        "gorn* cisnieni*",
+        "cisnieni* gorn*",
+        "doln* cisnieni*",
+        "cisnieni* doln*",
+        "mankiet* na ramie*",
+        "mankiet* do cisnieni*",
+        "rozmiar* mankiet*",
+        "zaloz* mankiet*",
+        "aparat* na nadgarst*",
+        "aparat* na ramie*",
+        "135 85",
+        "140 90",
+        "160 110",
+        "180 110",
+        "180 120",
+        "1* na 9*",
+        "1* na 8*",
+        "1* na 7*",
+        "1* na 6*",
+        "15* na 1*",
+        "16* na 1*",
+        "17* na 1*",
+        "18* na 1*",
+        "19* na 1*",
+        "2* na 1*",
+        "9* na 6*",
+        "9* na 5*",
+        "8* na 5*",
+        "1* 9*",
+        "1* 8*",
+        "1* 7*",
+        "1* 6*",
+        "9* 6*",
+        "mam 1* 1*",
+        "mam 2* 1*",
+        "mi 1* 1*",
+        "mi 2* 1*",
+        "wynik 1* 1*",
+        "mierz* cisnen*",
+        "zmierz* cisnen*",
+        "pomiar* cisnen*",
+        "cisnen* krwi",
+        "zmiez* cisnieni*",
+        "zmiery* cisnieni*",
+        "cisnieni* 7*",
+        "cisnieni* 6*"
+      ],
+      "questions": [
+        "Jak prawidłowo zmierzyć ciśnienie w domu?",
+        "Jakie ciśnienie jest za wysokie?",
+        "Czy ciśnieniomierz na nadgarstek jest dobry?",
+        "Ile razy dziennie mierzyć ciśnienie i przez ile dni?",
+        "Na którym ramieniu mierzyć ciśnienie?",
+        "Co zrobić, gdy mam ciśnienie 180 na 110?",
+        "Jakie ciśnienie jest za niskie?",
+        "Czy mogę mierzyć ciśnienie smartwatchem?",
+        "Czy przed pomiarem ciśnienia można pić kawę?",
+        "Jaki mankiet do ciśnieniomierza wybrać?",
+        "Mam 150 na 95, czy to dużo?",
+        "Jakie ciśnienie w ciąży jest niebezpieczne?"
+      ],
+      "summary": "Domowe pomiary ciśnienia, robione zwalidowanym aparatem naramiennym według stałego schematu, lepiej niż pojedynczy pomiar u lekarza pokazują, czy masz nadciśnienie i czy leczenie działa. Liczy się średnia z kilku dni, a nie pojedynczy wynik.",
+      "answer": "Mierz zwalidowanym aparatem na ramię z dopasowanym mankietem. 30 minut wcześniej nie pal, nie pij kawy, nie jedz, nie ćwicz. Usiądź z opartymi plecami i ręką na wysokości serca, odpocznij 5 minut, nie rozmawiaj. Przez 7 dni rano i wieczorem, przed lekami i jedzeniem, rób 2 pomiary co 1–2 minuty i zapisuj. Średnia od 135/85 to powód do wizyty w POZ. W ciąży wynik od 140/90 to lekarz w ciągu doby. Niskie ciśnienie to poniżej 90/60; częste zawroty głowy omów w POZ. Objawy udaru (opadający kącik ust, słaba ręka, bełkotliwa mowa) lub niemijający ból w klatce to 112 przy każdym wyniku. Od 180/110 (wystarczy jedna z liczb) z objawami, np. dusznością, dzwoń pod 112, bez nich idź dziś do lekarza.",
+      "facts": [
+        {
+          "text": "Do pomiarów w domu zaleca się automatyczny aparat z walidacją i odpowiednio dobranym mankietem zakładanym na ramię.",
+          "sources": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Walidacja oznacza, że dokładność aparatu sprawdzono w badaniu klinicznym według uznanego protokołu, a wyniki opublikowano w recenzowanym czasopiśmie. Listę zwalidowanych aparatów prowadzi m.in. międzynarodowa organizacja STRIDE BP (stridebp.org), wskazana w wytycznych ESC 2024 i PTNT/PTK 2024.",
+          "sources": [
+            "s1",
+            "s3",
+            "s11"
+          ]
+        },
+        {
+          "text": "Według ESH (2021) mniej niż 10% z ponad 4000 aparatów do mierzenia ciśnienia dostępnych na rynku przeszło uznane badania walidacyjne, a według ESC (2024) odpowiednio przebadano zaledwie około 6% aparatów.",
+          "sources": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Aparaty nadgarstkowe są na ogół mniej dokładne niż naramienne. Zwalidowany aparat nadgarstkowy można rozważyć dopiero wtedy, gdy dobrze dopasowanego mankietu na ramię nie da się założyć, np. przy bardzo dużym obwodzie ramienia lub znacznej otyłości.",
+          "sources": [
+            "s2",
+            "s3",
+            "s1"
+          ]
+        },
+        {
+          "text": "Aparaty bez mankietu (opaski, smartwatche) i aparaty z mankietem na palec nie powinny być używane do domowych pomiarów ciśnienia ani do decyzji o leczeniu.",
+          "sources": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Mankiet musi pasować do obwodu ramienia: za mały zawyża wynik, a za duży go zaniża. Rozmiar dobiera się według instrukcji aparatu.",
+          "sources": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Przy obwodzie ramienia powyżej 42 cm lepiej sprawdza się mankiet stożkowy, bo zwykły prostokątny może zawyżać ciśnienie.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Dolny brzeg mankietu powinien być 2–3 cm nad zgięciem łokcia, a pod górną i dolną krawędź mankietu powinien swobodnie wchodzić jeden palec.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Przez 30 minut przed pomiarem nie należy palić, pić kawy ani innych napojów z kofeiną, jeść ani ćwiczyć.",
+          "sources": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Przed pomiarem w razie potrzeby opróżnij pęcherz.",
+          "sources": [
+            "s3"
+          ]
+        },
+        {
+          "text": "Przed pomiarem posiedź spokojnie w cichym pomieszczeniu o komfortowej temperaturze: ESC zaleca 5 minut odpoczynku, ESH 3–5 minut. Nie rozmawiaj w trakcie ani między pomiarami.",
+          "sources": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Prawidłowa pozycja: siedzisz z plecami opartymi o krzesło, nogi nieskrzyżowane, stopy płasko na podłodze, gołe ramię oparte na stole, a środek ramienia na wysokości serca.",
+          "sources": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Mankiet zakłada się na gołe ramię, zwykle lewe, zgodnie z instrukcją aparatu. Rękawa nie podwija się, bo ciasno zwinięty uciska ramię jak opaska. Kolejne pomiary robi się na tym samym ramieniu.",
+          "sources": [
+            "s2",
+            "s3",
+            "s1"
+          ]
+        },
+        {
+          "text": "Schemat do rozpoznania nadciśnienia, kontroli leczenia i przed wizytą: 7 kolejnych dni (nie krócej niż 3), 2 pomiary rano i 2 wieczorem, jeden po drugim, przed posiłkiem i przed przyjęciem leków. Poranny pomiar robi się przed śniadaniem i lekami, ale nie od razu po przebudzeniu.",
+          "sources": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Odstęp między dwoma pomiarami w jednej serii to 1–2 minuty (ESH i NHS: 1 minuta, ESC 2024: 1–2 minuty).",
+          "sources": [
+            "s2",
+            "s3",
+            "s4"
+          ]
+        },
+        {
+          "text": "Według ESH do oceny potrzeba co najmniej 3 dni i co najmniej 12 pomiarów; wyniki z pierwszego dnia się odrzuca, a z pozostałych liczy średnią. Według ESC uśrednia się wszystkie pomiary, a gdy średnia z 3 dni jest blisko progu, mierzy się dalej do 7 dni.",
+          "sources": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Pojedyncze pomiary mają małą wartość diagnostyczną. O rozpoznaniu decyduje średnia z wielu pomiarów.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Najlepiej używać aparatu, który zapamiętuje wyniki i sam liczy średnią albo przesyła dane do telefonu lub komputera. Jeśli go nie masz, zapisuj wszystkie wyniki w dzienniczku.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Średnia z pomiarów domowych 135/85 mm Hg lub wyższa (skurczowe co najmniej 135 albo rozkurczowe co najmniej 85) oznacza nadciśnienie.",
+          "sources": [
+            "s1",
+            "s2",
+            "s3",
+            "s4"
+          ]
+        },
+        {
+          "text": "W pomiarach domowych wartości poniżej 120/70 mm Hg to ciśnienie optymalne, a wartości od 120/70 do poniżej 135/85 mm Hg to ciśnienie podwyższone.",
+          "sources": [
+            "s1",
+            "s3"
+          ]
+        },
+        {
+          "text": "W pomiarach w gabinecie próg nadciśnienia jest wyższy: 140/90 mm Hg lub więcej.",
+          "sources": [
+            "s1",
+            "s4"
+          ]
+        },
+        {
+          "text": "Pomiary domowe pomagają wykryć nadciśnienie białego fartucha (ciśnienie wysokie tylko u lekarza) i nadciśnienie ukryte (prawidłowe u lekarza, wysokie poza gabinetem). Nadciśnienie ukryte leczy się tak jak zwykłe nadciśnienie.",
+          "sources": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "text": "Każda dorosła osoba powinna mieć zmierzone ciśnienie (w gabinecie lub w domu) co najmniej raz w roku.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Osoby z podwyższonym ciśnieniem, które nie biorą leków na nadciśnienie, powinny mierzyć ciśnienie co 3 miesiące; warto też raz w roku zrobić 7-dniową serię pomiarów domowych.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Poza 7-dniowymi seriami częstość pomiarów ustala się indywidualnie, zwykle kilka razy w tygodniu lub w miesiącu, o różnych porach. ESH zaleca przy leczonym nadciśnieniu podwójny pomiar raz lub dwa razy w tygodniu, a co najmniej raz w miesiącu.",
+          "sources": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "text": "Zawsze wykonuje się dwa pomiary, jeden po drugim, i zapisuje oba wyniki.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Przy pierwszej ocenie (zwykle w gabinecie) ciśnienie mierzy się na obu ramionach. Jeśli różnica ciśnienia skurczowego większa niż 10 mm Hg potwierdza się w kolejnych pomiarach, dalej mierzy się na ramieniu z wyższym wynikiem.",
+          "sources": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Stała różnica ciśnienia skurczowego między ramionami większa niż 20 mm Hg wymaga diagnostyki w kierunku choroby tętnic.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Aparat zwalidowany u dorosłych może być niedokładny u dzieci, kobiet w ciąży, osób z bardzo dużym obwodem ramienia (powyżej 42 cm) i osób z zaburzeniami rytmu serca, zwłaszcza z migotaniem przedsionków. Dla tych grup potrzebne są aparaty walidowane osobno; w ciąży używa się tylko aparatów zwalidowanych dla kobiet w ciąży (lista na stridebp.org).",
+          "sources": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Aparat starszy niż 4 lata może mierzyć niedokładnie. ESC zaleca, by co jakiś czas poprosić personel medyczny o sprawdzenie dokładności aparatu i wymienić go, jeśli mierzy źle.",
+          "sources": [
+            "s3"
+          ]
+        },
+        {
+          "text": "Ciśnienie 180/110 mm Hg lub wyższe (skurczowe co najmniej 180 albo rozkurczowe co najmniej 110) z ostrymi objawami uszkodzenia narządów, np. bólem w klatce piersiowej, dusznością, bólem głowy, zaburzeniami widzenia, zawrotami głowy, objawami neurologicznymi, sennością lub drgawkami, to stan nagły zagrażający życiu, który zwykle wymaga natychmiastowego leczenia dożylnego w szpitalu.",
+          "sources": [
+            "s1",
+            "s3"
+          ]
+        },
+        {
+          "text": "W stanie nagłym ciśnienia nie obniża się gwałtownie i bez kontroli, bo może to wywołać kolejne powikłania; leczenie prowadzi się w szpitalu.",
+          "sources": [
+            "s3"
+          ]
+        },
+        {
+          "text": "Bardzo wysokie ciśnienie (180/110 mm Hg lub wyższe) bez objawów uszkodzenia narządów zwykle nie wymaga hospitalizacji, ale wymaga pilnej oceny lekarskiej i zmiany leczenia. Ciśnienie obniża się wtedy stopniowo lekami doustnymi, przez 24–48 godzin.",
+          "sources": [
+            "s1",
+            "s3"
+          ]
+        },
+        {
+          "text": "Przy bardzo wysokim wyniku najpierw trzeba wykluczyć przyczyny przemijające i błędy pomiaru: niepokój, ból, zły rozmiar lub ułożenie mankietu, złą pozycję, niesprawdzony aparat.",
+          "sources": [
+            "s1",
+            "s3"
+          ]
+        },
+        {
+          "text": "Niskie ciśnienie to wynik poniżej 90/60 mm Hg. Kłopotem jest głównie wtedy, gdy daje objawy: zawroty głowy, nudności, niewyraźne widzenie, osłabienie, splątanie, omdlenie. Do lekarza idzie się, gdy takie objawy, np. zawroty głowy lub omdlenia, się powtarzają; ta rada nie zależy od dokładnej liczby na aparacie. Gdy ciśnienie spadnie bardzo nisko, może dojść do wstrząsu (zimna i spocona skóra, szybki oddech, sinawa skóra, słabe i szybkie tętno), który wymaga natychmiastowego wezwania pomocy.",
+          "sources": [
+            "s5",
+            "s18"
+          ]
+        },
+        {
+          "text": "Hipotonię ortostatyczną rozpoznaje się, gdy po wstaniu (pomiar po 1 i 3 minutach stania) ciśnienie skurczowe spada o co najmniej 20 mm Hg lub rozkurczowe o co najmniej 10 mm Hg.",
+          "sources": [
+            "s1",
+            "s3"
+          ]
+        },
+        {
+          "text": "W ciąży próg rozpoznania nadciśnienia w pomiarze w gabinecie jest taki sam jak u innych dorosłych (140/90 mm Hg). Ciśnienie skurczowe 160 mm Hg lub wyższe albo rozkurczowe 110 mm Hg lub wyższe, a także objawy stanu przedrzucawkowego, są wskazaniem do hospitalizacji.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Według NICE kobieta po 20. tygodniu ciąży z pierwszym wynikiem 140/90 mm Hg lub wyższym powinna zostać oceniona w szpitalu w ciągu 24 godzin, a przy 160/110 mm Hg lub wyższym jeszcze tego samego dnia.",
+          "sources": [
+            "s14"
+          ]
+        },
+        {
+          "text": "Objawy stanu przedrzucawkowego to m.in. silny ból głowy niemijający po zwykłych lekach przeciwbólowych, zaburzenia widzenia (nieostre widzenie, błyski), ból pod żebrami, wymioty i nagły obrzęk twarzy, rąk lub stóp. Pojawia się najczęściej po 20. tygodniu ciąży, ale też w dniach lub tygodniach po porodzie.",
+          "sources": [
+            "s8"
+          ]
+        },
+        {
+          "text": "Nagły ból lub ucisk w klatce piersiowej, który nie mija, zwłaszcza promieniujący do ręki, szyi, żuchwy, brzucha lub pleców albo z potami, nudnościami czy dusznością, może oznaczać zawał i wymaga natychmiastowego wezwania pomocy. Nie jedź wtedy sam samochodem do szpitala.",
+          "sources": [
+            "s6",
+            "s15"
+          ]
+        },
+        {
+          "text": "Objawy udaru pojawiają się nagle. Najważniejsze to opadanie jednej strony twarzy (np. kącika ust przy próbie uśmiechu), osłabienie lub drętwienie ręki albo nogi, często tylko po jednej stronie ciała, oraz bełkotliwa mowa albo kłopot z mówieniem lub rozumieniem. Inne objawy to nagłe niewyraźne widzenie lub utrata wzroku w jednym albo obu oczach, zawroty głowy i utrata równowagi, nagły silny ból głowy, splątanie, nudności lub wymioty.",
+          "sources": [
+            "s16",
+            "s17"
+          ]
+        },
+        {
+          "text": "Przy objawach udaru dzwoni się natychmiast pod 112 (albo na pogotowie ratunkowe: 999), także gdy objawy pojawiają się i mijają albo całkiem ustąpiły; nie czeka się, aż miną. Zalecenie nie zależy od wyniku pomiaru ciśnienia. Warto zapamiętać, o której zaczęły się objawy, bo od czasu, jaki minął, zależy, jakie leczenie można zastosować; liczy się każda minuta. Nie jedź sam samochodem do szpitala.",
+          "sources": [
+            "s16",
+            "s17"
+          ]
+        },
+        {
+          "text": "Objawy udaru, które minęły w ciągu godziny (mikroudar, czyli przemijający atak niedokrwienny), to sygnał alarmowy: w ciągu następnych 48 godzin może dojść do udaru, czasem poważniejszego.",
+          "sources": [
+            "s17"
+          ]
+        },
+        {
+          "text": "Wysokie ciśnienie krwi jest jedną z najczęstszych przyczyn udaru i najważniejszym czynnikiem ryzyka udaru, który trzeba kontrolować: regularnie mierz ciśnienie, a jeśli masz nadciśnienie, przyjmuj zalecone leki.",
+          "sources": [
+            "s17"
+          ]
+        },
+        {
+          "text": "Częste bóle głowy lub niewyraźne widzenie u osoby z nadciśnieniem, a także ból w klatce piersiowej, który pojawia się i mija, są powodem do pilnej porady medycznej.",
+          "sources": [
+            "s6"
+          ]
+        },
+        {
+          "text": "Omdlenie wymaga wezwania pogotowia, gdy osoba nie odzyskuje przytomności w ciągu 1 minuty, ma ból w klatce piersiowej lub kołatanie serca, zemdlała podczas wysiłku albo na leżąco, ma drgawki, ma trudności z mówieniem lub poruszaniem się albo nie wraca w pełni do siebie. Po każdym omdleniu warto zgłosić się do lekarza.",
+          "sources": [
+            "s7"
+          ]
+        },
+        {
+          "text": "Powtarzające się lub nasilające kołatania serca są powodem wizyty u lekarza, a szybkie lub nierówne bicie serca z bólem w klatce, dusznością, omdleniem albo objawami udaru wymaga wezwania pogotowia.",
+          "sources": [
+            "s12"
+          ]
+        },
+        {
+          "text": "U większości leczonych dorosłych celem jest ciśnienie poniżej 130/80 mm Hg, ale nie niższe niż 120/70 mm Hg. Cel ustala lekarz indywidualnie, np. łagodniejszy przy zespole kruchości (dużym osłabieniu organizmu, częstym w starszym wieku).",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Program NFZ Moje Zdrowie (bilans zdrowia osoby dorosłej) jest dla osób ubezpieczonych od 20. roku życia, bez skierowania: co 5 lat w wieku 20–49 lat i co 3 lata od 50. roku życia. Obejmuje m.in. pomiar ciśnienia i tętna.",
+          "sources": [
+            "s10",
+            "s9"
+          ]
+        },
+        {
+          "text": "Do programu Moje Zdrowie zgłaszasz się, wypełniając ankietę w Internetowym Koncie Pacjenta, aplikacji mojeIKP albo w przychodni POZ; program działa w każdej placówce POZ.",
+          "sources": [
+            "s9"
+          ]
+        },
+        {
+          "text": "Od 2023 roku farmaceuci w Polsce mogą mierzyć ciśnienie w aptece według zasad pomiaru gabinetowego, w ramach opieki farmaceutycznej.",
+          "sources": [
+            "s1"
+          ]
+        }
+      ],
+      "selfCare": [
+        "Kup aparat naramienny z listy zwalidowanych (np. na stridebp.org) i dobierz mankiet do obwodu ramienia według instrukcji.",
+        "Przez 30 minut przed pomiarem nie pal, nie pij kawy, nie jedz i nie ćwicz, a w razie potrzeby opróżnij pęcherz.",
+        "Zdejmij ubranie z ramienia (nie podwijaj rękawa) i załóż mankiet na gołe ramię, 2–3 cm nad zgięciem łokcia.",
+        "Usiądź z opartymi plecami, nieskrzyżowanymi nogami i stopami na podłodze, oprzyj rękę na stole na wysokości serca, odpocznij w ciszy 5 minut i nie rozmawiaj w trakcie pomiaru.",
+        "Przed wizytą u lekarza rób przez 7 dni po 2 pomiary rano i 2 wieczorem, w odstępie 1–2 minut, przed lekami i jedzeniem; rano nie mierz od razu po przebudzeniu.",
+        "Zapisuj wszystkie wyniki albo korzystaj z pamięci aparatu i pokaż je lekarzowi; liczy się średnia, a nie pojedynczy pomiar.",
+        "Nie zmieniaj sam dawek leków na podstawie pojedynczych wyników; omów pomiary z lekarzem.",
+        "Jeśli wynik jest bardzo wysoki, a nie masz żadnych objawów, sprawdź mankiet i pozycję, odpocznij kilka minut i zmierz ponownie; jeśli nadal masz 180/110 lub więcej (wystarczy jedna z liczb), skontaktuj się z lekarzem jeszcze dziś.",
+        "Przy skłonności do niskiego ciśnienia wstawaj powoli (z leżenia przez siad do stania), jedz mniejsze posiłki częściej i pij więcej wody, jeśli lekarz nie zalecił ci ograniczania płynów.",
+        "Jeśli jesteś w ciąży, mierz tylko aparatem zwalidowanym dla kobiet w ciąży (lista na stridebp.org).",
+        "Co jakiś czas, a zwłaszcza gdy aparat ma ponad 4 lata, poproś w przychodni o sprawdzenie jego dokładności.",
+        "Jeśli masz 20 lat lub więcej, zgłoś się do programu Moje Zdrowie: wypełnij ankietę w IKP, mojeIKP albo w przychodni POZ."
+      ],
+      "warningSigns": [
+        {
+          "sign": "Nagłe objawy udaru (opadający kącik ust lub jedna strona twarzy, osłabienie albo drętwienie ręki lub nogi po jednej stronie ciała, bełkotliwa mowa lub kłopot z mówieniem, nagłe zaburzenia widzenia lub równowagi, nagły silny ból głowy), także jeśli już minęły, albo ból lub ucisk w klatce piersiowej, który nie mija, zwłaszcza promieniujący do ręki, szyi, żuchwy lub pleców albo z potami i dusznością, niezależnie od wyniku pomiaru, nawet gdy ciśnienie nie jest wysokie",
+          "triage": "emergency",
+          "action": "Dzwoń od razu pod 112, to może być udar albo zawał serca. Nie czekaj, aż objawy miną, i zapamiętaj, o której się zaczęły. Nie jedź sam samochodem do szpitala."
+        },
+        {
+          "sign": "Ciśnienie 180/110 lub wyższe (wystarczy, że górna wartość ma co najmniej 180 albo dolna co najmniej 110) i do tego ból w klatce piersiowej, duszność, silny ból głowy, zaburzenia widzenia lub mowy, silne zawroty głowy, drętwienie albo osłabienie połowy ciała, splątanie, nietypowa senność lub drgawki",
+          "triage": "emergency",
+          "action": "Dzwoń pod 112. Nie jedź sam do szpitala i nie bierz na własną rękę dodatkowych leków na ciśnienie."
+        },
+        {
+          "sign": "Ciąża lub okres do kilku tygodni po porodzie, a do tego: górne ciśnienie 160 lub wyższe albo dolne 110 lub wyższe, albo silny ból głowy niemijający po lekach przeciwbólowych, zaburzenia widzenia, ból pod żebrami, wymioty lub nagły obrzęk twarzy, rąk czy stóp",
+          "triage": "emergency",
+          "action": "Jedź od razu do szpitala z oddziałem położniczym albo na SOR. Przy drgawkach, utracie przytomności lub gdy nie możesz dojechać, dzwoń pod 112."
+        },
+        {
+          "sign": "Omdlenie z bólem w klatce piersiowej lub kołataniem serca, omdlenie podczas wysiłku albo na leżąco, brak przytomności dłużej niż minutę, drgawki albo trudności z mówieniem lub poruszaniem się po omdleniu",
+          "triage": "emergency",
+          "action": "Dzwoń pod 112."
+        },
+        {
+          "sign": "Ciśnienie 180/110 lub wyższe (górne co najmniej 180 albo dolne co najmniej 110) w pomiarze powtórzonym po kilku minutach odpoczynku, prawidłowo wykonanym, ale bez żadnych objawów",
+          "triage": "urgent",
+          "action": "Skontaktuj się z lekarzem jeszcze dziś: POZ, a po godzinach nocna i świąteczna opieka zdrowotna; jeśli to niemożliwe, jedź na SOR. Nie bierz dodatkowych dawek leków bez porozumienia z lekarzem. Jeśli pojawią się objawy, dzwoń pod 112."
+        },
+        {
+          "sign": "W ciąży ciśnienie 140/90 lub wyższe (górne co najmniej 140 albo dolne co najmniej 90) w powtórzonym pomiarze, bez innych objawów",
+          "triage": "urgent",
+          "action": "Jeszcze dziś, najpóźniej w ciągu 24 godzin, skontaktuj się z lekarzem prowadzącym ciążę; jeśli to niemożliwe, zgłoś się do izby przyjęć szpitala z oddziałem położniczym."
+        },
+        {
+          "sign": "Często powtarzające się bóle głowy lub niewyraźne widzenie przy nadciśnieniu, bez nagłych objawów udaru, albo ból w klatce piersiowej, który pojawia się i mija",
+          "triage": "urgent",
+          "action": "Skontaktuj się z lekarzem w ciągu 24 godzin (POZ albo nocna i świąteczna opieka zdrowotna). Jeśli ból w klatce nie mija albo pojawią się nagłe objawy udaru (np. opadający kącik ust, osłabienie ręki, zaburzenia mowy lub widzenia), dzwoń pod 112."
+        },
+        {
+          "sign": "Średnia z domowych pomiarów 135/85 lub wyższa (wystarczy, że górna ma co najmniej 135 albo dolna co najmniej 85)",
+          "triage": "gp",
+          "action": "Umów wizytę w POZ i zabierz zapis pomiarów; lekarz potwierdzi albo wykluczy nadciśnienie i oceni ryzyko."
+        },
+        {
+          "sign": "Powtarzające się zawroty głowy, osłabienie lub omdlenia przy niskim ciśnieniu albo po wstaniu, także gdy wynik nie spada poniżej 90/60",
+          "triage": "gp",
+          "action": "Umów wizytę u lekarza POZ; jeśli bierzesz leki na ciśnienie, nie odstawiaj ich sam, tylko omów to z lekarzem. Jeśli skóra robi się zimna, spocona lub sina, oddech jest szybki, a tętno słabe i szybkie, dzwoń pod 112."
+        },
+        {
+          "sign": "Aparat często sygnalizuje nieregularne bicie serca albo kołatania serca się powtarzają",
+          "triage": "gp",
+          "action": "Umów wizytę w POZ. Jeśli do tego dochodzi ból w klatce, duszność, omdlenie lub objawy udaru, dzwoń pod 112."
+        },
+        {
+          "sign": "Różnica ciśnienia skurczowego między ramionami większa niż 10 mm Hg w powtarzanych pomiarach",
+          "triage": "gp",
+          "action": "Powiedz o tym lekarzowi POZ; do czasu wizyty mierz na ramieniu z wyższym wynikiem."
+        }
+      ],
+      "related": [
+        "pomiar-tetna",
+        "kolatanie-serca",
+        "omdlenie",
+        "zawroty-glowy",
+        "bol-glowy",
+        "bol-w-klatce-piersiowej",
+        "udar-rozpoznawanie",
+        "badania-profilaktyczne-nfz",
+        "ryzyko-sercowo-naczyniowe"
+      ],
+      "sources": [
+        {
+          "id": "s1",
+          "title": "Wytyczne postępowania w nadciśnieniu tętniczym w Polsce 2024 — stanowisko Ekspertów Polskiego Towarzystwa Nadciśnienia Tętniczego/Polskiego Towarzystwa Kardiologicznego (Nadciśnienie Tętnicze w Praktyce 2024; 10(3–4): 53–111)",
+          "publisher": "Polskie Towarzystwo Nadciśnienia Tętniczego / Polskie Towarzystwo Kardiologiczne",
+          "url": "https://scm.viamedica.pl/sites/scm/files/2025-10/103769-460166-2-PB.pdf",
+          "year": 2024
+        },
+        {
+          "id": "s2",
+          "title": "2021 European Society of Hypertension practice guidelines for office and out-of-office blood pressure measurement (J Hypertens 2021; 39(7): 1293–1302)",
+          "publisher": "European Society of Hypertension",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/33710173/",
+          "year": 2021
+        },
+        {
+          "id": "s3",
+          "title": "2024 ESC Guidelines for the management of elevated blood pressure and hypertension (Eur Heart J 2024; 45(38): 3912–4018)",
+          "publisher": "European Society of Cardiology",
+          "url": "https://academic.oup.com/eurheartj/article/45/38/3912/7741010",
+          "year": 2024
+        },
+        {
+          "id": "s4",
+          "title": "Blood pressure test",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/tests-and-treatments/blood-pressure-test/",
+          "year": 2025
+        },
+        {
+          "id": "s5",
+          "title": "Low blood pressure (hypotension)",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/low-blood-pressure-hypotension/",
+          "year": 2023
+        },
+        {
+          "id": "s6",
+          "title": "High blood pressure",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/high-blood-pressure/",
+          "year": 2024
+        },
+        {
+          "id": "s7",
+          "title": "Fainting",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/fainting/",
+          "year": 2026
+        },
+        {
+          "id": "s8",
+          "title": "Pre-eclampsia",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/pre-eclampsia/",
+          "year": 2026
+        },
+        {
+          "id": "s9",
+          "title": "Programy profilaktyczne (Moje Zdrowie – bilans zdrowia osoby dorosłej)",
+          "publisher": "Narodowy Fundusz Zdrowia",
+          "url": "https://www.nfz.gov.pl/dla-pacjenta/programy-profilaktyczne/"
+        },
+        {
+          "id": "s10",
+          "title": "Tata powinien dbać o swoje zdrowie (program Moje Zdrowie)",
+          "publisher": "pacjent.gov.pl (Ministerstwo Zdrowia / NFZ)",
+          "url": "https://pacjent.gov.pl/print/pdf/node/7119",
+          "year": 2026
+        },
+        {
+          "id": "s11",
+          "title": "STRIDE BP: validated blood pressure monitors",
+          "publisher": "STRIDE BP (międzynarodowa organizacja non-profit, wspólna inicjatywa z ESH i ISH)",
+          "url": "https://www.stridebp.org/"
+        },
+        {
+          "id": "s12",
+          "title": "Atrial fibrillation",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/atrial-fibrillation/",
+          "year": 2025
+        },
+        {
+          "id": "s14",
+          "title": "Antenatal care (NG201): Recommendations – pre-eclampsia and hypertension in pregnancy",
+          "publisher": "National Institute for Health and Care Excellence (NICE)",
+          "url": "https://www.nice.org.uk/guidance/ng201/chapter/Recommendations",
+          "year": 2021
+        },
+        {
+          "id": "s15",
+          "title": "Heart attack",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/heart-attack/",
+          "year": 2026
+        },
+        {
+          "id": "s16",
+          "title": "Symptoms of a stroke",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/stroke/symptoms/",
+          "year": 2024
+        },
+        {
+          "id": "s17",
+          "title": "Niespodziewany udar",
+          "publisher": "pacjent.gov.pl (Ministerstwo Zdrowia / NFZ)",
+          "url": "https://pacjent.gov.pl/zapobiegaj/niespodziewany-udar",
+          "year": 2024
+        },
+        {
+          "id": "s18",
+          "title": "Low Blood Pressure",
+          "publisher": "National Heart, Lung, and Blood Institute (NIH)",
+          "url": "https://www.nhlbi.nih.gov/health/low-blood-pressure",
+          "year": 2022
+        }
+      ],
+      "review": {
+        "researched": "2026-10-03",
+        "verified": "2026-10-03",
+        "tested": "2026-10-03",
+        "claims": {
+          "confirmed": 75,
+          "corrected": 5,
+          "removed": 0,
+          "unverifiable": 1
+        },
+        "tests": {
+          "passed": 25,
+          "total": 25
+        },
+        "revisions": 1
+      }
+    },
+    {
+      "id": "rabdomioliza-wysilkowa",
+      "title": "Rabdomioliza wysiłkowa (rozpad mięśni po treningu)",
+      "domain": "sport",
+      "tier": 3,
+      "audience": "osoby trenujące rekreacyjnie i sportowcy, zwłaszcza zaczynające nowy, intensywny trening (spinning, crossfit, siłownia, biegi długodystansowe), a także osoby pracujące fizycznie w upale",
+      "keywords": [
+        "rabdomioliz*",
+        "rabdo",
+        "po rabdo",
+        "rabdomiol*",
+        "rabdomyol*",
+        "rabdomiliz*",
+        "rozpad* miesni",
+        "rozpad* miesnia",
+        "mocz* po trening*",
+        "mocz* po wysilk*",
+        "mocz* po silown*",
+        "mocz* po biegu",
+        "mocz* po biegani*",
+        "mocz* po maraton*",
+        "mocz* po spin*",
+        "mocz* po crossfi*",
+        "mocz* po cwiczen*",
+        "trening* mam ciemn* mocz*",
+        "trening* mam brazow* mocz*",
+        "silown* mam ciemn* mocz*",
+        "silown* mam brazow* mocz*",
+        "mocz* kolor* col*",
+        "mocz* jak col*",
+        "mioglobin*",
+        "kinaz* kreatynow*",
+        "wysok* ck",
+        "podwyzszon* ck",
+        "ck po trening*"
+      ],
+      "questions": [
+        "Co to jest rabdomioliza?",
+        "Mam ciemny mocz po treningu, czy to rabdomioliza?",
+        "Jak odróżnić zakwasy od rozpadu mięśni?",
+        "Kiedy mogę wrócić do treningu po rabdomiolizie?",
+        "Mocz koloru coli po siłowni, co robić?",
+        "Czy po pierwszym spinningu można dostać rabdo?",
+        "Czy zakwasy to rozpad mięśni?",
+        "Po treningu mam ciemny mocz, co to znaczy?",
+        "Mam bardzo mało moczu po treningu, co robić?"
+      ],
+      "summary": "Rabdomioliza wysiłkowa to rozpad komórek mięśni szkieletowych po zbyt intensywnym, długim albo nowym dla organizmu wysiłku. Zawartość mięśni (m.in. mioglobina i potas) przedostaje się do krwi i może uszkodzić nerki oraz zaburzyć pracę serca, dlatego to stan pilny, a nie zwykłe zakwasy.",
+      "answer": "Rabdomioliza wysiłkowa to rozpad mięśni po zbyt mocnym albo nowym dla ciebie wysiłku, np. po pierwszym spinningu, crossficie, setkach przysiadów albo treningu w upale. Zakwasy są najsilniejsze po 1–3 dniach i potem mijają. Niepokojące są: ból dużo silniejszy niż zwykle, obrzęk, twarde i słabe mięśnie, trudność w zgięciu ręki lub nogi, a zwłaszcza ciemny mocz (jak cola albo mocna herbata) lub bardzo mało moczu. Wtedy przerwij trening, pij wodę i jedź na SOR, bez skierowania. Tylko badanie krwi (CK) to potwierdzi, a szybkie leczenie chroni nerki. Przy tych objawach nie bierz na własną rękę ibuprofenu ani innych NLPZ. Do treningu wracaj stopniowo, dopiero gdy lekarz uzna, że to bezpieczne.",
+      "facts": [
+        {
+          "text": "Rabdomioliza to rozpad komórek mięśni szkieletowych, przy którym ich zawartość (m.in. mioglobina, potas, kinaza kreatynowa, czyli CK) przedostaje się do krwi.",
+          "sources": [
+            "s1",
+            "s9",
+            "s3"
+          ]
+        },
+        {
+          "text": "Rabdomioliza wysiłkowa pojawia się najczęściej, gdy wysiłek jest za duży, za szybko zwiększony i za wcześnie wprowadzony („too much, too fast, too soon”): intensywny, powtarzalny, długi albo nieznany i niedopasowany do formy.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Ryzyko zwiększają zwłaszcza ćwiczenia ekscentryczne, czyli z hamowaniem ruchu (np. przysiady, pompki, podciąganie), wykonywane w dużej objętości.",
+          "sources": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "text": "Ryzyko zwiększają też: rywalizacja i presja (test na czas, trener wymuszający wysiłek), upał i duża wilgotność, odwodnienie przed wysiłkiem, niedobór snu i niedawna infekcja wirusowa.",
+          "sources": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "text": "Do czynników ryzyka należą alkohol i narkotyki (np. kokaina, amfetamina), suplementy pobudzające (np. kofeina, synefryna, johimbina, efedryna) oraz niektóre leki: statyny, NLPZ (niesteroidowe leki przeciwzapalne), leki przeciwpsychotyczne, przeciwdepresyjne (np. SSRI) i pobudzające (amfetamina, metylofenidat).",
+          "sources": [
+            "s1",
+            "s5",
+            "s2"
+          ]
+        },
+        {
+          "text": "Rabdomioliza po statynach jest rzadka: w dużym badaniu obserwacyjnym ok. 2 przypadki na 100 000 leczonych rocznie; ryzyko rośnie przy łączeniu kilku leków obniżających cholesterol.",
+          "sources": [
+            "s9"
+          ]
+        },
+        {
+          "text": "Ryzyko mają też osoby z cechą sierpowatokrwinkową (nosiciele genu anemii sierpowatej) oraz z wrodzonymi chorobami metabolicznymi mięśni (np. zaburzeniami metabolizmu glikogenu lub tłuszczów).",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "W przeglądzie systematycznym 97 przypadków rabdomiolizy po spinningu większość chorych stanowiły zdrowe kobiety po pierwszych zajęciach; zgłaszały się do lekarza średnio po ok. 3 dniach (3,1 ± 1,5 dnia), najczęściej z bólem i osłabieniem ud oraz ciemnym moczem.",
+          "sources": [
+            "s8"
+          ]
+        },
+        {
+          "text": "W tym przeglądzie ostre uszkodzenie nerek wystąpiło u 7,2% chorych, czasowej dializy wymagało 2,1%, a 4,1% miało zespół ciasnoty przedziałów powięziowych uda leczony operacyjnie; nie opisano trwałych następstw ani zgonów.",
+          "sources": [
+            "s8"
+          ]
+        },
+        {
+          "text": "W przeglądzie systematycznym 25 badań (772 sportowców) rabdomioliza wysiłkowa dotyczyła głównie młodych mężczyzn (średnio ok. 29 lat), najczęściej po bieganiu, w tym maratonach (54,3%), i podnoszeniu ciężarów (14,8%).",
+          "sources": [
+            "s11"
+          ]
+        },
+        {
+          "text": "Typowe objawy to ból, skurcze lub bolesność mięśni silniejsze niż można się spodziewać po wysiłku, ciemny mocz (kolor herbaty lub coli) oraz osłabienie i zmęczenie, przez które nie da się dokończyć treningu.",
+          "sources": [
+            "s3"
+          ]
+        },
+        {
+          "text": "Objawy mogą pojawić się dopiero po kilku godzinach albo kilku dniach od wysiłku.",
+          "sources": [
+            "s3"
+          ]
+        },
+        {
+          "text": "Pełna „triada” objawów (ból mięśni, osłabienie, ciemny mocz) występuje u mniej niż 10% chorych, więc zwykły kolor moczu nie wyklucza rabdomiolizy.",
+          "sources": [
+            "s6",
+            "s9"
+          ]
+        },
+        {
+          "text": "Zwykłe zakwasy (DOMS) pojawiają się zwykle w ciągu 24 godzin od wysiłku, są najsilniejsze ok. 72 godzin po nim i trwają tylko kilka dni.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Na rabdomiolizę, a nie zwykłe zakwasy, wskazują: ból i tkliwość nieproporcjonalnie silne do wysiłku, obrzęk mięśni, wyraźne ograniczenie ruchu, osłabienie (zwłaszcza mięśni ud, bioder i ramion), ciemny mocz oraz ból, który nie słabnie albo narasta dłużej niż 5–7 dni.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Po samych objawach nie da się rozpoznać rabdomiolizy; potwierdza ją badanie krwi na kinazę kreatynową (CK).",
+          "sources": [
+            "s4",
+            "s3"
+          ]
+        },
+        {
+          "text": "Progi CK w wytycznych różnią się: wojskowe wytyczne CHAMP 2025 rozpoznają rabdomiolizę wysiłkową przy CK co najmniej 5000 j./l i silnych objawach, a międzynarodowe warsztaty ENMC 2024 przy CK powyżej 10 000 j./l (ok. 50-krotność górnej granicy normy, która wynosi zwykle ok. 200 j./l).",
+          "sources": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "text": "Samo wysokie CK po treningu nie oznacza choroby: u części zdrowych sportowców CK sięga nawet 175-krotności górnej granicy normy bez objawów i bez uszkodzenia nerek.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "CK zaczyna rosnąć ok. 12 godzin po uszkodzeniu mięśni, szczyt osiąga po 1–4 dniach, a po odpoczynku wraca do normy zwykle w ciągu 1–2 tygodni.",
+          "sources": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "text": "Ciemny lub czerwony mocz po wysiłku może mieć też inne przyczyny (krew w moczu, rozpad krwinek po długim biegu lub marszu, niektóre leki, buraki, rabarbar); rozróżnia je badanie moczu i krwi.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Rabdomioliza może prowadzić do uszkodzenia lub niewydolności nerek, groźnych zaburzeń rytmu serca (m.in. przez wysoki potas we krwi), drgawek, trwałej niepełnosprawności, a nawet śmierci.",
+          "sources": [
+            "s4",
+            "s9",
+            "s1"
+          ]
+        },
+        {
+          "text": "W badaniu z 2024 r. ostre uszkodzenie nerek wystąpiło u 8,5% osób hospitalizowanych z rabdomiolizą wysiłkową; ryzyko było istotnie większe u tych, które przed przyjęciem do szpitala brały NLPZ.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Zespół ciasnoty przedziałów powięziowych (wzrost ciśnienia w zamkniętej przestrzeni mięśnia, który odcina krążenie) objawia się bólem nieproporcjonalnym do urazu, mrowieniem i zaburzeniami czucia, twardym i obrzękniętym mięśniem, osłabieniem ruchu i silnym bólem przy biernym rozciąganiu; może wymagać pilnej operacji (fasciotomii).",
+          "sources": [
+            "s1",
+            "s9"
+          ]
+        },
+        {
+          "text": "Według CHAMP 2025 do leczenia w szpitalu kwalifikują się zwłaszcza osoby z: CK co najmniej 20 000 j./l, podejrzeniem zespołu ciasnoty, uszkodzeniem nerek, ciemnym moczem lub potwierdzoną mioglobinurią (mioglobiną w moczu), zaburzeniami elektrolitów, cechą sierpowatokrwinkową albo bez możliwości kontroli (np. mieszkające same).",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "O sposobie leczenia decyduje lekarz po badaniach krwi i moczu. Lżejsze przypadki leczy się ambulatoryjnie: picie płynów, ograniczenie aktywności i częste kontrole u lekarza (z badaniem CK i moczu), zwykle co 24–72 godziny; cięższe w szpitalu płynami dożylnymi, a czasem dializą.",
+          "sources": [
+            "s1",
+            "s7",
+            "s6"
+          ]
+        },
+        {
+          "text": "Wytyczne CHAMP 2025 zalecają unikać wszystkich NLPZ (np. ibuprofenu, ketoprofenu, diklofenaku) u każdej osoby z rabdomiolizą wysiłkową, nawet bez uszkodzenia nerek; preferowanym lekiem przeciwbólowym jest paracetamol.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Chłodzenie może krótkotrwale zmniejszać ból w pierwszych 24–72 godzinach, natomiast ciepła (np. okładów rozgrzewających) nie zaleca się w ostrej fazie, bo może nasilać stan zapalny i obrzęk.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Powrót do treningu według CHAMP 2025 (w lżejszych przypadkach, bez cech wysokiego ryzyka) jest etapowy: najpierw co najmniej 72 godziny tylko lekkiej aktywności, bez ćwiczeń siłowych i ze snem 7–8 godzin; potem, gdy objawy słabną, CK spada, a badanie moczu jest prawidłowe, lekki trening oporowy bez ćwiczeń do upadku mięśniowego, stopniowo zwiększany od lekkiego do umiarkowanego (może to trwać 3–4 tygodnie); pełny trening dopiero bez wyraźnego osłabienia, obrzęku i bólu. Nie ma jednego sprawdzonego w badaniach protokołu, więc tempo ustala lekarz.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Do pełnego treningu wraca się dopiero po wyzdrowieniu: z prawidłowym zakresem ruchu, bez bólu mięśni, z prawie pełną siłą, spadającym CK i prawidłowym badaniem moczu; w większości przypadków powrót przy stopniowym zwiększaniu wysiłku przebiega bez problemów.",
+          "sources": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "text": "Dalszą diagnostykę (m.in. genetyczną, w kierunku chorób nerwowo-mięśniowych) warto rozważyć, gdy: rabdomioliza się powtarza, CK jest podwyższone jeszcze 8 tygodni po epizodzie, epizod wystąpił po zwykłym dla danej osoby wysiłku, CK przekroczyło 50-krotność normy, leki, suplementy ani inne czynniki nie tłumaczą ciężkości epizodu, podobne epizody mieli członkowie rodziny albo występują też inne objawy wysiłkowe, np. skurcze lub bóle mięśni (skrót RHABDO).",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Zapobieganie polega na stopniowym zwiększaniu obciążeń, odpowiednim nawodnieniu i odżywieniu, unikaniu nienawykowych wysiłków (zwłaszcza ekscentrycznych), wysiłku w upale i wilgoci oraz treningu w czasie infekcji, a także na omówieniu przyjmowanych leków z lekarzem.",
+          "sources": [
+            "s2",
+            "s7"
+          ]
+        },
+        {
+          "text": "Na SOR można zgłosić się bez skierowania w stanie nagłego zagrożenia zdrowotnego; nocna i świąteczna opieka zdrowotna działa w dni powszednie od 18:00 do 8:00 oraz całą dobę w weekendy i święta, bez skierowania i bez rejonizacji.",
+          "sources": [
+            "s10"
+          ]
+        }
+      ],
+      "selfCare": [
+        "Gdy mięśnie bolą dużo bardziej niż zwykle albo czujesz nietypowe osłabienie, przerwij trening.",
+        "Przy takich objawach pij więcej płynów, najlepiej wody, i jednocześnie jedź na SOR, bo picie nie zastępuje badania.",
+        "Powiedz lekarzowi o treningu, lekach i suplementach i poproś o badanie CK we krwi oraz badanie moczu.",
+        "Przy podejrzeniu rabdomiolizy nie bierz na własną rękę ibuprofenu, ketoprofenu, diklofenaku, naproksenu ani innych NLPZ (niesteroidowych leków przeciwzapalnych); o lek przeciwbólowy zapytaj lekarza.",
+        "W pierwszych dniach nie rozgrzewaj bolących mięśni (sauna, gorąca kąpiel, okłady rozgrzewające); chłodny okład przez ręcznik może na chwilę zmniejszyć ból.",
+        "Nie wracaj do treningu, dopóki lekarz nie uzna, że to bezpieczne; potem zwiększaj obciążenia stopniowo przez kilka tygodni i nie ćwicz do upadku mięśniowego (aż zabraknie ci sił na kolejne powtórzenie).",
+        "Nowy rodzaj treningu (spinning, crossfit, dużo przysiadów, pompek, podciągań) zaczynaj lżej i krócej, nie ścigaj się z grupą i zwiększaj obciążenia stopniowo.",
+        "Nie trenuj intensywnie w czasie infekcji ani tuż po niej, po nieprzespanej nocy, po alkoholu ani w dużym upale.",
+        "Unikaj suplementów pobudzających, np. z synefryną, johimbiną, efedryną albo dużą dawką kofeiny.",
+        "Nie odstawiaj sam przepisanych leków, np. statyn; jeśli martwisz się ich wpływem na mięśnie, porozmawiaj z lekarzem."
+      ],
+      "warningSigns": [
+        {
+          "sign": "Ciemny mocz (jak cola albo mocna herbata) po wysiłku, zwłaszcza z bólem, obrzękiem albo osłabieniem mięśni",
+          "triage": "emergency",
+          "action": "Przerwij wysiłek i jedź od razu na SOR (bez skierowania). Jeśli nie masz jak dojechać albo czujesz się bardzo źle, dzwoń pod 112."
+        },
+        {
+          "sign": "Bardzo mało moczu albo brak moczu przez wiele godzin po intensywnym wysiłku",
+          "triage": "emergency",
+          "action": "Jedź od razu na SOR albo dzwoń pod 112, bo to może być ostre uszkodzenie nerek."
+        },
+        {
+          "sign": "Mięsień (np. uda, łydki albo ramienia) jest twardy, napięty i mocno spuchnięty, ból narasta przy rozciąganiu, a ręka lub noga drętwieje, mrowi albo słabnie",
+          "triage": "emergency",
+          "action": "Jedź natychmiast na SOR albo dzwoń pod 112: zespół ciasnoty przedziałów powięziowych (narastające ciśnienie w mięśniu, które odcina krążenie) może wymagać pilnej operacji."
+        },
+        {
+          "sign": "Nierówne albo bardzo szybkie bicie serca, skrajne osłabienie, wymioty albo splątanie po wysiłku, zwłaszcza w upale",
+          "triage": "emergency",
+          "action": "Dzwoń pod 112."
+        },
+        {
+          "sign": "Ból mięśni wyraźnie silniejszy niż po zwykłym treningu, z obrzękiem, osłabieniem albo trudnością w zgięciu lub wyprostowaniu ręki czy nogi, nawet jeśli mocz ma zwykły kolor",
+          "triage": "emergency",
+          "action": "Przerwij trening i jedź od razu na SOR (bez skierowania), bo tam od razu zbadają krew (m.in. CK) i mocz. Powiedz o treningu, lekach i suplementach. Jeśli nie masz jak dojechać albo czujesz się bardzo źle, dzwoń pod 112."
+        },
+        {
+          "sign": "Ból i sztywność mięśni po treningu nie słabną albo narastają dłużej niż 5–7 dni",
+          "triage": "urgent",
+          "action": "W ciągu doby zgłoś się do lekarza: do POZ (bez skierowania), a wieczorem, w nocy lub w weekend do nocnej i świątecznej opieki zdrowotnej. Powiedz o treningu i poproś o badanie CK we krwi i badanie moczu. Jeśli pojawi się ciemny mocz, obrzęk albo osłabienie, jedź od razu na SOR."
+        },
+        {
+          "sign": "Rabdomioliza powtórzyła się, pojawiła się po zwykłym dla ciebie treningu albo w rodzinie były podobne epizody, silne skurcze lub groźne powikłania po znieczuleniu ogólnym",
+          "triage": "gp",
+          "action": "Umów wizytę u lekarza POZ; może skierować cię do neurologa (poradni chorób nerwowo-mięśniowych) na dalszą diagnostykę, także genetyczną."
+        }
+      ],
+      "related": [
+        "zakwasy",
+        "udar-cieplny",
+        "nawodnienie-przy-wysilku",
+        "hiponatremia-wysilkowa",
+        "skurcze-miesni",
+        "zespol-przetrenowania"
+      ],
+      "sources": [
+        {
+          "id": "s1",
+          "title": "Clinical Practice Guideline for the Management of Exertional Rhabdomyolysis in Warfighters (September 2025)",
+          "publisher": "Consortium for Health and Military Performance (CHAMP), Uniformed Services University",
+          "url": "https://champ.usuhs.edu/sites/default/files/2025-09/WHEC_Clinical_Practice_Guidelines_ER.pdf",
+          "year": 2025
+        },
+        {
+          "id": "s2",
+          "title": "276th ENMC workshop: recommendations on optimal diagnostic pathway and management strategy for patients with acute rhabdomyolysis worldwide (Neuromuscular Disorders 2025;50:105344)",
+          "publisher": "European Neuromuscular Centre (ENMC)",
+          "url": "https://enmc.org/wp-content/uploads/2025/04/Full-report-WS-276.pdf",
+          "year": 2025
+        },
+        {
+          "id": "s3",
+          "title": "Signs and Symptoms of Rhabdomyolysis",
+          "publisher": "CDC / NIOSH",
+          "url": "https://www.cdc.gov/niosh/rhabdo/signs-symptoms/index.html",
+          "year": 2025
+        },
+        {
+          "id": "s4",
+          "title": "Rhabdomyolysis and Work",
+          "publisher": "CDC / NIOSH",
+          "url": "https://www.cdc.gov/niosh/rhabdo/about/index.html",
+          "year": 2024
+        },
+        {
+          "id": "s5",
+          "title": "Risk Factors for Rhabdomyolysis",
+          "publisher": "CDC / NIOSH",
+          "url": "https://www.cdc.gov/niosh/rhabdo/risk-factors/index.html",
+          "year": 2024
+        },
+        {
+          "id": "s6",
+          "title": "Rhabdomyolysis (MSD Manual Consumer Version)",
+          "publisher": "MSD Manuals",
+          "url": "https://www.msdmanuals.com/home/kidney-disorders/kidney-failure/rhabdomyolysis",
+          "year": 2025
+        },
+        {
+          "id": "s7",
+          "title": "Rhabdomyolysis",
+          "publisher": "healthdirect (Healthdirect Australia, rząd Australii)",
+          "url": "https://www.healthdirect.gov.au/rhabdomyolysis",
+          "year": 2025
+        },
+        {
+          "id": "s8",
+          "title": "Clinical characteristics and outcomes of exertional rhabdomyolysis after indoor spinning: a systematic review (Masuda i wsp.)",
+          "publisher": "The Physician and Sportsmedicine",
+          "url": "https://doi.org/10.1080/00913847.2022.2049645",
+          "year": 2023
+        },
+        {
+          "id": "s9",
+          "title": "Rabdomioliza – przyczyny, obraz kliniczny i postępowanie (Prygiel, Potulska-Chromik, Kostera-Pruszczyk; Klinika Neurologii WUM)",
+          "publisher": "Neurologia Dziecięca (Child Neurology)",
+          "url": "https://bibliotekanauki.pl/articles/2057229.pdf",
+          "year": 2017
+        },
+        {
+          "id": "s10",
+          "title": "Kiedy zgłosić się na szpitalny oddział ratunkowy (SOR), a kiedy skorzystać z nocnej i świątecznej opieki zdrowotnej (NiŚOZ)?",
+          "publisher": "Rzecznik Praw Pacjenta (gov.pl)",
+          "url": "https://www.gov.pl/web/rpp/kiedy-zglosic-sie-na-szpitalny-oddzial-ratunkowy-sor-a-kiedy-skorzystac-z-nocnej-i-swiatecznej-opieki-zdrowotnej"
+        },
+        {
+          "id": "s11",
+          "title": "Exertional Rhabdomyolysis in Athletes: Systematic Review and Current Perspectives (Bäcker i wsp.)",
+          "publisher": "Clinical Journal of Sport Medicine",
+          "url": "https://doi.org/10.1097/JSM.0000000000001082",
+          "year": 2023
+        }
+      ],
+      "review": {
+        "researched": "2026-10-03",
+        "verified": "2026-10-03",
+        "tested": "2026-10-03",
+        "claims": {
+          "confirmed": 44,
+          "corrected": 9,
+          "removed": 0,
+          "unverifiable": 0
+        },
+        "tests": {
+          "passed": 23,
+          "total": 23
+        },
+        "revisions": 0
+      }
+    }
+  ]
+}
