@@ -1,5 +1,5 @@
-// Doco's chat screen: the sunrise scene, a greeting for the time of day, the mood faces and topic
-// tiles that start a conversation, a minute of guided breathing, and quick replies under the offline
+// Doco's chat screen: the sunrise scene, a greeting for the time of day, the topic tiles that
+// start a conversation, a minute of guided breathing, and quick replies under the offline
 // companion's answers. Loaded last; it wraps the page's functions (the original runs first) and
 // never rewrites them.
 /* global sendSuggestion, currentLanguage, translations */
@@ -13,7 +13,6 @@
       greet: { morning: 'Dzień dobry', day: 'Cześć', evening: 'Dobry wieczór', night: 'Nie możesz zasnąć?' },
       intro: 'Jestem Doco. Napisz, co czujesz, albo stuknij poniżej.',
       introNight: 'Jestem tu też w nocy. Napisz, co nie daje Ci spać.',
-      checkin: 'Jak się dziś czujesz?',
       breathe: 'Oddychaj ze mną · 1 min',
       breatheAria: 'Oddychaj ze mną przez minutę',
       names: ['Bardzo źle', 'Źle', 'Średnio', 'Dobrze', 'Świetnie'],
@@ -33,7 +32,6 @@
       greet: { morning: 'Good morning', day: 'Hi there', evening: 'Good evening', night: "Can't sleep?" },
       intro: "I'm Doco. Write how you feel, or tap below.",
       introNight: "I'm here at night too. Tell me what keeps you awake.",
-      checkin: 'How are you feeling today?',
       breathe: 'Breathe with me · 1 min',
       breatheAria: 'Breathe with me for a minute',
       names: ['Very bad', 'Bad', 'So-so', 'Good', 'Great'],
@@ -53,7 +51,6 @@
       greet: { morning: 'Доброго ранку', day: 'Привіт', evening: 'Добрий вечір', night: 'Не можеш заснути?' },
       intro: 'Я Doco. Напиши, що відчуваєш, або торкнися нижче.',
       introNight: 'Я тут і вночі. Напиши, що не дає тобі спати.',
-      checkin: 'Як ти сьогодні почуваєшся?',
       breathe: 'Дихай зі мною · 1 хв',
       breatheAria: 'Дихай зі мною одну хвилину',
       names: ['Дуже погано', 'Погано', 'Так собі', 'Добре', 'Чудово'],
@@ -73,7 +70,6 @@
       greet: { morning: 'Guten Morgen', day: 'Hallo', evening: 'Guten Abend', night: 'Kannst du nicht schlafen?' },
       intro: 'Ich bin Doco. Schreib, wie es dir geht, oder tippe unten.',
       introNight: 'Ich bin auch nachts da. Schreib, was dich wach hält.',
-      checkin: 'Wie fühlst du dich heute?',
       breathe: 'Atme mit mir · 1 Min.',
       breatheAria: 'Eine Minute mit mir atmen',
       names: ['Sehr schlecht', 'Schlecht', 'Geht so', 'Gut', 'Super'],
@@ -93,7 +89,6 @@
       greet: { morning: 'Buenos días', day: 'Hola', evening: 'Buenas tardes', night: '¿No puedes dormir?' },
       intro: 'Soy Doco. Escribe cómo te sientes o toca abajo.',
       introNight: 'También estoy aquí de noche. Cuéntame qué no te deja dormir.',
-      checkin: '¿Cómo te sientes hoy?',
       breathe: 'Respira conmigo · 1 min',
       breatheAria: 'Respira conmigo un minuto',
       names: ['Muy mal', 'Mal', 'Más o menos', 'Bien', 'Genial'],
@@ -165,15 +160,12 @@
     welcome.dataset.period = p;
     welcome.querySelector('h2').textContent = t('greet')[p];
     welcome.querySelector('p').textContent = p === 'night' ? t('introNight') : t('intro');
-    $('hyCheckinLabel').textContent = t('checkin');
     $('hyBreatheLabel').textContent = t('breathe');
     $('hyHero').setAttribute('aria-label', t('breatheAria'));
     $('hyBreatheClose').setAttribute('aria-label', t('stop'));
     $('hyTopicsMoreLabel').textContent = t('more');
     renderTopics();
     document.querySelectorAll('.cface').forEach((b) => b.setAttribute('aria-label', t('names')[b.dataset.mood - 1]));
-    const today = window.hyTodayMood ? window.hyTodayMood() : null;
-    $('hyCheckin').querySelectorAll('.cface').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.mood) === today)));
   }
   const baseLanguage = window.updateInterfaceLanguage;
   window.updateInterfaceLanguage = function (l) {
@@ -258,7 +250,6 @@
       startWithMood(Number(b.dataset.mood));
     }, 240);
   }
-  $('hyCheckin').addEventListener('click', faceTap);
   $('hyBreatheAfter').addEventListener('click', faceTap);
   $('hyHero').addEventListener('click', () => openBreathe());
 

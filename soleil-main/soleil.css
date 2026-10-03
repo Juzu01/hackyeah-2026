@@ -601,18 +601,7 @@ a {
   transform: rotate(45deg);
 }
 
-/* How you feel, in one tap: the same faces as the mood diary. */
-.checkin {
-  margin-top: 24px;
-}
-.checkin-label {
-  margin-bottom: 10px;
-  color: var(--ink-2);
-  font-size: 0.875rem;
-  font-weight: 650;
-  text-align: center;
-  letter-spacing: 0.02em;
-}
+/* The faces after a minute of breathing and under "how are you?" in the chat: the same as the mood diary. */
 .checkin-faces {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
