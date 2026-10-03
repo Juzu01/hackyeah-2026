@@ -44,6 +44,10 @@ jobs:
         env:
           BASE_PATH: ./
           VITE_COMMIT_SHA: ${{ github.sha }}
+          # Supabase project for saving pain reports (supabase/README.md). The publishable key is
+          # public by design: it ships in the page's JS anyway, and RLS protects the data. Not a secret.
+          VITE_SUPABASE_URL: https://yoxnmbflqrppspjdmrks.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_xWLqoKLLjgaGuWd_WcbZKg_HUq87CU1
 
       # Fallback for the ideas page when the visitor's IP hits GitHub's unauthenticated API limit.
       # Not fatal: a failed snapshot shouldn't block deploying the app.
