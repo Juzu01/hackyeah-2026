@@ -163,9 +163,11 @@
       <path class="sky-face" d="M171 61c4 5 14 5 18 0M172 52v2M188 52v2"/></g></g>
     <g class="sky-cloud c1"><path d="M120 76h70a16 16 0 0 0 0-32 24 24 0 0 0-45-8 18 18 0 0 0-25 40z"/></g>
     <g class="sky-cloud c2"><path d="M196 92h62a14 14 0 0 0 0-28 21 21 0 0 0-40-6 15 15 0 0 0-22 34z"/></g>
-    <g class="sky-rain"><path d="M140 84v9M160 88v9M180 84v9M214 98v9M234 100v9M250 96v9"/></g>
+    <!-- One path per drop: the first three fall from the first cloud, the last three from the second
+         (soleil.css shows only the first cloud's drops when there's only one cloud). -->
+    <g class="sky-rain"><path d="M140 84v9"/><path d="M160 88v9"/><path d="M180 84v9"/><path d="M214 98v9"/><path d="M234 100v9"/><path d="M250 96v9"/></g>
     <path class="sky-bolt" d="M172 80l-8 14h9l-5 12 14-18h-9l6-8z"/>
-    <g class="sky-sparks"><path d="M100 30v10M95 35h10M262 26v8M258 30h8M282 70v6M279 73h6"/></g>
+    <g class="sky-sparks"><path d="M100 30v10M95 35h10"/><path d="M262 26v8M258 30h8"/><path d="M282 70v6M279 73h6"/></g>
     <path class="sky-horizon" d="M0 112 360 96"/>
   </svg>`;
   function moodSky() {
