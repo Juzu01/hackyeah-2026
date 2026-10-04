@@ -44,7 +44,7 @@ export default function Header({ path }: Props) {
                 ) : (
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-green text-xs font-bold text-green-ink">{initials}</span>
                 )}
-                <span className="max-w-[9rem] truncate text-[0.9375rem] font-medium text-ink">{account.user.name}</span>
+                <span className="max-w-[8rem] truncate text-[0.9375rem] font-semibold text-ink">{account.user.name.split(' ')[0]}</span>
               </summary>
               <div className="absolute right-0 mt-1 w-56 rounded-xl border border-line-2 bg-s1 p-1">
                 {account.user.email && <p className="truncate px-3 py-1.5 text-sm text-ink-2">{account.user.email}</p>}

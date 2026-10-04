@@ -315,29 +315,77 @@ a {
 }
 .auth-btn {
   min-height: 44px;
-  padding: 0 16px;
+  padding: 0 18px;
   border: 1px solid var(--line-2);
+  border-radius: 999px;
   color: var(--ink);
   font-size: 0.9375rem;
   font-weight: 650;
-  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
 }
 .auth-btn:active {
   background: var(--s2);
 }
+/* Signed in: a pill with a round photo (or initials) and the first name; it opens the account menu. */
 .user-avatar {
   display: none;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  background: var(--green);
-  color: var(--green-ink);
-  font-weight: 800;
+  align-items: center;
+  gap: 8px;
+  max-width: 172px;
+  min-height: 44px;
+  padding: 4px 10px 4px 4px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  background: var(--s1);
+  color: var(--ink);
+  font-size: 0.9375rem;
+  font-weight: 700;
   cursor: pointer;
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
 }
 .user-avatar.visible {
+  display: inline-flex;
+}
+.user-avatar:active {
+  background: var(--s2);
+}
+.ua-pic {
   display: grid;
+  flex: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--green-soft);
+  box-shadow: inset 0 0 0 1px var(--green-glow);
+  color: var(--green);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.ua-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ua-pic.is-big {
+  width: 46px;
+  height: 46px;
+  font-size: 1rem;
+}
+.ua-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ua-name:empty {
+  display: none;
+}
+.ua-go {
+  width: 14px;
+  height: 14px;
+  color: var(--ink-2);
+  transform: rotate(90deg);
 }
 
 /* ── Views ─────────────────────────────────────────────────────────── */
@@ -2444,19 +2492,32 @@ a {
   right: 16px;
   z-index: 200;
   display: none;
-  min-width: 250px;
+  min-width: 264px;
+  max-width: calc(100vw - 32px);
   padding: 6px;
   border: 1px solid var(--line-2);
+  border-radius: 20px;
   background: var(--s1);
-  box-shadow: 0 0 50px rgb(0 0 0 / 0.6);
-  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  box-shadow: 0 18px 50px rgb(0 0 0 / 0.45);
 }
 .user-menu.visible {
   display: block;
 }
 .user-menu-header {
-  padding: 10px 12px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+  padding: 10px 10px 14px;
   border-bottom: 1px solid var(--line);
+}
+.user-menu-who {
+  min-width: 0;
+}
+.user-menu-who > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .user-menu-name {
   font-weight: 700;
@@ -2472,6 +2533,7 @@ a {
   width: 100%;
   min-height: 50px;
   padding: 0 12px;
+  border-radius: 14px;
   font-size: 1rem;
   text-align: left;
 }
@@ -2480,6 +2542,7 @@ a {
 }
 .user-menu-btn .lang-code {
   margin-left: auto;
+  border-radius: 999px;
 }
 .user-menu-btn.danger {
   color: var(--alarm);

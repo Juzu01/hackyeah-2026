@@ -35,7 +35,7 @@
   src="https://awaited-mink-45.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
   type="text/javascript"
 ></script>
-<link rel="stylesheet" href="soleil.css?v=11">
+<link rel="stylesheet" href="soleil.css?v=12">
 <link rel="stylesheet" href="voice.css?v=6">
 <link rel="stylesheet" href="diary.css?v=4">
 <!-- The mode and colour picked in Więcej → Kolor aplikacji (app.js), before the first paint -->
@@ -256,8 +256,11 @@ try {
 <!-- Menu użytkownika -->
 <div class="user-menu" id="userMenu">
   <div class="user-menu-header">
-    <div class="user-menu-name" id="userName">—</div>
-    <div class="user-menu-email" id="userEmail">—</div>
+    <span class="ua-pic is-big" id="userMenuPic" aria-hidden="true"></span>
+    <div class="user-menu-who">
+      <div class="user-menu-name" id="userName">—</div>
+      <div class="user-menu-email" id="userEmail">—</div>
+    </div>
   </div>
   <button class="user-menu-btn" onclick="openLanguage(); toggleUserMenu()"><svg class="ico"><use href="#i-lang"/></svg><span id="menuLangLabel">Język</span> <span id="menuLangFlag" class="lang-code">PL</span></button>
   <button class="user-menu-btn" onclick="openVoicePicker(); toggleUserMenu()"><svg class="ico"><use href="#i-voice"/></svg><span id="menuVoiceLabel">Głos Doco</span></button>
@@ -298,7 +301,7 @@ try {
     </div>
     <div class="header-actions">
       <button class="auth-btn" id="loginBtn" onclick="openAuth()">Zaloguj się</button>
-      <div class="user-avatar" id="userAvatar" onclick="toggleUserMenu()"></div>
+      <button type="button" class="user-avatar" id="userAvatar" onclick="toggleUserMenu()" aria-label="Menu konta" aria-haspopup="menu"><span class="ua-pic" id="userAvatarPic"></span><span class="ua-name" id="userAvatarName"></span><svg class="ico ua-go" aria-hidden="true"><use href="#i-next"/></svg></button>
     </div>
   </header>
 
@@ -1031,8 +1034,22 @@ function updateAuthUI(user) {
     loginBtn.style.display = 'none';
     userAvatar.classList.add('visible');
     convBtn.classList.add('visible');
-    const initials = (user.firstName?.[0] || user.emailAddresses?.[0]?.emailAddress?.[0] || '?').toUpperCase();
-    userAvatar.textContent = initials;
+    // The account in the corner: Google's photo when there is one, otherwise initials; then the first name.
+    const first = (user.firstName || '').trim();
+    const initials = ((first[0] || user.emailAddresses?.[0]?.emailAddress?.[0] || '?') + (first ? user.lastName?.[0] || '' : '')).toUpperCase();
+    ['userAvatarPic', 'userMenuPic'].forEach((id) => {
+      const pic = document.getElementById(id);
+      if (user.hasImage && user.imageUrl) {
+        const img = new Image();
+        img.alt = '';
+        img.referrerPolicy = 'no-referrer';
+        img.src = user.imageUrl;
+        pic.replaceChildren(img);
+      } else {
+        pic.textContent = initials;
+      }
+    });
+    document.getElementById('userAvatarName').textContent = first;
     document.getElementById('userName').textContent = `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Użytkownik';
     document.getElementById('userEmail').textContent = user.emailAddresses?.[0]?.emailAddress || '';
     loadStreak(user.id);
@@ -2245,13 +2262,6 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
   function hyLabelButtons() {
     document.querySelectorAll('.popup-close:not([aria-label])').forEach((b) => b.setAttribute('aria-label', 'Zamknij'));
     $('conversationsBtn')?.setAttribute('aria-label', 'Rozmowy');
-    const avatar = $('userAvatar');
-    if (avatar && !avatar.hasAttribute('role')) {
-      avatar.setAttribute('role', 'button');
-      avatar.setAttribute('tabindex', '0');
-      avatar.setAttribute('aria-label', 'Menu konta');
-      avatar.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleUserMenu(); } });
-    }
   }
   hyLabelButtons();
   window.addEventListener('load', hyLabelButtons);
