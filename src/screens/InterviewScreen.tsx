@@ -1,4 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react'
+import Steps from '../components/Steps.tsx'
 import type { Duration, Onset, RedFlag, Trend } from '../data/types.ts'
 import { interviewRedFlags, type Answer, type CheckDraft } from '../lib/check.ts'
 
@@ -93,11 +94,10 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
     )
   }
 
-  const progress = Math.round(((i + 1) / steps.length) * 100)
-
   return (
-    <div className="mx-auto max-w-2xl px-4 py-6 sm:py-8">
-      <div className="mb-5">
+    <div className="mx-auto max-w-2xl px-4 pt-3 pb-6 sm:pb-8 lg:pt-6">
+      <Steps current={2} progress={(i + 1) / steps.length} />
+      <div className="mt-3 mb-4">
         <div className="flex items-center justify-between text-[0.9375rem] text-ink-2">
           <button type="button" onClick={back} className="-ml-2 inline-flex min-h-11 items-center gap-1.5 px-2 font-medium text-ink hover:bg-s2">
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -108,9 +108,6 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
           <span>
             Pytanie {i + 1} z {steps.length}
           </span>
-        </div>
-        <div className="mt-2 h-0.5 w-full overflow-hidden bg-line-2" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
-          <div className="h-full bg-green transition-all" style={{ width: `${progress}%` }} />
         </div>
       </div>
 

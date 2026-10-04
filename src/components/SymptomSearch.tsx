@@ -48,7 +48,7 @@ export default function SymptomSearch({ sex, picked, onPick, autoFocus }: Props)
           autoComplete="off"
           autoFocus={autoFocus}
           value={query}
-          placeholder="Wpisz objaw, np. ból głowy, zgaga, kaszel"
+          placeholder="Wpisz objaw, np. kaszel, zgaga"
           className="w-full bg-transparent py-2 text-base"
           onChange={(e) => {
             setQuery(e.target.value)
