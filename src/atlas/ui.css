@@ -249,6 +249,71 @@ body {
   color: var(--accent);
 }
 
+/* ── Whose body (a woman's or a man's) ──────────────────────────────── */
+
+/* The gauge's small sibling, bottom left: the chosen body has the lit edge and the accent icon. */
+.bodies {
+  position: fixed;
+  bottom: calc(var(--safe-bottom) + 18px);
+  left: calc(var(--gutter) - 6px);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  transition:
+    opacity 220ms var(--ease-out),
+    transform 220ms var(--ease-out);
+}
+.bodies.is-hidden {
+  opacity: 0;
+  transform: translateX(-12px);
+  pointer-events: none;
+}
+.bodies-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 12px 0 16px;
+  border: 0;
+  background: none;
+  color: var(--ink-2);
+  font-size: 0.9688rem;
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+  transition: color 200ms var(--ease-out);
+}
+.bodies-btn::before {
+  content: '';
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+  left: 4px;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--hair-strong);
+  transition:
+    background-color 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out);
+}
+.bodies-btn svg {
+  flex: none;
+  color: var(--ink-3);
+  transition: color 200ms var(--ease-out);
+}
+.bodies-btn[aria-checked='true'] {
+  color: var(--ink-1);
+  font-weight: 700;
+}
+.bodies-btn[aria-checked='true']::before {
+  background: var(--accent);
+  box-shadow: 0 0 10px rgb(192 228 178 / 0.5);
+}
+.bodies-btn[aria-checked='true'] svg {
+  color: var(--accent);
+}
+
 /* ── Voice dock ────────────────────────────────────────────────────── */
 
 .dock {
