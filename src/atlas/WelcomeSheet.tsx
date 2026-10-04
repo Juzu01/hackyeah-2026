@@ -25,7 +25,7 @@ export default function WelcomeSheet({ touch, onDone }: Props) {
           <CloseIcon />
         </button>
       </header>
-      <p className="onboard-lead">Poznaj swoje ciało i zapisz, co cię boli.</p>
+      <p className="onboard-lead">Poznaj swoje ciało: mięśnie, narządy i kości.</p>
 
       <ol className="onboard-tips">
         <li>
@@ -46,25 +46,19 @@ export default function WelcomeSheet({ touch, onDone }: Props) {
           </span>
         </li>
         <li>
-          <span className="onboard-art onboard-art-pain" aria-hidden="true">
-            Zgłoś ból
-          </span>
-          <span>
-            <strong>Zgłoś ból</strong> w wybranym miejscu i śledź, jak się zmienia.
-          </span>
-        </li>
-        <li>
           <span className="onboard-art onboard-art-voice" aria-hidden="true">
             <MicIcon size={20} />
           </span>
           <span>
             {canListen ? (
               <>
-                <strong>Powiedz, co boli</strong>: okrągły przycisk na dole słucha i sam pokaże to miejsce.
+                <strong>Zapytaj na głos</strong>, na przykład „gdzie jest wątroba?”: okrągły przycisk na dole słucha i sam
+                pokaże to miejsce.
               </>
             ) : (
               <>
-                <strong>Napisz, co boli</strong>: okrągły przycisk na dole otwiera rozmowę i sam pokaże to miejsce.
+                <strong>Zapytaj</strong>, na przykład „gdzie jest wątroba?”: okrągły przycisk na dole otwiera rozmowę i sam
+                pokaże to miejsce.
               </>
             )}
           </span>

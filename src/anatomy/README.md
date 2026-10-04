@@ -2,7 +2,7 @@
 
 A full-screen human figure built from BodyParts3D, segmented into 105 tappable structures (plus the glass skin). Zooming in goes deeper: muscles → organs and bones → organs pulled apart so each one can be tapped on its own. [DESIGN.md](DESIGN.md) is the spec (art direction, data contract, behaviour); this file is the map of the code.
 
-The engine here is framework-free TypeScript on three.js. The app around it (title bar, layer switch, the selection sheet with the pain report, the info sheet) is React in `src/atlas/`, composed in `src/App.tsx`. It installs as an app: `public/manifest.webmanifest`, `public/sw.js`, icons from `tools/icons/`.
+The engine here is framework-free TypeScript on three.js. The app around it (title bar, layer switch, the selection sheet, the conversation, the info sheet) is React in `src/atlas/`, composed in `src/App.tsx`. It installs as an app: `public/manifest.webmanifest`, `public/sw.js`, icons from `tools/icons/`.
 
 ## Files
 
@@ -44,8 +44,6 @@ viewer.destroy()
 ```
 
 The host element's padding tells the viewer how much the chrome covers at the top and bottom (`--chrome-top`, `--chrome-bottom` in `style.css`), so the body is framed between them.
-
-Pain reports store `painId(part.id)` (`src/pain/painId.ts`), not the atlas id: the database only accepts `^[a-zA-Z]+(-(left|right))?$` and keeps the 2D map's ids for parts it already had. `src/pain/painId.test.ts` checks both.
 
 ## Deep links and QA hooks
 

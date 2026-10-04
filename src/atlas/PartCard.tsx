@@ -1,5 +1,5 @@
 // The selected part, in plain words first: where it is ("Lewe udo, z przodu"),
-// its name and one simple sentence, and the big "Zgłoś ból". "Więcej" holds the
+// its name and one simple sentence. "Więcej" holds the
 // atlas detail for the curious: Latin, the clinical description, what it does,
 // exercises, a fact, how sport affects it, and the body system.
 
@@ -12,7 +12,6 @@ interface Props {
   part: PartInfo
   expanded: boolean
   onToggle(): void
-  onReport(): void
   onClose(): void
 }
 
@@ -39,7 +38,7 @@ function moreOf(part: PartInfo): { title: string; body: ReactNode }[] {
   return out
 }
 
-export default function PartCard({ part, expanded, onToggle, onReport, onClose }: Props) {
+export default function PartCard({ part, expanded, onToggle, onClose }: Props) {
   const plain = plainOf(part)
   const more = moreOf(part)
   const moreId = useId()
@@ -72,12 +71,6 @@ export default function PartCard({ part, expanded, onToggle, onReport, onClose }
         {expanded ? 'Mniej' : 'Więcej'}
         <ChevronIcon up={expanded} />
       </button>
-
-      <div className="sheet-actions">
-        <button type="button" className="btn-primary" onClick={onReport}>
-          Zgłoś ból
-        </button>
-      </div>
     </div>
   )
 }

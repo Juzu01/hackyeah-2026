@@ -45,8 +45,8 @@ export default function InfoSheet({ touch, build, onClose, onWelcome }: Props) {
         </button>
       </header>
       <p className="info-lead">
-        Trójwymiarowy atlas anatomiczny: mięśnie, narządy i kości. Wybierz część ciała, żeby poznać jej budowę i rolę albo
-        zgłosić ból i śledzić go w czasie.
+        Trójwymiarowy atlas anatomiczny: mięśnie, narządy i kości. Wybierz część ciała, żeby poznać jej budowę i rolę.
+        Jeśli coś Cię boli, sprawdź to w zakładce Objawy.
       </p>
 
       <h3 className="info-heading">Jak korzystać</h3>
@@ -61,7 +61,7 @@ export default function InfoSheet({ touch, build, onClose, onWelcome }: Props) {
       <p className="info-note">
         Lista w lewym górnym rogu przełącza warstwy: mięśnie, narządy z kośćmi albo narządy rozsunięte osobno, żeby łatwo
         je wybrać. Lupa na górze znajduje część ciała po nazwie, np. „kolano”. Okrągły przycisk na dole pozwala po
-        prostu powiedzieć, co boli.
+        prostu zapytać, na przykład „gdzie jest wątroba?”.
       </p>
       <button type="button" className="more-toggle" onClick={onWelcome}>
         Pokaż wprowadzenie jeszcze raz

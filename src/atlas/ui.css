@@ -17,8 +17,7 @@ body {
 .topbar,
 .layers,
 .dock,
-.sheet,
-.notice {
+.sheet {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   user-select: none;
@@ -202,7 +201,7 @@ body {
   background: var(--accent);
   box-shadow:
     0 0 0 5px var(--accent-soft),
-    0 0 18px rgb(192 228 178 / 0.45);
+    0 0 18px color-mix(in srgb, var(--accent) 45%, transparent);
   transform: translateY(calc(var(--i, 0) * var(--step)));
   transition: transform 320ms var(--ease-out);
   pointer-events: none;
@@ -308,7 +307,7 @@ body {
 }
 .bodies-btn[aria-checked='true']::before {
   background: var(--accent);
-  box-shadow: 0 0 10px rgb(192 228 178 / 0.5);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 50%, transparent);
 }
 .bodies-btn[aria-checked='true'] svg {
   color: var(--accent);
@@ -348,13 +347,13 @@ body {
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 34%, #e5f6df 0%, var(--accent) 46%, #96c284 100%);
+  background: radial-gradient(circle at 50% 34%, color-mix(in srgb, var(--accent) 35%, white) 0%, var(--accent) 46%, color-mix(in srgb, var(--accent) 78%, black) 100%);
   color: var(--accent-ink);
   box-shadow:
     inset 0 0 0 6px rgb(245 254 242 / 0.22),
     inset 0 -3px 8px rgb(46 77 32 / 0.35),
     0 10px 26px rgb(0 0 0 / 0.45),
-    0 0 44px rgb(192 228 178 / 0.22);
+    0 0 44px color-mix(in srgb, var(--accent) 22%, transparent);
   transition: transform 180ms var(--ease-out);
 }
 /* The rim. */
@@ -362,7 +361,7 @@ body {
   content: '';
   position: absolute;
   inset: -8px;
-  border: 1.5px solid rgb(192 228 178 / 0.42);
+  border: 1.5px solid color-mix(in srgb, var(--accent) 42%, transparent);
   border-radius: 50%;
 }
 .voice:active {
@@ -470,9 +469,6 @@ body {
 }
 .sheet-content {
   padding: 0 20px 14px;
-}
-.sheet-swap {
-  animation: sheet-swap 240ms var(--ease-out);
 }
 @keyframes sheet-swap {
   from {
@@ -745,74 +741,6 @@ body {
 
 /* ── Pain form ─────────────────────────────────────────────────────── */
 
-.pain-head {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-.pain-head .icon-btn {
-  margin: -2px 0 0 -6px;
-}
-.pain-q {
-  margin: 24px 0 12px;
-  color: var(--ink-1);
-  font-size: 1.0625rem;
-  font-weight: 700;
-}
-/* The scale reads as one strip: ten cells, each tinted with its place from green to red. */
-.pain-levels {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
-}
-.pain-level {
-  position: relative;
-  height: 52px;
-  overflow: hidden;
-  border: 1px solid var(--hair);
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--level) 12%, transparent);
-  color: var(--ink-1);
-  font-size: 1.125rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  transition:
-    background-color 160ms var(--ease-out),
-    border-color 160ms var(--ease-out),
-    transform 160ms var(--ease-out);
-}
-.pain-level::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 4px;
-  background: var(--level);
-  opacity: 0.9;
-}
-.pain-level[aria-pressed='true'] {
-  border-color: var(--level);
-  background: var(--level);
-  color: var(--level-ink);
-  transform: scale(1.04);
-}
-.pain-level[aria-pressed='true']::after {
-  opacity: 0;
-}
-.pain-scale {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0 0;
-  color: var(--ink-2);
-  font-size: 0.875rem;
-}
-
-.pain-types {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
 .chip {
   min-height: 46px;
   padding: 0 16px;
@@ -832,74 +760,6 @@ body {
   background: var(--accent-soft);
   color: var(--accent);
   font-weight: 650;
-}
-.pain-muted {
-  color: var(--ink-3);
-  font-size: 0.9375rem;
-}
-
-.pain-status {
-  min-height: 20px;
-  margin: 8px 0 0;
-  font-size: 0.9375rem;
-  text-align: center;
-}
-.pain-status .is-ok {
-  color: var(--accent);
-}
-.pain-status .is-error {
-  color: #ff9b8e;
-}
-
-.pain-history {
-  margin-top: 10px;
-  border-top: 1px solid var(--hair);
-}
-.pain-history ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.pain-history li {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 42px;
-  font-size: 0.9688rem;
-}
-.pain-badge {
-  flex: none;
-  width: 32px;
-  padding: 4px 0;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  text-align: center;
-}
-.pain-types-text {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  color: var(--ink-2);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.pain-date {
-  flex: none;
-  color: var(--ink-3);
-  font-size: 0.875rem;
-  font-variant-numeric: tabular-nums;
-}
-.pain-off {
-  margin: 16px 0 4px;
-  color: var(--ink-2);
-  font-size: 0.9688rem;
-  line-height: 1.5;
-}
-.pain-off code {
-  color: var(--ink-1);
-  font-size: 0.8438rem;
 }
 
 /* ── Info ──────────────────────────────────────────────────────────── */
@@ -979,8 +839,6 @@ body {
   font-size: 0.7812rem;
   font-variant-numeric: tabular-nums;
 }
-
-
 
 /* ── Plain-language card, search, welcome, layer caption, pain scale ─ */
 
@@ -1151,78 +1009,8 @@ body {
 .onboard-art-voice {
   width: 48px;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 34%, #e5f6df 0%, var(--accent) 46%, #96c284 100%);
+  background: radial-gradient(circle at 50% 34%, color-mix(in srgb, var(--accent) 35%, white) 0%, var(--accent) 46%, color-mix(in srgb, var(--accent) 78%, black) 100%);
   color: var(--accent-ink);
-}
-.onboard-art-pain {
-  padding: 0 10px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-size: 0.75rem;
-  font-weight: 650;
-  white-space: nowrap;
-}
-
-.pain-scale-groups {
-  display: grid;
-  gap: 8px;
-}
-.pain-scale-group {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-.pain-scale-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--ink-1);
-  font-size: 1rem;
-  font-weight: 500;
-}
-.pain-scale-face {
-  display: grid;
-}
-.pain-scale-levels {
-  display: grid;
-  grid-template-columns: repeat(3, 52px);
-  gap: 6px;
-}
-
-.pain-saved {
-  padding-top: 10px;
-  text-align: center;
-}
-.pain-saved-icon {
-  display: grid;
-  place-items: center;
-  width: 60px;
-  height: 60px;
-  margin: 0 auto;
-  border-radius: 50%;
-  background: var(--surface-2);
-  color: var(--accent);
-}
-.pain-saved-title {
-  margin: 12px 0 4px;
-  color: var(--ink-1);
-  font-family: var(--font-serif);
-  font-size: 1.375rem;
-  font-weight: 640;
-}
-.pain-saved-text {
-  margin: 0;
-  color: var(--ink-2);
-  font-size: 1rem;
-  line-height: 1.5;
-}
-.pain-saved .pain-history {
-  text-align: left;
-}
-.pain-again {
-  display: flex;
-  margin: 6px auto 0;
 }
 
 /* ── Conversation ──────────────────────────────────────────────────── */
@@ -1257,7 +1045,7 @@ body {
   margin: 0;
 }
 .talk-tools .icon-btn[aria-pressed='true'] {
-  border-color: rgb(192 228 178 / 0.4);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
   color: var(--accent);
 }
 
@@ -1413,77 +1201,15 @@ body {
   font-style: italic;
 }
 
-.talk-report {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 12px;
-  padding: 14px;
-  border: 1px solid var(--hair);
-  border-radius: 18px;
-  background: var(--surface-2);
-}
-.talk-report-part {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--ink-1);
-  font-family: var(--font-serif);
-  font-size: 1.3125rem;
-  font-weight: 640;
-  text-align: left;
-}
-.talk-part-side {
-  color: var(--ink-2);
-  font-family: var(--font-sans);
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-.talk-levels {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: 4px;
-}
-.talk-level {
-  position: relative;
-  height: 44px;
-  padding: 0;
-  overflow: hidden;
-  border: 1px solid var(--hair);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--level) 12%, transparent);
-  color: var(--ink-1);
-  font-size: 0.9375rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-.talk-level::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 3px;
-  background: var(--level);
-}
-.talk-level[aria-pressed='true'] {
-  border-color: var(--level);
-  background: var(--level);
-  color: var(--level-ink);
-}
-.talk-report .chip {
-  min-height: 40px;
-  padding: 0 12px;
-  font-size: 0.9375rem;
-}
-
 .talk-alert {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+/* "Przejdź do Objawów" under an answer about pain: the button opens Doco's tab. */
+.talk-symptoms {
+  margin-top: 10px;
+  text-decoration: none;
 }
 .btn-urgent {
   display: flex;
@@ -1581,33 +1307,15 @@ body {
 
 /* ── Notice (?demo) ────────────────────────────────────────────────── */
 
-.notice {
-  position: fixed;
-  top: calc(var(--chrome-top) + 4px);
-  right: var(--gutter);
-  left: var(--gutter);
-  z-index: 40;
-  max-width: 360px;
-  margin: 0 auto;
-  padding: 11px 16px;
-  border: 1px solid var(--hair);
-  border-radius: 14px;
-  background: var(--surface-solid);
-  color: var(--ink-1);
-  font-size: 0.9375rem;
-  text-align: center;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .sheet,
-  .sheet-scrim,
-  .sheet-swap,
-  .sheet-body,
-  .layers,
-  .layers-thumb,
-  .dock,
-  .voice,
-  .voice-ring {
+.sheet-scrim,
+.sheet-body,
+.layers,
+.layers-thumb,
+.dock,
+.voice,
+.voice-ring {
     transition: none !important;
     animation-duration: 1ms !important;
   }

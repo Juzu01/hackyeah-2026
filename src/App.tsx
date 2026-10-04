@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { PartInfo } from './anatomy/content.ts'
 import type { LayerName } from './anatomy/depth.ts'
 import type { Body } from './anatomy/model.ts'
@@ -20,15 +20,10 @@ import TopBar from './atlas/TopBar.tsx'
 import VoiceDock from './atlas/VoiceDock.tsx'
 import './atlas/ui.css'
 import WelcomeSheet from './atlas/WelcomeSheet.tsx'
-import { clearDemoHistory, seedDemoHistory } from './lib/painReports.ts'
 import { useMediaQuery } from './lib/useMediaQuery.ts'
-import PainPanel from './pain/PainPanel.tsx'
 
 // Set by the deploy workflow; undefined in local dev.
 const commitSha: string | undefined = import.meta.env.VITE_COMMIT_SHA
-
-// The ?demo action runs once per page load (StrictMode runs effects twice in dev).
-let demoParamHandled = false
 
 const params = new URLSearchParams(location.search)
 /** Remembered on this device: the welcome was seen, a part was tapped once. */
@@ -73,8 +68,6 @@ function App() {
   const [selected, setSelected] = useState<PartInfo | null>(null)
   const [view, setView] = useState<ViewerState>({ layer: 'muscles', back: false })
   const [body, setBody] = useState<Body>(firstBody)
-  // The selection sheet shows the part's card, or the pain form in its place.
-  const [mode, setMode] = useState<'card' | 'pain'>('card')
   const [expanded, setExpanded] = useState(false)
   const [info, setInfo] = useState(false)
   const [searching, setSearching] = useState<string | null>(null)
@@ -83,11 +76,6 @@ function App() {
   const [caption, setCaption] = useState<string | null>(null)
   // The conversation takes the sheet's place while it's open; the selection stays underneath.
   const [chat, setChat] = useState(false)
-  // The part the conversation just asked the viewer to show, so its selection isn't taken for a tap.
-  const chatFocus = useRef<string | null>(null)
-  // Bumped when the history changes outside the panel, so an open panel reloads it.
-  const [dataVersion, setDataVersion] = useState(0)
-  const [notice, setNotice] = useState<string | null>(null)
   const wide = useMediaQuery('(min-width: 900px)')
   const [touch] = useState(isTouchDevice)
 
@@ -96,19 +84,9 @@ function App() {
     if (!v) return
     if (a.layer) v.setLayer(a.layer)
     if (a.flip) v.flip()
-    if (a.focus) {
-      chatFocus.current = a.focus
-      v.focus(a.focus)
-    }
+    if (a.focus) v.focus(a.focus)
   }, [])
   const talk = useConversation({ selectedId: selected?.id ?? null, act })
-  // For the viewer's callbacks, which outlive a render.
-  const chatOpen = useRef(chat)
-  const talkRef = useRef(talk)
-  useLayoutEffect(() => {
-    chatOpen.current = chat
-    talkRef.current = talk
-  })
 
   const [part, closing] = usePresence(selected)
   const [chatShown, chatClosing] = usePresence(chat ? true : null)
@@ -122,19 +100,10 @@ function App() {
       onSelect: (p) => {
         setSelected(p)
         setExpanded(false)
-        if (!p) {
-          setMode('card')
-          return
-        }
+        if (!p) return
         tick()
         setTapped(true)
         memory.set(TAPPED, '1')
-        if (p.id === chatFocus.current) {
-          chatFocus.current = null
-          return
-        }
-        // "Where does it hurt?" answered with a finger.
-        if (chatOpen.current && talkRef.current.awaitingPart()) talkRef.current.send(p.name)
       },
       onChange: setView,
     })
@@ -162,8 +131,7 @@ function App() {
     if (talk.canListen) talk.listen()
   }
   const dismiss = () => {
-    if (mode === 'pain') setMode('card')
-    else if (expanded) setExpanded(false)
+    if (expanded) setExpanded(false)
     else deselect()
   }
   const finishWelcome = () => {
@@ -172,7 +140,6 @@ function App() {
   }
   const pickBody = (next: Body) => {
     setSelected(null)
-    setMode('card')
     setBody(next)
     memory.set(BODY, next)
   }
@@ -202,28 +169,6 @@ function App() {
       delete window.__atlasUi
     }
   }, [])
-
-  // Presentations: ?demo fills this browser's history with ~30 days of example reports, ?demo=clear removes them.
-  useEffect(() => {
-    const demo = params.get('demo')
-    if (demo === null || demoParamHandled) return
-    demoParamHandled = true
-    const run = demo === 'clear'
-      ? clearDemoHistory().then((n) => `Usunięto dane demo (${n} zgłoszeń).`)
-      : seedDemoHistory().then((n) => `Wczytano dane demo: ${n} zgłoszeń z ostatnich 30 dni.`)
-    run
-      .then((text) => {
-        setNotice(text)
-        setDataVersion((v) => v + 1)
-      })
-      .catch((err: unknown) => setNotice(`Dane demo: ${err instanceof Error ? err.message : 'błąd'}`))
-  }, [])
-
-  useEffect(() => {
-    if (!notice) return
-    const timer = setTimeout(() => setNotice(null), 5000)
-    return () => clearTimeout(timer)
-  }, [notice])
 
   return (
     <>
@@ -263,29 +208,12 @@ function App() {
       {part && !chatShown && (
         <Sheet
           ref={closing ? undefined : sheetRef}
-          label={mode === 'pain' ? `Zgłoś ból: ${part.name}` : part.name}
+          label={part.name}
           closing={closing}
           onDismiss={dismiss}
-          onExpand={() => mode === 'card' && setExpanded(true)}
+          onExpand={() => setExpanded(true)}
         >
-          <div key={mode} className="sheet-swap">
-            {mode === 'card' ? (
-              <PartCard
-                part={part}
-                expanded={expanded}
-                onToggle={() => setExpanded((e) => !e)}
-                onReport={() => setMode('pain')}
-                onClose={deselect}
-              />
-            ) : (
-              <PainPanel
-                key={`${part.id}:${dataVersion}`}
-                part={part}
-                onBack={() => setMode('card')}
-                onDone={deselect}
-              />
-            )}
-          </div>
+          <PartCard part={part} expanded={expanded} onToggle={() => setExpanded((e) => !e)} onClose={deselect} />
         </Sheet>
       )}
 
@@ -319,12 +247,6 @@ function App() {
         <Sheet label="Witaj" modal closing={welcomeClosing} onDismiss={finishWelcome} className="sheet-onboard">
           <WelcomeSheet touch={touch} onDone={finishWelcome} />
         </Sheet>
-      )}
-
-      {notice && (
-        <p role="status" className="notice">
-          {notice}
-        </p>
       )}
     </>
   )

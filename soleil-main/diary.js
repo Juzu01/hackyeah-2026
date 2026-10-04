@@ -5,7 +5,7 @@
 // [{ id, type: 'pain', at (ISO), where, regions, symptoms, level (1–10), duration, onset, trend, triage, advice, source }]
 
 const DIARY_DAYS = 30; // okres podsumowania
-// Kolor natężenia jak w Atlasie (src/pain/PainPanel.tsx): od zieleni (1) do czerwieni (10), zawsze z liczbą obok
+// Kolor natężenia: od zieleni (1) do czerwieni (10), zawsze z liczbą obok
 const diaryLevelColor = (n) => `hsl(${120 - ((n - 1) * 120) / 9} 70% 42%)`;
 const diaryLevelInk = (n) => (n >= 9 ? '#fff' : '#0b0f14');
 

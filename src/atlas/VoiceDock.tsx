@@ -18,7 +18,7 @@ export default function VoiceDock({ listening, canListen, hidden, onPress }: Pro
       <button
         type="button"
         className={`voice ${listening ? 'is-listening' : ''}`}
-        aria-label={listening ? 'Zakończ mówienie' : canListen ? 'Powiedz, co boli albo zadaj pytanie' : 'Napisz, co boli'}
+        aria-label={listening ? 'Zakończ mówienie' : canListen ? 'Zadaj pytanie o ciało' : 'Napisz pytanie o ciało'}
         tabIndex={hidden ? -1 : undefined}
         onClick={onPress}
       >

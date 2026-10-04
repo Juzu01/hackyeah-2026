@@ -1,20 +1,15 @@
-// The conversation's state: what was said, listening to the microphone, reading
-// answers aloud, and saving the pain reports it drafts. The dock and the chat
-// sheet are views of it; the body follows through `act`.
+// The conversation's state: what was said, listening to the microphone and reading
+// answers aloud. The dock and the chat sheet are views of it; the body follows
+// through `act`.
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { fetchPainTypes, savePainReport, type PainType } from '../../lib/painReports.ts'
-import { supabase } from '../../lib/supabase.ts'
-import { painId } from '../../pain/painId.ts'
-import { answer, partById, type Act, type Pending, type Reply } from './assistant.ts'
+import { answer, partById, type Act, type Reply } from './assistant.ts'
 import { askRemote, hasRemote } from './remote.ts'
 import { canListen, canSpeak, listen, speak, stopSpeaking, type Listening } from './speech.ts'
 
-export type SaveState = { kind: 'idle' | 'saving' | 'saved' } | { kind: 'error'; message: string }
-
 export type Turn =
   | { id: number; who: 'you'; text: string }
-  | { id: number; who: 'atlas'; reply: Reply; save?: SaveState; waiting?: boolean }
+  | { id: number; who: 'atlas'; reply: Reply; waiting?: boolean }
 
 export interface Conversation {
   turns: Turn[]
@@ -30,12 +25,6 @@ export interface Conversation {
   setReadAloud(on: boolean): void
   /** A short problem with the microphone, in plain words. */
   problem: string | null
-  painTypes: PainType[]
-  toggleType(turnId: number, typeId: string): void
-  setIntensity(turnId: number, n: number): void
-  save(turnId: number): void
-  /** The last answer asked where it hurts: a tap on the body can answer it. */
-  awaitingPart(): boolean
 }
 
 const READ_KEY = 'atlas-read-aloud'
@@ -49,7 +38,6 @@ export function useConversation({ selectedId, act }: { selectedId: string | null
   const [listening, setListening] = useState(false)
   const [interim, setInterim] = useState('')
   const [problem, setProblem] = useState<string | null>(null)
-  const [painTypes, setPainTypes] = useState<PainType[]>([])
   const [readAloud, setReadAloudState] = useState(() => {
     try {
       return localStorage.getItem(READ_KEY) !== 'off'
@@ -57,7 +45,6 @@ export function useConversation({ selectedId, act }: { selectedId: string | null
       return true
     }
   })
-  const pending = useRef<Pending>(null)
   const nextId = useRef(1)
   const mic = useRef<Listening | null>(null)
   // The latest values for callbacks that outlive a render (speech events).
@@ -65,13 +52,6 @@ export function useConversation({ selectedId, act }: { selectedId: string | null
   useLayoutEffect(() => {
     live.current = { selectedId, act, readAloud, turns }
   })
-
-  useEffect(() => {
-    if (!supabase) return
-    fetchPainTypes()
-      .then(setPainTypes)
-      .catch(() => {}) // the report card says saving is unavailable
-  }, [])
 
   useEffect(
     () => () => {
@@ -99,8 +79,7 @@ export function useConversation({ selectedId, act }: { selectedId: string | null
     if (!text) return
     setProblem(null)
     const { selectedId, act, readAloud, turns } = live.current
-    const reply = answer(text, { selectedId, pending: pending.current })
-    pending.current = reply.pending
+    const reply = answer(text, { selectedId })
     const you: Turn = { id: nextId.current++, who: 'you', text }
     const id = nextId.current++
     act(reply.act)
@@ -123,7 +102,7 @@ export function useConversation({ selectedId, act }: { selectedId: string | null
       return
     }
 
-    setTurns((ts) => [...ts, you, { id, who: 'atlas', reply, save: reply.draft ? { kind: 'idle' } : undefined }])
+    setTurns((ts) => [...ts, you, { id, who: 'atlas', reply }])
     if (voice && readAloud) speak(spoken(reply))
   }, [])
 
@@ -146,7 +125,7 @@ export function useConversation({ selectedId, act }: { selectedId: string | null
       onError: (message) => setProblem(message),
     })
     if (!session) {
-      setProblem('Ta przeglądarka nie rozpoznaje mowy. Napisz, co boli, w polu poniżej.')
+      setProblem('Ta przeglądarka nie rozpoznaje mowy. Napisz pytanie w polu poniżej.')
       return
     }
     mic.current = session
@@ -154,32 +133,6 @@ export function useConversation({ selectedId, act }: { selectedId: string | null
   }, [send])
 
   const stopListening = useCallback(() => mic.current?.stop(), [])
-
-  const editDraft = (turnId: number, f: (d: NonNullable<Reply['draft']>) => NonNullable<Reply['draft']>) =>
-    update(turnId, (t) => (t.reply.draft ? { ...t, save: { kind: 'idle' }, reply: { ...t.reply, draft: f(t.reply.draft) } } : t))
-
-  const toggleType = (turnId: number, typeId: string) =>
-    editDraft(turnId, (d) => ({
-      ...d,
-      typeIds: d.typeIds.includes(typeId) ? d.typeIds.filter((x) => x !== typeId) : [...d.typeIds, typeId],
-    }))
-
-  const setIntensity = (turnId: number, n: number) => editDraft(turnId, (d) => ({ ...d, intensity: n }))
-
-  const save = (turnId: number) => {
-    const turn = live.current.turns.find((t) => t.id === turnId)
-    const draft = turn?.who === 'atlas' ? turn.reply.draft : undefined
-    if (!draft || draft.intensity === null) return
-    update(turnId, (t) => ({ ...t, save: { kind: 'saving' } }))
-    savePainReport({ bodyPartId: painId(draft.partId), intensity: draft.intensity, painTypeIds: draft.typeIds })
-      .then(() => update(turnId, (t) => ({ ...t, save: { kind: 'saved' } })))
-      .catch((err: unknown) =>
-        update(turnId, (t) => ({
-          ...t,
-          save: { kind: 'error', message: err instanceof Error ? err.message : 'Nie udało się zapisać.' },
-        })),
-      )
-  }
 
   return {
     turns,
@@ -193,10 +146,5 @@ export function useConversation({ selectedId, act }: { selectedId: string | null
     readAloud,
     setReadAloud,
     problem,
-    painTypes,
-    toggleType,
-    setIntensity,
-    save,
-    awaitingPart: () => pending.current?.want === 'part',
   }
 }
