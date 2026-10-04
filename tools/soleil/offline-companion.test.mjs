@@ -264,6 +264,14 @@ for (const [[first, second], want] of FOLLOW) {
   check(`"${first}" → "${second}" → ${want}`, () => assert.equal(b.topic, want))
   if (want.startsWith('info:')) check(`${want} lists concrete steps`, () => assert.ok(b.html.includes('<ol class="hy-steps">')))
 }
+check('a swollen calf gets "today, may be a clot", not massage', () => {
+  const r = create({ knowledge: kb, random: () => 0 }).reply('boli mnie łydka po bieganiu i jest spuchnięta')
+  assert.equal(r.topic, 'pain'); assert.match(r.text, /jeszcze dziś.*zakrzep/); assert.match(r.text, /Nie masuj/)
+})
+check('a cramp or "zakwaszony organizm" is not zakwasy', () => {
+  assert.notEqual(create({ knowledge: kb, random: () => 0 }).reply('skurcz łydki po treningu').topic, 'info:zakwasy')
+  assert.notEqual(create({ knowledge: kb, random: () => 0 }).reply('czy mam zakwaszony organizm').topic, 'info:zakwasy')
+})
 check('the diary pain is mentioned for the same place', () => assert.match(create({ knowledge: kb, random: () => 0, context: () => ({ pains }) }).reply('boli mnie łydka').text, /w dzienniku.*łydka/))
 check('…and not for another one', () => assert.doesNotMatch(create({ knowledge: kb, random: () => 0, context: () => ({ pains }) }).reply('boli mnie brzuch').text, /w dzienniku/))
 

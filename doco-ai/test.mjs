@@ -171,6 +171,14 @@ await check('kontekst z aplikacji (dziennik) trafia do promptu, przycięty i bez
   await ask('hej')
   assert.match(sent.body.system, /\(nic nie zapisał\)/)
 })
+await check('ból mięśnia: odpowiedź na „od czego się zaczęło?” wybiera wpis (po bieganiu → zakwasy)', async () => {
+  const r = await call({ messages: [{ role: 'user', content: 'boli mnie mięsień' }, { role: 'assistant', content: 'Gdzie i od kiedy?' }, { role: 'user', content: 'łydka, od wczoraj, po bieganiu' }] })
+  assert.ok(r.data.entries.includes('zakwasy'), r.data.entries.join(','))
+  const k = await call({ messages: [{ role: 'user', content: 'boli mnie kolano po bieganiu' }] })
+  assert.ok(!k.data.entries.includes('zakwasy'), 'kolano to staw')
+  const s = await call({ messages: [{ role: 'user', content: 'łydka po bieganiu jest spuchnięta' }] })
+  assert.ok(!s.data.entries.includes('zakwasy'), 'obrzęk to nie zakwasy')
+})
 await check('pytanie uzupełniające bierze temat z poprzedniego pytania', async () => {
   const r = await call({ messages: [{ role: 'user', content: 'co na ból głowy?' }, { role: 'assistant', content: 'Paracetamol…' }, { role: 'user', content: 'a w ciąży?' }] })
   assert.ok(r.data.entries.includes('bol-glowy'))

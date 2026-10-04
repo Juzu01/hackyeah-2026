@@ -245,7 +245,7 @@
     "domain": "sport",
     "tier": 1,
     "focus": "",
-    "status": "do-zbadania"
+    "status": "w-bazie"
   },
   {
     "id": "aktywnosc-fizyczna-ile",
@@ -494,5 +494,21 @@
     "tier": 3,
     "focus": "",
     "status": "do-zbadania"
+  },
+  {
+    "id": "naciagniecie-miesnia",
+    "name": "Naciągnięcie i naderwanie mięśnia",
+    "domain": "sport",
+    "tier": 1,
+    "focus": "",
+    "status": "w-bazie"
+  },
+  {
+    "id": "spiete-miesnie-automasaz",
+    "name": "Spięty kark, barki i plecy",
+    "domain": "objawy",
+    "tier": 1,
+    "focus": "",
+    "status": "w-bazie"
   }
 ]

@@ -39,6 +39,28 @@ export function search(kb, text, n = 2) {
     .filter((x) => x.score > 0).sort((a, b) => b.score - a.score).slice(0, n).map((x) => x.entry);
 }
 
+// What started a muscle pain picks the entry when no keyword does ('boli mnie łydka, po bieganiu' -> zakwasy).
+// The same rules as CAUSES in soleil-main/offline-companion.js: a sudden injury first, then exercise, then sitting or stress;
+// only for muscles, never for a joint, the head, chest or belly, a cramp or a swollen, red or numb limb.
+const CAUSES = [
+  ['naciagniecie-miesnia', /\b(nagle|nagly|nagla|nagle mnie|naciagn\w*|naderw\w*|strzelil\w*|strzyknel\w*|chrupnel\w*|trzasnel\w*|szarpn\w*|uraz\w*|kontuzj\w*|upadl\w*|upadek|przewrocil\w*|poslizgn\w*|przy (sprincie|skoku|podnoszeniu|wyskoku|zrywie|kopnieciu)|(w trakcie|podczas|w czasie) (biegu|treningu|meczu|cwiczen\w*|gry))\b/],
+  ['zakwasy', /\b(zakwas(y|ow|ami|ach)?|po (\w+ )?(treningu|treningach|bieganiu|biegu|silowni|cwiczeniach|cwiczeniu|wysilku|meczu|rowerze|basenie|wf|wfie|crossfi\w*|jodze|tancu|tancach|wspinaczce|pilce|maratonie|zawodach|spacerze|wycieczce|gorach)|(trenowal\w*|cwiczyl\w*|biegal\w*|bylem na silowni|bylam na silowni) (wczoraj|przedwczoraj|wieczorem|rano))\b/],
+  ['spiete-miesnie-automasaz', /\b(od siedzenia|siedz\w* (\w+ )?(przy|za|przed)|przy (komputerze|biurku|laptopie|pracy)|spiet\w*|napiet\w*|sztywn\w*|zesztywnial\w*|zle spal\w*|po (spaniu|nocy|przebudzeniu)|od stresu|ze stresu|przez stres|od telefonu|nad telefonem)\b/],
+];
+const BODY_PART = /\b(glowa|glowe|glowy|kolan\w*|plecy|plecach|plecami|kregoslup\w*|brzuch\w*|zoladek|zoladk\w*|szyj\w*|kark\w*|bark\w*|ramie|ramion\w*|nog[aiei]|nogach|nodze|stop[aey]|stopie|kostk\w*|lydk\w*|reka|reke|reki|rece|dlon\w*|nadgarst\w*|lokie\w*|lokci\w*|biodr\w*|zab|zeba|zebow|zebach|ucho|uszy|ucha|gardl\w*|miesn\w*|staw\w*|kosc\w*|udo|uda)\b/;
+const MUSCLE_PART = /\b(miesn\w*|lydk\w*|udo|uda|udzie|udach|plec\w*|kark\w*|bark\w*|ramie|ramion\w*|szyj\w*|posladk\w*|lopatk\w*|kregoslup\w*|ledzwi\w*|krzyz\w*|biceps\w*|triceps\w*|dwuglow\w*|czworoglow\w*|przedrami\w*|nog[aiei]|nogach|nodze)\b/;
+const NOT_MUSCLE = /\b(glow\w*|brzuch\w*|zoladk\w*|gardl\w*|zab|zeba|zebow|zeby|zebach|ucho|uszy|ucha|klat\w*|serc\w*|kolan\w*|kostk\w*|staw\w*|nadgarst\w*|lokc\w*|lokie\w*|biodr\w*|stop[aey]|stopie|palc\w*|goraczk\w*|temperatur\w*|oddech\w*|duszn\w*)\b/;
+const NOT_SORE = /\b(skurcz\w*|opuchl\w*|obrzek\w*|spuchl\w*|spuchniet\w*|puchnie|zaczerwien\w*|czerwon\w*|siniak\w*|krwiak\w*|zdretwial\w*|dretwi\w*|mrowi\w*)\b/;
+export function cause(kb, text) {
+  const n = normalize(text);
+  if (NOT_MUSCLE.test(n) || NOT_SORE.test(n) || (BODY_PART.test(n) && !MUSCLE_PART.test(n))) return null;
+  for (const [id, re] of CAUSES) {
+    const item = re.test(n) && kb.find((x) => x.entry.id === id);
+    if (item) return item.entry;
+  }
+  return null;
+}
+
 let cache = { at: 0, kb: null };
 async function knowledge() {
   if (cache.kb && Date.now() - cache.at < 10 * 60e3) return cache.kb;
@@ -215,7 +237,10 @@ export default async function handler(req, res) {
 
   // The topic usually sits in the last two things the user said ("a w ciąży?" after "co na ból głowy?")
   const asked = history.filter((m) => m.role === 'user').slice(-2).map((m) => m.content).join(' ');
-  const entries = search(await knowledge(), asked);
+  const kb = await knowledge();
+  const entries = search(kb, asked);
+  const picked = entries.length < 2 && cause(kb, asked);
+  if (picked && !entries.includes(picked)) entries.push(picked);
   const sources = entries.flatMap((e) => (e.sources || []).filter((s) => /^https:\/\//.test(s.url)).slice(0, 2))
     .slice(0, 3).map((s) => ({ publisher: s.publisher, url: s.url }));
 

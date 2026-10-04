@@ -189,7 +189,7 @@
   const MEH = /^(jakos|ujdzie|tak srednio)$|\b(srednio|tak sobie|jako tako|bywalo lepiej|bez szalu|ni to ni owo)\b/;
   const FINE = /^(dobrze|ok|okej|oki|spoko|dobra|w porzadku|niezle|calkiem dobrze|git)$/;
   const NEGATED_JOY = /\bnie (jest |czuje sie |bylo |jestem |mam )?(dobrze|super|fajnie|swietnie|wesolo|szczesliw\w*|dobry)\b/;
-  const PAIN_WORD = /\b(boli|bola|bolal\w*|bolec|bol|bolu|bole|bolem|bolow|obolal\w*|kluje|klucie|rwie|piecze|kontuzj\w*|uraz\w*|skrecil\w*|naciagn\w*|naderw\w*|zakwas\w*|migren\w*)\b/;
+  const PAIN_WORD = /\b(boli|bola|bolal\w*|bolec|bol|bolu|bole|bolem|bolow|obolal\w*|kluje|klucie|rwie|piecze|kontuzj\w*|uraz\w*|skrecil\w*|naciagn\w*|naderw\w*|zakwas(y|ow|ami|ach)?|migren\w*)\b/;
   const BODY_PART = /\b(glowa|glowe|glowy|kolan\w*|plecy|plecach|plecami|kregoslup\w*|brzuch\w*|zoladek|zoladk\w*|szyj\w*|kark\w*|bark\w*|ramie|ramion\w*|nog[aiei]|nogach|nodze|stop[aey]|stopie|kostk\w*|lydk\w*|reka|reke|reki|rece|dlon\w*|nadgarst\w*|lokie\w*|lokci\w*|biodr\w*|zab|zeba|zebow|zebach|ucho|uszy|ucha|gardl\w*|miesn\w*|staw\w*|kosc\w*|udo|uda)\b/;
   const TENSE = /\b(spiet\w*|napiet\w*|sztywn\w*|zesztywnial\w*|zablokowan\w*|przykurcz\w*)\b/;
 
@@ -197,7 +197,7 @@
   // In a pain thread these pick the checked entry (if the base has it); the sudden-injury one is checked first.
   const CAUSES = [
     ['naciagniecie-miesnia', /\b(nagle|nagly|nagla|nagle mnie|naciagn\w*|naderw\w*|strzelil\w*|strzyknel\w*|chrupnel\w*|trzasnel\w*|szarpn\w*|uraz\w*|kontuzj\w*|upadl\w*|upadek|przewrocil\w*|poslizgn\w*|przy (sprincie|skoku|podnoszeniu|wyskoku|zrywie|kopnieciu)|(w trakcie|podczas|w czasie) (biegu|treningu|meczu|cwiczen\w*|gry))\b/],
-    ['zakwasy', /\b(zakwas\w*|po (\w+ )?(treningu|treningach|bieganiu|biegu|silowni|cwiczeniach|cwiczeniu|wysilku|meczu|rowerze|basenie|wf|wfie|crossfi\w*|jodze|tancu|tancach|wspinaczce|pilce|maratonie|zawodach|spacerze|wycieczce|gorach)|(trenowal\w*|cwiczyl\w*|biegal\w*|bylem na silowni|bylam na silowni) (wczoraj|przedwczoraj|wieczorem|rano))\b/],
+    ['zakwasy', /\b(zakwas(y|ow|ami|ach)?|po (\w+ )?(treningu|treningach|bieganiu|biegu|silowni|cwiczeniach|cwiczeniu|wysilku|meczu|rowerze|basenie|wf|wfie|crossfi\w*|jodze|tancu|tancach|wspinaczce|pilce|maratonie|zawodach|spacerze|wycieczce|gorach)|(trenowal\w*|cwiczyl\w*|biegal\w*|bylem na silowni|bylam na silowni) (wczoraj|przedwczoraj|wieczorem|rano))\b/],
     ['spiete-miesnie-automasaz', /\b(od siedzenia|siedz\w* (\w+ )?(przy|za|przed)|przy (komputerze|biurku|laptopie|pracy)|spiet\w*|napiet\w*|sztywn\w*|zesztywnial\w*|zle spal\w*|po (spaniu|nocy|przebudzeniu)|od stresu|ze stresu|przez stres|od telefonu|nad telefonem)\b/],
   ];
   // Replies in a pain thread that may answer 'od czego się zaczęło?' ('od siedzenia', 'ze stresu', 'źle spałem')
@@ -205,8 +205,13 @@
   // Only muscles: a joint, the head, belly, chest or a tooth needs other advice
   const MUSCLE_PART = /\b(miesn\w*|lydk\w*|udo|uda|udzie|udach|plec\w*|kark\w*|bark\w*|ramie|ramion\w*|szyj\w*|posladk\w*|lopatk\w*|kregoslup\w*|ledzwi\w*|krzyz\w*|biceps\w*|triceps\w*|dwuglow\w*|czworoglow\w*|przedrami\w*|nog[aiei]|nogach|nodze)\b/;
   const NOT_MUSCLE = /\b(glow\w*|brzuch\w*|zoladk\w*|gardl\w*|zab|zeba|zebow|zeby|zebach|ucho|uszy|ucha|klat\w*|serc\w*|kolan\w*|kostk\w*|staw\w*|nadgarst\w*|lokc\w*|lokie\w*|biodr\w*|stop[aey]|stopie|palc\w*|goraczk\w*|temperatur\w*|oddech\w*|duszn\w*)\b/;
+  // A cramp, a swollen or red calf or a fever is not something to massage away: those stay with the warning signs
+  const NOT_SORE = /\b(skurcz\w*|opuchl\w*|obrzek\w*|spuchl\w*|spuchniet\w*|puchnie|zaczerwien\w*|czerwon\w*|siniak\w*|krwiak\w*|zdretwial\w*|dretwi\w*|mrowi\w*)\b/;
+  // One swollen, red or painful calf may be a clot (NHS DVT, in the zakwasy and naciągnięcie entries): today, not 'wait and see'
+  const CALF_ALARM = /\b(lydk\w*|lydce)\b.*\b(opuchl\w*|obrzek\w*|spuchl\w*|spuchniet\w*|puchnie|zaczerwien\w*|czerwon\w*)\b|\b(opuchl\w*|obrzek\w*|spuchl\w*|spuchniet\w*|puchnie|zaczerwien\w*|czerwon\w*)\b.*\b(lydk\w*|lydce)\b/;
+  const CALF_LINE = `Spuchnięta albo zaczerwieniona łydka (zwłaszcza jedna) to powód, żeby jeszcze dziś pójść do lekarza, bo może to być zakrzep. Nie masuj jej. Gdyby doszła duszność albo ból w klatce piersiowej, dzwoń pod ${TEL112}.`;
   function causeEntry(kb, n) {
-    if (!kb || NOT_MUSCLE.test(n) || (BODY_PART.test(n) && !MUSCLE_PART.test(n))) return null;
+    if (!kb || NOT_MUSCLE.test(n) || NOT_SORE.test(n) || (BODY_PART.test(n) && !MUSCLE_PART.test(n))) return null;
     for (const [id, re] of CAUSES) {
       if (!re.test(n)) continue;
       const item = kb.find((x) => x.entry.id === id);
@@ -693,6 +698,7 @@
       } else {
         [kind, html] = pick(t, R[t]);
         topic = t;
+        if (t === 'pain' && CALF_ALARM.test(d.n)) html = html.replace(/^([^.!?]*[.!?])/, `$1 ${CALF_LINE}`);
         if (t === 'pain' && !diaryShown) {
           const line = diaryLine(d.n);
           if (line) { html = html.replace(/^([^.!?]*[.!?])/, `$1 ${line}`); diaryShown = true; }

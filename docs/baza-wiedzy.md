@@ -65,10 +65,10 @@ Badacze i testerzy tej serii znaleźli wiadomości, na które czat odpowiadał �
 ## Stan bazy
 
 <!-- raport:start -->
-Stan na **2026-10-04**: **17 wpisów** (4 z pilota i 13 z serii o zdrowiu psychicznym). Wszystkie przeszły weryfikację i testy.
+Stan na **2026-10-04**: **20 wpisów** (4 z pilota, 13 z serii o zdrowiu psychicznym i 3 o bólu mięśni). Wszystkie przeszły weryfikację i testy.
 
-- Dziedziny: psychika 14, objawy 1, samobadanie 1, sport 1, profilaktyka 0.
-- Poziomy: tier 1: 6 (ból głowy, bezsenność, lęk i niepokój, obniżony nastrój, stres na co dzień, stres przed egzaminem), tier 2: 6 (atak paniki, gdzie szukać pomocy, jak pomóc osobie w kryzysie, wypalenie zawodowe, żałoba, pomiar ciśnienia), tier 3: 5 (ADHD u dorosłych, depresja poporodowa, PTSD, zaburzenia odżywiania, rabdomioliza wysiłkowa).
+- Dziedziny: psychika 14, sport 3, objawy 2, samobadanie 1, profilaktyka 0.
+- Poziomy: tier 1: 9 (ból głowy, bezsenność, lęk i niepokój, obniżony nastrój, stres na co dzień, stres przed egzaminem, zakwasy, naciągnięcie mięśnia, spięte mięśnie i automasaż), tier 2: 6 (atak paniki, gdzie szukać pomocy, jak pomóc osobie w kryzysie, wypalenie zawodowe, żałoba, pomiar ciśnienia), tier 3: 5 (ADHD u dorosłych, depresja poporodowa, PTSD, zaburzenia odżywiania, rabdomioliza wysiłkowa).
 - Razem w ostatnich rundach: 1597 kontroli twierdzeń (1404 potwierdzone, 186 poprawionych, 4 usunięte, 3 niesprawdzalne) i 422 testy, wszystkie zaliczone.
 - Sprawdzenia po scaleniu ADHD i redakcji archiwisty: `sprawdz.mjs` OK (8 uwag o długości answer, niżej), `wiedza.test.mjs` OK (315 pytań trafia do swojego wpisu, kryzys i 112 mają pierwszeństwo, kafelki i buźki czatu zostają rozmową), `offline-companion.test.mjs` OK, `tools/wiedza/robocze/pytania-sporne.mjs --wszystkie` OK (wynik niżej). W trakcie tej rundy koordynator przerabiał kod czatu i jego testy. W jednym z pośrednich uruchomień `offline-companion.test.mjs` pokazał 3 błędy: odpowiedzi o bólu nie miały linków do `cialo/` i `gdzie-boli/`. Ten test nie korzysta z bazy, a po zmianach koordynatora przechodzi. Wszystkie wyniki w raporcie pochodzą z ostatniego uruchomienia na obecnym kodzie czatu.
 
@@ -91,11 +91,18 @@ Stan na **2026-10-04**: **17 wpisów** (4 z pilota i 13 z serii o zdrowiu psychi
 | Zaburzenia odżywiania: sygnały ostrzegawcze (`zaburzenia-odzywiania`) | psychika | 3 | 101 / 14 / 0 / 0 | 24/24 | 0 |
 | Domowy pomiar ciśnienia tętniczego (`pomiar-cisnienia`) | samobadanie | 2 | 75 / 5 / 0 / 1 | 25/25 | 1 |
 | Rabdomioliza wysiłkowa (`rabdomioliza-wysilkowa`) | sport | 3 | 44 / 9 / 0 / 0 | 23/23 | 0 |
+| Spięty kark, barki i plecy: automasaż krok po kroku (`spiete-miesnie-automasaz`) | objawy | 1 | 38 / 12 / 0 / 1 | 24/24 | 1 |
+| Naciągnięcie i naderwanie mięśnia: co robić (`naciagniecie-miesnia`) | sport | 1 | 52 / 6 / 1 / 0 | 25/25 | 0 |
+| Zakwasy (DOMS): ile trwają i jak je złagodzić (`zakwasy`) | sport | 1 | 35 / 8 / 1 / 0 | 24/24 | 1 |
 
 Twierdzenia są liczone z ostatniej rundy weryfikacji. Przy tematach z poprawką ta runda objęła wszystkie twierdzenia, a te, które nie zmieniły się od poprzedniej rundy, dostały w niej status „potwierdzone”. Dlatego liczby poprawek w tabeli są małe. We wszystkich rundach razem weryfikator dał status „poprawione” albo „usunięte” (poprawione / usunięte): ból głowy 32 razy (31 / 1), bezsenność 23 (22 / 1), pomiar ciśnienia 19 (17 / 2), rabdomioliza 9 (9 / 0), stres na co dzień 22 (21 / 1), lęk i niepokój 23 (22 / 1), atak paniki 20 (20 / 0), ADHD 18 (18 / 0). Pozostałe tematy serii miały jedną rundę.
 
 ### Historia poprawek
 
+- **Seria o bólu mięśni (2026-10-04):** właściciel aplikacji chciał konkretnych porad („jak dokładnie rozmasować mięsień”), więc wpisy mają kroki automasażu z czasem i siłą ucisku. Czat dopytuje, od czego zaczął się ból, i wybiera wpis: po treningu → zakwasy, nagle albo po urazie → naciągnięcie (bez masażu przez pierwsze dni), od siedzenia albo stresu → spięte mięśnie. Każdy temat robił osobny agent przechodzący kolejno role badacza, weryfikatora i testera, a scalał je koordynator.
+- **Zakwasy:** 2 rundy (r0, r1). Bloker r0: brak ostrzeżenia przed mocnym masażem i rolowaniem w ciąży i przy lekach przeciwkrzepliwych. W r1 dopisane do selfCare, weryfikator approved, tester 24/24.
+- **Spięte mięśnie i automasaż:** 2 rundy (r0, r1). Blokery r0: nowe mrowienie po urazie szyi było raz urgent, raz emergency (teraz emergency); brak ostrzeżenia przed ibuprofenem w ciąży (NHS). Tester przeredagował kroki (te same czynności i wartości), żeby na „jak rozmasować kark” czat pokazywał ciepło, ściskanie, kółka kciukiem i ucisk do 90 sekund.
+- **Naciągnięcie mięśnia:** 1 runda (r0), tester 25/25 bez blokerów. Pilność wyższa niż w zleceniu: trzask z wgłębieniem, drętwienie i niemożność stanięcia na nodze to SOR (NHS, MSD).
 - **Rabdomioliza wysiłkowa:** 1 runda (r0). Tester przepuścił wpis od razu (23/23), bez blokerów.
 - **Pomiar ciśnienia:** 2 rundy (r0, r1). Bloker r0: objawy udaru (opadający kącik ust, słabsza ręka, bełkotliwa mowa) kierowały pod 112 tylko przy ciśnieniu od 180/110. W r1 pierwszy sygnał emergency to udar albo niemijający ból w klatce → 112 przy każdym wyniku.
 - **Ból głowy:** 3 rundy (r0–r2). Blokery r0: czad u osoby mieszkającej samotnie nie trafiał do żadnego sygnału alarmowego (sygnał wymagał kilku chorych domowników); answer nie ostrzegał przed ibuprofenem w ciąży ani aspiryną u dzieci; typowa aura migreny kłóciła się z sygnałami 112. Bloker r1: czat nie pokazywał ostrzeżenia o stanie przedrzucawkowym (silny, niemijający ból głowy w ciąży → szpital).
@@ -107,6 +114,10 @@ Twierdzenia są liczone z ostatniej rundy weryfikacji. Przy tematach z poprawką
 - **Pozostałe 9 tematów serii** (obniżony nastrój, stres przed egzaminem, wypalenie, żałoba, jak pomóc, gdzie szukać pomocy, depresja poporodowa, zaburzenia odżywiania, PTSD): 1 runda (r0), tester bez blokerów.
 
 ### Najważniejsze poprawki weryfikatora
+
+- Zakwasy: z rady „nie roluj po stawach” wypadły kości (źródło mówi tylko o stawach); przerwa w masażu i cieple po naciągnięciu to 2 dni, nie 2–3.
+- Spięte mięśnie: „najlepiej działa” złagodzone do „mogą pomóc”; metaanaliza masażu dotyczy masażu u terapeuty, nie automasażu, i fakt to mówi; doszły objawy udaru (112), drętwienie pośladków i wewnętrznej strony ud (zespół ogona końskiego) oraz ból szyi z gorączką lub bolesnym przełykaniem (MSD).
+- Naciągnięcie: lód 15–20 minut (NHS, nidirect), zdanie o 2 tygodniach zdrowienia według NHS; „bardzo mało moczu” usunięte z sygnału rabdomiolizy (nie ma go ani CDC, ani MSD); doszły przeciwwskazania ibuprofenu z NHS.
 
 - Rabdomioliza: silny ból z obrzękiem lub osłabieniem przy zwykłym moczu podniesiony z urgent do emergency (SOR), ból, który nie słabnie ponad 5–7 dni, z gp do urgent (CDC, CHAMP 2025).
 - Rabdomioliza: zdanie ENMC o NLPZ dotyczyło choroby McArdle'a, więc wypadło; zakaz NLPZ dotyczy podejrzenia rabdomiolizy (CHAMP 2025); powrót do treningu tylko po decyzji lekarza.
