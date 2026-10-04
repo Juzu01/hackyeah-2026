@@ -4,7 +4,7 @@
 (function () {
   const $ = (id) => document.getElementById(id);
   const app = $('app');
-  const VIEWS = ['rozmowa', 'nastroj', 'cialo', 'objawy', 'wiecej', 'dziennik'];
+  const VIEWS = ['rozmowa', 'nastroj', 'cialo', 'objawy', 'dziennik', 'wiecej'];
 
   // ── Languages ───────────────────────────────────────────────────────
   // The page translates its own parts (updateInterfaceLanguage); these are the parts this shell adds.
