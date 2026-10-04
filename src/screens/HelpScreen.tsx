@@ -1,4 +1,5 @@
 import { DISCLAIMER } from '../components/Footer.tsx'
+import { hasAiAnalysis } from '../lib/analysis.ts'
 
 export default function HelpScreen() {
   return (
@@ -6,10 +7,10 @@ export default function HelpScreen() {
       <h1 className="font-serif text-[2rem] leading-tight font-medium tracking-tight text-ink sm:text-[2.5rem]">Jak to działa</h1>
       <ol className="mt-4 list-decimal space-y-3 pl-5 text-ink-2 marker:font-serif marker:text-green [&_strong]:text-ink">
         <li>
-          <strong>Wskazujesz miejsce na sylwetce</strong> (przód lub tył) albo wpisujesz objaw. Dla każdej okolicy jest krótka lista typowych dolegliwości.
+          <strong>Wskazujesz miejsce na sylwetce</strong> albo wpisujesz objaw (plecy, kark i pośladki znajdziesz w wyszukiwarce). Dla każdej okolicy jest krótka lista typowych dolegliwości.
         </li>
         <li>
-          <strong>Odpowiadasz na pytania alarmowe</strong> – najpierw wykluczamy sytuacje wymagające natychmiastowej pomocy. Potem pytamy o czas trwania, początek, nasilenie i przebieg.
+          <strong>Odpowiadasz na pytania alarmowe</strong> – najpierw wykluczamy sytuacje wymagające natychmiastowej pomocy. Potem o każdy objaw osobno: jak bardzo dokucza, od kiedy trwa, jak się zaczął i jak się zmienia.
         </li>
         <li>
           <strong>Dostajesz wstępną ocenę:</strong> zalecenie (samoopieka, wizyta u lekarza, pilna konsultacja lub stan nagły), listę możliwych przyczyn z poziomem dopasowania i wskazówki, co możesz zrobić.
@@ -32,7 +33,8 @@ export default function HelpScreen() {
 
       <h2 className="mt-8 border-t border-line pt-6 font-serif text-[1.625rem] leading-tight font-medium text-ink">Prywatność</h2>
       <p className="mt-2 text-ink-2">
-        Odpowiedzi i zapisane analizy zostają w Twojej przeglądarce (localStorage); nic nie jest wysyłane na serwer. Logowanie (Clerk) służy tylko do rozdzielenia historii między osoby korzystające z tego samego urządzenia. To prototyp hackathonowy, nie wyrób medyczny.
+        Odpowiedzi i zapisane analizy zostają w Twojej przeglądarce (localStorage);{' '}
+        {hasAiAnalysis ? 'do analizy AI wysyłamy tylko objawy i odpowiedzi, bez imienia i konta.' : 'nic nie jest wysyłane na serwer.'} Logowanie (Clerk) służy tylko do rozdzielenia historii między osoby korzystające z tego samego urządzenia. To prototyp hackathonowy, nie wyrób medyczny.
       </p>
 
       <h2 className="mt-8 border-t border-line pt-6 font-serif text-[1.625rem] leading-tight font-medium text-ink">Na jakich wzorcach się opieramy</h2>

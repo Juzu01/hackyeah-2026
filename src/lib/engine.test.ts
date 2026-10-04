@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { analyze, rankConditions } from './engine.ts'
+import { analyze, analyzeBySymptom, rankConditions } from './engine.ts'
 
 describe('engine', () => {
   it('ranks migraine first for a classic migraine picture', () => {
@@ -31,6 +31,47 @@ describe('engine', () => {
     expect(analyze({ ...base, duration: 'days', severity: 3 }).triage).toBe('self-care')
     expect(analyze({ ...base, duration: 'months', severity: 3 }).triage).toBe('gp')
     expect(analyze({ ...base, duration: 'days', severity: 9 }).triage).toBe('urgent')
+  })
+
+  it('weighs each symptom on its own answers and names it', () => {
+    const base = { regions: ['lower-back'], symptoms: ['back-pain-lower', 'back-pain-after-lifting'], redFlags: [] }
+    const mild = { symptomId: 'back-pain-after-lifting', severity: 3, duration: 'days' as const, trend: 'same' as const }
+    const r = analyze({ ...base, courses: [{ symptomId: 'back-pain-lower', severity: 9, duration: 'hours', trend: 'same' }, mild] })
+    expect(r.triage).toBe('urgent')
+    expect(r.reasons).toContain('bardzo silne dolegliwości – ból dolnej części pleców (krzyża)')
+    const long = analyze({ ...base, courses: [{ symptomId: 'back-pain-lower', severity: 3, duration: 'months', trend: 'same' }, mild] })
+    expect(long.triage).toBe('gp')
+    expect(long.reasons.some((x) => x.startsWith('objawy utrzymują się od ponad tygodnia – ból dolnej'))).toBe(true)
+    // A worsening that started hours ago is not yet a reason; one that lasts days is.
+    const worse = { symptomId: 'back-pain-lower', severity: 3, trend: 'worse' as const }
+    expect(analyze({ ...base, courses: [{ ...worse, duration: 'hours' }, mild] }).triage).toBe('self-care')
+    expect(analyze({ ...base, courses: [{ ...worse, duration: 'days' }, mild] }).triage).toBe('gp')
+  })
+
+  it('gives every symptom its own causes and urgency', () => {
+    const input = {
+      regions: ['knee', 'chest', 'head'],
+      symptoms: ['knee-pain', 'cough', 'headache'],
+      redFlags: [],
+      courses: [
+        { symptomId: 'knee-pain', severity: 9, duration: 'days' as const, trend: 'worse' as const },
+        { symptomId: 'cough', severity: 3, duration: 'days' as const, trend: 'same' as const },
+        { symptomId: 'headache', severity: 2, duration: 'hours' as const, trend: 'better' as const },
+      ],
+    }
+    const each = analyzeBySymptom(input)
+    expect(each.map((s) => s.symptomId)).toEqual(['knee-pain', 'cough', 'headache'])
+    for (const s of each) {
+      expect(s.conditions.length).toBeGreaterThan(0)
+      expect(s.conditions.every((c) => c.matched.includes(s.symptomId))).toBe(true)
+    }
+    // The knee no longer loses its causes to the infections the other two share.
+    expect(each[0].conditions).toHaveLength(3)
+    expect(each[0].conditions.every((c) => c.matched.length === 1)).toBe(true)
+    expect(each[0].triage).toBe('urgent')
+    expect(each[0].reasons).toContain('bardzo silne dolegliwości')
+    expect(each[1].triage).toBe('self-care')
+    expect(analyze(input).triage).toBe('urgent')
   })
 
   it('respects sex and age filters', () => {

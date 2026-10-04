@@ -17,9 +17,9 @@ const VIEW_BOX = '-186 -10 372 856'
 
 /**
  * Clickable silhouette ("where does it hurt?") in a soft light. Its regions show as faint seams
- * so it's clear where to tap, light up under the finger, and stay lit with a round count once
- * something there is picked. Turning between front and back spins the figure. The back view
- * flips the figure so its left stays on the viewer's left.
+ * so it's clear where to tap, light up under the finger, and stay lit once something there is
+ * picked. Turning between front and back spins the figure. The back view flips the figure so its
+ * left stays on the viewer's left.
  */
 export default function BodyMap({ view, active, counts, onSelect, onHover, className }: Props) {
   const skin = useMemo(() => buildBodyModel().skin, [])
@@ -94,23 +94,6 @@ export default function BodyMap({ view, active, counts, onSelect, onHover, class
         </g>
       </g>
 
-      {/* Counts in circles, drawn unflipped so the digits read correctly in the back view; a slow
-          ring goes out from each, like a pulse: it hurts here. */}
-      {regions.map((r) => {
-        const n = counts.get(r.id) ?? 0
-        if (!n) return null
-        const x = flip ? -r.labelAt[0] : r.labelAt[0]
-        const y = r.labelAt[1]
-        return (
-          <g key={`badge-${r.id}`} className="bm-badge" transform={`translate(${x} ${y})`} pointerEvents="none" aria-hidden="true">
-            <circle className="bm-pulse" r="18" />
-            <circle className="bm-dot" r="18" />
-            <text y="8" textAnchor="middle">
-              {n}
-            </text>
-          </g>
-        )
-      })}
     </svg>
   )
 }

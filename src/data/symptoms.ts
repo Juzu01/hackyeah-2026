@@ -87,6 +87,8 @@ export const SYMPTOMS: Symptom[] = [
   s('blood-urine', 'Krew w moczu', ['pelvis', 'lower-abdomen', 'lower-back'], { search: ['mocz'] }),
   s('menstrual-pain', 'Bolesne miesiączki', ['lower-abdomen', 'pelvis'], { sex: 'f', search: ['okres'] }),
   s('pelvic-pain-cycle', 'Ból w podbrzuszu związany z cyklem miesiączkowym', ['pelvis', 'lower-abdomen'], { sex: 'f' }),
+  // The period itself: the interview asks when it came, how heavy and how painful (InterviewScreen, CycleStep).
+  s('menstruation', 'Miesiączka', ['pelvis', 'lower-abdomen'], { sex: 'f', common: true, search: ['okres', 'cykl', 'spóźnia', 'plamienie', 'krwawienie'] }),
 
   // --- pelvis ---
   s('pelvic-pain', 'Ból w miednicy lub podbrzuszu', ['pelvis'], { common: true }),
@@ -100,16 +102,16 @@ export const SYMPTOMS: Symptom[] = [
 
   // --- back ---
   s('back-pain-upper', 'Ból górnej części pleców, między łopatkami', ['upper-back'], { common: true, search: ['plecy'] }),
-  s('back-muscle-tension', 'Napięcie i sztywność mięśni pleców', ['upper-back', 'lower-back']),
+  s('back-muscle-tension', 'Napięcie i sztywność mięśni pleców', ['upper-back', 'lower-back'], { search: ['plecy'] }),
   s('back-pain-posture', 'Ból nasila się po długim siedzeniu lub pracy przy biurku', ['upper-back', 'lower-back', 'nape']),
   s('shoulder-blade-pain', 'Ból łopatki', ['upper-back']),
-  s('back-pain-lower', 'Ból dolnej części pleców (krzyża)', ['lower-back'], { common: true, search: ['kręgosłup', 'lędźwie'] }),
+  s('back-pain-lower', 'Ból dolnej części pleców (krzyża)', ['lower-back'], { common: true, search: ['plecy', 'kręgosłup', 'lędźwie'] }),
   s('back-pain-radiating-leg', 'Ból promieniujący z pleców do pośladka lub nogi', ['lower-back', 'buttocks'], { search: ['rwa'] }),
   s('leg-numb', 'Drętwienie lub mrowienie nogi lub stopy', ['lower-back', 'buttocks', 'thigh', 'shin', 'calf']),
-  s('back-pain-after-lifting', 'Ból zaczął się po dźwignięciu lub gwałtownym ruchu', ['lower-back']),
+  s('back-pain-after-lifting', 'Ból zaczął się po dźwignięciu lub gwałtownym ruchu', ['lower-back'], { search: ['plecy'] }),
   s('back-stiff-morning', 'Sztywność rano, która zmniejsza się po rozruszaniu', ['lower-back', 'buttocks']),
   s('flank-pain', 'Ból w boku pod żebrami, może promieniować do pachwiny', ['lower-back'], { search: ['nerka', 'kolka'] }),
-  s('buttock-pain', 'Ból pośladka', ['buttocks'], { common: true }),
+  s('buttock-pain', 'Ból pośladka', ['buttocks'], { common: true, search: ['pośladki', 'pośladek'] }),
   s('tailbone-pain', 'Ból kości ogonowej, nasila się przy siedzeniu', ['buttocks']),
   s('sciatic-pain', 'Piekący lub strzelający ból wzdłuż tylnej części nogi', ['buttocks', 'thigh', 'lower-back'], { search: ['rwa kulszowa'] }),
 
@@ -166,7 +168,7 @@ export const SYMPTOMS: Symptom[] = [
   s('shin-pain-running', 'Ból wzdłuż kości piszczelowej po bieganiu lub skokach', ['shin']),
   s('shin-skin-red', 'Zaczerwienienie i ocieplenie skóry na nodze', ['shin', 'calf', 'ankle']),
   s('shin-injury', 'Uraz goleni', ['shin']),
-  s('calf-pain', 'Ból łydki', ['calf'], { common: true }),
+  s('calf-pain', 'Ból łydki', ['calf'], { common: true, search: ['łydka'] }),
   s('calf-cramps', 'Skurcze łydek, zwłaszcza w nocy', ['calf']),
   s('calf-tender-swollen', 'Łydka obrzęknięta, tkliwa i cieplejsza niż druga', ['calf', 'shin'], { search: ['zakrzepica'] }),
   s('calf-injury', 'Nagły ból łydki podczas wysiłku, „jak uderzenie”', ['calf']),
@@ -178,7 +180,7 @@ export const SYMPTOMS: Symptom[] = [
   s('achilles-pain', 'Ból i sztywność z tyłu nad piętą (ścięgno Achillesa)', ['ankle', 'heel', 'calf']),
   s('achilles-snap', 'Nagłe „strzelenie” z tyłu kostki i osłabienie odbicia stopy', ['heel', 'calf', 'ankle']),
   s('foot-pain', 'Ból stopy', ['foot'], { common: true }),
-  s('heel-pain', 'Ból pięty', ['heel', 'foot'], { common: true }),
+  s('heel-pain', 'Ból pięty', ['heel', 'foot'], { common: true, search: ['pięta'] }),
   s('heel-pain-morning', 'Ból pięty przy pierwszych krokach rano', ['heel', 'foot'], { search: ['ostroga'] }),
   s('toe-pain-red', 'Nagły, bardzo silny ból i obrzęk stawu dużego palca', ['foot'], { search: ['dna', 'paluch'] }),
   s('foot-numb', 'Drętwienie, pieczenie lub mrowienie stóp', ['foot', 'heel']),

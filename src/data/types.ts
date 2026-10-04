@@ -50,3 +50,31 @@ export interface RedFlag {
 export type Duration = 'hours' | 'days' | 'weeks' | 'months'
 export type Onset = 'sudden' | 'gradual'
 export type Trend = 'worse' | 'same' | 'better'
+
+export type Pregnancy = 'no' | 'yes' | 'unknown'
+
+/** The period against the usual cycle: late, early, on time, or no regular cycle to compare with. */
+export type CycleTiming = 'late' | 'early' | 'usual' | 'irregular'
+/** By how much: up to a week, 8–14 days, more than two weeks (early: up to a week or more). */
+export type CycleShift = 'week' | 'two-weeks' | 'more'
+export type CycleFlow = 'light' | 'usual' | 'heavy' | 'flooding'
+
+/** What the interview asks about the period instead of "since when" and "how it started". */
+export interface CycleCourse {
+  timing?: CycleTiming
+  shift?: CycleShift
+  flow?: CycleFlow
+  /** Bleeding or spotting between periods. */
+  spotting?: boolean
+}
+
+/** How one symptom behaves: the interview asks this for each symptom separately. */
+export interface SymptomCourse {
+  /** 1–10. */
+  severity?: number
+  duration?: Duration
+  onset?: Onset
+  trend?: Trend
+  /** The period ("menstruation" symptom) only. */
+  cycle?: CycleCourse
+}

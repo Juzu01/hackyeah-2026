@@ -21,7 +21,7 @@ export default function ConditionCard({ item, rank }: Props) {
       <div className="flex items-start gap-3">
         <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-line-2 font-serif text-base text-ink-2">{rank}</span>
         <div className="min-w-0 flex-1">
-          <h3 className="font-serif text-[1.375rem] leading-tight font-medium text-ink">{c.name}</h3>
+          <h4 className="font-serif text-[1.375rem] leading-tight font-medium text-ink">{c.name}</h4>
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
             <div className="h-1.5 w-24 overflow-hidden rounded-full bg-line-2" role="img" aria-label={`${EVIDENCE_LABEL[item.evidence]}, ${filled} na 10`}>
               <div className={`h-full rounded-full ${BAR[item.evidence]}`} style={{ width: `${filled * 10}%` }} />

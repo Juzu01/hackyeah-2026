@@ -1,5 +1,7 @@
 # Baza danych (Supabase)
 
+> **Październik 2026:** Atlas ciała (`/cialo/`) nie zgłasza już bólu, od tego jest zakładka Objawy („Gdzie boli?”). Panel bólu, czat zapisujący zgłoszenia, `src/lib/painReports.ts` i dane demo (`?demo`) zostały usunięte z kodu; są w historii gita. Tabele poniżej zostają w bazie, ale aplikacja ich teraz nie używa.
+
 Projekt `hackyeah-2026` (`yoxnmbflqrppspjdmrks`, Frankfurt). Adres i klucz publiczny: [`.env.example`](../.env.example).
 
 Użytkownik loguje się **anonimowo** (Supabase Auth) przy pierwszym zapisie. Sesja zostaje w przeglądarce, więc ta sama osoba widzi swoją historię przy kolejnych wizytach. Każdy widzi tylko swoje zgłoszenia (RLS).
@@ -61,3 +63,18 @@ Wiersze demo mają `is_demo = true`, więc w analizach na prawdziwych danych fil
 ## Migracje
 
 Pliki w [`migrations/`](migrations/) są już wgrane do projektu, a ich numery zgadzają się z historią migracji w Supabase (Supabase CLI nie będzie ich wgrywać drugi raz). Zmiany schematu dodajemy jako **nowy** plik migracji, bez edytowania starych.
+
+## Funkcja `analiza-objawow` (AI w „Gdzie boli?”)
+
+Karta „Twoje objawy razem” w wyniku może pochodzić od Claude’a. Strona nie może trzymać tokenu (na GitHub Pages wszystko jest publiczne), więc pyta funkcję [`functions/analiza-objawow`](functions/analiza-objawow/index.ts), a dopiero ona pyta Claude’a przez GitHub Models. Claude dostaje tylko objawy z odpowiedziami, zalecenie i przyczyny wybrane już przez naszą bazę, i ma się trzymać wyłącznie ich.
+
+Wdrożenie (raz):
+
+```sh
+npx supabase login
+npx supabase link --project-ref yoxnmbflqrppspjdmrks
+npx supabase secrets set GITHUB_TOKEN=<token z uprawnieniem Models: read> MODEL=<id modelu Claude z katalogu GitHub Models>
+npx supabase functions deploy analiza-objawow --no-verify-jwt
+```
+
+Potem w `.github/workflows/deploy.yml` przy budowaniu „Gdzie boli?” dodać `VITE_ANALYSIS_URL: https://yoxnmbflqrppspjdmrks.supabase.co/functions/v1/analiza-objawow`. Bez tej zmiennej (albo gdy AI nie odpowie w 15 s) karta liczy się w aplikacji z naszej bazy i nie jest podpisana jako AI.

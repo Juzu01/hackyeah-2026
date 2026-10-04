@@ -1,14 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { buildRegions, regionLabel, type Region, type View } from '../body/regions.ts'
+import { regionLabel, type Region } from '../body/regions.ts'
 import BodyMap from '../components/BodyMap.tsx'
 import EmergencyBar from '../components/EmergencyBar.tsx'
 import PersonCard from '../components/PersonCard.tsx'
-import Segmented from '../components/Segmented.tsx'
 import Steps from '../components/Steps.tsx'
 import SymptomPanel, { type PanelTarget } from '../components/SymptomPanel.tsx'
 import SymptomSearch from '../components/SymptomSearch.tsx'
 import { symptomName } from '../data/symptoms.ts'
-import type { CheckDraft } from '../lib/check.ts'
+import { PERIOD, type CheckDraft } from '../lib/check.ts'
 import { loadProfile, saveProfile } from '../lib/history.ts'
 import { useMediaQuery } from '../lib/useMediaQuery.ts'
 
@@ -26,11 +25,11 @@ const CONSENT_KEY = 'gdzieboli:consent'
  * Step 1 of 3, where it hurts. The page title lives in the bar above, so this screen opens
  * straight on the steps, the emergency line and who it's for (one line once known); then the
  * search and the body, standing in its light on Doco's horizon. What's picked collects in a
- * tray at the bottom with "Dalej", always in reach of a thumb.
+ * tray at the bottom with "Dalej", always in reach of a thumb. The body shows its front only:
+ * the back (back, nape, buttocks, calves, heels) is found by search.
  */
 export default function StartScreen({ draft, update, togglePick, userId, onNext }: Props) {
   const isDesktop = useMediaQuery('(min-width: 1024px)')
-  const [view, setView] = useState<View>('front')
   const [target, setTarget] = useState<PanelTarget | null>(null)
   const [hover, setHover] = useState<Region | null>(null)
   const [consent, setConsent] = useState(() => {
@@ -49,7 +48,6 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
     for (const p of draft.picks) if (p.regionId) m.set(p.regionId, (m.get(p.regionId) ?? 0) + 1)
     return m
   }, [draft.picks])
-  const regionsOfView = useMemo(() => buildRegions(view), [view])
 
   // "Dla mnie": remember sex and age between checks.
   useEffect(() => {
@@ -161,24 +159,11 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
         {/* The body. */}
         <section className="stage cut lg:col-span-5 lg:col-start-1 lg:row-span-3 lg:row-start-2" aria-label="Sylwetka">
           <div className="stage-top">
-            <Segmented<View>
-              label="Widok"
-              size="sm"
-              value={view}
-              onChange={(v) => {
-                setView(v)
-                if (target?.kind === 'region') setTarget(null)
-              }}
-              options={[
-                { value: 'front', label: 'Przód' },
-                { value: 'back', label: 'Tył' },
-              ]}
-            />
             <p className={`stage-place ${place ? 'is-named' : ''}`} aria-live="polite">
               {place ?? 'Stuknij miejsce'}
             </p>
           </div>
-          <BodyMap view={view} active={target?.kind === 'region' ? target.region.id : undefined} counts={counts} onSelect={selectRegion} onHover={setHover} className="stage-figure" />
+          <BodyMap view="front" active={target?.kind === 'region' ? target.region.id : undefined} counts={counts} onSelect={selectRegion} onHover={setHover} className="stage-figure" />
           <div className="stage-more">
             <button type="button" onClick={() => setTarget({ kind: 'general' })} aria-pressed={target?.kind === 'general'} className="chip">
               Całe ciało
@@ -187,26 +172,14 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
             <button type="button" onClick={() => setTarget({ kind: 'skin' })} aria-pressed={target?.kind === 'skin'} className="chip">
               Skóra
             </button>
-            <label className="sr-only" htmlFor="region-select">
-              Wybierz miejsce z listy
-            </label>
-            <select
-              id="region-select"
-              value={target?.kind === 'region' ? target.region.id : ''}
-              onChange={(e) => {
-                const r = regionsOfView.find((x) => x.id === e.target.value)
-                if (r) selectRegion(r)
-              }}
-              className="field stage-select"
-            >
-              <option value="">Lista miejsc…</option>
-              {regionsOfView.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {regionLabel(r)}
-                </option>
-              ))}
-            </select>
+            {/* The period has no place on the body: one tap adds it, and the questions come later. */}
+            {draft.sex === 'f' && (
+              <button type="button" onClick={() => togglePick(PERIOD)} aria-pressed={picked.has(PERIOD)} className="chip">
+                Miesiączka
+              </button>
+            )}
           </div>
+          <p className="stage-back">Ból pleców, karku albo pośladków? Wpisz go w wyszukiwarce.</p>
         </section>
 
         {/* Desktop: the list for the chosen place sits next to the body, the tray under it. */}

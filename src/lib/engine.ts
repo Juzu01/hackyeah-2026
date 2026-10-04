@@ -5,12 +5,13 @@
 
 import { CONDITIONS } from '../data/conditions.ts'
 import { RED_FLAGS } from '../data/redFlags.ts'
-import { SYMPTOM_BY_ID } from '../data/symptoms.ts'
-import { TRIAGE_LEVELS, type Condition, type Duration, type Onset, type Sex, type Trend, type Triage } from '../data/types.ts'
+import { SYMPTOM_BY_ID, symptomName } from '../data/symptoms.ts'
+import { TRIAGE_LEVELS, type Condition, type Duration, type Onset, type Pregnancy, type RedFlag, type Sex, type SymptomCourse, type Trend, type Triage } from '../data/types.ts'
 
 export interface CheckInput {
   sex?: Sex
   age?: number
+  pregnancy?: Pregnancy
   /** Region def ids the user pointed at. */
   regions: string[]
   symptoms: string[]
@@ -18,6 +19,8 @@ export interface CheckInput {
   redFlags: string[]
   /** Whether the alarm questions were asked at all (affects the wording of the reasons). */
   answeredRedFlags?: boolean
+  /** How each symptom behaves. Without it, the four answers below stand for all the symptoms. */
+  courses?: (SymptomCourse & { symptomId: string })[]
   duration?: Duration
   onset?: Onset
   severity?: number
@@ -129,13 +132,52 @@ export function rankConditions(input: CheckInput): RankedCondition[] {
 }
 
 export function analyze(input: CheckInput): CheckResult {
+  const conditions = rankConditions(input).slice(0, 6)
+  const flags = RED_FLAGS.filter((f) => input.redFlags.includes(f.id))
+  return { ...decide(input, conditions, flags), conditions, redFlags: flags.map((f) => f.id) }
+}
+
+export interface SymptomResult {
+  symptomId: string
+  course: SymptomCourse
+  triage: Triage
+  reasons: string[]
+  /** Its likeliest causes, best first. */
+  conditions: RankedCondition[]
+}
+
+/**
+ * The result for each symptom on its own, so that one symptom's causes don't crowd out
+ * another's. Causes come from the ranking of all the symptoms together (a cause that explains
+ * several of them ranks higher) and keep those that explain this one; the urgency comes from
+ * them, from this symptom's own answers, and from the alarm answers about its part of the body.
+ */
+export function analyzeBySymptom(input: CheckInput, perSymptom = 3): SymptomResult[] {
   const ranked = rankConditions(input)
-  const conditions = ranked.slice(0, 6)
+  return input.symptoms.flatMap((symptomId) => {
+    const symptom = SYMPTOM_BY_ID.get(symptomId)
+    if (!symptom) return []
+    const course: SymptomCourse = input.courses?.find((c) => c.symptomId === symptomId) ?? {
+      severity: input.severity,
+      duration: input.duration,
+      onset: input.onset,
+      trend: input.trend,
+    }
+    const conditions = ranked.filter((r) => r.matched.includes(symptomId)).slice(0, perSymptom)
+    const flags = RED_FLAGS.filter(
+      (f) => input.redFlags.includes(f.id) && (f.regions.includes('*') || symptom.regions.includes('*') || f.regions.some((r) => symptom.regions.includes(r))),
+    )
+    const own = { ...input, symptoms: [symptomId], courses: [{ symptomId, ...course }], answeredRedFlags: false }
+    return [{ symptomId, course, conditions, ...decide(own, conditions, flags) }]
+  })
+}
+
+/** How urgent: the alarm answers, then the causes, then the follow-up answers. */
+function decide(input: CheckInput, conditions: RankedCondition[], flags: RedFlag[]): { triage: Triage; reasons: string[] } {
   const reasons: string[] = []
   let triage: Triage = 'self-care'
 
   // Red flags first: a single "yes" sets the floor, whatever else is going on.
-  const flags = RED_FLAGS.filter((f) => input.redFlags.includes(f.id))
   for (const f of flags) {
     triage = atLeast(triage, f.triage)
     reasons.push(f.reason)
@@ -156,22 +198,42 @@ export function analyze(input: CheckInput): CheckResult {
   }
   if (flags.length === 0 && input.answeredRedFlags) reasons.push('w wywiadzie nie zgłoszono objawów alarmowych')
 
-  // Modifiers from the follow-up questions.
-  const severity = input.severity ?? 0
-  if (severity >= 8 && TRIAGE_LEVELS.indexOf(triage) < TRIAGE_LEVELS.indexOf('urgent')) {
-    triage = 'urgent'
-    reasons.push('bardzo silne dolegliwości')
-  } else if (severity >= 6 && triage === 'self-care') {
-    triage = 'gp'
-    reasons.push('nasilone dolegliwości')
+  // Modifiers from the follow-up questions, symptom by symptom. With several symptoms the
+  // reason says which one, e.g. "bardzo silne dolegliwości – ból głowy".
+  const courses: (SymptomCourse & { symptomId?: string })[] = input.courses?.length
+    ? input.courses
+    : [{ severity: input.severity, duration: input.duration, trend: input.trend }]
+  const which = (c: { symptomId?: string }) => {
+    if (courses.length < 2 || !c.symptomId) return ''
+    const name = symptomName(c.symptomId)
+    return ` – ${name.charAt(0).toLowerCase()}${name.slice(1)}`
   }
-  if (input.duration && DURATION_ORDER.indexOf(input.duration) >= DURATION_ORDER.indexOf('weeks') && triage === 'self-care') {
-    triage = 'gp'
-    reasons.push('objawy utrzymują się od ponad tygodnia')
+  for (const c of courses) {
+    const severity = c.severity ?? 0
+    if (severity >= 8 && TRIAGE_LEVELS.indexOf(triage) < TRIAGE_LEVELS.indexOf('urgent')) {
+      triage = 'urgent'
+      reasons.push(`bardzo silne dolegliwości${which(c)}`)
+    } else if (severity >= 6 && triage === 'self-care') {
+      triage = 'gp'
+      reasons.push(`nasilone dolegliwości${which(c)}`)
+    }
   }
-  if (input.trend === 'worse' && input.duration && input.duration !== 'hours' && triage === 'self-care') {
+  for (const c of courses) {
+    if (c.duration && DURATION_ORDER.indexOf(c.duration) >= DURATION_ORDER.indexOf('weeks') && triage === 'self-care') {
+      triage = 'gp'
+      reasons.push(`objawy utrzymują się od ponad tygodnia${which(c)}`)
+    }
+  }
+  for (const c of courses) {
+    if (c.trend === 'worse' && c.duration && c.duration !== 'hours' && triage === 'self-care') {
+      triage = 'gp'
+      reasons.push(`objawy się nasilają${which(c)}`)
+    }
+  }
+  // Pregnant: anything that brings someone here is worth a word with a doctor or midwife, at least.
+  if (input.pregnancy === 'yes' && triage === 'self-care') {
     triage = 'gp'
-    reasons.push('objawy się nasilają')
+    reasons.push('ciąża – objawy warto omówić z lekarzem lub położną')
   }
   if (input.age !== undefined && input.age >= 65 && triage === 'self-care' && input.symptoms.includes('fever')) {
     triage = 'gp'
@@ -183,5 +245,5 @@ export function analyze(input: CheckInput): CheckResult {
   }
 
   if (reasons.length === 0) reasons.push('objawy wyglądają na łagodne i częste')
-  return { triage, reasons: [...new Set(reasons)], conditions, redFlags: flags.map((f) => f.id) }
+  return { triage, reasons: [...new Set(reasons)] }
 }

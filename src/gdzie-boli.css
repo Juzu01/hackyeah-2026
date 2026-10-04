@@ -1,6 +1,6 @@
 /* "Gdzie boli?" runs inside Doco (the "Objawy" tab, in an iframe), so it wears Doco's
-   colours: true black with a faint green cast and one light pastel-green accent. Shapes are kept
-   simple and soft here (rounded corners, round markers), so the checker reads calmly.
+   colours: true black with a faint green cast (or Doco's light mode) and one accent colour. Shapes are
+   kept simple and soft here (rounded corners, round markers), so the checker reads calmly.
    Its own Tailwind entry (src/index.css is the atlas's) so the tokens below can become
    utilities: bg-s1, text-ink-2, border-line… */
 @import 'tailwindcss';
@@ -19,14 +19,15 @@
   /* 4.3:1 on black: placeholders and disabled things only, never text people must read. */
   --ink-3: #6b7364;
 
-  --green: #c0e4b2;
-  --green-hover: #d2eec7;
-  --green-ink: #0b1307;
-  --green-soft: rgba(192, 228, 178, 0.13);
+  --green: #45e499;
+  --green-hover: color-mix(in srgb, var(--green) 70%, white);
+  --green-ink: #04140c;
+  --green-soft: color-mix(in srgb, var(--green) 13%, transparent);
 
   --alarm: #ff6b5e;
   --alarm-soft: rgba(255, 107, 94, 0.1);
   --alarm-line: rgba(255, 107, 94, 0.35);
+  --alarm-ink: #1f0604;
 
   /* Triage levels on black, each ≥ 7:1 against --bg and --s1: red, amber, a calm blue-grey
      for "see a doctor" (so it does not read as the accent), muted green for self-care. */
@@ -36,12 +37,48 @@
   --care-self: #8fbf9a;
 
   /* Ambient light: a very faint pastel-green glow at the top of the page. */
-  --glow: rgba(192, 228, 178, 0.1);
+  --glow: color-mix(in srgb, var(--green) 10%, transparent);
 
   /* Corners: cards, then buttons, fields and tiles. */
   --r: 16px;
   --r-sm: 12px;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  /* the body map's silhouette */
+  --figure: #1c1c1a;
+  /* The pain scale (InterviewScreen): 1–3 mild, 4–7 moderate, 8–10 severe. Fixed meaning, so
+     not the accent; the number on a lit field is dark ink. */
+  --pain-low: #5fcf86;
+  --pain-mid: #f4c84a;
+  --pain-high: #ff6b5e;
+  --pain-ink: #10140e;
+}
+
+/* Doco's light mode (src/lib/accent.ts): Doco's off-white with white cards, and deeper colours
+   that keep ≥ 4.5:1 on white. The accent's light shade comes from Doco; this one is the default's. */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f5f6f1;
+  --s1: #ffffff;
+  --s2: #eceee7;
+  --line: rgba(30, 40, 25, 0.12);
+  --line-2: rgba(30, 40, 25, 0.22);
+  --ink: #171a14;
+  --ink-2: #4b5446;
+  --ink-3: #687062;
+  --green: #048251;
+  --green-ink: #ffffff;
+  --green-hover: color-mix(in srgb, var(--green) 85%, black);
+  --alarm: #c43a2c;
+  --alarm-soft: rgba(196, 58, 44, 0.07);
+  --alarm-line: rgba(196, 58, 44, 0.4);
+  --alarm-ink: #ffffff;
+  --care-urgent: #9a5a00;
+  --care-gp: #3a5573;
+  --care-self: #2f6b3c;
+  --figure: #e3e6de;
+  --pain-low: #3fb36a;
+  --pain-mid: #ebb81f;
+  --pain-high: #e5533f;
 }
 
 @theme inline {
@@ -175,13 +212,13 @@ header nav :is(a, button) {
   }
   /* Calling 112 / 999: same shape, alarm red. */
   .btn-primary.is-alarm {
-    color: #1f0604;
+    color: var(--alarm-ink);
   }
   .btn-primary.is-alarm::before {
     background: var(--alarm);
   }
   .btn-primary.is-alarm:hover::before {
-    background: #ff857a;
+    background: color-mix(in srgb, var(--alarm) 85%, var(--ink));
   }
 
   .btn-secondary {
@@ -299,6 +336,207 @@ header nav :is(a, button) {
     background: var(--green);
     color: var(--green-ink);
     font-weight: 700;
+  }
+
+  /* Results (ResultsScreen): a short "being analysed" bar, the reading of all the symptoms
+     together, and one folded section per symptom; little text until something is opened. */
+  .analyzing {
+    border: 1px solid var(--line);
+    background: var(--s1);
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+  .analyzing-bar {
+    position: relative;
+    height: 0.375rem;
+    margin-top: 1.25rem;
+    overflow: hidden;
+    background: var(--line-2);
+  }
+  .analyzing-bar > span {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 92%;
+    background: var(--green);
+    transform-origin: left;
+    animation: analyzing-fill 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+  /* A light passes along it for as long as the AI keeps us waiting. */
+  .analyzing-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, white 40%, transparent), transparent);
+    transform: translateX(-100%);
+    animation: analyzing-shine 1.3s linear infinite;
+  }
+  @keyframes analyzing-fill {
+    from {
+      transform: scaleX(0);
+    }
+  }
+  @keyframes analyzing-shine {
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  .insight {
+    border: 1px solid color-mix(in srgb, var(--green) 40%, var(--line-2));
+    background: linear-gradient(160deg, color-mix(in srgb, var(--green) 9%, var(--s1)), var(--s1) 65%);
+    padding: 1rem 1.25rem 1.125rem;
+  }
+  .badge-ai {
+    flex: none;
+    padding: 0.125rem 0.5rem;
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* A row that opens: title and a chevron, the text under it. */
+  .fold > summary,
+  .alarms > summary {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    color: var(--ink);
+    font-weight: 650;
+    cursor: pointer;
+    list-style: none;
+  }
+  .fold > summary::-webkit-details-marker,
+  .alarms > summary::-webkit-details-marker,
+  .symptom > summary::-webkit-details-marker {
+    display: none;
+  }
+  .fold > summary::after,
+  .alarms > summary::after,
+  .symptom > summary::after {
+    content: '';
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin: 0 0.25rem 0.25rem;
+    border-right: 2px solid var(--ink-2);
+    border-bottom: 2px solid var(--ink-2);
+    transform: rotate(45deg);
+    transition: transform 160ms var(--ease);
+  }
+  .fold[open] > summary::after,
+  .alarms[open] > summary::after,
+  .symptom[open] > summary::after {
+    margin-bottom: -0.25rem;
+    transform: rotate(-135deg);
+  }
+
+  .symptom {
+    border: 1px solid var(--line);
+    background: var(--s1);
+  }
+  .symptom > summary {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.875rem 2.75rem 0.875rem 1rem;
+    cursor: pointer;
+    list-style: none;
+  }
+  .symptom > summary::after {
+    position: absolute;
+    top: 50%;
+    right: 1.125rem;
+    margin-top: -0.375rem;
+  }
+  .symptom[open] > summary::after {
+    margin-top: -0.125rem;
+  }
+  .symptom[open] > summary {
+    border-bottom: 1px solid var(--line);
+  }
+  .symptom-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .symptom-name {
+    min-width: 0;
+    color: var(--ink);
+    font-family: 'Fraunces Variable', 'Nunito Variable', Georgia, serif;
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.15;
+  }
+  .symptom-sub {
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+  }
+  .symptom-body {
+    padding: 0.875rem 1rem 1rem;
+  }
+
+  .alarms {
+    border: 1px solid var(--alarm-line);
+    background: var(--alarm-soft);
+    padding: 0 1rem;
+  }
+  .alarms[open] {
+    padding-bottom: 1rem;
+  }
+  .alarms > summary {
+    color: var(--alarm);
+    font-family: 'Fraunces Variable', 'Nunito Variable', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .analyzing-bar > span,
+    .analyzing-bar::after {
+      animation: none;
+    }
+  }
+
+  /* One field of the pain scale, lit in its zone's colour on hover and when chosen. */
+  .level {
+    aspect-ratio: 1;
+    border: 1px solid var(--line-2);
+    border-radius: 0.75rem;
+    background: var(--s2);
+    color: var(--ink);
+    font-size: 1.125rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition: background-color 120ms, border-color 120ms, color 120ms;
+  }
+  .level[data-zone='low'] {
+    --zone: var(--pain-low);
+  }
+  .level[data-zone='mid'] {
+    --zone: var(--pain-mid);
+  }
+  .level[data-zone='high'] {
+    --zone: var(--pain-high);
+  }
+  /* Pointers only: on a phone the last tap would stay "hovered". */
+  @media (hover: hover) {
+    .level:hover {
+      border-color: var(--zone);
+      background: color-mix(in srgb, var(--zone) 18%, var(--s2));
+    }
+  }
+  .level[aria-checked='true'] {
+    border-color: var(--zone);
+    background: var(--zone);
+    color: var(--pain-ink);
+    font-weight: 800;
   }
 
   /* Small uppercase label above a field or a section. */
@@ -443,7 +681,7 @@ header nav :is(a, button) {
   }
   .stage-place.is-named {
     color: var(--green);
-    font-family: var(--font-serif);
+    font-family: 'Fraunces Variable', 'Nunito Variable', Georgia, serif;
     font-size: 1.1875rem;
     font-weight: 640;
   }
@@ -486,7 +724,7 @@ header nav :is(a, button) {
     touch-action: manipulation;
   }
   .bm-skin {
-    fill: #141a12;
+    fill: var(--figure);
   }
   .bm-edge {
     fill: none;
@@ -511,16 +749,16 @@ header nav :is(a, button) {
       stroke-opacity 160ms var(--ease);
   }
   .bm-zone:is(.is-hover, :focus-visible) path {
-    fill: rgb(192 228 178 / 0.14);
+    fill: color-mix(in srgb, var(--green) 14%, transparent);
     stroke-opacity: 0.7;
   }
   .bm-zone.is-picked path {
-    fill: rgb(192 228 178 / 0.26);
+    fill: color-mix(in srgb, var(--green) 26%, transparent);
     stroke-opacity: 0.9;
     stroke-width: 2;
   }
   .bm-zone.is-active path {
-    fill: rgb(192 228 178 / 0.42);
+    fill: color-mix(in srgb, var(--green) 42%, transparent);
     stroke-opacity: 1;
     stroke-width: 2.4;
   }
@@ -626,7 +864,7 @@ header nav :is(a, button) {
     align-items: center;
     gap: 8px;
     padding: 0 10px 0 14px;
-    border: 1px solid rgb(192 228 178 / 0.4);
+    border: 1px solid color-mix(in srgb, var(--green) 40%, transparent);
     border-radius: 999px;
     background: var(--green-soft);
     color: var(--ink);
@@ -697,7 +935,7 @@ header nav :is(a, button) {
     max-height: 82vh;
     flex-direction: column;
     overflow: hidden;
-    border-top: 1px solid rgb(192 228 178 / 0.35);
+    border-top: 1px solid color-mix(in srgb, var(--green) 35%, transparent);
     border-radius: 20px 20px 0 0;
     background: var(--s1);
     box-shadow: 0 -20px 60px rgb(0 0 0 / 0.6);

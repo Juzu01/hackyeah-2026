@@ -33,9 +33,11 @@ describe('knowledge base integrity', () => {
     }
   })
 
+  // Except the period: its causes (late, early, heavy…) wait for the verified knowledge base.
+  const AWAITING_CONDITIONS = ['menstruation']
   it('every symptom is used by at least one condition', () => {
     const used = new Set(CONDITIONS.flatMap((c) => Object.keys(c.symptoms)))
-    const unused = SYMPTOMS.filter((s) => !used.has(s.id)).map((s) => s.id)
+    const unused = SYMPTOMS.filter((s) => !used.has(s.id) && !AWAITING_CONDITIONS.includes(s.id)).map((s) => s.id)
     expect(unused).toEqual([])
   })
 
