@@ -14,8 +14,7 @@ const diaryTexts = {
     locale: 'pl-PL', title: 'Dziennik', back: 'Więcej',
     lead: 'Twoje samopoczucie i ból w jednym miejscu. Łatwiej zauważysz, co się powtarza, i opowiesz o tym lekarzowi.',
     locked: 'Dziennik jest dostępny po zalogowaniu — wpisy należą do Twojego konta.',
-    checkin: 'Jak się dziś czujesz?', moodSaved: (m) => `Zapisano: ${m}. Możesz to zmienić w ciągu dnia.`, moodToday: (m) => `Dziś: ${m}. Możesz to zmienić.`,
-    cta: 'Boli coś? Sprawdź w „Gdzie boli?” i dodaj wpis do dziennika.',
+    cta: 'Boli Cię coś? Sprawdź, gdzie boli',
     period: 'Ostatnie 30 dni', painDays: 'Dni z bólem', avgLevel: 'Średnie nasilenie', topWhere: 'Najczęściej boli', avgMood: 'Średni nastrój',
     ofDays: (n) => `z ${n} dni`, outOf10: 'na 10', outOf5: 'z 5', times: (n) => `${n}×`, noData: 'brak danych',
     insight: (a, b) => `W dni z bólem Twój nastrój był średnio ${a} z 5, a w pozostałe dni ${b} z 5.`,
@@ -31,8 +30,7 @@ const diaryTexts = {
     locale: 'en-GB', title: 'Diary', back: 'More',
     lead: 'How you feel and what hurts, in one place. It\'s easier to spot what keeps coming back and to tell your doctor about it.',
     locked: 'The diary is available once you sign in, so the entries belong to your account.',
-    checkin: 'How are you feeling today?', moodSaved: (m) => `Saved: ${m}. You can change it during the day.`, moodToday: (m) => `Today: ${m}. You can change it.`,
-    cta: 'Something hurts? Check it in "Where does it hurt?" and add an entry to your diary.',
+    cta: 'Does something hurt? Check where it hurts',
     period: 'Last 30 days', painDays: 'Days with pain', avgLevel: 'Average intensity', topWhere: 'Hurts most often', avgMood: 'Average mood',
     ofDays: (n) => `of ${n} days`, outOf10: 'out of 10', outOf5: 'out of 5', times: (n) => `${n}×`, noData: 'no data yet',
     insight: (a, b) => `On days with pain your mood was ${a} out of 5 on average, and ${b} out of 5 on other days.`,
@@ -48,8 +46,7 @@ const diaryTexts = {
     locale: 'uk-UA', title: 'Щоденник', back: 'Більше',
     lead: 'Твоє самопочуття й біль в одному місці. Так легше помітити, що повторюється, і розповісти про це лікарю.',
     locked: 'Щоденник доступний після входу — записи належать твоєму обліковому запису.',
-    checkin: 'Як ти сьогодні почуваєшся?', moodSaved: (m) => `Збережено: ${m}. Можна змінити протягом дня.`, moodToday: (m) => `Сьогодні: ${m}. Можна змінити.`,
-    cta: 'Щось болить? Перевір у «Де болить?» і додай запис до щоденника.',
+    cta: 'Щось болить? Перевір, де болить',
     period: 'Останні 30 днів', painDays: 'Дні з болем', avgLevel: 'Середня сила болю', topWhere: 'Найчастіше болить', avgMood: 'Середній настрій',
     ofDays: (n) => `з ${n} днів`, outOf10: 'з 10', outOf5: 'з 5', times: (n) => `${n}×`, noData: 'ще немає даних',
     insight: (a, b) => `У дні з болем твій настрій був у середньому ${a} з 5, а в інші дні — ${b} з 5.`,
@@ -65,8 +62,7 @@ const diaryTexts = {
     locale: 'de-DE', title: 'Tagebuch', back: 'Mehr',
     lead: 'Dein Befinden und deine Schmerzen an einem Ort. So erkennst du leichter, was wiederkehrt, und kannst es in der Arztpraxis erzählen.',
     locked: 'Das Tagebuch ist nach der Anmeldung verfügbar – die Einträge gehören zu deinem Konto.',
-    checkin: 'Wie fühlst du dich heute?', moodSaved: (m) => `Gespeichert: ${m}. Du kannst es im Laufe des Tages ändern.`, moodToday: (m) => `Heute: ${m}. Du kannst es ändern.`,
-    cta: 'Tut etwas weh? Prüfe es unter „Wo tut es weh?“ und füge einen Eintrag hinzu.',
+    cta: 'Tut etwas weh? Prüfe, wo es wehtut',
     period: 'Letzte 30 Tage', painDays: 'Tage mit Schmerzen', avgLevel: 'Mittlere Stärke', topWhere: 'Am häufigsten', avgMood: 'Mittlere Stimmung',
     ofDays: (n) => `von ${n} Tagen`, outOf10: 'von 10', outOf5: 'von 5', times: (n) => `${n}×`, noData: 'noch keine Daten',
     insight: (a, b) => `An Tagen mit Schmerzen lag deine Stimmung im Schnitt bei ${a} von 5, an anderen Tagen bei ${b} von 5.`,
@@ -82,8 +78,7 @@ const diaryTexts = {
     locale: 'es-ES', title: 'Diario', back: 'Más',
     lead: 'Cómo te sientes y lo que te duele, en un solo lugar. Así verás más fácil lo que se repite y podrás contárselo a tu médico.',
     locked: 'El diario está disponible al iniciar sesión: los registros pertenecen a tu cuenta.',
-    checkin: '¿Cómo te sientes hoy?', moodSaved: (m) => `Guardado: ${m}. Puedes cambiarlo durante el día.`, moodToday: (m) => `Hoy: ${m}. Puedes cambiarlo.`,
-    cta: '¿Te duele algo? Revísalo en «¿Dónde duele?» y añade un registro al diario.',
+    cta: '¿Te duele algo? Revisa dónde duele',
     period: 'Últimos 30 días', painDays: 'Días con dolor', avgLevel: 'Intensidad media', topWhere: 'Duele más a menudo', avgMood: 'Ánimo medio',
     ofDays: (n) => `de ${n} días`, outOf10: 'de 10', outOf5: 'de 5', times: (n) => `${n}×`, noData: 'aún sin datos',
     insight: (a, b) => `Los días con dolor tu ánimo fue de ${a} sobre 5 de media, y ${b} sobre 5 el resto de días.`,
@@ -97,7 +92,6 @@ const diaryTexts = {
   }
 };
 
-let diaryFlash = '';
 // Kept in sessionStorage too: signing in with Google reloads the page on the way back
 let diaryLoginRequestedAt = Number(sessionStorage.getItem('soleil_diary_login')) || 0;
 
@@ -145,12 +139,6 @@ function diaryLogin() {
   openAuth();
 }
 
-function diaryRecordMood(n) {
-  const ok = typeof window.hyRecordMood === 'function' && window.hyRecordMood(n);
-  diaryFlash = ok ? dt().moodSaved(dt().moods[n - 1].toLowerCase()) : '';
-  renderDiaryView();
-}
-
 function deleteDiaryEntry(id) {
   if (!confirm(dt().deleteQ)) return;
   storePain(loadPain().filter(e => e.id !== id));
@@ -193,12 +181,7 @@ function renderDiaryView() {
   }
   const pain = loadPain();
   const moods = loadMoods();
-  const today = typeof window.hyTodayMood === 'function' ? window.hyTodayMood() : null;
   const s = diaryStats(pain, moods);
-
-  const faces = [1, 2, 3, 4, 5].map(n => `<button type="button" class="face" role="radio" aria-checked="${today === n}" data-mood="${n}" onclick="diaryRecordMood(${n})"><svg><use href="#face-${n}"/></svg><span>${t.moods[n - 1]}</span></button>`).join('');
-  const status = diaryFlash || (today ? t.moodToday(t.moods[today - 1].toLowerCase()) : '');
-  diaryFlash = '';
 
   const stat = (label, value, context, extra = '') => `<div class="diary-stat"${extra}><span class="diary-stat-label">${label}</span><span class="diary-stat-value">${value}</span><span class="diary-stat-context">${context}</span></div>`;
   const levelSev = s.avgLevel === null ? null : Math.round(s.avgLevel);
@@ -211,16 +194,12 @@ function renderDiaryView() {
   ].join('');
   const insight = s.moodWithPain !== null && s.moodWithoutPain !== null ? `<p class="diary-insight">${t.insight(diaryNum(s.moodWithPain), diaryNum(s.moodWithoutPain))}</p>` : '';
 
+  // The last 30 days first; how you feel today is asked in Nastrój, so not again here.
   page.innerHTML = `${head}
-    <section class="diary-checkin" aria-labelledby="diaryCheckin">
-      <h3 class="page-sub" id="diaryCheckin">${t.checkin}</h3>
-      <div class="faces" role="radiogroup" aria-labelledby="diaryCheckin">${faces}</div>
-      <p class="saved-note" role="status">${status}</p>
-    </section>
-    <button type="button" class="diary-cta" onclick="hyShowView('objawy')"><svg class="ico"><use href="#i-pulse"/></svg><span>${t.cta}</span><svg class="ico row-go"><use href="#i-next"/></svg></button>
     <h3 class="page-sub">${t.period}</h3>
     <div class="diary-stats">${stats}</div>
     ${insight}
+    <button type="button" class="diary-cta" onclick="hyShowView('objawy')"><svg class="ico"><use href="#i-pulse"/></svg><span>${t.cta}</span><svg class="ico row-go"><use href="#i-next"/></svg></button>
     <h3 class="page-sub">${t.entries} <span class="diary-sub-note">${t.fromNewest}</span></h3>
     ${diaryTilesHtml(pain, moods, t)}
     <p class="diary-fine">${t.device} ${t.notMedical}</p>`;
