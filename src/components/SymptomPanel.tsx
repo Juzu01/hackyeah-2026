@@ -58,7 +58,7 @@ export default function SymptomPanel({ target, sex, picked, onToggle, onClose }:
           <h2 className="font-serif text-[1.375rem] leading-tight font-medium text-ink">{title}</h2>
           <p className="mt-0.5 text-[0.9375rem] text-ink-2">Zaznacz wszystko, co pasuje.</p>
         </div>
-        <button type="button" onClick={onClose} aria-label="Zamknij listę" className="-mr-1.5 flex h-11 w-11 shrink-0 items-center justify-center text-ink-2 hover:bg-s2 hover:text-ink">
+        <button type="button" onClick={onClose} aria-label="Zamknij listę" className="-mr-1.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ink-2 hover:bg-s2 hover:text-ink">
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
             <path d="M6 6l12 12M18 6 6 18" />
           </svg>

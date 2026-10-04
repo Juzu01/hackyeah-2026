@@ -19,14 +19,12 @@ export default function ConditionCard({ item, rank }: Props) {
   return (
     <article className="cut border border-line bg-s1 p-4 sm:p-5">
       <div className="flex items-start gap-3">
-        <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center border border-line-2 font-serif text-base text-ink-2">{rank}</span>
+        <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-line-2 font-serif text-base text-ink-2">{rank}</span>
         <div className="min-w-0 flex-1">
           <h3 className="font-serif text-[1.375rem] leading-tight font-medium text-ink">{c.name}</h3>
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-            <div className="flex gap-0.5" role="img" aria-label={`${EVIDENCE_LABEL[item.evidence]}, ${filled} na 10`}>
-              {Array.from({ length: 10 }, (_, i) => (
-                <span key={i} className={`h-2 w-3 ${i < filled ? BAR[item.evidence] : 'bg-line-2'}`} />
-              ))}
+            <div className="h-1.5 w-24 overflow-hidden rounded-full bg-line-2" role="img" aria-label={`${EVIDENCE_LABEL[item.evidence]}, ${filled} na 10`}>
+              <div className={`h-full rounded-full ${BAR[item.evidence]}`} style={{ width: `${filled * 10}%` }} />
             </div>
             <span className="text-[0.9375rem] font-semibold text-ink">{EVIDENCE_LABEL[item.evidence]}</span>
             <span className="text-sm text-ink-2">zwykle: {TRIAGE_INFO[c.triage].title.toLowerCase()}</span>
@@ -39,7 +37,7 @@ export default function ConditionCard({ item, rank }: Props) {
                 <p className="font-semibold text-ink">Pasujące objawy:</p>
                 <div className="mt-1.5 flex flex-wrap gap-1.5">
                   {item.matched.map((id) => (
-                    <span key={id} className="border border-line-2 bg-s2 px-2.5 py-1 text-[0.9375rem] text-ink">
+                    <span key={id} className="rounded-full border border-line-2 bg-s2 px-3 py-1 text-[0.9375rem] text-ink">
                       {symptomName(id)}
                     </span>
                   ))}

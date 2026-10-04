@@ -14,15 +14,12 @@ interface Props {
 }
 
 const VIEW_BOX = '-186 -10 372 856'
-/** The ground under the feet rises left to right at the slope of Doco's horizon (16 in 360). */
-const GROUND = { x1: -186, y1: 818, x2: 186, y2: 801.5 }
 
 /**
- * Clickable silhouette ("where does it hurt?"). The figure stands on Doco's slanted horizon in
- * a soft light; its regions show as faint seams so it's clear where to tap, light up under the
- * finger, and stay lit with a diamond count once something there is picked. Turning between
- * front and back spins the figure; each time it appears, one scan line passes down the body.
- * The back view flips the figure so its left stays on the viewer's left.
+ * Clickable silhouette ("where does it hurt?") in a soft light. Its regions show as faint seams
+ * so it's clear where to tap, light up under the finger, and stay lit with a round count once
+ * something there is picked. Turning between front and back spins the figure. The back view
+ * flips the figure so its left stays on the viewer's left.
  */
 export default function BodyMap({ view, active, counts, onSelect, onHover, className }: Props) {
   const skin = useMemo(() => buildBodyModel().skin, [])
@@ -54,23 +51,11 @@ export default function BodyMap({ view, active, counts, onSelect, onHover, class
           <stop offset="0.55" style={{ stopColor: 'var(--green)', stopOpacity: 0.05 }} />
           <stop offset="1" style={{ stopColor: 'var(--green)', stopOpacity: 0 }} />
         </radialGradient>
-        <linearGradient id="bm-ground" x1={GROUND.x1} x2={GROUND.x2} y1="0" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0" style={{ stopColor: 'var(--green)', stopOpacity: 0 }} />
-          <stop offset="0.5" style={{ stopColor: 'var(--green)', stopOpacity: 0.85 }} />
-          <stop offset="1" style={{ stopColor: 'var(--green)', stopOpacity: 0 }} />
-        </linearGradient>
-        <linearGradient id="bm-scan" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" style={{ stopColor: 'var(--green)', stopOpacity: 0 }} />
-          <stop offset="0.85" style={{ stopColor: 'var(--green)', stopOpacity: 0.22 }} />
-          <stop offset="1" style={{ stopColor: 'var(--green)', stopOpacity: 0.7 }} />
-        </linearGradient>
       </defs>
 
       <ellipse cx="0" cy="360" rx="330" ry="420" fill="url(#bm-glow)" />
-      <line className="bm-ground" {...GROUND} stroke="url(#bm-ground)" />
-      <line className="bm-ground is-far" x1={GROUND.x1 + 70} y1={GROUND.y1 + 22} x2={GROUND.x2 - 70} y2={GROUND.y2 + 22} stroke="url(#bm-ground)" />
 
-      {/* Keyed by the view, so turning around replays the spin and the scan. */}
+      {/* Keyed by the view, so turning around replays the spin. */}
       <g key={view} className="bm-turn">
         <g transform={flip ? 'scale(-1 1)' : undefined}>
           {skin.map((d, i) => (
@@ -102,7 +87,6 @@ export default function BodyMap({ view, active, counts, onSelect, onHover, class
                 </g>
               )
             })}
-            <rect className="bm-scan" x="-186" y="-130" width="372" height="120" fill="url(#bm-scan)" pointerEvents="none" />
           </g>
           {skin.map((d, i) => (
             <path key={`edge-${i}`} d={d} className="bm-edge" />
@@ -110,7 +94,7 @@ export default function BodyMap({ view, active, counts, onSelect, onHover, class
         </g>
       </g>
 
-      {/* Counts as diamonds, drawn unflipped so the digits read correctly in the back view; a slow
+      {/* Counts in circles, drawn unflipped so the digits read correctly in the back view; a slow
           ring goes out from each, like a pulse: it hurts here. */}
       {regions.map((r) => {
         const n = counts.get(r.id) ?? 0
@@ -119,8 +103,8 @@ export default function BodyMap({ view, active, counts, onSelect, onHover, class
         const y = r.labelAt[1]
         return (
           <g key={`badge-${r.id}`} className="bm-badge" transform={`translate(${x} ${y})`} pointerEvents="none" aria-hidden="true">
-            <rect className="bm-pulse" x="-17" y="-17" width="34" height="34" />
-            <rect x="-17" y="-17" width="34" height="34" transform="rotate(45)" />
+            <circle className="bm-pulse" r="18" />
+            <circle className="bm-dot" r="18" />
             <text y="8" textAnchor="middle">
               {n}
             </text>

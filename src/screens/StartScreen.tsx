@@ -106,7 +106,7 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
       )}
       {n === 0 ? (
         <p className="tray-hint">
-          <span className="tray-diamond" aria-hidden="true" />
+          <span className="tray-dot" aria-hidden="true" />
           Stuknij miejsce na ciele, które boli, albo wpisz objaw.
         </p>
       ) : (

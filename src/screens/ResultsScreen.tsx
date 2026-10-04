@@ -112,7 +112,7 @@ export default function ResultsScreen({ draft, savedAt, onRestart, onToast }: Pr
         <p className="mt-2 text-base text-ink-2">
           {draft.forWhom === 'other' ? 'Osoba' : 'Ty'}: {draft.sex ? SEX_LABEL[draft.sex] : '—'}, {draft.age ?? '—'} lat · objawy: {symptoms.join(', ')}
         </p>
-        <p className="mt-3 border-l-2 border-line-2 bg-s1 px-3 py-2.5 text-base text-ink-2">Wynik to wstępna ocena na podstawie Twoich odpowiedzi, a nie diagnoza. O dalszym postępowaniu decyduje lekarz.</p>
+        <p className="mt-3 rounded-xl bg-s1 px-4 py-3 text-base text-ink-2">Wynik to wstępna ocena na podstawie Twoich odpowiedzi, a nie diagnoza. O dalszym postępowaniu decyduje lekarz.</p>
       </div>
 
       <TriageCard triage={result.triage} reasons={result.reasons} />

@@ -77,7 +77,7 @@ export default function SymptomSearch({ sex, picked, onPick, autoFocus }: Props)
         />
       </div>
       {open && query.trim().length >= 2 && (
-        <ul id="symptom-search-list" role="listbox" className="absolute z-20 mt-1 max-h-72 w-full overflow-auto border border-line-2 bg-s1 py-1">
+        <ul id="symptom-search-list" role="listbox" className="absolute z-20 mt-1 max-h-72 w-full overflow-auto rounded-xl border border-line-2 bg-s1 py-1">
           {results.length === 0 && <li className="px-3 py-2.5 text-base text-ink-2">Nie znaleziono. Spróbuj innego słowa albo wskaż miejsce na sylwetce.</li>}
           {results.map((s, i) => {
             const already = picked.has(s.id)

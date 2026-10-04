@@ -38,15 +38,15 @@ export default function Header({ path }: Props) {
           <span className="hidden sm:inline">{link('/pomoc', 'Jak to działa')}</span>
           {account.status === 'signed-in' && account.user && (
             <details className="relative ml-1">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 border border-line-2 py-1 pr-3 pl-1 hover:bg-s2 [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-full border border-line-2 py-1 pr-3 pl-1 hover:bg-s2 [&::-webkit-details-marker]:hidden">
                 {account.user.imageUrl ? (
-                  <img src={account.user.imageUrl} alt="" className="h-7 w-7" />
+                  <img src={account.user.imageUrl} alt="" className="h-7 w-7 rounded-full" />
                 ) : (
-                  <span className="flex h-7 w-7 items-center justify-center bg-green text-xs font-bold text-green-ink">{initials}</span>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-green text-xs font-bold text-green-ink">{initials}</span>
                 )}
                 <span className="max-w-[9rem] truncate text-[0.9375rem] font-medium text-ink">{account.user.name}</span>
               </summary>
-              <div className="absolute right-0 mt-1 w-56 border border-line-2 bg-s1 p-1">
+              <div className="absolute right-0 mt-1 w-56 rounded-xl border border-line-2 bg-s1 p-1">
                 {account.user.email && <p className="truncate px-3 py-1.5 text-sm text-ink-2">{account.user.email}</p>}
                 <a href="#/historia" className="block px-3 py-2.5 text-[0.9375rem] text-ink hover:bg-s2">
                   Historia analiz

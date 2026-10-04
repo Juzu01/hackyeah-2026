@@ -1,5 +1,6 @@
 /* "Gdzie boli?" runs inside Doco (the "Objawy" tab, in an iframe), so it wears Doco's
-   look: true black with a faint green cast, one light pastel-green accent, sharp corners.
+   colours: true black with a faint green cast and one light pastel-green accent. Shapes are kept
+   simple and soft here (rounded corners, round markers), so the checker reads calmly.
    Its own Tailwind entry (src/index.css is the atlas's) so the tokens below can become
    utilities: bg-s1, text-ink-2, border-line… */
 @import 'tailwindcss';
@@ -37,7 +38,9 @@
   /* Ambient light: a very faint pastel-green glow at the top of the page. */
   --glow: rgba(192, 228, 178, 0.1);
 
-  --cut: 10px;
+  /* Corners: cards, then buttons, fields and tiles. */
+  --r: 16px;
+  --r-sm: 12px;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
@@ -130,31 +133,18 @@ header nav :is(a, button) {
       var(--bg);
   }
 
-  /* Cards: one 10px chamfer at the top-right instead of a radius. clip-path also cuts the
-     1px border, so ::after redraws that diagonal in the card's own border colour. */
+  /* Cards (the class name is from when they had a cut corner). */
   .cut {
     position: relative;
-    clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
-  }
-  .cut::after {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: calc(100% - var(--cut) + 1px);
-    width: calc(var(--cut) * 1.4142);
-    border-top: 1px solid;
-    border-top-color: inherit;
-    transform: rotate(45deg);
-    transform-origin: 0 0;
-    pointer-events: none;
+    border-radius: var(--r);
   }
 
-  /* Primary action. The green fill is a clipped pseudo-element rather than the button itself,
-     so the clip-path does not swallow the focus outline. */
+  /* Primary action: solid green, rounded. */
   .btn-primary {
     position: relative;
     isolation: isolate;
     display: inline-flex;
+    border-radius: var(--r-sm);
     min-height: 3.25rem;
     align-items: center;
     justify-content: center;
@@ -170,8 +160,8 @@ header nav :is(a, button) {
     position: absolute;
     inset: 0;
     z-index: -1;
+    border-radius: inherit;
     background: var(--green);
-    clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
   }
   .btn-primary:hover::before {
     background: var(--green-hover);
@@ -202,7 +192,7 @@ header nav :is(a, button) {
     gap: 0.5rem;
     padding: 0 1rem;
     border: 1px solid var(--line-2);
-    border-radius: 0;
+    border-radius: var(--r-sm);
     background: transparent;
     color: var(--ink);
     font-size: 1rem;
@@ -222,10 +212,10 @@ header nav :is(a, button) {
     font-size: 0.9375rem;
   }
 
-  /* Inputs and the search box: square, raised one step, green ring when focused. */
+  /* Inputs and the search box: rounded, raised one step, green ring when focused. */
   .field {
     border: 1px solid var(--line-2);
-    border-radius: 0;
+    border-radius: var(--r-sm);
     background: var(--s2);
     color: var(--ink);
   }
@@ -254,7 +244,7 @@ header nav :is(a, button) {
     margin: 0;
   }
 
-  /* Square checkbox: hairline box, filled green with a dark tick when on. */
+  /* Checkbox: hairline box with soft corners, filled green with a dark tick when on. */
   .check {
     display: inline-grid;
     width: 1.25rem;
@@ -263,7 +253,7 @@ header nav :is(a, button) {
     place-content: center;
     margin: 0;
     border: 1px solid var(--ink-2);
-    border-radius: 0;
+    border-radius: 6px;
     background: var(--s2);
     appearance: none;
     cursor: pointer;
@@ -284,7 +274,7 @@ header nav :is(a, button) {
     visibility: visible;
   }
 
-  /* Chips and the segments of a radio group: square, hairline, green when on. */
+  /* Chips: round-ended, hairline, green when on. */
   .chip {
     display: inline-flex;
     min-height: 2.5rem;
@@ -292,6 +282,7 @@ header nav :is(a, button) {
     gap: 0.375rem;
     padding: 0 0.875rem;
     border: 1px solid var(--line-2);
+    border-radius: 999px;
     background: transparent;
     color: var(--ink);
     font-size: 0.9375rem;
@@ -319,86 +310,62 @@ header nav :is(a, button) {
     text-transform: uppercase;
   }
   /* ── The three steps (components/Steps.tsx) ───────────────────────────
-     Slanted blades like Doco's tab bar. The current one is lit and its top edge fills with
-     --fill (0–1) as the questions are answered; done ones keep a full, quieter edge. */
+     A label over a thin rounded bar each. The current bar fills with --fill (0–1) as the
+     questions are answered; done ones are full. */
   .steps {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 7px;
+    gap: 8px;
     margin: 0;
-    padding: 0 5px;
+    padding: 0;
     list-style: none;
   }
   .step {
     --fill: 0;
-    position: relative;
-    isolation: isolate;
     display: flex;
     min-width: 0;
-    height: 38px;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     gap: 7px;
     color: var(--ink-2);
     font-size: 0.875rem;
     font-weight: 700;
     white-space: nowrap;
   }
-  .step::before {
+  .step::after {
     content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border: 1px solid var(--line);
+    height: 4px;
+    border-radius: 999px;
     background:
-      linear-gradient(var(--green), var(--green)) top left / calc(var(--fill) * 100%) 2px no-repeat,
-      var(--s1);
-    transform: skewX(-14deg);
-    transition:
-      background-size 500ms var(--ease),
-      background-color 300ms var(--ease),
-      border-color 300ms var(--ease);
+      linear-gradient(var(--green), var(--green)) left / calc(var(--fill) * 100%) 100% no-repeat,
+      var(--line-2);
+    transition: background-size 500ms var(--ease);
+  }
+  .step-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
   }
   .step[data-state='now'] {
     color: var(--green);
   }
-  .step[data-state='now']::before {
-    border-color: rgb(192 228 178 / 0.4);
-    background-color: rgb(192 228 178 / 0.1);
-    box-shadow: 0 -8px 20px -14px var(--green);
-  }
   .step[data-state='done'] {
     color: var(--ink);
   }
-  .step[data-state='done']::before {
-    border-color: var(--line-2);
-    background-color: var(--s1);
-  }
   .step-n {
-    position: relative;
-    isolation: isolate;
     display: grid;
     width: 20px;
     height: 20px;
     flex: none;
     place-items: center;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
     font-size: 0.6875rem;
     font-weight: 800;
   }
-  .step-n::before {
-    content: '';
-    position: absolute;
-    inset: 3px;
-    z-index: -1;
-    border: 1.5px solid currentColor;
-    transform: rotate(45deg);
-  }
   .step:is([data-state='now'], [data-state='done']) .step-n {
-    color: var(--green-ink);
-  }
-  .step:is([data-state='now'], [data-state='done']) .step-n::before {
     border-color: var(--green);
     background: var(--green);
+    color: var(--green-ink);
   }
 
   /* ── The emergency line (components/EmergencyBar.tsx) ── */
@@ -408,8 +375,9 @@ header nav :is(a, button) {
     align-items: center;
     gap: 10px;
     margin: 0;
-    padding: 6px 12px;
-    border-left: 2px solid var(--alarm);
+    padding: 6px 14px;
+    border: 1px solid var(--alarm-line);
+    border-radius: var(--r-sm);
     background: var(--alarm-soft);
     color: var(--ink);
     font-size: 0.9375rem;
@@ -450,8 +418,7 @@ header nav :is(a, button) {
     background: var(--s2);
   }
 
-  /* ── The body on its stage (StartScreen + components/BodyMap.tsx) ──
-     The figure stands on Doco's slanted horizon in a soft light, like the sprout in Rozmowa. */
+  /* ── The body on its stage (StartScreen + components/BodyMap.tsx): the figure in a soft light ── */
   .stage {
     display: flex;
     flex-direction: column;
@@ -508,7 +475,8 @@ header nav :is(a, button) {
   }
   .stage-empty {
     padding: 16px;
-    border: 1px dashed var(--line-2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
     color: var(--ink-2);
   }
 
@@ -556,14 +524,7 @@ header nav :is(a, button) {
     stroke-opacity: 1;
     stroke-width: 2.4;
   }
-  .bm-ground {
-    stroke-width: 2;
-  }
-  .bm-ground.is-far {
-    stroke-width: 1.4;
-    opacity: 0.35;
-  }
-  .bm-badge rect {
+  .bm-dot {
     fill: var(--green);
     stroke: var(--bg);
     stroke-width: 3;
@@ -579,11 +540,11 @@ header nav :is(a, button) {
   @keyframes bm-pulse {
     from {
       opacity: 0.7;
-      transform: rotate(45deg) scale(1);
+      transform: scale(1);
     }
     to {
       opacity: 0;
-      transform: rotate(45deg) scale(2.1);
+      transform: scale(2.1);
     }
   }
   .bm-badge text {
@@ -604,27 +565,10 @@ header nav :is(a, button) {
       transform: scaleX(0.12);
     }
   }
-  /* One scan line passes down the body as it appears. */
-  .bm-scan {
-    animation: bm-scan 1500ms cubic-bezier(0.45, 0, 0.35, 1) 250ms both;
-  }
-  @keyframes bm-scan {
-    from {
-      transform: translateY(0);
-    }
-    85% {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-      transform: translateY(980px);
-    }
-  }
   @media (prefers-reduced-motion: reduce) {
     .bm-turn {
       animation: none;
     }
-    .bm-scan,
     .bm-pulse {
       display: none;
     }
@@ -650,18 +594,18 @@ header nav :is(a, button) {
     gap: 12px;
     margin: 0;
     padding: 0 14px;
-    border: 1px dashed var(--line-2);
-    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    background: var(--s1);
     color: var(--ink-2);
     font-size: 0.9375rem;
   }
-  .tray-diamond {
-    width: 9px;
-    height: 9px;
+  .tray-dot {
+    width: 8px;
+    height: 8px;
     flex: none;
+    border-radius: 50%;
     background: var(--green);
-    box-shadow: 0 0 10px var(--green);
-    transform: rotate(45deg);
   }
   .tray-chips {
     display: flex;
@@ -681,8 +625,9 @@ header nav :is(a, button) {
     min-height: 38px;
     align-items: center;
     gap: 8px;
-    padding: 0 10px 0 12px;
+    padding: 0 10px 0 14px;
     border: 1px solid rgb(192 228 178 / 0.4);
+    border-radius: 999px;
     background: var(--green-soft);
     color: var(--ink);
     font-size: 0.9375rem;
@@ -717,6 +662,7 @@ header nav :is(a, button) {
     height: 22px;
     padding: 0 5px;
     place-items: center;
+    border-radius: 999px;
     background: var(--green-ink);
     color: var(--green);
     font-size: 0.8125rem;
@@ -729,6 +675,7 @@ header nav :is(a, button) {
       margin: 0;
       padding: 14px 16px;
       border: 1px solid var(--line);
+      border-radius: var(--r);
       background: var(--s1);
     }
     .tray-chips {
@@ -751,9 +698,9 @@ header nav :is(a, button) {
     flex-direction: column;
     overflow: hidden;
     border-top: 1px solid rgb(192 228 178 / 0.35);
+    border-radius: 20px 20px 0 0;
     background: var(--s1);
     box-shadow: 0 -20px 60px rgb(0 0 0 / 0.6);
-    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
     animation: sheet-up 300ms var(--ease) both;
   }
   .sheet-grip {
@@ -761,6 +708,7 @@ header nav :is(a, button) {
     height: 4px;
     flex: none;
     margin: 8px auto 0;
+    border-radius: 999px;
     background: var(--line-2);
   }
   .sheet-foot {

@@ -18,7 +18,7 @@ function Tile({ selected, onClick, children, tone = 'default' }: { selected?: bo
       type="button"
       onClick={onClick}
       aria-pressed={selected}
-      className={`min-h-14 border px-4 py-3.5 text-left text-base font-medium transition-colors sm:text-lg ${
+      className={`min-h-14 rounded-xl border px-4 py-3.5 text-left text-base font-medium transition-colors sm:text-lg ${
         selected ? 'border-green bg-green-soft text-ink' : tone === 'yes' ? 'border-line-2 bg-s2 text-ink hover:border-alarm-line hover:bg-alarm-soft' : 'border-line-2 bg-s2 text-ink hover:border-green/60'
       }`}
     >
@@ -120,7 +120,7 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
               Dlaczego o to pytamy?
             </button>
             {why && (
-              <p className="border-l-2 border-green bg-s2 px-3 py-2.5 text-base text-ink-2">
+              <p className="rounded-xl bg-s2 px-4 py-3 text-base text-ink-2">
                 Najpierw wykluczamy objawy, które wymagają natychmiastowej pomocy ({step.flag.reason}). Odpowiedź „tak” zmienia zalecenie niezależnie od reszty wywiadu.
               </p>
             )}
@@ -208,7 +208,7 @@ export default function InterviewScreen({ draft, update, onBack, onDone }: Props
                     update({ severity: v })
                     next()
                   }}
-                  className={`aspect-square border text-lg font-semibold tabular-nums ${
+                  className={`aspect-square rounded-xl border text-lg font-semibold tabular-nums ${
                     draft.severity === v ? 'border-green bg-green font-bold text-green-ink' : v >= 8 ? 'border-line-2 bg-s2 text-ink hover:border-alarm-line hover:bg-alarm-soft' : 'border-line-2 bg-s2 text-ink hover:border-green/60'
                   }`}
                 >
