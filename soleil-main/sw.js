@@ -9,7 +9,7 @@ self.addEventListener('push', (event) => {
   event.waitUntil(
     self.registration.showNotification(data.title, {
       body: data.body,
-      icon: 'logosoleil.png',
+      icon: 'icon-192.png?v=2',
       data: { url: data.url || './' }
     })
   );

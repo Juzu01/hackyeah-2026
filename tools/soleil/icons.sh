@@ -1,5 +1,6 @@
 #!/bin/sh
-# Renders Soleil's app icons (soleil-main/) from tools/soleil/icon.svg. Needs rsvg-convert (librsvg).
+# Renders Doco's app icons (soleil-main/) from tools/soleil/icon.svg. Needs rsvg-convert (librsvg).
+# After changing them, bump ?v= on the icons in soleil-main/manifest.json and index.html.
 set -eu
 cd "$(dirname "$0")"
 out=../../soleil-main
