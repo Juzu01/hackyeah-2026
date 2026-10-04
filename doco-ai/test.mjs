@@ -151,6 +151,26 @@ await check('bez pasującego wpisu: prompt mówi, że go nie ma', async () => {
   assert.deepEqual(r.data.entries, [])
   assert.match(sent.body.system, /brak wpisu pasującego/)
 })
+await check('prompt: tylko zdrowie i samopoczucie, prośby spoza (przepis) odrzuca jednym zdaniem', async () => {
+  const r = await ask('jak zrobić naleśniki?')
+  assert.equal(r.code, 200)
+  assert.match(sent.body.system, /Rozmawiasz tylko o zdrowiu i samopoczuciu/)
+  assert.match(sent.body.system, /przepis kulinarny/)
+  assert.match(sent.body.system, /odrzuć jednym zdaniem/)
+})
+await check('prompt: przy dolegliwości najpierw dopytaj, potem konkretne kroki', async () => {
+  await ask('boli mnie mięsień')
+  assert.match(sent.body.system, /najpierw o to dopytaj/)
+  assert.match(sent.body.system, /jak rozmasować/)
+})
+await check('kontekst z aplikacji (dziennik) trafia do promptu, przycięty i bez znaków sterujących', async () => {
+  await call({ messages: [{ role: 'user', content: 'boli mnie łydka' }], context: 'Ból zapisany w dzienniku: wczoraj Łydka (prawa strona), 5/10.\u0007' + 'x'.repeat(3000) })
+  assert.match(sent.body.system, /CO WIESZ O UŻYTKOWNIKU[\s\S]*wczoraj Łydka \(prawa strona\), 5\/10/)
+  assert.ok(!sent.body.system.includes('\u0007'))
+  assert.ok(!sent.body.system.includes('x'.repeat(1500)))
+  await ask('hej')
+  assert.match(sent.body.system, /\(nic nie zapisał\)/)
+})
 await check('pytanie uzupełniające bierze temat z poprzedniego pytania', async () => {
   const r = await call({ messages: [{ role: 'user', content: 'co na ból głowy?' }, { role: 'assistant', content: 'Paracetamol…' }, { role: 'user', content: 'a w ciąży?' }] })
   assert.ok(r.data.entries.includes('bol-glowy'))

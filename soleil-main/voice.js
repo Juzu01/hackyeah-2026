@@ -329,6 +329,16 @@ function stopVoicePreview() {
   if (voicePreview) { voicePreview.pause(); voicePreview = null; }
 }
 
+function voiceBackground() {
+  const saved = window.DocoContext ? window.DocoContext.summary() : '';
+  return 'Informacja od aplikacji Doco, nie od użytkownika. Nie czytaj jej na głos i nie wspominaj o niej. ' +
+    'Rozmawiasz tylko o zdrowiu i samopoczuciu. Na prośby spoza tego (przepis, zadanie domowe, kod, pogoda, wyniki meczów, ciekawostki) ' +
+    'nie odpowiadasz nawet krótko: jednym zdaniem mówisz, że w tym nie pomożesz, bo jesteś od zdrowia i samopoczucia, i pytasz, jak się czuje. ' +
+    'Gdy ktoś mówi o dolegliwości, najpierw krótko dopytaj: gdzie, od kiedy, jak mocno i od czego się zaczęło. Potem daj konkretne kroki ' +
+    '(np. jak rozmasować mięsień: gdzie, jak mocno, jak długo; świeżego urazu nie masuj przez pierwsze dni) i powiedz, kiedy iść do lekarza. ' +
+    (saved ? 'Co użytkownik zapisał w aplikacji (nawiąż, gdy pasuje, bez wyliczania i bez diagnoz):\n' + saved : 'Użytkownik nic jeszcze nie zapisał w dzienniku.');
+}
+
 function loadVoiceSdk() {
   if (window.ElevenLabsClient) return Promise.resolve(window.ElevenLabsClient);
   if (!voiceSdkPromise) {
@@ -420,6 +430,10 @@ async function startVoiceCall() {
     });
     if (!current()) { conversation.endSession().catch(() => {}); return; }
     voiceConversation = conversation;
+    // Background for the agent, never said aloud: health topics only, ask before advising, and what the person saved
+    // in the app (kontekst.js). The agent's own prompt says the same (tools/elevenlabs-agent.mjs); this covers an agent
+    // that hasn't been updated yet.
+    try { conversation.sendContextualUpdate(voiceBackground()); } catch (e) { console.warn('Doco voice context:', e); }
     if (voiceState === 'connecting') setVoiceState('listening');
     startVoiceTimer();
     startVoiceLevels();

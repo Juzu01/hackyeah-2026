@@ -189,8 +189,32 @@
   const MEH = /^(jakos|ujdzie|tak srednio)$|\b(srednio|tak sobie|jako tako|bywalo lepiej|bez szalu|ni to ni owo)\b/;
   const FINE = /^(dobrze|ok|okej|oki|spoko|dobra|w porzadku|niezle|calkiem dobrze|git)$/;
   const NEGATED_JOY = /\bnie (jest |czuje sie |bylo |jestem |mam )?(dobrze|super|fajnie|swietnie|wesolo|szczesliw\w*|dobry)\b/;
-  const PAIN_WORD = /\b(boli|bola|bolal\w*|bolec|bol|bolu|bole|bolem|bolow|obolal\w*|kluje|klucie|rwie|piecze|kontuzj\w*|uraz\w*|skrecil\w*|naciagn\w*|migren\w*)\b/;
+  const PAIN_WORD = /\b(boli|bola|bolal\w*|bolec|bol|bolu|bole|bolem|bolow|obolal\w*|kluje|klucie|rwie|piecze|kontuzj\w*|uraz\w*|skrecil\w*|naciagn\w*|naderw\w*|zakwas\w*|migren\w*)\b/;
   const BODY_PART = /\b(glowa|glowe|glowy|kolan\w*|plecy|plecach|plecami|kregoslup\w*|brzuch\w*|zoladek|zoladk\w*|szyj\w*|kark\w*|bark\w*|ramie|ramion\w*|nog[aiei]|nogach|nodze|stop[aey]|stopie|kostk\w*|lydk\w*|reka|reke|reki|rece|dlon\w*|nadgarst\w*|lokie\w*|lokci\w*|biodr\w*|zab|zeba|zebow|zebach|ucho|uszy|ucha|gardl\w*|miesn\w*|staw\w*|kosc\w*|udo|uda)\b/;
+  const TENSE = /\b(spiet\w*|napiet\w*|sztywn\w*|zesztywnial\w*|zablokowan\w*|przykurcz\w*)\b/;
+
+  // What started a muscle pain decides the advice: massage helps sore or tense muscles, but not a fresh strain.
+  // In a pain thread these pick the checked entry (if the base has it); the sudden-injury one is checked first.
+  const CAUSES = [
+    ['naciagniecie-miesnia', /\b(nagle|nagly|nagla|nagle mnie|naciagn\w*|naderw\w*|strzelil\w*|strzyknel\w*|chrupnel\w*|trzasnel\w*|szarpn\w*|uraz\w*|kontuzj\w*|upadl\w*|upadek|przewrocil\w*|poslizgn\w*|przy (sprincie|skoku|podnoszeniu|wyskoku|zrywie|kopnieciu)|(w trakcie|podczas|w czasie) (biegu|treningu|meczu|cwiczen\w*|gry))\b/],
+    ['zakwasy', /\b(zakwas\w*|po (\w+ )?(treningu|treningach|bieganiu|biegu|silowni|cwiczeniach|cwiczeniu|wysilku|meczu|rowerze|basenie|wf|wfie|crossfi\w*|jodze|tancu|tancach|wspinaczce|pilce|maratonie|zawodach|spacerze|wycieczce|gorach)|(trenowal\w*|cwiczyl\w*|biegal\w*|bylem na silowni|bylam na silowni) (wczoraj|przedwczoraj|wieczorem|rano))\b/],
+    ['spiete-miesnie-automasaz', /\b(od siedzenia|siedz\w* (\w+ )?(przy|za|przed)|przy (komputerze|biurku|laptopie|pracy)|spiet\w*|napiet\w*|sztywn\w*|zesztywnial\w*|zle spal\w*|po (spaniu|nocy|przebudzeniu)|od stresu|ze stresu|przez stres|od telefonu|nad telefonem)\b/],
+  ];
+  // Replies in a pain thread that may answer 'od czego się zaczęło?' ('od siedzenia', 'ze stresu', 'źle spałem')
+  const PAIN_FOLLOW = ['open', 'pain', 'symptom', 'stress', 'tired', 'work', 'no', 'dunno', 'meh'];
+  // Only muscles: a joint, the head, belly, chest or a tooth needs other advice
+  const MUSCLE_PART = /\b(miesn\w*|lydk\w*|udo|uda|udzie|udach|plec\w*|kark\w*|bark\w*|ramie|ramion\w*|szyj\w*|posladk\w*|lopatk\w*|kregoslup\w*|ledzwi\w*|krzyz\w*|biceps\w*|triceps\w*|dwuglow\w*|czworoglow\w*|przedrami\w*|nog[aiei]|nogach|nodze)\b/;
+  const NOT_MUSCLE = /\b(glow\w*|brzuch\w*|zoladk\w*|gardl\w*|zab|zeba|zebow|zeby|zebach|ucho|uszy|ucha|klat\w*|serc\w*|kolan\w*|kostk\w*|staw\w*|nadgarst\w*|lokc\w*|lokie\w*|biodr\w*|stop[aey]|stopie|palc\w*|goraczk\w*|temperatur\w*|oddech\w*|duszn\w*)\b/;
+  function causeEntry(kb, n) {
+    if (!kb || NOT_MUSCLE.test(n) || (BODY_PART.test(n) && !MUSCLE_PART.test(n))) return null;
+    for (const [id, re] of CAUSES) {
+      if (!re.test(n)) continue;
+      const item = kb.find((x) => x.entry.id === id);
+      if (item) return item.entry;
+    }
+    return null;
+  }
+
   // Symptoms other than pain ('mam gorączkę', 'kręci mi się w głowie'), and questions about the chat itself
   const SYMPTOM = /\b(goraczk\w*|temperatur\w*|katar\w*|kaszel|kaszl\w*|wysypk\w*|swedz\w*|swedzi|zawrot\w*|kreci mi sie w glowie|mdli|mdlosci|nudnosci|wymiot\w*|biegunk\w*|zaparci\w*|krwawi\w*|krwotok\w*|opuchl\w*|obrzek\w*|spuchl\w*|puchnie|mrowi\w*|oslabion\w*|oslabieni\w*|przeziebi\w*|grypa|grype|grypy|infekcj\w*|chory|chora|choruje)\b/;
   const DIAGNOSIS = /\b(co mi jest|co mi dolega|co to moze byc|czy jestem chor\w*|postaw\w* (mi )?diagnoz\w*|zdiagnozuj\w*)\b/;
@@ -200,6 +224,44 @@
   const GREETING = /^(hej\w*|czesc|witaj\w*|dzien dobry|dobry wieczor|siema\w*|elo|halo|hello|hi|hey|yo|serwus|dobry)\b/;
   const THANKS = /\b(dzieki|dziekuje|dziekuj\w*|dzieks|thx|thanks|wdzieczn\w*)\b/;
   const BYE = /\b(pa pa|papa|dobranoc|do zobaczenia|do uslyszenia|na razie|narazie|lece|ide spac|bywaj)\b|^pa$/;
+
+  // ---- Off-topic: Doco talks only about health and wellbeing. Requests for recipes, homework, code, sports results,
+  // weather, trivia, jokes or a new role get a short "not with this" and an invitation back, never the answer itself.
+  // Anything that also mentions health, the body, a symptom or a medicine stays a health question.
+  const FOOD = '(nalesnik\\w*|ciast\\w*|pierog\\w*|zup\\w*|pizz\\w*|makaron\\w*|sernik\\w*|tort\\w*|gofr\\w*|plack\\w*|placek|kotlet\\w*|schabow\\w*|bigos\\w*|rosol\\w*|gulasz\\w*|jajecznic\\w*|omlet\\w*|frytk\\w*|burger\\w*|sushi|lazani\\w*|spaghetti|risott\\w*|muffin\\w*|babeczk\\w*|ciastecz\\w*|pancake\\w*|drink\\w*|chleb\\w*|bulk\\w*|obiad\\w*|kolacj\\w*|sniadani\\w*|deser\\w*|salatk\\w*|sos\\w*|kurczak\\w*|ryz\\w*)';
+  const OFFTOPIC = {
+    cooking: [/\bprzepis(y|u|em|ow|ie)?\b(?! (na )?(lek|leki|lekow|recept))/, new RegExp(`\\b(jak|jak sie) (zrobic|zrobi|robi|ugotowac|ugotowa|upiec|upiecz|usmazyc|usmaz|przyrzadzic|przygotowac|zrobic dobre|zrobic pyszne) (\\w+ ){0,2}${FOOD}`),
+      new RegExp(`\\b(ugotuj|upiecz|usmaz|zrob mi) (\\w+ ){0,2}${FOOD}`), new RegExp(`\\bskladniki (na|do) (\\w+ ){0,2}${FOOD}`),
+      /\bco (moge |mam )?(ugotowac|upiec|zrobic|przygotowac) na (obiad|kolacje|sniadanie|deser|impreze|urodziny)\b/],
+    homework: [/\b(napisz|napiszesz|zrob|zrobisz|rozwiaz|rozwiazesz|sprawdz|popraw|pomoz mi (napisac|zrobic|rozwiazac|z|w)) (mi |za mnie )?(\w+ ){0,2}(wypracowani\w*|rozprawk\w*|zadani\w*|prac\w* domow\w*|referat\w*|esej\w*|wiersz\w*|piosenk\w*|opowiadani\w*|list\w* motywacyjn\w*|cv|maila|e mail\w*|wiadomosc\w* do szefa|prezentacj\w*|sprawozdani\w*|test\w* z|kartkowk\w*|matm\w*|matematyk\w*|fizyk\w*|chemi\w*|polsk\w*|angielsk\w*|histori\w*)\b/,
+      /\b(zadani\w* domow\w*|prac\w* domow\w*)\b.*\b(zrob|rozwiaz|napisz|pomoz)\w*/],
+    code: [/\b(napisz|zrob|popraw|napraw|wytlumacz|wyjasnij) (mi )?(\w+ ){0,2}(kod\w*|program\w*|skrypt\w*|funkcj\w*|petl\w*|strone internetow\w*)\b/,
+      /\bjak (napisac|zrobic|zaprogramowac|policzyc) (\w+ ){0,3}w (python\w*|javascript\w*|typescript\w*|java|html|css|sql|excelu)\b/],
+    sports: [/\bkto (wygral|wygra|przegral|strzelil)\b/, /\bwynik\w* (meczu|spotkania|wyborow)\b/, /\b(jak|ile) (zagral\w*|strzelil\w*)\b/, /\b(ekstraklas\w*|liga mistrzow|premier league|transfer\w* (pilkarz\w*|zawodnik\w*))\b/],
+    weather: [/\bjaka (jest |bedzie )?pogoda\b/, /\bprognoz\w* pogody\b/, /\bczy (jutro |dzis |dzisiaj )?bedzie (padac|padal|snieg|slonce|burza)\b/],
+    facts: [/\bstolic\w* (polski|francji|niemiec|hiszpanii|wloch|anglii|usa|\w+)\b/, /\bkto (byl|jest|zostal) (prezydent\w*|premier\w*|krol\w*|papiez\w*)\b/, /\bkiedy (byla|wybuchla|zaczela sie|skonczyla sie) (bitwa|wojna|rewolucja)\b/, /\b(ile to jest|policz|oblicz) \d/, /^\d+ (razy|plus|minus|dodac|odjac|podzielic przez) \d+/, /\bprzetlumacz\w*\b/, /\bjak (jest|bedzie|powiedziec) po (angielsku|niemiecku|hiszpansku|francusku|wlosku|rosyjsku)\b/],
+    fun: [/\bopowiedz (mi )?(jakis |jakiegos )?(kawal|dowcip|zart|bajk)\w*/, /\bpolec\w* (mi )?(jakis |jakas |jakies )?(film|serial|gr[eay]|ksiazk|piosenk|muzyk|anime|podcast)\w*/, /\bco (obejrzec|poczytac|posluchac)\b/, /\b(kurs|cena|ile kosztuje) (\w+ )?(walut\w*|euro|dolara|franka|bitcoin\w*|kryptowalut\w*|akcji)\b/, /\b(w co|czy warto) (za)?inwestowac\b/, /\bjaki (telefon|laptop|komputer|samochod|rower) (kupic|wybrac)\b/, /\bjak naprawic (komputer|telefon|laptop|rower|samochod|auto|pralk\w*|kran)\b/],
+    role: [/\b(zignoruj|zapomnij) (\w+ ){0,2}(instrukcj\w*|zasad\w*|polecen\w*|prompt\w*)\b/, /^(prosze )?udawaj\b/, /\budawaj ze jestes\b/,
+      /\bod teraz jestes\b/, /\bjestes teraz (\w+ )?(kucharz\w*|nauczyciel\w*|programist\w*|asystent\w*|chatgpt|gpt|kims innym)\b/, /\bwciel sie w\b/],
+  };
+  const OFFTOPIC_LEAD = {
+    cooking: 'Przepisów nie podam',
+    homework: 'Z zadaniami i pisaniem tekstów nie pomogę',
+    code: 'Z programowaniem nie pomogę',
+    sports: 'Wyników i wiadomości nie sprawdzam',
+    weather: 'Pogody nie sprawdzam',
+    facts: 'Z tym nie pomogę',
+    fun: 'Z tym nie pomogę',
+    role: 'Zostanę przy tym, czym jestem',
+  };
+  // Feelings win too: 'opowiedz mi kawał, bo jest mi smutno' gets the conversation about the sadness
+  const FEELINGS = ['sad', 'anxiety', 'stress', 'lonely', 'anger'];
+  function offTopic(n) {
+    if (HEALTH.test(n) || SYMPTOM.test(n) || PAIN_WORD.test(n) || BODY_PART.test(n) || DIAGNOSIS.test(n)) return null;
+    if (FEELINGS.some((t) => T[t].some((re) => re.test(n)))) return null;
+    for (const [kind, list] of Object.entries(OFFTOPIC)) if (list.some((re) => re.test(n))) return kind;
+    return null;
+  }
 
   // Short answers that only make sense in the context of the previous message
   const YES = /^(tak|tak tak|no tak|tak opowiedz|opowiedz|tak poprosze|poprosze|tak chetnie|dawaj|tak dawaj|jasne|ok|okej|okay|oki|dobrze|dobra|sprobuje|sprobujmy|moge|chce|zgoda|pewnie|spoko|niech bedzie|no|da sie|dam rade|chetnie|tak chce|tak sprobuje|czemu nie|zrobione|zrobilem|zrobilam|gotowe)$/;
@@ -269,10 +331,11 @@
       ['write', 'Cieszę się razem z tobą! Mały pomysł: zapisz dziś trzy zdania o tym, co było dobre. W gorszy dzień miło będzie do nich wrócić.'],
       ['ask', 'Super! Takie chwile dodają sił na później. Co dziś najbardziej ci pomogło?'],
     ],
-    // Pain or another symptom with no checked entry: say plainly when not to wait, instead of sending the user elsewhere
+    // Pain with no checked entry yet: ask what decides the advice (where, since when, what started it), and say plainly
+    // when not to wait. The answer to these questions picks the entry (see CAUSES).
     pain: [
-      ['ask', `Przykro mi, że cię boli. Nie postawię diagnozy, ale powiem ci, kiedy nie czekać: jeśli ból jest nagły i bardzo silny, narasta mimo odpoczynku albo pojawia się z dusznością czy omdleniem, dzwoń pod ${TEL112}. Jeśli jest mocny, nie mija po kilku dniach albo dochodzi gorączka lub obrzęk, idź do lekarza rodzinnego (${AFTER_HOURS}). Gdzie dokładnie boli i od kiedy?`],
-      ['ask', `Oj, to nieprzyjemne. Najważniejsze na początek: nagły, bardzo silny ból albo ból z dusznością czy omdleniem to powód, żeby od razu dzwonić pod ${TEL112}. Silny ból, który nie mija po kilku dniach, albo ból z gorączką czy obrzękiem to sprawa dla lekarza rodzinnego (${AFTER_HOURS}). Od kiedy to czujesz i co go nasila?`],
+      ['ask', `Przykro mi, że cię boli. Dopytam, żeby podpowiedzieć coś konkretnego: gdzie dokładnie boli i od kiedy? Zaczęło się po treningu, nagle przy ruchu albo urazie, czy samo, na przykład od siedzenia? Gdyby ból był nagły i bardzo silny albo pojawiła się duszność czy omdlenie, dzwoń pod ${TEL112}. Silny ból, który nie mija po kilku dniach, to sprawa dla lekarza rodzinnego (${AFTER_HOURS}).`],
+      ['ask', `Oj, to nieprzyjemne. Powiedz mi więcej, to podpowiem, co możesz zrobić: gdzie boli, jak mocno (od 1 do 10) i od czego się zaczęło — po wysiłku, po nagłym ruchu albo urazie, czy bez powodu? Nagły, bardzo silny ból albo ból z dusznością czy omdleniem to powód, żeby od razu dzwonić pod ${TEL112}, a ból, który nie mija po kilku dniach albo idzie z gorączką czy obrzękiem, to sprawa dla lekarza rodzinnego (${AFTER_HOURS}).`],
     ],
     symptom: [
       ['ask', `Przykro mi, że źle się czujesz. Nie postawię diagnozy, ale powiem ci, kiedy nie czekać: duszność, ból w klatce piersiowej, omdlenie, nagłe splątanie albo stan, który szybko się pogarsza, to powód, żeby dzwonić pod ${TEL112}. Jeśli objawy są silne, nie mijają po kilku dniach albo wysoka gorączka nie spada, idź do lekarza rodzinnego (${AFTER_HOURS}). Od kiedy to trwa i co jeszcze czujesz?`],
@@ -437,6 +500,20 @@
       (health ? ', a w sprawach zdrowia wolę nie zgadywać. Najpewniej odpowie ci lekarz rodzinny albo farmaceuta.' : '.') +
       (topics ? ` Sprawdzone odpowiedzi mam na przykład o tematach: ${topics}.` : '') + ' Możemy też po prostu porozmawiać.';
   }
+  const OFFTOPIC_LINE = {
+    cooking: 'Przepisów nie podam, bo jestem od zdrowia i samopoczucia.',
+    homework: 'Z zadaniami i pisaniem tekstów nie pomogę, bo jestem od zdrowia i samopoczucia.',
+    code: 'Z programowaniem nie pomogę, bo jestem od zdrowia i samopoczucia.',
+    sports: 'Wyników i wiadomości nie sprawdzam, bo jestem od zdrowia i samopoczucia.',
+    weather: 'Pogody nie sprawdzam, bo jestem od zdrowia i samopoczucia.',
+    role: 'Zostanę sobą: jestem Doco i rozmawiam tylko o zdrowiu i samopoczuciu.',
+  };
+  function offTopicReply(kind, kb, rand) {
+    const topics = knownTopics(kb, rand).split(', ').filter(Boolean).slice(0, 3).join(', ');
+    return (OFFTOPIC_LINE[kind] || 'Z tym nie pomogę, bo jestem od zdrowia i samopoczucia.') +
+      ' Mogę za to porozmawiać o tym, jak się czujesz, co cię boli albo co cię martwi' +
+      (topics ? `, a sprawdzone porady mam na przykład o tematach: ${topics}` : '') + '. O czym chcesz pogadać?';
+  }
   function aboutReply(kb, rand) {
     const topics = knownTopics(kb, rand);
     return 'Jestem Doco, czat wsparcia. Mogę z tobą porozmawiać, gdy jest ci ciężko, podsunąć proste ćwiczenia, na przykład spokojny oddech, ' +
@@ -448,8 +525,21 @@
   const OFFER_AFTER = ['sad', 'anxiety', 'stress', 'lonely', 'anger', 'tired', 'motivation', 'work', 'conflict'];
   const offerLine = (e, lead = ' Jeśli chcesz,') => `${lead} opowiem ci też, co wiadomo o temacie „${shortTitle(e)}”. Wystarczy napisać „tak”.`;
 
-  function infoReply(e) {
+  // The selfCare steps that share the most word stems with the question ('jak rozmasować kark' -> the massage steps),
+  // in the entry's own order; without a match, the first ones
+  function closest(list, n, k) {
+    const stems = [...new Set(n.split(' ').filter((w) => w.length > 3).map((w) => w.slice(0, 5)))];
+    const scored = list.map((item, i) => {
+      const words = normalize(item).split(' ');
+      return [i, stems.filter((st) => words.some((w) => w.startsWith(st))).length];
+    });
+    const keep = new Set(scored.sort((a, b) => b[1] - a[1] || a[0] - b[0]).slice(0, k).map(([i]) => i));
+    return list.filter((_, i) => keep.has(i));
+  }
+  function infoReply(e, n = '') {
     let html = esc(e.answer);
+    const steps = closest(e.selfCare || [], n, 4);
+    if (steps.length) html += `<span class="hy-steps-title">Co możesz zrobić</span><ol class="hy-steps">${steps.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>`;
     const now = (e.warningSigns || []).filter((w) => w.triage === 'emergency').slice(0, 3);
     if (now.length) html += ` Nie czekaj, dzwoń pod <a class="hy-tel" href="tel:112">112</a>, jeśli: ${now.map((w) => esc(lowerFirst(w.sign.replace(/\.$/, '')))).join('; ')}.`;
     const links = (e.sources || []).filter((s) => /^https:\/\//.test(s.url)).slice(0, 3)
@@ -469,6 +559,8 @@
     if (ASSAULT.test(n)) return { topic: 'assault', n };
     if (VIOLENCE.some((re) => re.test(n))) return { topic: 'violence', n };
     if (HELP.test(n)) return { topic: 'help', n };
+    const off = offTopic(n);
+    if (off) return { topic: 'offtopic', off, n };
     if (ABOUT.test(n)) return { topic: 'about', n };
     if (HOW_ARE_YOU.test(n)) return { topic: 'howareyou', n };
     const score = {};
@@ -478,6 +570,8 @@
     // Pain alone weighs less than an emotional topic: 'boli mnie, że się pokłóciliśmy' -> conflict
     // 'zęby' (teeth) only with diacritics: without them it collides with 'żeby' (so that)
     score.pain = (PAIN_WORD.test(n) ? 0.6 : 0) + (BODY_PART.test(n) || /zęby/i.test(raw) ? 0.6 : 0);
+    // 'mam spięty kark', 'sztywne plecy od siedzenia': tense muscles are a body complaint, not stress talk
+    if (BODY_PART.test(n) && TENSE.test(n)) score.pain += 1;
     // Ties: the more specific/emotional topic wins
     const order = ['pain', 'conflict', 'anxiety', 'lonely', 'anger', 'stress', 'sad', 'tired', 'work', 'motivation', 'joy'];
     let best = null;
@@ -504,6 +598,24 @@
     let lastKind = null; // what the last reply offered ('ask' or the step name)
     let crisisSeen = false; // after a crisis signal every later reply keeps the numbers at hand
     let offered = null; // a checked entry offered in the last reply ("Wystarczy napisać „tak”")
+    let painText = ''; // everything said in the current pain thread: 'boli mnie mięsień' + 'łydka, po bieganiu'
+    let diaryShown = false; // the pain diary is mentioned once per conversation
+
+    // A pain saved in the diary in the last two weeks (opts.context() -> { pains: [{ where, level, at }] })
+    function diaryLine(n) {
+      let ctx = null;
+      try { ctx = opts.context && opts.context(); } catch (e) { ctx = null; }
+      const p = ctx && Array.isArray(ctx.pains) ? ctx.pains.filter((x) => x && x.where && x.at).sort((a, b) => String(b.at).localeCompare(String(a.at)))[0] : null;
+      if (!p) return '';
+      const days = Math.floor((Date.now() - new Date(p.at).getTime()) / 864e5);
+      if (!(days >= 0 && days <= 14)) return '';
+      // Only the same place: 'boli mnie brzuch' says nothing about a calf in the diary ('mięsień' alone could be it)
+      const named = n.replace(/\b(miesn\w*|staw\w*|kosc\w*)\b/g, '');
+      const stems = normalize(p.where).split(' ').filter((w) => w.length > 3).map((w) => w.slice(0, 4));
+      if (BODY_PART.test(named) && !stems.some((st) => named.split(' ').some((w) => w.startsWith(st)))) return '';
+      const when = days === 0 ? 'dziś' : days === 1 ? 'wczoraj' : `${days} dni temu`;
+      return `Widzę w dzienniku, że ${when} zapisano ból: ${esc(lowerFirst(String(p.where)))}${p.level ? `, ${Number(p.level)}/10` : ''}.`;
+    }
 
     // Pick an unused item from the list (no repeats until all are used)
     function pick(key, list) {
@@ -541,8 +653,13 @@
       } else if (t === 'violence' || t === 'assault') {
         html = t === 'assault' ? ASSAULT_REPLY : VIOLENCE_REPLY;
         topic = t;
-      } else if ((info = findInfo(kb, raw, d) || (t === 'yes' && wasOffered))) {
-        html = infoReply(info);
+      } else if (t === 'offtopic') {
+        html = offTopicReply(d.off, kb, rand);
+        topic = t;
+      } else if ((info = findInfo(kb, raw, d) || (t === 'yes' && wasOffered) ||
+        ((t === 'pain' || (topic === 'pain' && PAIN_FOLLOW.includes(t))) && causeEntry(kb, `${topic === 'pain' ? painText : ''} ${d.n}`)))) {
+        // A checked entry, also when the answer to 'od czego się zaczęło?' picks it ('po bieganiu' -> zakwasy)
+        html = infoReply(info, d.n);
         kind = 'info';
         t = `info:${info.id}`;
         topic = 'info';
@@ -576,17 +693,25 @@
       } else {
         [kind, html] = pick(t, R[t]);
         topic = t;
+        if (t === 'pain' && !diaryShown) {
+          const line = diaryLine(d.n);
+          if (line) { html = html.replace(/^([^.!?]*[.!?])/, `$1 ${line}`); diaryShown = true; }
+        }
         const offer = OFFER_AFTER.includes(t) && matchInfo(kb, d.n);
         // 'mam depresję' names a condition, it doesn't say what happened today
         if (offer && HAVE_CONDITION.test(d.n)) [kind, html] = ['ask', 'Dziękuję, że mi o tym mówisz. Jak się dziś z tym czujesz?'];
         if (offer && kind === 'ask') { html += offerLine(offer); offered = offer; }
       }
       lastKind = kind;
+      painText = topic === 'pain' ? `${painText} ${d.n}`.trim() : '';
       if (t === 'crisis') crisisSeen = true;
       else if (crisisSeen) html += REMINDER;
 
       const text = strip(html);
-      return { topic: t, kind, html, text, offer: offered ? offered.id : null, delay: 600 + Math.round(rand() * 300) + Math.min(300, text.length) };
+      // Doco 'thinks' before answering, longer for a longer answer; crisis and emergency answers come at once
+      const urgent = ['crisis', 'redflag', 'violence', 'assault'].includes(t);
+      const delay = urgent ? 500 : 1000 + Math.round(rand() * 500) + Math.min(1500, text.length * 3);
+      return { topic: t, kind, html, text, offer: offered ? offered.id : null, delay };
     }
 
     return { reply: respond, get topic() { return topic; } };

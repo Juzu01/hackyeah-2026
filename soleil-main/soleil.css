@@ -1490,8 +1490,52 @@ a {
 }
 .typing-indicator {
   display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+}
+.typing-dots {
+  display: flex;
   gap: 7px;
-  padding: 17px 16px;
+  padding: 3px 0;
+}
+.typing-label {
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+.typing-label.swap {
+  animation: typing-swap 0.35s ease-out;
+}
+@keyframes typing-swap {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .typing-label.swap {
+    animation: none;
+  }
+}
+
+/* Concrete steps under a checked answer (offline-companion.js infoReply) */
+.hy-steps-title {
+  display: block;
+  margin-top: 12px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.hy-steps {
+  margin: 6px 0 0;
+  padding-left: 1.3em;
+}
+.hy-steps li {
+  margin: 5px 0;
+  padding-left: 2px;
+}
+.hy-steps li::marker {
+  color: var(--green);
+  font-weight: 800;
 }
 .typing-dot {
   width: 7px;

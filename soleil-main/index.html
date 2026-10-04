@@ -65,7 +65,7 @@
   src="https://awaited-mink-45.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
   type="text/javascript"
 ></script>
-<link rel="stylesheet" href="soleil.css?v=12">
+<link rel="stylesheet" href="soleil.css?v=13">
 <link rel="stylesheet" href="voice.css?v=6">
 <link rel="stylesheet" href="diary.css?v=5">
 <!-- The mode and colour picked in Więcej → Kolor aplikacji (app.js), before the first paint -->
@@ -2126,7 +2126,8 @@ const CHAT_FALLBACK = {
 const chatText = () => CHAT_FALLBACK[currentLanguage] || CHAT_FALLBACK.pl;
 function offlineReply(text) {
   if (!window.SoleilOffline) return null;
-  if (currentLanguage === 'pl') return (offlineChat = offlineChat || window.SoleilOffline.create()).reply(text);
+  // The diary (kontekst.js) lets the chat pick up the thread: 'Widzę w dzienniku, że wczoraj zapisano ból…'
+  if (currentLanguage === 'pl') return (offlineChat = offlineChat || window.SoleilOffline.create({ context: () => window.DocoContext && window.DocoContext.get() })).reply(text);
   const t = chatText();
   const topic = window.SoleilOffline.detect(text).topic;
   let html;
@@ -2157,22 +2158,43 @@ function appendMessageSilent(role, text) {
   row.appendChild(avatar); row.appendChild(bubble); chatWindow.appendChild(row);
 }
 
+// Doco takes a moment before answering: the dots and a line that changes while the answer is prepared
+const THINKING = {
+  pl: ['Doco myśli…', 'Sprawdzam w bazie wiedzy…', 'Układam odpowiedź…'],
+  en: ['Doco is thinking…', 'Checking the knowledge base…', 'Putting the answer together…'],
+  uk: ['Doco думає…', 'Перевіряю базу знань…', 'Складаю відповідь…'],
+  de: ['Doco denkt nach…', 'Ich schaue in der Wissensbasis nach…', 'Ich formuliere die Antwort…'],
+  es: ['Doco está pensando…', 'Consultando la base de conocimientos…', 'Preparando la respuesta…'],
+};
+let typingTimer = null;
 function showTyping() {
+  removeTyping();
   const row = document.createElement('div'); row.className = 'message-row ai'; row.id = 'typingRow';
   const avatar = document.createElement('div'); avatar.className = 'avatar ai'; avatar.textContent = '';
   const bubble = document.createElement('div'); bubble.className = 'bubble ai typing-indicator';
-  bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+  bubble.setAttribute('role', 'status');
+  bubble.innerHTML = '<div class="typing-dots" aria-hidden="true"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div><span class="typing-label"></span>';
   row.appendChild(avatar); row.appendChild(bubble); chatWindow.appendChild(row);
   chatWindow.scrollTop = chatWindow.scrollHeight;
+  const steps = THINKING[currentLanguage] || THINKING.pl, label = bubble.querySelector('.typing-label');
+  let step = 0;
+  label.textContent = steps[0];
+  typingTimer = setInterval(() => {
+    if (step >= steps.length - 1) return;
+    label.textContent = steps[++step];
+    label.classList.remove('swap'); void label.offsetWidth; label.classList.add('swap');
+  }, 1000);
 }
-function removeTyping() { const t = document.getElementById('typingRow'); if (t) t.remove(); }
+function removeTyping() { clearInterval(typingTimer); typingTimer = null; const t = document.getElementById('typingRow'); if (t) t.remove(); }
 function sendSuggestion(text) { input.value = text; sendMessage(); }
 
 // Doco AI (doco-ai/ on Vercel, address in ai-config.js) answers with Claude, grounded in the checked knowledge base.
 // Crisis and emergency messages never wait for it: the offline companion's checked reply with the numbers comes at once.
+// Neither do requests that aren't about health (a recipe, homework, code, the weather): Doco says it only talks about
+// health and wellbeing, so the AI never gets the chance to write a pancake recipe.
 function safetyFirst(text) {
   if (!window.SoleilOffline) return false;
-  if (currentLanguage === 'pl') return ['crisis', 'redflag', 'violence', 'assault'].includes(window.SoleilOffline.detect(text).topic);
+  if (currentLanguage === 'pl') return ['crisis', 'redflag', 'violence', 'assault', 'offtopic'].includes(window.SoleilOffline.detect(text).topic);
   const t = chatText();
   return !!(t.crisis && (t.crisis.test(text) || t.redflag.test(text)));
 }
@@ -2193,7 +2215,8 @@ async function sendMessage() {
       method: 'POST',
       signal: AbortSignal.timeout ? AbortSignal.timeout(20000) : undefined, // a hanging server falls back to offline
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: conversationHistory, userId: currentUser?.id || null, conversationId: currentConversationId, language: currentLanguage })
+      // context: what the person saved in the app (mood, pain diary, symptom checks), so the AI can pick up the thread
+      body: JSON.stringify({ messages: conversationHistory, userId: currentUser?.id || null, conversationId: currentConversationId, language: currentLanguage, context: window.DocoContext ? window.DocoContext.summary() : '' })
     });
     const data = await res.json();
     removeTyping();
@@ -2297,9 +2320,10 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
 })();
 </script>
 <script src="ai-config.js?v=1"></script>
-<script src="offline-companion.js?v=5"></script>
+<script src="kontekst.js?v=1"></script>
+<script src="offline-companion.js?v=6"></script>
 <script src="lemur.js?v=5"></script>
-<script src="voice.js?v=6"></script>
+<script src="voice.js?v=7"></script>
 <script src="diary.js?v=4"></script>
 <script src="app.js?v=11"></script>
 <script src="quotes.js?v=5"></script>
