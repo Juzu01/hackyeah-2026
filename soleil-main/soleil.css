@@ -1193,10 +1193,11 @@ a {
   opacity: 1;
   transform: translateX(-70px) translateY(-4px) scale(0.7);
 }
-/* 1: storm. */
-.sky-box[data-mood='1'] .sky-sun {
-  transform: translateY(60px);
-  opacity: 0.2;
+/* 1: storm. The sun sets behind the horizon (the clip in art.js) and is gone. */
+.sky-box[data-mood='1'] .sky-sun,
+.sky-box[data-mood='2'] .sky-sun {
+  transform: translateY(80px);
+  opacity: 0;
 }
 .sky-box[data-mood='1'] .sky-cloud,
 .sky-box[data-mood='2'] .c1,
@@ -1229,11 +1230,7 @@ a {
     opacity: 0.2;
   }
 }
-/* 2: rain. */
-.sky-box[data-mood='2'] .sky-sun {
-  transform: translateY(40px);
-  opacity: 0.35;
-}
+/* 2: rain, no sun either (see 1). */
 /* 3: sun behind a cloud. */
 .sky-box[data-mood='3'] .sky-sun {
   transform: translate(26px, 6px) scale(0.85);

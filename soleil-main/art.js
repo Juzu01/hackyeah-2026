@@ -154,12 +154,13 @@
 
   // ── The mood sky above the mood diary: the weather follows the face you pick ──
   const SKY = `<svg class="sky" viewBox="0 0 360 120" aria-hidden="true" focusable="false">
-    <defs><radialGradient id="sky-glow"><stop offset="0" style="stop-color: var(--green)" stop-opacity=".45"/><stop offset="1" style="stop-color: var(--green)" stop-opacity="0"/></radialGradient></defs>
+    <defs><radialGradient id="sky-glow"><stop offset="0" style="stop-color: var(--green)" stop-opacity=".45"/><stop offset="1" style="stop-color: var(--green)" stop-opacity="0"/></radialGradient>
+      <clipPath id="sky-above"><path d="M0 0H360V96L0 112Z"/></clipPath></defs>
     <g class="sky-stars"><circle cx="40" cy="20" r="1.2"/><circle cx="120" cy="12" r="1"/><circle cx="300" cy="18" r="1.3"/><circle cx="330" cy="54" r="1"/><circle cx="70" cy="60" r="1"/></g>
-    <g class="sky-sun"><circle cx="180" cy="58" r="64" fill="url(#sky-glow)"/>
+    <g clip-path="url(#sky-above)"><g class="sky-sun"><circle cx="180" cy="58" r="64" fill="url(#sky-glow)"/>
       <g class="sky-rays"><path d="M180 14v8M180 94v8M136 58h8M216 58h8M149 27l6 6M205 83l6 6M149 89l6-6M205 33l6-6"/></g>
       <circle class="sky-disc" cx="180" cy="58" r="22"/>
-      <path class="sky-face" d="M171 61c4 5 14 5 18 0M172 52v2M188 52v2"/></g>
+      <path class="sky-face" d="M171 61c4 5 14 5 18 0M172 52v2M188 52v2"/></g></g>
     <g class="sky-cloud c1"><path d="M120 76h70a16 16 0 0 0 0-32 24 24 0 0 0-45-8 18 18 0 0 0-25 40z"/></g>
     <g class="sky-cloud c2"><path d="M196 92h62a14 14 0 0 0 0-28 21 21 0 0 0-40-6 15 15 0 0 0-22 34z"/></g>
     <g class="sky-rain"><path d="M140 84v9M160 88v9M180 84v9M214 98v9M234 100v9M250 96v9"/></g>
