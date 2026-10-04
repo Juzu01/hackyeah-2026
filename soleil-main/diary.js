@@ -19,7 +19,7 @@ const diaryTexts = {
     period: 'Ostatnie 30 dni', painDays: 'Dni z bólem', avgLevel: 'Średnie nasilenie', topWhere: 'Najczęściej boli', avgMood: 'Średni nastrój',
     ofDays: (n) => `z ${n} dni`, outOf10: 'na 10', outOf5: 'z 5', times: (n) => `${n}×`, noData: 'brak danych',
     insight: (a, b) => `W dni z bólem Twój nastrój był średnio ${a} z 5, a w pozostałe dni ${b} z 5.`,
-    entries: 'Wpisy', fromOldest: 'od najstarszego do najnowszego',
+    entries: 'Wpisy', fromNewest: 'od najnowszego',
     empty: 'Na razie pusto. Zapisz wyżej, jak się czujesz, a gdy coś zaboli, dodaj wpis z „Gdzie boli?”.',
     device: 'Wpisy należą do Twojego konta i zapisują się na tym urządzeniu.', notMedical: 'To nie jest diagnoza. W nagłej sytuacji dzwoń pod 112.',
     deleteQ: 'Usunąć ten wpis?', deleteLabel: 'Usuń wpis', today: 'dziś', yesterday: 'wczoraj', mood: 'Nastrój', pain: 'Ból',
@@ -36,7 +36,7 @@ const diaryTexts = {
     period: 'Last 30 days', painDays: 'Days with pain', avgLevel: 'Average intensity', topWhere: 'Hurts most often', avgMood: 'Average mood',
     ofDays: (n) => `of ${n} days`, outOf10: 'out of 10', outOf5: 'out of 5', times: (n) => `${n}×`, noData: 'no data yet',
     insight: (a, b) => `On days with pain your mood was ${a} out of 5 on average, and ${b} out of 5 on other days.`,
-    entries: 'Entries', fromOldest: 'oldest to newest',
+    entries: 'Entries', fromNewest: 'newest first',
     empty: 'Nothing here yet. Note how you feel above, and when something hurts, add an entry from "Where does it hurt?".',
     device: 'The entries belong to your account and are saved on this device.', notMedical: 'This is not a diagnosis. In an emergency call 112.',
     deleteQ: 'Delete this entry?', deleteLabel: 'Delete entry', today: 'today', yesterday: 'yesterday', mood: 'Mood', pain: 'Pain',
@@ -53,7 +53,7 @@ const diaryTexts = {
     period: 'Останні 30 днів', painDays: 'Дні з болем', avgLevel: 'Середня сила болю', topWhere: 'Найчастіше болить', avgMood: 'Середній настрій',
     ofDays: (n) => `з ${n} днів`, outOf10: 'з 10', outOf5: 'з 5', times: (n) => `${n}×`, noData: 'ще немає даних',
     insight: (a, b) => `У дні з болем твій настрій був у середньому ${a} з 5, а в інші дні — ${b} з 5.`,
-    entries: 'Записи', fromOldest: 'від найстаршого до найновішого',
+    entries: 'Записи', fromNewest: 'від найновішого',
     empty: 'Поки що порожньо. Відзнач вище, як почуваєшся, а коли щось заболить — додай запис із «Де болить?».',
     device: 'Записи належать твоєму обліковому запису й зберігаються на цьому пристрої.', notMedical: 'Це не діагноз. У надзвичайній ситуації телефонуй на 112.',
     deleteQ: 'Видалити цей запис?', deleteLabel: 'Видалити запис', today: 'сьогодні', yesterday: 'вчора', mood: 'Настрій', pain: 'Біль',
@@ -70,7 +70,7 @@ const diaryTexts = {
     period: 'Letzte 30 Tage', painDays: 'Tage mit Schmerzen', avgLevel: 'Mittlere Stärke', topWhere: 'Am häufigsten', avgMood: 'Mittlere Stimmung',
     ofDays: (n) => `von ${n} Tagen`, outOf10: 'von 10', outOf5: 'von 5', times: (n) => `${n}×`, noData: 'noch keine Daten',
     insight: (a, b) => `An Tagen mit Schmerzen lag deine Stimmung im Schnitt bei ${a} von 5, an anderen Tagen bei ${b} von 5.`,
-    entries: 'Einträge', fromOldest: 'vom ältesten zum neuesten',
+    entries: 'Einträge', fromNewest: 'neueste zuerst',
     empty: 'Noch leer. Halte oben fest, wie du dich fühlst, und wenn etwas wehtut, füge einen Eintrag aus „Wo tut es weh?“ hinzu.',
     device: 'Die Einträge gehören zu deinem Konto und werden auf diesem Gerät gespeichert.', notMedical: 'Das ist keine Diagnose. Im Notfall wähle die 112.',
     deleteQ: 'Diesen Eintrag löschen?', deleteLabel: 'Eintrag löschen', today: 'heute', yesterday: 'gestern', mood: 'Stimmung', pain: 'Schmerz',
@@ -87,7 +87,7 @@ const diaryTexts = {
     period: 'Últimos 30 días', painDays: 'Días con dolor', avgLevel: 'Intensidad media', topWhere: 'Duele más a menudo', avgMood: 'Ánimo medio',
     ofDays: (n) => `de ${n} días`, outOf10: 'de 10', outOf5: 'de 5', times: (n) => `${n}×`, noData: 'aún sin datos',
     insight: (a, b) => `Los días con dolor tu ánimo fue de ${a} sobre 5 de media, y ${b} sobre 5 el resto de días.`,
-    entries: 'Registros', fromOldest: 'del más antiguo al más reciente',
+    entries: 'Registros', fromNewest: 'del más reciente',
     empty: 'Aún está vacío. Anota arriba cómo te sientes y, cuando algo te duela, añade un registro desde «¿Dónde duele?».',
     device: 'Los registros pertenecen a tu cuenta y se guardan en este dispositivo.', notMedical: 'Esto no es un diagnóstico. En una emergencia llama al 112.',
     deleteQ: '¿Eliminar este registro?', deleteLabel: 'Eliminar registro', today: 'hoy', yesterday: 'ayer', mood: 'Ánimo', pain: 'Dolor',
@@ -221,14 +221,14 @@ function renderDiaryView() {
     <h3 class="page-sub">${t.period}</h3>
     <div class="diary-stats">${stats}</div>
     ${insight}
-    <h3 class="page-sub">${t.entries} <span class="diary-sub-note">${t.fromOldest}</span></h3>
+    <h3 class="page-sub">${t.entries} <span class="diary-sub-note">${t.fromNewest}</span></h3>
     ${diaryTilesHtml(pain, moods, t)}
     <p class="diary-fine">${t.device} ${t.notMedical}</p>`;
 }
 
-// Tiles from the oldest entry to the newest, with a heading for each month
+// Tiles from the newest entry to the oldest (top left is the latest), with a heading for each month
 function diaryTilesHtml(pain, moods, t) {
-  const entries = [...pain, ...moods].sort((a, b) => a.at.localeCompare(b.at));
+  const entries = [...pain, ...moods].sort((a, b) => b.at.localeCompare(a.at));
   if (!entries.length) return `<p class="diary-empty">${t.empty}</p>`;
   const month = new Intl.DateTimeFormat(t.locale, { month: 'long', year: 'numeric' });
   let lastMonth = '';
