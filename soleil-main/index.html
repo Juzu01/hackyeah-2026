@@ -1081,7 +1081,10 @@ function openAuth(mode) {
   document.getElementById('authOverlay').classList.add('visible');
   if (clerk && clerk.loaded) mountClerkSignIn();
 }
-const clerkAppearance = { variables: { colorPrimary: '#45e499', colorTextOnPrimaryBackground: '#04140c', colorBackground: '#0c100b', colorInputBackground: '#141912', colorInputText: '#f2f5ed', colorText: '#f2f5ed', colorTextSecondary: '#a8b1a1', colorNeutral: '#f2f5ed', colorDanger: '#ff7a6b', borderRadius: '0px', fontFamily: "'Nunito', system-ui, sans-serif", fontSize: '1rem' }, elements: { rootBox: { width: '100%' }, cardBox: { width: '100%', boxShadow: 'none', border: '1px solid var(--line-2)' }, card: { boxShadow: 'none' } } };
+const clerkAppearance = { variables: { colorPrimary: '#45e499', colorTextOnPrimaryBackground: '#04140c', colorBackground: '#0c100b', colorInputBackground: '#141912', colorInputText: '#f2f5ed', colorText: '#f2f5ed', colorTextSecondary: '#a8b1a1', colorNeutral: '#f2f5ed', colorDanger: '#ff7a6b', borderRadius: '0px', fontFamily: "'Nunito', system-ui, sans-serif", fontSize: '1rem' }, elements: { rootBox: { width: '100%' }, cardBox: { width: '100%', boxShadow: 'none', border: '1px solid var(--line-2)' }, card: { boxShadow: 'none' },
+  // Without "Secured by Clerk": only "Masz już konto? Zaloguj się" stays in the footer, and an empty footer goes
+  footer: { '& > :not(.cl-footerAction)': { display: 'none' }, '&:not(:has(.cl-footerAction))': { display: 'none' } } },
+  layout: { unsafe_disableDevelopmentModeWarnings: true } }; // no "Development mode" badge (dev keys: Pages has no own domain)
 function mountClerkSignIn() {
   const el = document.getElementById('clerk-sign-in'), back = authReturnUrl();
   clerk.unmountSignIn(el);

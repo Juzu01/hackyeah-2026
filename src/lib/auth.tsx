@@ -15,6 +15,9 @@ const KEY: string = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY ?? DEFAULT_KEY
 
 const APPEARANCE = {
   variables: { colorPrimary: '#0f766e', borderRadius: '12px', fontFamily: 'inherit' },
+  // Same as the Doco sign-in: no "Secured by Clerk" and no "Development mode" badge
+  elements: { footer: { '& > :not(.cl-footerAction)': { display: 'none' }, '&:not(:has(.cl-footerAction))': { display: 'none' } } },
+  options: { unsafe_disableDevelopmentModeWarnings: true },
 }
 
 function ClerkAccount({ children }: { children: ReactNode }) {
