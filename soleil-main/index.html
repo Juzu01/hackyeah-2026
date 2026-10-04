@@ -301,7 +301,7 @@ try {
     </div>
     <div class="header-actions">
       <button class="auth-btn" id="loginBtn" onclick="openAuth()">Zaloguj się</button>
-      <button type="button" class="user-avatar" id="userAvatar" onclick="toggleUserMenu()" aria-label="Menu konta" aria-haspopup="menu"><span class="ua-pic" id="userAvatarPic"></span><span class="ua-name" id="userAvatarName"></span><svg class="ico ua-go" aria-hidden="true"><use href="#i-next"/></svg></button>
+      <button type="button" class="user-avatar" id="userAvatar" onclick="toggleUserMenu()" aria-label="Menu konta" aria-haspopup="menu"><span class="ua-pic" id="userAvatarPic"></span><svg class="ico ua-go" aria-hidden="true"><use href="#i-next"/></svg></button>
     </div>
   </header>
 
@@ -1034,7 +1034,7 @@ function updateAuthUI(user) {
     loginBtn.style.display = 'none';
     userAvatar.classList.add('visible');
     convBtn.classList.add('visible');
-    // The account in the corner: Google's photo when there is one, otherwise initials; then the first name.
+    // The account in the corner: Google's photo when there is one, otherwise initials.
     const first = (user.firstName || '').trim();
     const initials = ((first[0] || user.emailAddresses?.[0]?.emailAddress?.[0] || '?') + (first ? user.lastName?.[0] || '' : '')).toUpperCase();
     ['userAvatarPic', 'userMenuPic'].forEach((id) => {
@@ -1049,7 +1049,6 @@ function updateAuthUI(user) {
         pic.textContent = initials;
       }
     });
-    document.getElementById('userAvatarName').textContent = first;
     document.getElementById('userName').textContent = `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Użytkownik';
     document.getElementById('userEmail').textContent = user.emailAddresses?.[0]?.emailAddress || '';
     loadStreak(user.id);

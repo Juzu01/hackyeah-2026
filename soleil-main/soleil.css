@@ -325,17 +325,13 @@ a {
 .auth-btn:active {
   background: var(--s2);
 }
-/* Signed in: a pill with a round photo (or initials) and the first name; it opens the account menu. */
+/* Signed in: a round photo (or initials) with a small arrow; it opens the account menu. */
 .user-avatar {
   display: none;
   align-items: center;
-  gap: 8px;
-  max-width: 172px;
+  gap: 4px;
   min-height: 44px;
-  padding: 4px 10px 4px 4px;
-  border: 1px solid var(--line-2);
-  border-radius: 999px;
-  background: var(--s1);
+  padding: 0 2px;
   color: var(--ink);
   font-size: 0.9375rem;
   font-weight: 700;
@@ -345,14 +341,14 @@ a {
   display: inline-flex;
 }
 .user-avatar:active {
-  background: var(--s2);
+  opacity: 0.75;
 }
 .ua-pic {
   display: grid;
   flex: none;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   overflow: hidden;
   border-radius: 50%;
   background: var(--green-soft);
@@ -371,15 +367,6 @@ a {
   width: 46px;
   height: 46px;
   font-size: 1rem;
-}
-.ua-name {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.ua-name:empty {
-  display: none;
 }
 .ua-go {
   width: 14px;

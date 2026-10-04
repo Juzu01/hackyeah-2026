@@ -38,13 +38,15 @@ export default function Header({ path }: Props) {
           <span className="hidden sm:inline">{link('/pomoc', 'Jak to działa')}</span>
           {account.status === 'signed-in' && account.user && (
             <details className="relative ml-1">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-full border border-line-2 py-1 pr-3 pl-1 hover:bg-s2 [&::-webkit-details-marker]:hidden">
+              <summary aria-label="Menu konta" className="flex min-h-11 cursor-pointer list-none items-center gap-1 rounded-full px-0.5 hover:opacity-80 [&::-webkit-details-marker]:hidden">
                 {account.user.imageUrl ? (
-                  <img src={account.user.imageUrl} alt="" className="h-7 w-7 rounded-full" />
+                  <img src={account.user.imageUrl} alt="" className="h-9 w-9 rounded-full" />
                 ) : (
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-green text-xs font-bold text-green-ink">{initials}</span>
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-green text-xs font-bold text-green-ink">{initials}</span>
                 )}
-                <span className="max-w-[8rem] truncate text-[0.9375rem] font-semibold text-ink">{account.user.name.split(' ')[0]}</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-3.5 w-3.5 text-ink-2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
               </summary>
               <div className="absolute right-0 mt-1 w-56 rounded-xl border border-line-2 bg-s1 p-1">
                 {account.user.email && <p className="truncate px-3 py-1.5 text-sm text-ink-2">{account.user.email}</p>}
