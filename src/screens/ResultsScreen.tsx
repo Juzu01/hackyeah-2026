@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import ConditionCard from '../components/ConditionCard.tsx'
 import { DISCLAIMER } from '../components/Footer.tsx'
+import Steps from '../components/Steps.tsx'
 import TriageCard from '../components/TriageCard.tsx'
 import { symptomName } from '../data/symptoms.ts'
 import { useAccount } from '../lib/account.ts'
@@ -102,7 +103,9 @@ export default function ResultsScreen({ draft, savedAt, onRestart, onToast }: Pr
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-6 sm:py-8">
+    <div className="mx-auto max-w-3xl px-4 pt-3 pb-6 sm:pb-8 lg:pt-6">
+      <Steps current={3} />
+      <div className="h-5" />
       <div className="mb-4">
         <p className="eyebrow">Wstępna ocena · {date.toLocaleDateString('pl-PL')}</p>
         <h1 className="mt-1.5 font-serif text-[2rem] leading-tight font-medium tracking-tight text-ink sm:text-[2.5rem]">{where || 'Objawy ogólne'}</h1>

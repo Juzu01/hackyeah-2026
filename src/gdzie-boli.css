@@ -19,7 +19,7 @@
   --ink-3: #6b7364;
 
   --green: #c0e4b2;
-  --green-hover: #c2f1d8;
+  --green-hover: #d2eec7;
   --green-ink: #0b1307;
   --green-soft: rgba(192, 228, 178, 0.13);
 
@@ -38,6 +38,7 @@
   --glow: rgba(192, 228, 178, 0.1);
 
   --cut: 10px;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 @theme inline {
@@ -316,6 +317,469 @@ header nav :is(a, button) {
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+  }
+  /* ── The three steps (components/Steps.tsx) ───────────────────────────
+     Slanted blades like Doco's tab bar. The current one is lit and its top edge fills with
+     --fill (0–1) as the questions are answered; done ones keep a full, quieter edge. */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin: 0;
+    padding: 0 5px;
+    list-style: none;
+  }
+  .step {
+    --fill: 0;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-width: 0;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: var(--ink-2);
+    font-size: 0.875rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .step::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border: 1px solid var(--line);
+    background:
+      linear-gradient(var(--green), var(--green)) top left / calc(var(--fill) * 100%) 2px no-repeat,
+      var(--s1);
+    transform: skewX(-14deg);
+    transition:
+      background-size 500ms var(--ease),
+      background-color 300ms var(--ease),
+      border-color 300ms var(--ease);
+  }
+  .step[data-state='now'] {
+    color: var(--green);
+  }
+  .step[data-state='now']::before {
+    border-color: rgb(192 228 178 / 0.4);
+    background-color: rgb(192 228 178 / 0.1);
+    box-shadow: 0 -8px 20px -14px var(--green);
+  }
+  .step[data-state='done'] {
+    color: var(--ink);
+  }
+  .step[data-state='done']::before {
+    border-color: var(--line-2);
+    background-color: var(--s1);
+  }
+  .step-n {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    width: 20px;
+    height: 20px;
+    flex: none;
+    place-items: center;
+    font-size: 0.6875rem;
+    font-weight: 800;
+  }
+  .step-n::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    z-index: -1;
+    border: 1.5px solid currentColor;
+    transform: rotate(45deg);
+  }
+  .step:is([data-state='now'], [data-state='done']) .step-n {
+    color: var(--green-ink);
+  }
+  .step:is([data-state='now'], [data-state='done']) .step-n::before {
+    border-color: var(--green);
+    background: var(--green);
+  }
+
+  /* ── The emergency line (components/EmergencyBar.tsx) ── */
+  .sos {
+    display: flex;
+    min-height: 42px;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 6px 12px;
+    border-left: 2px solid var(--alarm);
+    background: var(--alarm-soft);
+    color: var(--ink);
+    font-size: 0.9375rem;
+    line-height: 1.35;
+  }
+  .sos a {
+    color: var(--alarm);
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── Who it's for (components/PersonCard.tsx): a small form, then one line ── */
+  .person {
+    display: grid;
+    gap: 12px;
+    padding: 12px 14px 14px;
+    border: 1px solid var(--line);
+    background: var(--s1);
+  }
+  .person.is-invalid {
+    border-color: var(--alarm-line);
+  }
+  .person-line {
+    display: flex;
+    width: 100%;
+    min-height: 48px;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    background: var(--s1);
+    font-size: 0.9375rem;
+    cursor: pointer;
+  }
+  .person-line:hover {
+    border-color: var(--line-2);
+    background: var(--s2);
+  }
+
+  /* ── The body on its stage (StartScreen + components/BodyMap.tsx) ──
+     The figure stands on Doco's slanted horizon in a soft light, like the sprout in Rozmowa. */
+  .stage {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 12px;
+    border: 1px solid var(--line);
+    background: var(--s1);
+  }
+  .stage-top {
+    display: flex;
+    min-height: 40px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .stage-place {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .stage-place.is-named {
+    color: var(--green);
+    font-family: var(--font-serif);
+    font-size: 1.1875rem;
+    font-weight: 640;
+  }
+  .stage-figure {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: min(56vh, 560px);
+    margin: 6px auto 0;
+  }
+  .stage-more {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .stage-more .chip {
+    min-height: 2.75rem;
+  }
+  .chip-sub {
+    font-size: 0.875rem;
+    opacity: 0.7;
+  }
+  .stage-select {
+    height: 2.75rem;
+    padding: 0 10px;
+    font-size: 0.9375rem;
+  }
+  .stage-empty {
+    padding: 16px;
+    border: 1px dashed var(--line-2);
+    color: var(--ink-2);
+  }
+
+  .bodymap {
+    overflow: visible;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .bm-skin {
+    fill: #141a12;
+  }
+  .bm-edge {
+    fill: none;
+    stroke: var(--green);
+    stroke-opacity: 0.5;
+    stroke-width: 1.6;
+    pointer-events: none;
+  }
+  .bm-zone {
+    cursor: pointer;
+    outline: none;
+  }
+  /* Faint seams show where the places are; the one under the finger lights up. */
+  .bm-zone path {
+    fill: transparent;
+    stroke: var(--green);
+    stroke-opacity: 0.16;
+    stroke-width: 1.2;
+    stroke-linejoin: round;
+    transition:
+      fill 160ms var(--ease),
+      stroke-opacity 160ms var(--ease);
+  }
+  .bm-zone:is(.is-hover, :focus-visible) path {
+    fill: rgb(192 228 178 / 0.14);
+    stroke-opacity: 0.7;
+  }
+  .bm-zone.is-picked path {
+    fill: rgb(192 228 178 / 0.26);
+    stroke-opacity: 0.9;
+    stroke-width: 2;
+  }
+  .bm-zone.is-active path {
+    fill: rgb(192 228 178 / 0.42);
+    stroke-opacity: 1;
+    stroke-width: 2.4;
+  }
+  .bm-ground {
+    stroke-width: 2;
+  }
+  .bm-ground.is-far {
+    stroke-width: 1.4;
+    opacity: 0.35;
+  }
+  .bm-badge rect {
+    fill: var(--green);
+    stroke: var(--bg);
+    stroke-width: 3;
+  }
+  .bm-pulse {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 2;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: bm-pulse 2.6s var(--ease) infinite;
+  }
+  @keyframes bm-pulse {
+    from {
+      opacity: 0.7;
+      transform: rotate(45deg) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: rotate(45deg) scale(2.1);
+    }
+  }
+  .bm-badge text {
+    fill: var(--green-ink);
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: 800;
+  }
+  /* Turning between front and back spins the figure on its axis. */
+  .bm-turn {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    animation: bm-turn 520ms var(--ease) both;
+  }
+  @keyframes bm-turn {
+    from {
+      opacity: 0.25;
+      transform: scaleX(0.12);
+    }
+  }
+  /* One scan line passes down the body as it appears. */
+  .bm-scan {
+    animation: bm-scan 1500ms cubic-bezier(0.45, 0, 0.35, 1) 250ms both;
+  }
+  @keyframes bm-scan {
+    from {
+      transform: translateY(0);
+    }
+    85% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      transform: translateY(980px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bm-turn {
+      animation: none;
+    }
+    .bm-scan,
+    .bm-pulse {
+      display: none;
+    }
+  }
+
+  /* ── The tray: what's picked, and "Dalej", always under the thumb ── */
+  .tray {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    margin: 0 -16px;
+    padding: 16px 16px 12px;
+    background: linear-gradient(to bottom, transparent, var(--bg) 16px);
+  }
+  /* Inside Doco the frame's bottom runs under the tab bar's slanted edge (src/shell.ts). */
+  html.in-doco .tray {
+    padding-bottom: 32px;
+  }
+  .tray-hint {
+    display: flex;
+    min-height: 46px;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding: 0 14px;
+    border: 1px dashed var(--line-2);
+    background: var(--bg);
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+  }
+  .tray-diamond {
+    width: 9px;
+    height: 9px;
+    flex: none;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+    transform: rotate(45deg);
+  }
+  .tray-chips {
+    display: flex;
+    gap: 6px;
+    margin: 0 -16px 10px;
+    padding: 0 16px;
+    overflow-x: auto;
+    list-style: none;
+    scrollbar-width: none;
+  }
+  .tray-chips::-webkit-scrollbar {
+    display: none;
+  }
+  .tray-chip {
+    display: inline-flex;
+    max-width: 15rem;
+    min-height: 38px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px 0 12px;
+    border: 1px solid rgb(192 228 178 / 0.4);
+    background: var(--green-soft);
+    color: var(--ink);
+    font-size: 0.9375rem;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .tray-chip svg {
+    color: var(--green);
+  }
+  .tray-chip:hover {
+    border-color: var(--green);
+  }
+  .tray-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .tray-consent {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink-2);
+    font-size: 0.875rem;
+    line-height: 1.3;
+    cursor: pointer;
+  }
+  .tray-count {
+    display: grid;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 5px;
+    place-items: center;
+    background: var(--green-ink);
+    color: var(--green);
+    font-size: 0.8125rem;
+    font-weight: 800;
+  }
+  @media (min-width: 1024px) {
+    .tray,
+    html.in-doco .tray {
+      position: static;
+      margin: 0;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: var(--s1);
+    }
+    .tray-chips {
+      flex-wrap: wrap;
+      margin: 0 0 12px;
+      padding: 0;
+    }
+  }
+
+  /* ── The list for a place, sliding up on phones ── */
+  .sheet-scrim {
+    background: rgb(0 0 0 / 0.66);
+    animation: fade-in 200ms var(--ease) both;
+  }
+  .sheet {
+    position: relative;
+    display: flex;
+    width: 100%;
+    max-height: 82vh;
+    flex-direction: column;
+    overflow: hidden;
+    border-top: 1px solid rgb(192 228 178 / 0.35);
+    background: var(--s1);
+    box-shadow: 0 -20px 60px rgb(0 0 0 / 0.6);
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+    animation: sheet-up 300ms var(--ease) both;
+  }
+  .sheet-grip {
+    width: 40px;
+    height: 4px;
+    flex: none;
+    margin: 8px auto 0;
+    background: var(--line-2);
+  }
+  .sheet-foot {
+    flex: none;
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+  }
+  html.in-doco .sheet-foot {
+    padding-bottom: 32px;
+  }
+  @keyframes sheet-up {
+    from {
+      transform: translateY(100%);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
   }
 }
 
