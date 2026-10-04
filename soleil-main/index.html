@@ -3,6 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!-- On a computer (mouse, window at least 700px wide) Doco opens inside a phone (telefon.html). Phones, the
+     home-screen app (standalone) and frames get the app itself. ?ramka=0 skips the phone, ?ramka=1 forces it. -->
+<script>
+(function () {
+  try {
+    var ramka = new URLSearchParams(location.search).get('ramka');
+    if (ramka === '0' || window.top !== window.self) return;
+    var app = navigator.standalone || matchMedia('(display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui), (display-mode: window-controls-overlay)').matches;
+    var computer = matchMedia('(hover: hover) and (pointer: fine)').matches && innerWidth >= 700;
+    if (ramka === '1' || (computer && !app)) {
+      document.documentElement.style.visibility = 'hidden';
+      location.replace('telefon.html' + location.search + location.hash);
+    }
+  } catch (e) {}
+})();
+// Inside that phone, pages that refuse to open in a frame (Google's sign-in) take over the whole tab instead;
+// Google sends the visitor back to ./#/sso-callback…, which lands in the phone again.
+(function () {
+  try {
+    if (window.top === window.self || !window.top.document.documentElement.hasAttribute('data-doco-frame') || !window.navigation) return;
+    navigation.addEventListener('navigate', function (e) {
+      var to = new URL(e.destination.url);
+      if (to.origin === location.origin || !e.cancelable || e.downloadRequest != null) return;
+      e.preventDefault();
+      window.top.location.href = to.href;
+    });
+  } catch (e) {}
+})();
+</script>
 <title>Doco — Twój przyjaciel</title>
 <meta name="application-name" content="Doco">
 <meta name="description" content="Doco: rozmowa o tym, co czujesz, dziennik nastroju, atlas ciała 3D i sprawdzanie objawów.">

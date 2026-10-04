@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pl" data-doco-frame>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doco — Twój przyjaciel</title>
+<meta name="description" content="Doco: rozmowa o tym, co czujesz, dziennik nastroju, atlas ciała 3D i sprawdzanie objawów.">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- Doco on a computer: the app inside a phone (iPhone 15 or Galaxy S24). index.html sends desktop visitors
+     here and the address bar goes back to ./ at once, so the link people copy is the app's own.
+     Phones (and a link to this page opened on one) get the app itself; ?ramka=1 keeps the frame anyway. -->
+<script>
+(function () {
+  var rest = location.search + location.hash;
+  var forced = new URLSearchParams(location.search).get('ramka') === '1';
+  var computer = matchMedia('(hover: hover) and (pointer: fine)').matches && innerWidth >= 700;
+  if (window.top !== window.self || (!computer && !forced)) { window.docoLeaving = true; location.replace('./' + rest); return; }
+  history.replaceState(null, '', './' + rest);
+})();
+// The app's light/dark mode and colour (Więcej → Kolor aplikacji), so the page around the phone matches it
+function docoTheme() {
+  var root = document.documentElement;
+  try {
+    var theme = localStorage.getItem('doco_theme');
+    var light = theme === 'light' || (theme === 'system' && matchMedia('(prefers-color-scheme: light)').matches);
+    root.dataset.theme = light ? 'light' : 'dark';
+    var a = JSON.parse(localStorage.getItem('doco_accent'));
+    var v = a && (light ? a.light : a);
+    if (v && /^#[0-9a-f]{6}$/i.test(v.accent)) root.style.setProperty('--green', v.accent);
+    else root.style.removeProperty('--green');
+  } catch (e) {}
+}
+docoTheme();
+</script>
+<style>
+@font-face {
+  font-family: 'Nunito'; font-style: normal; font-display: swap; font-weight: 200 1000;
+  src: url(fonts/nunito-latin-ext-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Nunito'; font-style: normal; font-display: swap; font-weight: 200 1000;
+  src: url(fonts/nunito-latin-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Fraunces'; font-style: normal; font-display: swap; font-weight: 100 900;
+  src: url(fonts/fraunces-latin-full-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --green: #45e499;
+  --bg: #040605;
+  --ink: #f2f5ed;
+  --ink-2: #a8b1a1;
+  --ink-3: #6b7364;
+  --line: rgb(211 235 202 / 0.1);
+  --chip: rgb(255 255 255 / 0.04);
+  --qr-card: #f2f5ed;
+  --metal-hi: #3b3f3d;
+  --metal: #1c1e1d;
+  --metal-lo: #0b0c0c;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #eceee7;
+  --ink: #141912;
+  --ink-2: #4c5548;
+  --ink-3: #7d8677;
+  --line: rgb(20 25 18 / 0.12);
+  --chip: rgb(20 25 18 / 0.04);
+  --qr-card: #fff;
+  color-scheme: light;
+}
+html, body { margin: 0; height: 100%; overflow: hidden; }
+body {
+  background:
+    radial-gradient(42% 48% at 50% 46%, color-mix(in srgb, var(--green) 8%, transparent), transparent 72%),
+    var(--bg);
+  color: var(--ink);
+  font: 500 15px/1.45 'Nunito', system-ui, sans-serif;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- the phone ---------- */
+.device { grid-column: 2; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+#stage { position: relative; flex: none; }
+#phone {
+  position: absolute; left: 0; top: 0; transform-origin: 0 0;
+  width: var(--fw); height: var(--fh);
+  border-radius: var(--fr);
+  background: linear-gradient(145deg, var(--metal-hi) 0%, var(--metal) 18%, var(--metal-lo) 50%, var(--metal) 82%, var(--metal-hi) 100%);
+  box-shadow:
+    inset 0 0 0 1.5px rgb(255 255 255 / 0.1),
+    inset 0 0 0 5px #050505,
+    0 0 0 1px #000,
+    0 50px 90px -30px rgb(0 0 0 / 0.85);
+}
+.side {
+  position: absolute; width: 4px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--metal-hi), var(--metal));
+}
+.side.l { left: -3px; }
+.side.r { right: -3px; }
+#screen {
+  position: absolute; left: var(--bl); top: var(--bt);
+  width: var(--w); height: var(--h);
+  border-radius: var(--r); overflow: hidden;
+  background: #000; box-shadow: 0 0 0 2px #000;
+}
+#app {
+  position: absolute; left: 0; top: var(--sat);
+  width: var(--w); height: calc(var(--h) - var(--sat) - var(--sab));
+  border: 0; display: block; background: #000;
+}
+/* status bar and the strip under the app take the colour at the app's top and bottom edge (paintEdges) */
+#status, #home { position: absolute; left: 0; right: 0; pointer-events: none; background: var(--top, #000); color: var(--top-ink, #fff); }
+#status { top: 0; height: var(--sat); display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; }
+#home { bottom: 0; height: var(--sab); background: var(--bottom, #000); color: var(--bottom-ink, #fff); }
+#home i { position: absolute; left: 50%; transform: translateX(-50%); border-radius: 3px; background: currentColor; }
+.icons { display: flex; align-items: center; gap: 6px; }
+.icons svg { display: block; }
+.ios #status { padding: 4px 30px 0 46px; font: 600 16px/1 -apple-system, 'SF Pro Text', system-ui, sans-serif; letter-spacing: -0.2px; }
+.ios #home i { width: 134px; height: 5px; bottom: 8px; opacity: 0.9; }
+.galaxy #status { padding: 2px 18px 0 22px; font: 500 13px/1 'Roboto', system-ui, sans-serif; }
+.galaxy .icons { gap: 4px; }
+.galaxy .pct { font-size: 12px; margin-left: 2px; }
+.galaxy #home i { width: 110px; height: 4px; bottom: 8px; opacity: 0.6; }
+.island {
+  position: absolute; left: 50%; top: 11px; transform: translateX(-50%);
+  width: 124px; height: 36px; border-radius: 20px; background: #000;
+}
+.island::after {
+  content: ""; position: absolute; right: 13px; top: 50%; width: 11px; height: 11px;
+  transform: translateY(-50%); border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2b3a55 0 18%, #0c1018 45%, #050608 70%);
+}
+.punch {
+  position: absolute; left: 50%; top: 10px; transform: translateX(-50%);
+  width: 14px; height: 14px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #26324a 0 20%, #07090d 60%);
+  box-shadow: 0 0 0 1.5px #000;
+}
+
+#devices { display: flex; gap: 6px; }
+#devices button {
+  appearance: none; border: 1px solid var(--line); background: var(--chip);
+  color: var(--ink-2); font: 600 13px/1 'Nunito', system-ui, sans-serif;
+  padding: 9px 14px; border-radius: 999px; cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+#devices button:hover { color: var(--ink); }
+#devices button[aria-pressed="true"] {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--green) 14%, transparent);
+  border-color: color-mix(in srgb, var(--green) 40%, transparent);
+}
+#devices button:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+
+/* ---------- beside the phone: what Doco is + how to get it on a phone ---------- */
+.intro { grid-column: 1; grid-row: 1; justify-self: end; width: 290px; margin-right: clamp(40px, 7vw, 120px); }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand svg { width: 52px; height: 52px; color: var(--green); flex: none; }
+.brand h1 {
+  margin: 0; font: 600 40px/1 'Fraunces', Georgia, serif;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1; letter-spacing: -0.5px;
+}
+.lede { margin: 14px 0 0; color: var(--ink-2); }
+.get { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+.get h2 { margin: 0 0 14px; font: 700 15px/1.3 'Nunito', system-ui, sans-serif; }
+.qr { display: flex; gap: 16px; align-items: flex-start; }
+.qr-card { flex: none; width: 104px; height: 104px; padding: 8px; box-sizing: border-box; border-radius: 12px; background: var(--qr-card); }
+.qr-card svg { display: block; width: 100%; height: 100%; }
+.qr p { margin: 0; font-size: 13.5px; color: var(--ink-2); }
+.steps { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; font-size: 13.5px; color: var(--ink-2); }
+.steps b { display: block; color: var(--ink); font-weight: 700; }
+
+@media (max-width: 1040px) { .intro { display: none; } }
+@media (max-height: 640px) { .get { display: none; } }
+</style>
+</head>
+<body>
+<aside class="intro">
+  <div class="brand">
+    <!-- Doco's lemur logo, the same drawing as <symbol id="lemur"> in index.html -->
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <ellipse cx="32" cy="50" rx="25" ry="8.5" fill="#1f3d24" stroke="#f7f3de" stroke-width="9"/>
+      <ellipse cx="32" cy="50" rx="25" ry="8.5" fill="none" stroke="#3f7344" stroke-width="9" stroke-dasharray="5.59 5.59"/>
+      <path d="M19 49C18 40 24 35 32 35C40 35 46 40 45 49C44.5 53 39 55 32 55C25 55 19.5 53 19 49Z" fill="#6fa45f"/>
+      <ellipse cx="32" cy="47" rx="9" ry="7" fill="#f7f3de"/>
+      <path d="M57 50A25 8.5 0 0 1 7 50" fill="none" stroke="#f7f3de" stroke-width="9"/>
+      <path d="M57 50A25 8.5 0 0 1 7 50" fill="none" stroke="#3f7344" stroke-width="9" stroke-dasharray="5.59 5.59"/>
+      <path d="M34 53C27.3 49.4 24.1 45.4 24.4 41.8C24.7 37.9 30.1 36.4 33.6 40.4C36.6 36 42 36.3 43 40C43.8 43.4 41.3 47.8 34 53Z" fill="currentColor"/>
+      <ellipse cx="41.8" cy="47" rx="2.6" ry="2.3" fill="#2f5233"/>
+      <g transform="rotate(7 32 32)">
+        <path d="M10.9 17.1C7.6 11.2 7.6 2.6 10.2 0.7C14.5 1.2 19.5 7.6 19.8 14.7C17.6 16.9 13.3 18.6 10.9 17.1Z" fill="#6fa45f"/>
+        <path d="M12.6 14.9C10.2 10.7 10.2 4.8 12.2 3.6C15.2 4.3 18.6 8.8 18.6 13.7C16.9 15.1 14.2 15.9 12.6 14.9Z" fill="#f7f3de"/>
+        <path d="M14 13.3C12.6 10.6 12.7 7.4 13.6 6.7C15.2 7.5 16.8 10.4 16.4 13.1Z" fill="#2f5233"/>
+        <path d="M53.1 17.1C56.4 11.2 56.4 2.6 53.8 0.7C49.5 1.2 44.5 7.6 44.2 14.7C46.4 16.9 50.7 18.6 53.1 17.1Z" fill="#6fa45f"/>
+        <path d="M51.4 14.9C53.8 10.7 53.8 4.8 51.8 3.6C48.8 4.3 45.4 8.8 45.4 13.7C47.1 15.1 49.8 15.9 51.4 14.9Z" fill="#f7f3de"/>
+        <path d="M50 13.3C51.4 10.6 51.3 7.4 50.4 6.7C48.8 7.5 47.2 10.4 47.6 13.1Z" fill="#2f5233"/>
+        <ellipse cx="32" cy="25" rx="17.5" ry="14.5" fill="#6fa45f"/>
+        <path d="M17.6 30.6C16.6 25.2 21.4 21.4 27.2 21.9C29.5 22.1 30.9 20.4 32 18.2C33.1 20.4 34.5 22.1 36.8 21.9C42.6 21.4 47.4 25.2 46.4 30.6C45.4 36.4 39.6 38.9 32 38.9C24.4 38.9 18.6 36.4 17.6 30.6Z" fill="#f7f3de"/>
+        <path d="M21.8 28.4Q24.8 24.9 27.8 28.4M36.2 28.4Q39.2 24.9 42.2 28.4" fill="none" stroke="#14211b" stroke-width="2.7" stroke-linecap="round"/>
+        <path d="M29.5 31.2Q32 30.2 34.5 31.2Q33.7 33.7 32 34.1Q30.3 33.7 29.5 31.2Z" fill="#14211b"/>
+      </g>
+    </svg>
+    <h1>Doco</h1>
+  </div>
+  <p class="lede">Rozmowa o&nbsp;tym, co czujesz, dziennik nastroju, atlas ciała 3D i&nbsp;sprawdzanie objawów.</p>
+
+  <section class="get">
+    <h2>Doco na Twoim telefonie</h2>
+    <div class="qr">
+      <!-- https://juzu01.github.io/hackyeah-2026/ (QR version 3, level M) -->
+      <div class="qr-card">
+        <svg viewBox="0 0 29 29" aria-label="Kod QR z adresem Doco" role="img"><path stroke="#050705" d="M0 0.5h7m1 0h3m1 0h1m1 0h1m2 0h4m1 0h7m-29 1h1m5 0h1m1 0h3m1 0h3m2 0h1m2 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h3m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m8 0h1m3 0h2m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m2 0h1m1 0h2m1 0h1m1 0h4m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h1m1 0h2m2 0h2m1 0h4m-21 1h1m1 0h2m1 0h3m1 0h2m6 0h1m1 0h1m2 0h1m2 0h1m1 0h2m-28 1h1m3 0h1m1 0h1m3 0h3m3 0h4m1 0h1m1 0h1m3 0h1m-26 1h1m2 0h3m4 0h1m2 0h1m1 0h1m7 0h2m-21 1h1m4 0h3m3 0h3m1 0h2m4 0h1m-29 1h2m1 0h1m2 0h2m2 0h2m5 0h1m2 0h2m1 0h1m1 0h2m-27 1h1m2 0h3m2 0h4m2 0h2m3 0h1m1 0h2m3 0h3m-29 1h2m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m2 0h1m2 0h1m2 0h1m1 0h1m1 0h3m-27 1h1m2 0h1m2 0h3m4 0h1m2 0h1m8 0h1m-27 1h4m1 0h1m7 0h2m2 0h3m3 0h2m1 0h1m-26 1h1m1 0h1m2 0h2m2 0h2m2 0h1m4 0h1m2 0h1m1 0h3m-28 1h1m2 0h1m2 0h1m1 0h2m1 0h1m1 0h4m1 0h1m3 0h3m1 0h1m-25 1h1m1 0h2m1 0h1m4 0h3m2 0h2m3 0h1m3 0h1m-26 1h2m1 0h3m1 0h3m2 0h2m1 0h11m-19 1h4m4 0h1m1 0h3m3 0h5m-29 1h7m1 0h1m3 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h2m1 0h1m-28 1h1m5 0h1m1 0h4m1 0h2m3 0h1m1 0h1m3 0h2m1 0h1m-28 1h1m1 0h3m1 0h1m4 0h2m2 0h1m1 0h1m2 0h5m1 0h1m-27 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m2 0h3m2 0h2m2 0h1m-29 1h1m1 0h3m1 0h1m1 0h5m4 0h1m1 0h2m2 0h1m2 0h1m1 0h1m-29 1h1m5 0h1m3 0h2m3 0h1m4 0h1m4 0h1m1 0h1m-28 1h7m1 0h1m1 0h2m3 0h2m1 0h7m2 0h1"/></svg>
+      </div>
+      <p>Zeskanuj aparatem i&nbsp;dodaj Doco do ekranu początkowego. Otworzy się jak aplikacja, na cały ekran, bez paska przeglądarki.</p>
+    </div>
+    <ul class="steps">
+      <li><b>iPhone (Safari)</b>Udostępnij → „Do ekranu początkowego”</li>
+      <li><b>Android (Chrome)</b>Menu ⋮ → „Dodaj do ekranu głównego”</li>
+    </ul>
+  </section>
+</aside>
+
+<div class="device">
+  <div id="stage">
+    <div id="phone">
+      <div id="screen">
+        <div id="status"><span id="clock"></span><span class="icons" id="icons"></span></div>
+        <div id="cam"></div>
+        <iframe id="app" title="Doco" allow="microphone; camera; autoplay; clipboard-write; fullscreen"></iframe>
+        <div id="home"><i></i></div>
+      </div>
+    </div>
+  </div>
+  <nav id="devices" aria-label="Telefon">
+    <button type="button" data-d="iphone">iPhone 15</button>
+    <button type="button" data-d="galaxy">Samsung Galaxy S24</button>
+  </nav>
+</div>
+
+<script>
+(function () {
+  if (window.docoLeaving) return;
+  // CSS viewport, screen corner radius, bezel [top, right, bottom, left], frame radius, status bar (sat) and
+  // the strip under the app (sab), camera, side keys [side, top, length]
+  var DEVICES = {
+    iphone: { os: 'ios', w: 393, h: 852, r: 55, bez: [13, 13, 13, 13], fr: 68, sat: 54, sab: 34, cam: 'island',
+              side: [['l', 150, 30], ['l', 205, 62], ['l', 280, 62], ['r', 235, 96]] },
+    galaxy: { os: 'galaxy', w: 360, h: 780, r: 34, bez: [11, 11, 11, 11], fr: 45, sat: 32, sab: 22, cam: 'punch',
+              side: [['r', 170, 92], ['r', 290, 50]] },
+  };
+  var ICONS = {
+    ios:
+      '<svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.6" y="5" width="3" height="6" rx="1"/><rect x="9.2" y="2.6" width="3" height="8.4" rx="1"/><rect x="13.8" y="0" width="3" height="11" rx="1"/></svg>' +
+      '<svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor"><path d="M7.5 2.2c2.3 0 4.4.9 6 2.4l1.1-1.2A10.2 10.2 0 0 0 7.5.6 10.2 10.2 0 0 0 .4 3.4l1.1 1.2a8.6 8.6 0 0 1 6-2.4Z"/><path d="M7.5 5.4c1.4 0 2.6.5 3.6 1.4l1.1-1.2a6.9 6.9 0 0 0-9.4 0l1.1 1.2c1-.9 2.2-1.4 3.6-1.4Z"/><path d="M9.8 8 7.5 10.5 5.2 8a3.4 3.4 0 0 1 4.6 0Z"/></svg>' +
+      '<svg width="26" height="12" viewBox="0 0 26 12"><rect x=".6" y=".6" width="22" height="10.8" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1.1"/><rect x="2.2" y="2.2" width="15.6" height="7.6" rx="1.8" fill="currentColor"/><path d="M24.2 4v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2Z" fill="currentColor" fill-opacity=".45"/></svg>',
+    galaxy:
+      '<svg width="14" height="11" viewBox="0 0 15 11" fill="currentColor"><path d="M7.5 2.2c2.3 0 4.4.9 6 2.4l1.1-1.2A10.2 10.2 0 0 0 7.5.6 10.2 10.2 0 0 0 .4 3.4l1.1 1.2a8.6 8.6 0 0 1 6-2.4Z"/><path d="M7.5 5.4c1.4 0 2.6.5 3.6 1.4l1.1-1.2a6.9 6.9 0 0 0-9.4 0l1.1 1.2c1-.9 2.2-1.4 3.6-1.4Z"/><path d="M9.8 8 7.5 10.5 5.2 8a3.4 3.4 0 0 1 4.6 0Z"/></svg>' +
+      '<svg width="14" height="11" viewBox="0 0 14 11" fill="currentColor"><rect x="0" y="8" width="2.4" height="3" rx=".6"/><rect x="3.8" y="5.5" width="2.4" height="5.5" rx=".6"/><rect x="7.6" y="3" width="2.4" height="8" rx=".6"/><rect x="11.4" y="0" width="2.4" height="11" rx=".6" fill-opacity=".35"/></svg>' +
+      '<span class="pct">78%</span>' +
+      '<svg width="20" height="10" viewBox="0 0 20 10"><rect x=".5" y=".5" width="17" height="9" rx="2.4" fill="none" stroke="currentColor" stroke-opacity=".5"/><rect x="2" y="2" width="11" height="6" rx="1.2" fill="currentColor"/><rect x="18.4" y="3.2" width="1.4" height="3.6" rx=".6" fill="currentColor" fill-opacity=".5"/></svg>',
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var frame = $('app'), phone = $('phone');
+  var current;
+  try { current = localStorage.getItem('doco-frame-device'); } catch (e) {}
+  if (!DEVICES[current]) current = 'iphone';
+
+  function show(name) {
+    var d = DEVICES[name];
+    current = name;
+    try { localStorage.setItem('doco-frame-device', name); } catch (e) {}
+    var bt = d.bez[0], br = d.bez[1], bb = d.bez[2], bl = d.bez[3];
+    var vars = { w: d.w, h: d.h, r: d.r, fr: d.fr, sat: d.sat, sab: d.sab, bt: bt, bl: bl, fw: d.w + bl + br, fh: d.h + bt + bb };
+    for (var k in vars) phone.style.setProperty('--' + k, vars[k] + 'px');
+    phone.className = d.os;
+    $('cam').className = d.cam;
+    $('icons').innerHTML = ICONS[d.os];
+    phone.querySelectorAll('.side').forEach(function (el) { el.remove(); });
+    d.side.forEach(function (s) {
+      var el = document.createElement('i');
+      el.className = 'side ' + s[0];
+      el.style.top = s[1] + 'px';
+      el.style.height = s[2] + 'px';
+      phone.appendChild(el);
+    });
+    document.querySelectorAll('#devices [data-d]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.d === name)); });
+    tick();
+    fit();
+  }
+
+  // Whole phone in the window, never larger than life size
+  function fit() {
+    var d = DEVICES[current];
+    var fw = d.w + d.bez[1] + d.bez[3] + 8, fh = d.h + d.bez[0] + d.bez[2];
+    var s = Math.min(1, (innerHeight - $('devices').offsetHeight - 18 - 48) / fh, (innerWidth - 32) / fw);
+    phone.style.transform = 'translateX(4px) scale(' + s + ')';
+    $('stage').style.width = fw * s + 'px';
+    $('stage').style.height = fh * s + 'px';
+  }
+
+  function tick() {
+    var now = new Date(), h = now.getHours(), m = String(now.getMinutes()).padStart(2, '0');
+    $('clock').textContent = (current === 'iphone' ? h : String(h).padStart(2, '0')) + ':' + m;
+  }
+
+  // The status bar and the strip under the app take the colour the app shows at its top and bottom edge,
+  // as on a real phone where the app runs under them. Read with a 1×1 canvas, so any CSS colour works.
+  var ctx = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
+  ctx.canvas.width = ctx.canvas.height = 1;
+  function colourAt(doc, x, y) {
+    var layers = [];
+    for (var el = doc.elementFromPoint(x, y); el; el = el.parentElement) {
+      var c = getComputedStyle(el).backgroundColor;
+      if (c && c !== 'transparent' && !/^rgba\(.*,\s*0\)$/.test(c)) layers.push(c);
+    }
+    ctx.globalCompositeOperation = 'copy';
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, 1, 1);
+    ctx.globalCompositeOperation = 'source-over';
+    for (var i = layers.length - 1; i >= 0; i--) { ctx.fillStyle = layers[i]; ctx.fillRect(0, 0, 1, 1); }
+    var p = ctx.getImageData(0, 0, 1, 1).data;
+    var lum = (0.2126 * p[0] + 0.7152 * p[1] + 0.0722 * p[2]) / 255;
+    return ['rgb(' + p[0] + ' ' + p[1] + ' ' + p[2] + ')', lum > 0.55 ? '#000' : '#fff'];
+  }
+  function paintEdges() {
+    try {
+      var doc = frame.contentDocument;
+      if (!doc || !doc.body) return;
+      var w = frame.clientWidth, h = frame.clientHeight;
+      var top = colourAt(doc, 6, 1), bottom = colourAt(doc, w / 2, h - 1);
+      phone.style.setProperty('--top', top[0]);
+      phone.style.setProperty('--top-ink', top[1]);
+      phone.style.setProperty('--bottom', bottom[0]);
+      phone.style.setProperty('--bottom-ink', bottom[1]);
+    } catch (e) {}
+  }
+
+  // Keep the address bar on the app's tab (#rozmowa, #nastroj…), so reloading or copying the link lands there
+  function syncAddress() {
+    try {
+      var loc = frame.contentWindow.location;
+      if (loc.origin !== location.origin || !/\/(index\.html)?$/.test(loc.pathname)) return;
+      if (loc.search + loc.hash !== location.search + location.hash) history.replaceState(null, '', './' + loc.search + loc.hash);
+      if (frame.contentDocument.title) document.title = frame.contentDocument.title;
+    } catch (e) {}
+  }
+
+  frame.addEventListener('load', function () {
+    try { frame.contentWindow.addEventListener('hashchange', syncAddress); } catch (e) {}
+    syncAddress();
+    paintEdges();
+  });
+  frame.src = './' + location.search + location.hash;
+
+  $('devices').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-d]');
+    if (b && b.dataset.d !== current) show(b.dataset.d);
+  });
+  addEventListener('resize', fit);
+  // The app saved a new mode or colour (localStorage changes from the frame arrive here as storage events)
+  addEventListener('storage', function (e) { if (e.key === 'doco_theme' || e.key === 'doco_accent') docoTheme(); });
+
+  show(current);
+  setInterval(tick, 10000);
+  setInterval(function () { if (!document.hidden) paintEdges(); }, 400);
+})();
+</script>
+</body>
+</html>
