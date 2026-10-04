@@ -145,7 +145,18 @@ const TOPICS = [
   ['partner mi grozi, że mnie zabije', 'violence'],
   ['zostałam zgwałcona i boję się', 'assault'],
   ['co robić po gwałcie?', 'assault'],
+  ['puchnie mi gardło po leku', 'redflag'],
+  ['tata od wczoraj jest splątany', 'redflag'],
   ['bolą mnie zęby', 'pain'],
+  // Other symptoms and questions about the chat get an answer, not "tell me more"
+  ['mam gorączkę 39', 'symptom'],
+  ['kręci mi się w głowie', 'symptom'],
+  ['mam katar i kaszel', 'symptom'],
+  ['kim jesteś?', 'about'],
+  ['co umiesz?', 'about'],
+  ['jak się czujesz?', 'howareyou'],
+  ['pomóż mi', 'help'],
+  ['co mi jest?', 'diagnosis'],
   // Not crisis, not pain: 'żeby' isn't 'zęby', oversleeping isn't a wish to die
   ['chcę, żeby mama mnie zrozumiała', 'open'],
   ['zasnąłem i nie obudziłem się na czas', 'tired'],
@@ -169,9 +180,11 @@ for (const [msg, want] of TOPICS) {
   const r = create({ random: () => 0 }).reply(msg)
   console.log(`${r.topic.padEnd(14)} ${msg}\n${' '.repeat(15)}→ ${short(r.text)}`)
   check(msg, () => assert.equal(detect(msg).topic, want))
-  if (want === 'pain') check(`${msg} links`, () => assert.ok(r.html.includes('href="cialo/"') && r.html.includes('href="gdzie-boli/"')))
+  // Pain with no checked entry: the answer itself says when to call 112 and when to see a doctor, no "go to another tab"
+  if (want === 'pain') check(`${msg} helps, no redirect`, () => assert.ok(!/href="(cialo|gdzie-boli)\//.test(r.html) && r.html.includes('tel:112') && /lekarza/.test(r.text)))
   if (want === 'redflag') check(`${msg} 112`, () => assert.ok(r.html.includes('tel:112')))
   if (want === 'assault') check(`${msg} 112 + SOR + 72 h`, () => assert.ok(r.html.includes('tel:112') && r.text.includes('SOR') && r.text.includes('72 godzin')))
+  if (want === 'symptom') check(`${msg} 112 + doctor, no redirect`, () => assert.ok(r.html.includes('tel:112') && /lekarza/.test(r.text) && !/href="(cialo|gdzie-boli)\//.test(r.html)))
   if (want === 'violence') check(`${msg} 112 + Niebieska Linia`, () => assert.ok(r.html.includes('tel:112') && r.html.includes('tel:800120002')))
   check(`${msg} never "nie rozumiem"`, () => assert.ok(!/nie rozumiem/i.test(r.text)))
 }

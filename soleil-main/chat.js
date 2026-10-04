@@ -22,7 +22,7 @@
       done: 'Dobra robota', doneSub: 'Jak się teraz czujesz?',
       stop: 'Zakończ',
       saved: 'Zapisano w dzienniku nastroju',
-      yes: 'Tak, spróbuję', notNow: 'Nie teraz', withMe: 'Oddychaj ze mną',
+      yes: 'Tak, spróbuję', tell: 'Tak, opowiedz', notNow: 'Nie teraz', withMe: 'Oddychaj ze mną',
       checker: 'Gdzie boli?', atlas: 'Atlas ciała',
       quick: 'Szybkie odpowiedzi',
       short: 'Napisz tutaj…',
@@ -41,7 +41,7 @@
       done: 'Well done', doneSub: 'How do you feel now?',
       stop: 'Stop',
       saved: 'Saved in your mood diary',
-      yes: "Yes, I'll try", notNow: 'Not now', withMe: 'Breathe with me',
+      yes: "Yes, I'll try", tell: 'Yes, tell me', notNow: 'Not now', withMe: 'Breathe with me',
       checker: 'Where does it hurt?', atlas: 'Body atlas',
       quick: 'Quick replies',
       short: 'Write here…',
@@ -60,7 +60,7 @@
       done: 'Молодець', doneSub: 'Як ти зараз почуваєшся?',
       stop: 'Завершити',
       saved: 'Збережено в щоденнику настрою',
-      yes: 'Так, спробую', notNow: 'Не зараз', withMe: 'Дихай зі мною',
+      yes: 'Так, спробую', tell: 'Так, розкажи', notNow: 'Не зараз', withMe: 'Дихай зі мною',
       checker: 'Де болить?', atlas: 'Атлас тіла',
       quick: 'Швидкі відповіді',
       short: 'Напиши тут…',
@@ -79,7 +79,7 @@
       done: 'Gut gemacht', doneSub: 'Wie fühlst du dich jetzt?',
       stop: 'Beenden',
       saved: 'Im Stimmungstagebuch gespeichert',
-      yes: 'Ja, ich versuche es', notNow: 'Nicht jetzt', withMe: 'Atme mit mir',
+      yes: 'Ja, ich versuche es', tell: 'Ja, erzähl', notNow: 'Nicht jetzt', withMe: 'Atme mit mir',
       checker: 'Wo tut es weh?', atlas: 'Körperatlas',
       quick: 'Schnelle Antworten',
       short: 'Schreib hier…',
@@ -98,7 +98,7 @@
       done: 'Muy bien', doneSub: '¿Cómo te sientes ahora?',
       stop: 'Terminar',
       saved: 'Guardado en tu diario de ánimo',
-      yes: 'Sí, lo intento', notNow: 'Ahora no', withMe: 'Respira conmigo',
+      yes: 'Sí, lo intento', tell: 'Sí, cuéntame', notNow: 'Ahora no', withMe: 'Respira conmigo',
       checker: '¿Dónde duele?', atlas: 'Atlas del cuerpo',
       quick: 'Respuestas rápidas',
       short: 'Escribe aquí…',
@@ -340,7 +340,8 @@
 
   // ── Quick replies under the offline companion's answers ─────────────
   // The companion says what each answer offers (kind): a small step gets "yes / not now", breathing
-  // gets the guided minute, pain gets the symptom checker and the atlas, "how are you?" gets the faces.
+  // gets the guided minute, an offered checked answer gets "yes / not now", a symptom with no checked answer
+  // gets the symptom checker, "how are you?" gets the faces.
   const STEPS = ['walk', 'write', 'text', 'ground', 'pause', 'small'];
   let lastReply = null;
   if (window.SoleilOffline) {
@@ -348,6 +349,14 @@
     window.SoleilOffline.reply = function (text) {
       lastReply = baseReply.call(this, text);
       return lastReply;
+    };
+    // The page starts its own conversation with create() (index.html, offlineReply), so its replies are caught too
+    const baseCreate = window.SoleilOffline.create;
+    window.SoleilOffline.create = function () {
+      const chat = baseCreate.apply(this, arguments);
+      const reply = chat.reply;
+      chat.reply = (text) => (lastReply = reply(text));
+      return chat;
     };
   }
   function clearChips() {
@@ -371,10 +380,12 @@
     const sayIt = (text) => () => say(text);
     if (r.kind === 'breath') {
       row.append(chip(t('withMe'), 'i-breath', () => openBreathe()), chip(t('notNow'), null, sayIt(t('notNow'))));
+    } else if (r.offer) {
+      row.append(chip(t('tell'), 'i-check', sayIt(t('tell'))), chip(t('notNow'), null, sayIt(t('notNow'))));
     } else if (STEPS.includes(r.kind)) {
       row.append(chip(t('yes'), 'i-check', sayIt(t('yes'))), chip(t('notNow'), null, sayIt(t('notNow'))));
-    } else if (r.topic === 'pain') {
-      row.append(chip(t('checker'), 'i-symptom', () => window.hyShowView('objawy')), chip(t('atlas'), 'i-body', () => window.hyShowView('cialo')));
+    } else if (r.topic === 'pain' || r.topic === 'symptom') {
+      row.append(chip(t('checker'), 'i-symptom', () => window.hyShowView('objawy')));
     } else if ((r.topic === 'greeting' || r.topic === 'thanks') && r.kind === 'ask') {
       row.classList.add('hy-chip-faces');
       for (let n = 1; n <= 5; n++) {

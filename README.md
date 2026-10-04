@@ -41,7 +41,7 @@ Zmienne środowiskowe (opcjonalne): `VITE_CLERK_PUBLISHABLE_KEY` – klucz Clerk
 
 ## Baza wiedzy czatu
 
-Na pytania o zdrowie („jak zmierzyć ciśnienie?”, „co na ból głowy?”) czat Soleil odpowiada z bazy `soleil-main/data/wiedza.json`. Każdy wpis zbiera, sprawdza w źródłach, testuje i zapisuje zespół czterech agentów Claude Code (`.claude/agents/`: badacz, weryfikator, tester, archiwista). Kolejne tematy dodaje się komendą `/baza-wiedzy` w Claude Code. Opis, zasady i stan bazy: [`docs/baza-wiedzy.md`](docs/baza-wiedzy.md).
+Na pytania o zdrowie („jak zmierzyć ciśnienie?”, „co na ból głowy?”, „czy to depresja?”) i na objawy, o których ma sprawdzony wpis („boli mnie głowa od rana”), czat Doco odpowiada z bazy `soleil-main/data/wiedza.json` (17 tematów, w tym 14 o zdrowiu psychicznym). Gdy ktoś pisze o swoich uczuciach („mam depresję”, „nie mogę spać”), czat najpierw rozmawia i proponuje sprawdzone informacje („Tak, opowiedz”). Na pytanie, na które bazy nie ma, mówi wprost, że nie ma sprawdzonej odpowiedzi, zamiast zgadywać. Każdy wpis zbiera, sprawdza w źródłach, testuje i zapisuje zespół czterech agentów Claude Code (`.claude/agents/`: badacz, weryfikator, tester, archiwista). Kolejne tematy dodaje się komendą `/baza-wiedzy` w Claude Code. Opis, zasady i stan bazy: [`docs/baza-wiedzy.md`](docs/baza-wiedzy.md).
 
 ## Rozmowa głosowa
 

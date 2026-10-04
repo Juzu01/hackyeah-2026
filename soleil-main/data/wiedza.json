@@ -8979,6 +8979,1024 @@
       }
     },
     {
+      "id": "adhd-u-doroslych",
+      "title": "ADHD u dorosłych",
+      "domain": "psychika",
+      "tier": 3,
+      "audience": "dorośli (od 18. roku życia), którzy podejrzewają u siebie ADHD, mają już diagnozę albo biorą leki na ADHD, oraz ich bliscy",
+      "keywords": [
+        "adhd*",
+        "add",
+        "z adhd",
+        "na adhd",
+        "adhd u doros*",
+        "doros* z adhd",
+        "objaw* adhd",
+        "diagnoz* adhd",
+        "zdiagnozowa* adhd",
+        "test* na adhd",
+        "test* adhd",
+        "lek* na adhd",
+        "leczeni* adhd",
+        "nadpobudliwos*",
+        "nadpobudliw* psychoruchow*",
+        "deficyt* uwagi",
+        "zaburzeni* koncentracji u doros*",
+        "metylofenidat*",
+        "concert*",
+        "concerc*",
+        "medikinet*",
+        "medikinec*",
+        "ritalin*",
+        "symkinet*",
+        "symkinec*",
+        "atenz*",
+        "elvanse*",
+        "lisdeksamfetamin*",
+        "atomoksetyn*",
+        "auroxetyn*",
+        "lek* na koncentracj*",
+        "tabletk* na koncentracj*",
+        "smart drug*",
+        "tabletk* na skupieni*",
+        "lek* na skupieni*",
+        "adhd czy depresj*",
+        "depresj* czy adhd",
+        "adhd a depresj*",
+        "depresj* a adhd",
+        "adhd to depresj*",
+        "ritalin* przed*",
+        "ritalin* od*",
+        "ritalin* na*",
+        "concert* przed*",
+        "concert* od*",
+        "concert* na*",
+        "medikinet* przed*",
+        "medikinet* od*",
+        "medikinet* na*",
+        "elvanse* przed*",
+        "elvanse* od*",
+        "elvanse* na*",
+        "metylofenidat* przed*",
+        "metylofenidat* od*",
+        "metylofenidat* na*",
+        "adhd i depresj*",
+        "depresj* i adhd",
+        "adhd czy nerwic*",
+        "nerwic* czy adhd",
+        "adhd a nerwic*",
+        "nerwic* a adhd",
+        "adhd i nerwic*",
+        "nerwic* i adhd",
+        "adhd to nerwic*",
+        "adhd od nerwic*",
+        "nerwic* od adhd",
+        "adhd to to samo co nerwic*",
+        "nerwic* to to samo co adhd"
+      ],
+      "questions": [
+        "Jakie są objawy ADHD u dorosłych?",
+        "Jak sprawdzić, czy mam ADHD?",
+        "Czy test na ADHD z internetu wystarczy do diagnozy?",
+        "Kto diagnozuje ADHD u dorosłych?",
+        "Czy do psychiatry na diagnozę ADHD potrzebuję skierowania?",
+        "Czy ADHD u dorosłych leczy się na NFZ?",
+        "Czy ADHD może zacząć się dopiero w dorosłości?",
+        "Jak leczy się ADHD u dorosłych?",
+        "Czy leki na ADHD są refundowane dla dorosłych?",
+        "Czy Concerta jest refundowana dla dorosłych?",
+        "Czy mogę wziąć lek na ADHD od kolegi przed egzaminem?",
+        "Czy mogę prowadzić samochód, biorąc leki na ADHD?",
+        "Czy dorośli z ADHD częściej mają depresję albo lęk?",
+        "Czy tabletki na skupienie z internetu są bezpieczne?",
+        "Czy mogę brać leki na ADHD w ciąży?",
+        "Czy mogę karmić piersią, biorąc leki na ADHD?",
+        "Po leku na ADHD mam tiki. Co robić?",
+        "Mam 68 lat i od roku nie mogę się skupić. Czy to ADHD?",
+        "Czy to ADHD czy nerwica?"
+      ],
+      "summary": "ADHD (zespół nadpobudliwości psychoruchowej z deficytem uwagi) to zaburzenie neurorozwojowe, które zaczyna się w dzieciństwie i u wielu osób trwa w dorosłości: kłopoty z uwagą i organizacją, wewnętrzny niepokój i impulsywność utrudniają pracę, naukę i relacje. Rozpoznaje je psychiatra po dokładnym wywiadzie, a leczenie łączy psychoedukację, terapię i często leki.",
+      "answer": "ADHD to kłopoty z uwagą i organizacją, niepokój i impulsywność, które trwają od dzieciństwa i psują pracę, naukę lub relacje. Gdy zaczęły się dopiero w dorosłości, idź do lekarza rodzinnego, a przy nagłym splątaniu (ktoś nie wie, gdzie jest) lub niewyraźnej mowie dzwoń pod 112. Rozpoznaje psychiatra (na NFZ bez skierowania), nie test z internetu. Pomagają terapia, wiedza o ADHD i często leki, za które dorośli płacą pełną cenę (stan na 1.10.2026). Nie bierz cudzych leków pobudzających. Po swoim leku nie prowadź przy zawrotach lub senności, a nowe lub nasilone tiki zgłoś lekarzowi jeszcze dziś. W ciąży lub karmiąc piersią szybko omów lek z lekarzem; w ciąży nie odstawiaj go sama. ADHD często towarzyszą depresja, lęk i nałogi. Przy myślach samobójczych dzwoń pod 112, 116 123 lub 800 70 2222.",
+      "facts": [
+        {
+          "text": "ADHD (zespół nadpobudliwości psychoruchowej z deficytem uwagi) to zaburzenie neurorozwojowe: kłopoty z utrzymaniem uwagi, nadmierna ruchliwość lub niepokój i impulsywność.",
+          "sources": [
+            "s2",
+            "s4"
+          ]
+        },
+        {
+          "text": "U dorosłych nadruchliwość zwykle słabnie i przechodzi w poczucie wewnętrznego niepokoju, a na pierwszy plan wychodzą kłopoty z uwagą: rozpraszanie się, zapominanie, gubienie rzeczy, kłopoty z organizacją czasu i kończeniem zadań.",
+          "sources": [
+            "s2",
+            "s4",
+            "s9"
+          ]
+        },
+        {
+          "text": "Objawy ADHD zaczynają się w dzieciństwie. Według DSM-5-TR i ICD-11 kilka wyraźnych objawów musiało występować już przed 12. rokiem życia, choć część osób trafia do lekarza dopiero jako dorośli; polskie rekomendacje przyjmują, że w wywiadzie powinny to być co najmniej 3 objawy.",
+          "sources": [
+            "s2",
+            "s4",
+            "s26",
+            "s27"
+          ]
+        },
+        {
+          "text": "Według DSM-5-TR u osób od 17. roku życia do rozpoznania potrzeba co najmniej 5 objawów nieuwagi lub co najmniej 5 objawów nadruchliwości i impulsywności; ICD-11 nie podaje sztywnej liczby objawów.",
+          "sources": [
+            "s2",
+            "s26",
+            "s27"
+          ]
+        },
+        {
+          "text": "Objawy muszą utrzymywać się co najmniej 6 miesięcy, występować w kilku sferach życia i wyraźnie utrudniać funkcjonowanie w co najmniej dwóch z nich (np. praca lub nauka, relacje rodzinne, życie towarzyskie).",
+          "sources": [
+            "s1",
+            "s2",
+            "s26",
+            "s27"
+          ]
+        },
+        {
+          "text": "Dorosły nie musi pamiętać wszystkich objawów z dzieciństwa: wystarczą wspomnienia z wieku 9–12 lat, a relacja bliskich i świadectwa szkolne pomagają, ale nie są konieczne.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Objawy mogą być niewidoczne przez lata, bo ktoś je kompensuje (np. wysoką inteligencją albo pomocą rodziców czy partnera), i ujawnić się dopiero przy większych wymaganiach, np. na studiach albo w nowej pracy.",
+          "sources": [
+            "s2",
+            "s3",
+            "s27"
+          ]
+        },
+        {
+          "text": "Gdy brakuje informacji o objawach przed 12. rokiem życia, ADHD u dorosłego rozpoznaje się ostrożnie, po wykluczeniu m.in. spektrum autyzmu, zaburzeń osobowości, zaburzeń nastroju i lękowych (stanowisko konsultanta krajowego w dziedzinie psychiatrii z 6 marca 2024 r.).",
+          "sources": [
+            "s12"
+          ]
+        },
+        {
+          "text": "ADHD ma około 2,8% dorosłych (w badaniach z 20 krajów od 1,4 do 3,6%); polskie rekomendacje z 2024 r. podają 4,4% i szacują, że w Polsce ADHD może mieć około 1 mln osób.",
+          "sources": [
+            "s3",
+            "s2"
+          ]
+        },
+        {
+          "text": "W 2023 r. rozpoznanie ADHD (F90) w publicznej opiece zdrowotnej miało tylko 3579 dorosłych, czyli niespełna 0,4% osób, które mogą spełniać kryteria.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "U kobiet ADHD rozpoznaje się rzadziej i później (średnio o około 4 lata niż u mężczyzn), bo częściej mają objawy nieuwagi, które trudniej zauważyć, maskują je, a bywają błędnie rozpoznawane jako lęk lub depresja.",
+          "sources": [
+            "s1",
+            "s2",
+            "s4"
+          ]
+        },
+        {
+          "text": "ADHD często występuje rodzinnie i ma silne podłoże genetyczne; częściej mają je m.in. osoby urodzone przedwcześnie, z padaczką, po urazie mózgu i autystyczne.",
+          "sources": [
+            "s3",
+            "s4"
+          ]
+        },
+        {
+          "text": "Kwestionariusz przesiewowy (np. ASRS: 6 pytań, 4 lub więcej odpowiedzi dodatnich to wynik dodatni) pokazuje tylko, czy potrzebna jest dokładna diagnoza: wynik dodatni nie przesądza o ADHD, a ujemny go nie wyklucza.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "ADHD nie rozpoznaje się na podstawie samych skal i kwestionariuszy; potrzebna jest pełna ocena kliniczna i psychospołeczna, wywiad rozwojowy i psychiatryczny oraz ocena stanu psychicznego.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Nie ma jednego badania potwierdzającego ADHD, a testy neuropsychologiczne, badanie inteligencji, EEG ani badania obrazowe mózgu nie są potrzebne rutynowo.",
+          "sources": [
+            "s2",
+            "s8"
+          ]
+        },
+        {
+          "text": "Według polskich rekomendacji wywiad diagnostyczny w kierunku ADHD u dorosłego powinien trwać co najmniej 90 minut; nie da się go rzetelnie przeprowadzić w 20–30 minut.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Przed diagnozą ADHD potrzebne jest pełne badanie psychiatryczne i wywiad o chorobach somatycznych, bo podobne objawy mogą dawać m.in. depresja, zaburzenia lękowe, choroba afektywna dwubiegunowa czy spektrum autyzmu.",
+          "sources": [
+            "s2",
+            "s3",
+            "s12"
+          ]
+        },
+        {
+          "text": "Leki pobudzające mogą poprawiać koncentrację także u osób bez ADHD, więc to, że lek „działa”, nie dowodzi ADHD.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "W badaniu 100 najpopularniejszych filmów o ADHD na TikToku 52% wprowadzało w błąd, a wśród 50 filmów z tagiem #adhdtest wprowadzało w błąd 92%.",
+          "sources": [
+            "s17",
+            "s18"
+          ]
+        },
+        {
+          "text": "ADHD powinien rozpoznawać psychiatra albo inny specjalista przeszkolony w rozpoznawaniu ADHD; w ocenie często pomaga psycholog.",
+          "sources": [
+            "s1",
+            "s4",
+            "s15"
+          ]
+        },
+        {
+          "text": "Do psychiatry w poradni zdrowia psychicznego z umową z NFZ nie potrzebujesz skierowania; od 17 września 2025 r. bez skierowania przyjmie cię też psycholog w placówce z umową z NFZ.",
+          "sources": [
+            "s15",
+            "s16",
+            "s25"
+          ]
+        },
+        {
+          "text": "Dorośli mogą bez skierowania i bez umawiania się zgłosić do Centrum Zdrowia Psychicznego, jeśli działa ono w ich okolicy (to program pilotażowy); CZP pomaga bezpłatnie i całą dobę.",
+          "sources": [
+            "s15",
+            "s23"
+          ]
+        },
+        {
+          "text": "Leczenie ADHD u dorosłych jest wielotorowe: psychoedukacja (pierwszy krok dla każdego), terapia poznawczo-behawioralna, coaching, zmiany w otoczeniu i leki.",
+          "sources": [
+            "s2",
+            "s3",
+            "s12"
+          ]
+        },
+        {
+          "text": "Według NICE leki proponuje się dorosłym, gdy objawy nadal wyraźnie utrudniają życie mimo zmian w otoczeniu; lekami pierwszego wyboru są lisdeksamfetamina albo metylofenidat, a atomoksetyna, gdy nie działają lub nie są tolerowane. Europejski konsensus (2019) i konsultant krajowy w dziedzinie psychiatrii (2024) także stawiają na pierwszym miejscu leki pobudzające, a konkretny lek i dawkę zawsze dobiera lekarz.",
+          "sources": [
+            "s1",
+            "s3",
+            "s12",
+            "s9"
+          ]
+        },
+        {
+          "text": "Terapię (np. poznawczo-behawioralną) zaleca się dorosłym, którzy nie chcą brać leków, nie tolerują ich albo mimo leków nadal mają istotne objawy (wtedy razem z lekami).",
+          "sources": [
+            "s1",
+            "s2"
+          ]
+        },
+        {
+          "text": "Leki na ADHD może zacząć tylko lekarz z doświadczeniem w leczeniu ADHD, np. psychiatra; przed leczeniem mierzy ciśnienie, tętno i masę ciała oraz pyta o choroby serca i nagłe zgony w rodzinie.",
+          "sources": [
+            "s1",
+            "s8",
+            "s9"
+          ]
+        },
+        {
+          "text": "W Polsce do leczenia ADHD u dorosłych są zarejestrowane m.in. metylofenidat (np. Concerta, Medikinet CR), atomoksetyna i lisdeksamfetamina (Elvanse, dopuszczona w 2024 r. i dostępna w aptekach na receptę).",
+          "sources": [
+            "s8",
+            "s9",
+            "s10",
+            "s11",
+            "s12"
+          ]
+        },
+        {
+          "text": "Refundacja leków na ADHD obejmuje tylko dzieci i młodzież (metylofenidat u dzieci powyżej 6 lat, atomoksetyna u dzieci od 6 lat i młodzieży); lisdeksamfetaminy nie ma na liście leków refundowanych, a dorosły płaci pełną cenę (stan na 1 października 2026 r.). We wrześniu 2025 r. Ministerstwo Zdrowia nie prowadziło postępowań o refundację tych leków dla dorosłych.",
+          "sources": [
+            "s28",
+            "s13",
+            "s14"
+          ]
+        },
+        {
+          "text": "Metylofenidat wydaje się na receptę Rpw, czyli receptę na leki zawierające substancje psychotropowe lub środki odurzające.",
+          "sources": [
+            "s14",
+            "s15"
+          ]
+        },
+        {
+          "text": "Najczęstsze działania niepożądane leków na ADHD to szybsze tętno, wyższe ciśnienie, mniejszy apetyt i spadek masy ciała, bóle głowy i gorszy sen; lekarz kontroluje ciśnienie i tętno po każdej zmianie dawki i co najmniej co 6 miesięcy.",
+          "sources": [
+            "s1",
+            "s2",
+            "s3",
+            "s8"
+          ]
+        },
+        {
+          "text": "U nawet 30% osób z ADHD efekt leczenia lekami jest niezadowalający, a lekarz co najmniej raz w roku ocenia, czy dalej je brać.",
+          "sources": [
+            "s2",
+            "s1"
+          ]
+        },
+        {
+          "text": "Leki pobudzające (metylofenidat, pochodne amfetaminy) mogą uzależniać; ryzyko rośnie przy wyższych dawkach, szybko działających postaciach i braniu leku niezgodnie z zaleceniem, a nadużywanie może prowadzić m.in. do bezsenności, drażliwości i psychozy.",
+          "sources": [
+            "s2",
+            "s7",
+            "s8"
+          ]
+        },
+        {
+          "text": "Ryzyko nadużywania leków pobudzających jest większe u dorosłych, zwłaszcza młodych, niż u dzieci; lek trzeba przechowywać tak, żeby nie trafił do znajomych ani członków rodziny.",
+          "sources": [
+            "s8"
+          ]
+        },
+        {
+          "text": "U dorosłych biorących leki pobudzające opisywano nagłe zgony, udary i zawały serca; przy jawnej chorobie serca albo umiarkowanym lub ciężkim nadciśnieniu lisdeksamfetamina jest przeciwwskazana.",
+          "sources": [
+            "s8"
+          ]
+        },
+        {
+          "text": "Objawy przedawkowania pochodnych amfetaminy to m.in. niepokój, drżenie, splątanie, agresja, omamy, napady paniki i podwyższona temperatura, a w ciężkich zatruciach drgawki i śpiączka.",
+          "sources": [
+            "s8"
+          ]
+        },
+        {
+          "text": "Po wzięciu większej dawki metylofenidatu niż przepisana trzeba od razu szukać pomocy medycznej, nawet bez objawów, a przy drgawkach albo szybkim, wolnym lub nierównym biciu serca wezwać pogotowie.",
+          "sources": [
+            "s5"
+          ]
+        },
+        {
+          "text": "Przy podejrzeniu zatrucia lekiem trzeba od razu zadzwonić pod 112 albo jechać na SOR, nie czekając na objawy, i nie wywoływać wymiotów bez porady operatora 112 lub lekarza.",
+          "sources": [
+            "s22"
+          ]
+        },
+        {
+          "text": "Ból w klatce piersiowej, objawy udaru, drgawki, nagły obrzęk ust, języka lub gardła albo trudności z oddychaniem (objawy ciężkiej reakcji alergicznej) oraz myśli o zrobieniu krzywdy sobie lub innym podczas brania metylofenidatu wymagają natychmiastowej pomocy (pogotowie albo SOR).",
+          "sources": [
+            "s6"
+          ]
+        },
+        {
+          "text": "Omamy, kołatanie serca, wyraźna zmiana nastroju (agresja, drażliwość, przygnębienie, lęk) albo nowe tiki podczas brania metylofenidatu to powód do pilnego kontaktu z lekarzem.",
+          "sources": [
+            "s6"
+          ]
+        },
+        {
+          "text": "Przy ostrym epizodzie psychozy lub manii lekarz odstawia leki na ADHD i ewentualnie wraca do nich po ustąpieniu epizodu; leki pobudzające mogą wywołać nowe objawy psychotyczne lub maniakalne.",
+          "sources": [
+            "s1",
+            "s8"
+          ]
+        },
+        {
+          "text": "Nagłe odstawienie metylofenidatu może wywołać objawy odstawienia, np. przygnębienie, dlatego odstawia się go po rozmowie z lekarzem, zwykle stopniowo.",
+          "sources": [
+            "s5",
+            "s7"
+          ]
+        },
+        {
+          "text": "Leki na ADHD mogą wywoływać zawroty głowy, senność lub zaburzenia widzenia; gdy się pojawią, nie należy prowadzić pojazdów ani obsługiwać maszyn.",
+          "sources": [
+            "s7",
+            "s8",
+            "s10"
+          ]
+        },
+        {
+          "text": "Nieleczone ADHD zwiększa ryzyko poważnych wypadków drogowych, a leczenie (np. metylofenidatem) może to ryzyko zmniejszać.",
+          "sources": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "Alkohol może nasilać działania niepożądane metylofenidatu, dlatego podczas leczenia lepiej go nie pić.",
+          "sources": [
+            "s7",
+            "s10"
+          ]
+        },
+        {
+          "text": "Kofeina nasila działania niepożądane metylofenidatu, a nie wzmacnia jego działania (w połączeniu z lekiem nierzadko wręcz pogarsza uwagę), dlatego zwłaszcza na początku leczenia lepiej jej unikać.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "ADHD u dorosłych bardzo często występuje razem z innymi zaburzeniami (przez całe życie u 60–80% osób); zaburzenia lękowe ma około 34%, zaburzenia nastroju około 22%, a uzależnienia około 11% dorosłych z ADHD.",
+          "sources": [
+            "s3"
+          ]
+        },
+        {
+          "text": "ADHD ma około 19–27% osób z uzależnieniem, a osoby z ADHD dwa razy częściej używają substancji psychoaktywnych, czasem żeby same złagodzić objawy.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Osoby z ADHD częściej mają depresję i lęk oraz wyższe ryzyko samobójstwa.",
+          "sources": [
+            "s4"
+          ]
+        },
+        {
+          "text": "Psychozę, ciężką depresję i epizod choroby dwubiegunowej leczy się przed leczeniem ADHD, a nadużywanie alkoholu i substancji trzeba najpierw ustabilizować; łagodniejsze zaburzenia lęku i nastroju można leczyć równolegle.",
+          "sources": [
+            "s2",
+            "s3"
+          ]
+        },
+        {
+          "text": "U większości dorosłych z ADHD występuje przesunięty rytm snu (późne zasypianie), a leki pobudzające mogą wydłużać zasypianie i skracać sen; pierwszym krokiem przy kłopotach ze snem jest higiena snu i dopasowanie leczenia.",
+          "sources": [
+            "s3",
+            "s2"
+          ]
+        },
+        {
+          "text": "Pomagają zmiany w otoczeniu: ograniczenie rozpraszaczy (np. słuchawki, ciche miejsce), krótsze bloki pracy z przerwami na ruch i polecenia na piśmie; w pracy lub na uczelni można prosić o takie dostosowania.",
+          "sources": [
+            "s1",
+            "s4"
+          ]
+        },
+        {
+          "text": "Regularny ruch, wystarczająca ilość snu (stała pora, ciemna i cicha sypialnia, bez ekranów, kofeiny, cukru i alkoholu przed snem) oraz regularne posiłki pomagają radzić sobie z objawami.",
+          "sources": [
+            "s4",
+            "s1"
+          ]
+        },
+        {
+          "text": "Neurofeedbacku nie zalecają ani NICE, ani australijskie wytyczne (AADPA) z powodu niewystarczających dowodów; badania u dorosłych są słabe i niejednoznaczne.",
+          "sources": [
+            "s2"
+          ]
+        },
+        {
+          "text": "Pomoc w kryzysie jest bezpłatna i całodobowa: 116 123 (telefon zaufania dla dorosłych), 800 70 2222 (Centrum Wsparcia), 116 111 (dzieci i młodzież); przy bezpośrednim zagrożeniu życia dzwoń pod 112.",
+          "sources": [
+            "s19",
+            "s20",
+            "s21"
+          ]
+        },
+        {
+          "text": "Nocna i świąteczna opieka zdrowotna działa w dni robocze od 18:00 do 8:00, a w weekendy i święta całą dobę, bez skierowania; najbliższy punkt podpowie infolinia NFZ 800 190 590.",
+          "sources": [
+            "s24"
+          ]
+        },
+        {
+          "text": "Leki na ADHD stosuje się w ciąży ostrożnie, bo danych o ich bezpieczeństwie jest mało. Według polskich ChPL (oficjalnych charakterystyk leków) metylofenidatu nie zaleca się w ciąży, chyba że przerwanie leczenia byłoby większym zagrożeniem dla ciąży, a lisdeksamfetaminę i atomoksetynę stosuje się w ciąży tylko wtedy, gdy korzyści dla matki przeważają nad ryzykiem dla płodu.",
+          "sources": [
+            "s29",
+            "s9",
+            "s10",
+            "s8",
+            "s11"
+          ]
+        },
+        {
+          "text": "Po metylofenidacie w pierwszym trymestrze (pierwszych 3 miesiącach) ciąży obserwowano niewielki wzrost ryzyka wad serca u dziecka (około 3 dodatkowe przypadki na 1000 ciąż), ale większość dzieci narażonych na ten lek w łonie matki rodzi się bez wad.",
+          "sources": [
+            "s9",
+            "s10",
+            "s30"
+          ]
+        },
+        {
+          "text": "Lisdeksamfetamina i inne lecznicze amfetaminy nie są znane z wywoływania wad wrodzonych, ale w części badań wiązano je z większym ryzykiem stanu przedrzucawkowego (groźnego wzrostu ciśnienia w ciąży), porodu przedwczesnego i mniejszej masy urodzeniowej dziecka.",
+          "sources": [
+            "s8",
+            "s31"
+          ]
+        },
+        {
+          "text": "Lek na ADHD brany w ostatnich tygodniach przed porodem może wywołać u noworodka przejściowe objawy odstawienia (np. drżenie, kłopoty ze snem, oddychaniem lub karmieniem), dlatego dziecko bywa po porodzie obserwowane.",
+          "sources": [
+            "s30",
+            "s31",
+            "s32",
+            "s8"
+          ]
+        },
+        {
+          "text": "Jeśli lek dobrze kontroluje ADHD, czasem lepiej go w ciąży nie odstawiać, bo odstawienie grozi nawrotem objawów, a nagłe przerwanie może dać objawy odstawienia; w ciąży nie odstawia się leku na ADHD ani nie zmniejsza dawki bez rozmowy z lekarzem.",
+          "sources": [
+            "s30",
+            "s31",
+            "s32"
+          ]
+        },
+        {
+          "text": "Planując ciążę, trzeba wcześniej porozmawiać z lekarzem prowadzącym leczenie, czy obecny lek jest nadal najlepszy (lekarz może chcieć zmienić leczenie), a przy nieplanowanej ciąży jak najszybciej zgłosić się do lekarza.",
+          "sources": [
+            "s29",
+            "s30",
+            "s31",
+            "s32"
+          ]
+        },
+        {
+          "text": "Metylofenidat przenika do mleka matki w małych ilościach. NHS uznaje, że przy zdrowym dziecku można go brać podczas karmienia piersią, a polskie ChPL (oficjalne charakterystyki leku) zalecają, żeby lekarz razem z matką zdecydował, czy przerwać karmienie, czy przerwać lub wstrzymać lek.",
+          "sources": [
+            "s29",
+            "s9",
+            "s10"
+          ]
+        },
+        {
+          "text": "Według polskich ChPL (oficjalnych charakterystyk leków) lisdeksamfetaminy nie należy stosować podczas karmienia piersią, a atomoksetyny trzeba wtedy unikać, bo brakuje danych o jej bezpieczeństwie.",
+          "sources": [
+            "s8",
+            "s11"
+          ]
+        },
+        {
+          "text": "Leki pobudzające mogą wywołać nowe albo nasilić dawne tiki ruchowe i głosowe; lekarz sprawdza to po każdej zmianie dawki i co najmniej co 6 miesięcy, a gdy pojawią się tiki, może przerwać leczenie.",
+          "sources": [
+            "s9",
+            "s10",
+            "s8",
+            "s6"
+          ]
+        },
+        {
+          "text": "Według NICE dorosłego bez rozpoznania ADHD w dzieciństwie kieruje się na ocenę w kierunku ADHD wtedy, gdy typowe objawy zaczęły się w dzieciństwie, trwają przez całe życie i nie tłumaczy ich inne zaburzenie psychiczne.",
+          "sources": [
+            "s1"
+          ]
+        },
+        {
+          "text": "Kłopoty z pamięcią często nie są groźne i bywają skutkiem częstych, dających się leczyć przyczyn, jak stres, lęk, depresja czy bezsenność, ale czasem są objawem poważniejszej choroby, np. otępienia (demencji); gdy utrudniają codzienne życie, trzeba iść do lekarza rodzinnego, a nie diagnozować się samemu.",
+          "sources": [
+            "s33"
+          ]
+        },
+        {
+          "text": "Pogorszenie pamięci i myślenia mogą wywołać m.in. niedoczynność tarczycy, niedobór witaminy B12, krwiak pod oponą mózgu po urazie głowy (nawet niewielkim) i długotrwałe nadużywanie alkoholu lub leków, a niektóre leki (np. nasenne, przeciwlękowe, na przeziębienie) mogą je nasilać; takie przyczyny często da się leczyć.",
+          "sources": [
+            "s34"
+          ]
+        },
+        {
+          "text": "U starszych osób depresja może przypominać otępienie; po wyleczeniu depresji sprawność umysłowa zwykle wraca, chyba że ktoś ma jednocześnie otępienie.",
+          "sources": [
+            "s34"
+          ]
+        },
+        {
+          "text": "Stopniowo narastające zapominanie lub dezorientacja to powód do wizyty u lekarza rodzinnego (nie w trybie pilnym), a u starszych osób bywa objawem otępienia.",
+          "sources": [
+            "s35",
+            "s36"
+          ]
+        },
+        {
+          "text": "Nagłe splątanie (ktoś nagle nie wie, gdzie jest, nie potrafi jasno myśleć ani mówić, nie może się skupić albo widzi rzeczy, których nie ma) wymaga natychmiastowej pomocy, bo może je wywołać m.in. udar, infekcja, niski cukier, uraz głowy, leki, alkohol lub zatrucie; osoba splątana nie powinna sama jechać do szpitala.",
+          "sources": [
+            "s35",
+            "s36",
+            "s37"
+          ]
+        },
+        {
+          "text": "NHS radzi, żeby karmiąc piersią i biorąc metylofenidat, obserwować dziecko: jeśli gorzej je lub nie przybiera na wadze, jest drażliwe, wymiotuje, ma biegunkę, gorzej śpi albo ma zmiany na skórze (np. wysypkę), trzeba jak najszybciej skontaktować się z lekarzem; do czasu porady NHS zaleca dalej brać lek i karmić jak zwykle.",
+          "sources": [
+            "s29"
+          ]
+        },
+        {
+          "text": "Według polskich ulotek leków z metylofenidatem (Medikinet CR, Concerta) niekontrolowane ruchy ciała lub dźwięki (tiki) to poważne działanie niepożądane, z którym trzeba niezwłocznie skontaktować się z lekarzem; ulotka Medikinet CR wymienia tu także nasilenie tików.",
+          "sources": [
+            "s38",
+            "s39"
+          ]
+        }
+      ],
+      "selfCare": [
+        "Traktuj test z internetu tylko jako wstępne sito: jeśli objawy psują ci życie, idź do psychiatry bez względu na wynik testu.",
+        "Przed wizytą spisz przykłady kłopotów z dzieciństwa i z dziś (szkoła, praca, dom, relacje); jeśli możesz, weź świadectwa szkolne albo poproś bliską osobę, żeby opisała, jaki byłeś jako dziecko.",
+        "Dziel zadania na krótkie odcinki z przerwami na ruch i ogranicz rozpraszacze, np. pracuj w cichym miejscu albo w słuchawkach.",
+        "Korzystaj z przypomnień (alarmy w telefonie, kalendarz, kartki na lodówce).",
+        "Proś, żeby ważne polecenia przekazywano ci także na piśmie.",
+        "W pracy lub na uczelni możesz poprosić o dostosowania, np. ciche miejsce pracy albo pomoc w planowaniu zadań.",
+        "Ruszaj się regularnie.",
+        "Kładź się spać o stałej porze, a tuż przed snem nie korzystaj z ekranów, nie pij kawy ani alkoholu i nie jedz słodyczy.",
+        "Jedz regularne, zróżnicowane posiłki.",
+        "Bierz lek na ADHD dokładnie tak, jak przepisał lekarz: nie zwiększaj sam dawki i nie odstawiaj go nagle.",
+        "Jeśli bierzesz lek na ADHD i planujesz ciążę, porozmawiaj wcześniej z lekarzem prowadzącym leczenie, czy ten lek jest dla ciebie nadal najlepszy.",
+        "Gdy dowiesz się, że jesteś w ciąży, nie odstawiaj leku sama i nie zmniejszaj dawki, tylko jak najszybciej skontaktuj się z lekarzem prowadzącym leczenie.",
+        "Jeśli karmisz piersią albo zamierzasz karmić, powiedz o tym lekarzowi, który przepisuje lek na ADHD: od leku zależy, czy można go wtedy brać.",
+        "Nie dawaj nikomu swojego leku i trzymaj go w bezpiecznym miejscu, poza zasięgiem dzieci.",
+        "Nie bierz leków pobudzających od znajomych ani z internetu, nawet „na naukę”: mogą uzależniać i obciążać serce, a to, że pomagają się skupić, nie znaczy, że masz ADHD.",
+        "Nie prowadź auta ani roweru, dopóki nie wiesz, jak działa na ciebie lek, i nigdy, gdy po nim masz zawroty głowy, senność albo zaburzenia widzenia.",
+        "Podczas leczenia staraj się nie pić alkoholu.",
+        "Na początku leczenia metylofenidatem ogranicz kawę, napoje energetyczne i inne źródła kofeiny.",
+        "Zapisuj, jak lek wpływa na sen, apetyt, nastrój i bicie serca, i pokazuj notatki lekarzowi.",
+        "Opowiedz bliskim o ADHD i poszukaj grup wsparcia dla dorosłych z ADHD."
+      ],
+      "warningSigns": [
+        {
+          "sign": "Po leku na ADHD albo innym leku pobudzającym nagle boli cię w klatce piersiowej, puchną ci usta, język lub gardło, trudno ci oddychać, masz drgawki albo objawy udaru (opadający kącik ust, osłabienie jednej strony ciała, niewyraźna mowa)",
+          "triage": "emergency",
+          "action": "Dzwoń od razu pod 112. Nie jedź sam na SOR, poczekaj na karetkę. Przygotuj dla ratowników opakowanie leku i powiedz, ile i kiedy go wziąłeś."
+        },
+        {
+          "sign": "Wziąłeś więcej leku na ADHD, niż przepisał lekarz, albo lek na ADHD połknęło dziecko, nawet jeśli na razie nic się nie dzieje",
+          "triage": "emergency",
+          "action": "Od razu zadzwoń pod 112 albo jedź na SOR i nie czekaj na objawy. Nie wywołuj wymiotów. Nie prowadź: niech ktoś cię zawiezie albo wezwij karetkę. Weź opakowanie leku i pozostałe tabletki. Do czasu pomocy niech ktoś przy tobie będzie."
+        },
+        {
+          "sign": "Po wzięciu cudzego leku na ADHD, za dużej dawki swojego leku albo innego środka pobudzającego masz kołatanie serca, drżenie, silny niepokój, splątanie, omamy albo wysoką temperaturę",
+          "triage": "emergency",
+          "action": "Dzwoń pod 112 i powiedz, co, ile i kiedy wziąłeś oraz czy piłeś alkohol. Nie bierz nic więcej, nie prowadź i nie zostawaj sam do przyjazdu pomocy."
+        },
+        {
+          "sign": "Masz myśli samobójcze albo myśli o zrobieniu krzywdy sobie lub komuś innemu",
+          "triage": "emergency",
+          "action": "Jeśli grozi ci niebezpieczeństwo teraz, dzwoń pod 112. Porozmawiaj z kimś od razu, bezpłatnie i o każdej porze: 800 70 2222 (Centrum Wsparcia), 116 123 (telefon zaufania dla dorosłych), 116 111 (dzieci i młodzież). Jeśli bierzesz lek na ADHD, powiedz o tych myślach lekarzowi, który go przepisał."
+        },
+        {
+          "sign": "Nagle (w ciągu godzin lub dni) pojawiło się splątanie u ciebie albo u kogoś bliskiego: ta osoba nie wie, gdzie jest, mówi bez sensu albo niewyraźnie, nie może się skupić ani zrozumieć, co się do niej mówi, albo widzi rzeczy, których nie ma",
+          "triage": "emergency",
+          "action": "Dzwoń pod 112. Osoba splątana nie może sama prowadzić ani jechać na SOR. Zostań przy niej, mów spokojnie i krótkimi zdaniami, przygotuj dla ratowników jej leki i powiedz, kiedy zaczęły się objawy."
+        },
+        {
+          "sign": "Podczas brania leku na ADHD widzisz lub słyszysz rzeczy, których nie ma, stajesz się bardzo podejrzliwy, masz gonitwę myśli i prawie nie śpisz albo nagle bardzo zmienia ci się nastrój (agresja, silny lęk, przygnębienie)",
+          "triage": "urgent",
+          "action": "Jeszcze dziś skontaktuj się z lekarzem, który przepisał lek, albo z psychiatrą (bez skierowania) lub Centrum Zdrowia Psychicznego; wieczorem, w nocy i w weekend z nocną i świąteczną opieką zdrowotną. Zapytaj, czy brać kolejną dawkę. Jeśli ktoś jest w niebezpieczeństwie, dzwoń pod 112."
+        },
+        {
+          "sign": "Podczas brania leku na ADHD masz kołatanie serca (szybkie lub nierówne bicie), zemdlałeś bez jasnej przyczyny albo ciśnienie jest wyraźnie wyższe niż zwykle",
+          "triage": "urgent",
+          "action": "Jeszcze dziś, najpóźniej w ciągu doby, skontaktuj się z lekarzem, który prowadzi leczenie, a wieczorem, w nocy i w weekend z nocną i świąteczną opieką zdrowotną (bez skierowania; infolinia NFZ 800 190 590). Jeśli dochodzi ból w klatce piersiowej albo duszność, dzwoń pod 112."
+        },
+        {
+          "sign": "Podczas brania leku na ADHD pojawiły się albo nasiliły tiki: szybkie, drobne, mimowolne ruchy (np. mięśni twarzy) albo dźwięki, których nie możesz powstrzymać",
+          "triage": "urgent",
+          "action": "Jeszcze dziś skontaktuj się z lekarzem, który przepisał lek, a wieczorem, w nocy i w weekend z nocną i świąteczną opieką zdrowotną (bez skierowania; infolinia NFZ 800 190 590). Zapytaj, czy brać kolejną dawkę: lekarz może zmienić albo przerwać leczenie."
+        },
+        {
+          "sign": "Karmisz piersią i bierzesz lek na ADHD, a dziecko gorzej je albo nie przybiera na wadze, jest drażliwe, wymiotuje, ma biegunkę, gorzej śpi albo ma wysypkę",
+          "triage": "urgent",
+          "action": "Jeszcze dziś skontaktuj się z pediatrą albo lekarzem rodzinnym dziecka, a wieczorem, w nocy i w weekend z nocną i świąteczną opieką zdrowotną (bez skierowania; infolinia NFZ 800 190 590). Powiedz, jaki lek na ADHD bierzesz, i zapytaj, co dalej z lekiem i karmieniem."
+        },
+        {
+          "sign": "Od dzieciństwa masz kłopoty z uwagą, organizacją czasu, zapominaniem, niepokojem albo impulsywnością, które psują ci pracę, naukę, finanse lub relacje",
+          "triage": "gp",
+          "action": "Umów się do psychiatry (w poradni z umową z NFZ bez skierowania) albo porozmawiaj z lekarzem rodzinnym i zapytaj o diagnozę w kierunku ADHD. Przed wizytą spisz przykłady kłopotów z dzieciństwa i z dziś."
+        },
+        {
+          "sign": "Kłopoty z uwagą, skupieniem lub pamięcią pojawiły się u ciebie dopiero w dorosłości (np. w starszym wieku) albo wyraźnie się nasilają, stopniowo przez tygodnie lub miesiące",
+          "triage": "gp",
+          "action": "Umów się do lekarza rodzinnego i nie diagnozuj się sam. ADHD zaczyna się w dzieciństwie, a takie kłopoty mogą mieć inną przyczynę, np. depresję, lęk, stres, kłopoty ze snem, niedoczynność tarczycy, niedobór witaminy B12, działanie leków lub alkoholu, uraz głowy albo początek otępienia (demencji); wiele z nich da się leczyć. Powiedz lekarzowi o wszystkich lekach, które bierzesz, i jeśli możesz, weź ze sobą bliską osobę, która opisze zmiany. Jeśli takie kłopoty pojawiły się nagle, w ciągu godzin lub dni, i do tego ktoś nie wie, gdzie jest ani jaki jest dzień, mówi bez sensu lub niewyraźnie, jest nietypowo senny, wyciszony albo pobudzony lub widzi rzeczy, których nie ma, dzwoń pod 112: to może być nagłe splątanie."
+        },
+        {
+          "sign": "Od dawna leczysz się na depresję lub lęk bez wyraźnej poprawy, a kłopoty z uwagą masz od dziecka",
+          "triage": "gp",
+          "action": "Powiedz o tym psychiatrze, który cię leczy, i zapytaj o ocenę w kierunku ADHD."
+        },
+        {
+          "sign": "Pijesz coraz więcej albo sięgasz po narkotyki, leki pobudzające lub uspokajające, żeby się skupić albo wyciszyć",
+          "triage": "gp",
+          "action": "Porozmawiaj z psychiatrą albo zgłoś się do poradni leczenia uzależnień (do obu bez skierowania). Zanim lekarz zacznie leczyć ADHD, zwykle trzeba najpierw ustabilizować picie lub branie substancji."
+        },
+        {
+          "sign": "Bierzesz lek na ADHD i od tygodni źle śpisz, tracisz na wadze, masz obniżony nastrój albo lek przestał pomagać",
+          "triage": "gp",
+          "action": "Umów się do lekarza, który prowadzi leczenie; może zmienić dawkę albo lek. Nie odstawiaj leku nagle na własną rękę i nie zwiększaj sam dawki."
+        },
+        {
+          "sign": "Bierzesz lek na ADHD i jesteś w ciąży, planujesz ciążę albo karmisz piersią",
+          "triage": "gp",
+          "action": "Jak najszybciej, najlepiej w ciągu kilku dni, porozmawiaj z lekarzem, który prowadzi leczenie ADHD, i powiedz o leku ginekologowi lub położnej. W ciąży nie odstawiaj leku sama i nie zmniejszaj dawki bez rozmowy z lekarzem."
+        },
+        {
+          "sign": "Często rozpraszasz się za kierownicą, miewasz stłuczki lub mandaty za prędkość albo po leku na ADHD masz zawroty, senność lub zaburzenia widzenia",
+          "triage": "gp",
+          "action": "Nie prowadź, gdy po leku masz zawroty, senność lub kłopoty z widzeniem, i porozmawiaj o tym z psychiatrą lub lekarzem rodzinnym. Nieleczone ADHD zwiększa ryzyko wypadków, a leczenie może je zmniejszyć."
+        }
+      ],
+      "related": [
+        "obnizony-nastroj-czy-depresja",
+        "lek-i-niepokoj",
+        "bezsennosc",
+        "gdzie-szukac-pomocy-psychologicznej",
+        "stres-przed-egzaminem",
+        "alkohol-ile-to-za-duzo"
+      ],
+      "sources": [
+        {
+          "id": "s1",
+          "title": "Attention deficit hyperactivity disorder: diagnosis and management (NICE guideline NG87), Recommendations",
+          "publisher": "National Institute for Health and Care Excellence (NICE)",
+          "url": "https://www.nice.org.uk/guidance/ng87/chapter/Recommendations",
+          "year": 2019
+        },
+        {
+          "id": "s2",
+          "title": "Diagnostyka i postępowanie terapeutyczne u dorosłych z ADHD. Rekomendacje Sekcji Kształcenia Specjalizacyjnego Polskiego Towarzystwa Psychiatrycznego i koalicji organizacji na rzecz osób z ADHD – 2024 r. (Gondek i wsp., Psychiatria Spersonalizowana 2024;3(3):43–73)",
+          "publisher": "Polskie Towarzystwo Psychiatryczne (Psychiatria Spersonalizowana)",
+          "url": "https://www.termedia.pl/Diagnostyka-i-postepowanie-terapeutyczne-u-doroslych-z-ADHD-Rekomendacje-Sekcji-Ksztalcenia-Specjalizacyjnego-Polskiego-Towarzystwa-Psychiatrycznego-i-koalicji-organizacji-na-rzecz-osob-z-ADHD-2024-r-,169,54745,1,0.html",
+          "year": 2024
+        },
+        {
+          "id": "s3",
+          "title": "Updated European Consensus Statement on diagnosis and treatment of adult ADHD (Kooij i wsp., European Psychiatry 2019;56:14–34)",
+          "publisher": "European Network Adult ADHD (European Psychiatry)",
+          "url": "https://www.cambridge.org/core/journals/european-psychiatry/article/updated-european-consensus-statement-on-diagnosis-and-treatment-of-adult-adhd/707E2A36539213CF85EACCA576F47427",
+          "year": 2019
+        },
+        {
+          "id": "s4",
+          "title": "ADHD in adults",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/conditions/adhd-adults/",
+          "year": 2025
+        },
+        {
+          "id": "s5",
+          "title": "How and when to take methylphenidate for adults",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/medicines/methylphenidate-adults/how-and-when-to-take-methylphenidate-for-adults/",
+          "year": 2025
+        },
+        {
+          "id": "s6",
+          "title": "Side effects of methylphenidate for adults",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/medicines/methylphenidate-adults/side-effects-of-methylphenidate-for-adults/",
+          "year": 2025
+        },
+        {
+          "id": "s7",
+          "title": "Common questions about methylphenidate for adults",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/medicines/methylphenidate-adults/common-questions-about-methylphenidate-for-adults/",
+          "year": 2025
+        },
+        {
+          "id": "s8",
+          "title": "Charakterystyka Produktu Leczniczego Elvanse, kapsułki twarde (lisdeksamfetamina)",
+          "publisher": "Rejestr Produktów Leczniczych (rejestry.ezdrowie.gov.pl)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/49444/characteristic",
+          "year": 2026
+        },
+        {
+          "id": "s9",
+          "title": "Charakterystyka Produktu Leczniczego Medikinet CR 20 mg, kapsułki o zmodyfikowanym uwalnianiu (metylofenidat)",
+          "publisher": "Rejestr Produktów Leczniczych (rejestry.ezdrowie.gov.pl)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/17626/characteristic",
+          "year": 2026
+        },
+        {
+          "id": "s10",
+          "title": "Charakterystyka Produktu Leczniczego Concerta, tabletki o przedłużonym uwalnianiu (metylofenidat)",
+          "publisher": "Rejestr Produktów Leczniczych (rejestry.ezdrowie.gov.pl)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/19682/characteristic",
+          "year": 2026
+        },
+        {
+          "id": "s11",
+          "title": "Charakterystyka Produktu Leczniczego Auroxetyn (atomoksetyna)",
+          "publisher": "Rejestr Produktów Leczniczych (rejestry.ezdrowie.gov.pl)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/39092/characteristic",
+          "year": 2024
+        },
+        {
+          "id": "s12",
+          "title": "Odpowiedź Ministra Zdrowia na interpelację nr 10038 w sprawie dostępności oraz refundacji leków stosowanych w leczeniu ADHD u osób dorosłych (24.06.2025)",
+          "publisher": "Ministerstwo Zdrowia (Sejm RP, api.sejm.gov.pl)",
+          "url": "https://api.sejm.gov.pl/sejm/term10/interpellations/attachment/ATTDHZJ4Q/i10038-o1.pdf",
+          "year": 2025
+        },
+        {
+          "id": "s13",
+          "title": "Odpowiedź Ministra Zdrowia na interpelację nr 11973 w sprawie refundacji leków wykorzystywanych w farmakoterapii ADHD dla osób w wieku od 18. do 26. roku życia (22.09.2025)",
+          "publisher": "Ministerstwo Zdrowia (Sejm RP, api.sejm.gov.pl)",
+          "url": "https://api.sejm.gov.pl/sejm/term10/interpellations/attachment/ATTDLVHZT/i11973-o1.pdf",
+          "year": 2025
+        },
+        {
+          "id": "s14",
+          "title": "Medikinet CR 20 mg – kapsułki o zmodyfikowanym uwalnianiu: cena i refundacja (ceny zgodne z przepisami od 1 października 2026 r.)",
+          "publisher": "Medycyna Praktyczna (mp.pl)",
+          "url": "https://www.mp.pl/pacjent/leki/lek/68671,Medikinet-CR-20-mg-kapsulki-o-zmodyfikowanym-uwalnianiu.-twarde",
+          "year": 2026
+        },
+        {
+          "id": "s15",
+          "title": "Odpowiedź Ministerstwa Zdrowia na interpelację nr 5744 w sprawie rekomendacji Parlamentarnego Zespołu do spraw ADHD (25.11.2024)",
+          "publisher": "Ministerstwo Zdrowia (Sejm RP, api.sejm.gov.pl)",
+          "url": "https://api.sejm.gov.pl/sejm/term10/interpellations/attachment/ATTDBEJNR/i05744-o1.pdf",
+          "year": 2024
+        },
+        {
+          "id": "s16",
+          "title": "Kto i kiedy nie potrzebuje skierowania",
+          "publisher": "pacjent.gov.pl (Narodowy Fundusz Zdrowia)",
+          "url": "https://pacjent.gov.pl/artykul/kto-i-kiedy-nie-potrzebuje-skierowania",
+          "year": 2026
+        },
+        {
+          "id": "s17",
+          "title": "TikTok and Attention-Deficit/Hyperactivity Disorder: A Cross-Sectional Study of Social Media Content Quality (Yeung i wsp., Can J Psychiatry 2022;67(12):899–906)",
+          "publisher": "PubMed (Canadian Journal of Psychiatry)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/35196157/",
+          "year": 2022
+        },
+        {
+          "id": "s18",
+          "title": "How evidence-based is the hashtag ADHD test (#adhdtest)? A cross-sectional content analysis of TikTok videos on ADHD screening (Verma, Sinha; Australas Psychiatry 2025;33(1):82–88)",
+          "publisher": "PubMed (Australasian Psychiatry)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/39422639/",
+          "year": 2025
+        },
+        {
+          "id": "s19",
+          "title": "116 SOS – wsparcie psychologiczne dla dorosłych, telefon 116 123",
+          "publisher": "116sos.pl (NASK i Instytut Psychologii Zdrowia PTP)",
+          "url": "https://116sos.pl/"
+        },
+        {
+          "id": "s20",
+          "title": "Centrum Wsparcia dla osób dorosłych w kryzysie psychicznym, telefon 800 70 2222",
+          "publisher": "Centrum Wsparcia (centrumwsparcia.pl)",
+          "url": "https://centrumwsparcia.pl/"
+        },
+        {
+          "id": "s21",
+          "title": "116 111 – telefon zaufania dla dzieci i młodzieży",
+          "publisher": "Fundacja Dajemy Dzieciom Siłę (116111.pl)",
+          "url": "https://116111.pl/"
+        },
+        {
+          "id": "s22",
+          "title": "Co robić w przypadku zatrucia?",
+          "publisher": "pacjent.gov.pl (Narodowy Fundusz Zdrowia)",
+          "url": "https://pacjent.gov.pl/aktualnosc/co-robic-w-przypadku-zatrucia",
+          "year": 2024
+        },
+        {
+          "id": "s23",
+          "title": "Centra Zdrowia Psychicznego",
+          "publisher": "Ministerstwo Zdrowia (gov.pl)",
+          "url": "https://www.gov.pl/web/zdrowie/centra-zdrowia-psychicznego",
+          "year": 2026
+        },
+        {
+          "id": "s24",
+          "title": "NFZ przypomina, gdzie się leczyć w czasie weekendu i dni świątecznych",
+          "publisher": "Narodowy Fundusz Zdrowia (nfz.gov.pl)",
+          "url": "https://www.nfz.gov.pl/aktualnosci/aktualnosci-centrali/nfz-przypomina-gdzie-sie-leczyc-w-czasie-weekendu-i-dni-swiatecznych,8845.html",
+          "year": 2025
+        },
+        {
+          "id": "s25",
+          "title": "Nowa lista lekarzy specjalistów dostępnych bez skierowania od 17 września 2025 r.",
+          "publisher": "Rzecznik Praw Pacjenta (gov.pl)",
+          "url": "https://www.gov.pl/web/rpp/nowa-lista-lekarzy-specjalistow-dostepnych-bez-skierowania-od-17-wrzesnia-2025-r",
+          "year": 2025
+        },
+        {
+          "id": "s26",
+          "title": "What is ADHD? (kryteria DSM-5-TR dla młodzieży i dorosłych)",
+          "publisher": "American Psychiatric Association (psychiatry.org)",
+          "url": "https://www.psychiatry.org/patients-families/adhd/what-is-adhd",
+          "year": 2025
+        },
+        {
+          "id": "s27",
+          "title": "Clinical descriptions and diagnostic requirements for ICD-11 mental, behavioural and neurodevelopmental disorders (CDDR), 6A05 Attention deficit hyperactivity disorder",
+          "publisher": "World Health Organization (WHO)",
+          "url": "https://www.who.int/publications/i/item/9789240077263",
+          "year": 2024
+        },
+        {
+          "id": "s28",
+          "title": "Obwieszczenie Ministra Zdrowia z dnia 16 września 2026 r. w sprawie wykazu refundowanych leków, środków spożywczych specjalnego przeznaczenia żywieniowego oraz wyrobów medycznych na 1 października 2026 r. (załącznik, część A1)",
+          "publisher": "Ministerstwo Zdrowia (gov.pl)",
+          "url": "https://www.gov.pl/web/zdrowie/obwieszczenie-ministra-zdrowia-z-dnia-16-wrzesnia-2026-r-w-sprawie-wykazu-refundowanych-lekow-srodkow-spozywczych-specjalnego-przeznaczenia-zywieniowego-oraz-wyrobow-medycznych-na-1-pazdziernika-2026-r",
+          "year": 2026
+        },
+        {
+          "id": "s29",
+          "title": "Pregnancy, breastfeeding and fertility while taking methylphenidate for adults (przegląd 25.03.2025)",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/medicines/methylphenidate-adults/pregnancy-breastfeeding-and-fertility-while-taking-methylphenidate-for-adults/",
+          "year": 2025
+        },
+        {
+          "id": "s30",
+          "title": "Bumps – Best use of medicines in pregnancy: Methylphenidate (wersja 4, styczeń 2023)",
+          "publisher": "UK Teratology Information Service (UKTIS, finansowany przez UK Health Security Agency)",
+          "url": "https://www.medicinesinpregnancy.org/leaflets-a-z/methylphenidate/",
+          "year": 2023
+        },
+        {
+          "id": "s31",
+          "title": "Bumps – Best use of medicines in pregnancy: Lisdexamfetamine (therapeutic amfetamines, wersja 2.0, czerwiec 2026)",
+          "publisher": "UK Teratology Information Service (UKTIS, finansowany przez UK Health Security Agency)",
+          "url": "https://www.medicinesinpregnancy.org/leaflets-a-z/lisdexamfetamine/",
+          "year": 2026
+        },
+        {
+          "id": "s32",
+          "title": "Bumps – Best use of medicines in pregnancy: Atomoxetine (wersja 3.0, grudzień 2022)",
+          "publisher": "UK Teratology Information Service (UKTIS, finansowany przez UK Health Security Agency)",
+          "url": "https://www.medicinesinpregnancy.org/leaflets-a-z/atomoxetine/",
+          "year": 2022
+        },
+        {
+          "id": "s33",
+          "title": "Memory loss (amnesia) (przegląd 09.10.2023)",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/symptoms/memory-loss-amnesia/",
+          "year": 2023
+        },
+        {
+          "id": "s34",
+          "title": "Dementia (Major Neurocognitive Disorder), MSD Manual Consumer Version (pełny przegląd 02.2025, aktualizacja 01.2026)",
+          "publisher": "MSD Manuals",
+          "url": "https://www.msdmanuals.com/home/brain-spinal-cord-and-nerve-disorders/delirium-and-dementia/dementia",
+          "year": 2026
+        },
+        {
+          "id": "s35",
+          "title": "Sudden confusion (delirium) (przegląd 28.05.2024)",
+          "publisher": "NHS",
+          "url": "https://www.nhs.uk/symptoms/confusion/",
+          "year": 2024
+        },
+        {
+          "id": "s36",
+          "title": "Delirium, MSD Manual Consumer Version (pełny przegląd 02.2025, aktualizacja 08.2025)",
+          "publisher": "MSD Manuals",
+          "url": "https://www.msdmanuals.com/home/brain-spinal-cord-and-nerve-disorders/delirium-and-dementia/delirium",
+          "year": 2025
+        },
+        {
+          "id": "s37",
+          "title": "Splątanie: przyczyny, objawy i leczenie (dr hab. n. med. Piotr Kopiński; aktualizacja lek. Magdalena Wiercińska)",
+          "publisher": "Medycyna Praktyczna (mp.pl)",
+          "url": "https://www.mp.pl/pacjent/objawy/150107,splatanie",
+          "year": 2022
+        },
+        {
+          "id": "s38",
+          "title": "Ulotka dołączona do opakowania: informacja dla użytkownika. Medikinet CR, kapsułki o zmodyfikowanym uwalnianiu, twarde (metylofenidat), data ostatniej aktualizacji ulotki 02/2026",
+          "publisher": "Rejestr Produktów Leczniczych (rejestry.ezdrowie.gov.pl)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/17626/leaflet",
+          "year": 2026
+        },
+        {
+          "id": "s39",
+          "title": "Ulotka dołączona do opakowania: informacja dla użytkownika. Concerta, tabletki o przedłużonym uwalnianiu (metylofenidat), data ostatniej aktualizacji ulotki 09/2025",
+          "publisher": "Rejestr Produktów Leczniczych (rejestry.ezdrowie.gov.pl)",
+          "url": "https://rejestry.ezdrowie.gov.pl/api/rpl/medicinal-products/19682/leaflet",
+          "year": 2025
+        }
+      ],
+      "review": {
+        "researched": "2026-10-04",
+        "verified": "2026-10-04",
+        "tested": "2026-10-04",
+        "claims": {
+          "confirmed": 132,
+          "corrected": 4,
+          "removed": 0,
+          "unverifiable": 0
+        },
+        "tests": {
+          "passed": 26,
+          "total": 26
+        },
+        "revisions": 2
+      }
+    },
+    {
       "id": "depresja-poporodowa",
       "title": "Depresja poporodowa, baby blues i psychoza poporodowa",
       "domain": "psychika",

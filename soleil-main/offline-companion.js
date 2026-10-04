@@ -18,8 +18,8 @@
       .replace(/[^a-z0-9]+/g, ' ').trim();
   }
 
-  const ATLAS = '<a href="cialo/">Atlas ciała 3D</a>';
-  const CHECKER = '<a href="gdzie-boli/">Gdzie boli?</a>';
+  const TEL112 = '<a class="hy-tel" href="tel:112">112</a>';
+  const AFTER_HOURS = 'wieczorem, w nocy i w weekend do nocnej i świątecznej opieki zdrowotnej, bez skierowania';
 
   // ---- 1. Safety: suicide / self-harm signals (checked first, always) ----
   const CRISIS = [
@@ -97,7 +97,10 @@
     /\bnie moge (zlapac )?(oddechu|oddychac)\b/, /\b(trudno|ciezko) (mi )?(oddychac|zlapac oddech|sie oddycha)/,
     // Sudden confusion ('tata nagle jest splątany', 'mama nagle nie wie, gdzie jest')
     /\bnagle (\w+ ){0,3}(splatan\w*|zdezorientowan\w*|nie wie gdzie jest|nikogo nie poznaje|nie poznaje mnie|mowi bez sensu)/,
-    /\b(splatan\w*|zdezorientowan\w*) (\w+ ){0,2}nagle\b/,
+    /\b(splatan\w*|zdezorientowan\w*) (\w+ ){0,2}(nagle|od wczoraj|od rana|od kilku godzin|od dzis)\b/,
+    /\b(od wczoraj|od rana|od kilku godzin|od dzis) (\w+ ){0,2}(splatan\w*|zdezorientowan\w*)/,
+    // Swelling of the throat, tongue or lips: a severe allergic reaction ('puchnie mi gardło po leku')
+    /\b(puchn\w*|spuchl\w*|obrzek\w*|opuchl\w*) (mi |ci )?(\w+ )?(gardl\w*|jezyk\w*|usta|ust|warg\w*)\b/, /\b(gardlo|jezyk|usta|wargi) (mi )?(puchn\w*|spuchl\w*)/,
     // Heart racing that doesn't stop ('serce mi wali od 20 minut i nie przestaje')
     /\b(serce|serducho|serduszko) (mi )?(wali|kolacze|bije|lomocze|galopuje|szaleje)\b (\w+ ){0,5}(nie przestaje|nie mija|nie zwalnia|nie przechodzi)\b/,
     /\b(serce|serducho|serduszko) (mi )?(wali|kolacze|lomocze|galopuje|szaleje) od (\w+ )?(minut\w*|godzin\w*)\b/,
@@ -177,12 +180,18 @@
   const NEGATED_JOY = /\bnie (jest |czuje sie |bylo |jestem |mam )?(dobrze|super|fajnie|swietnie|wesolo|szczesliw\w*|dobry)\b/;
   const PAIN_WORD = /\b(boli|bola|bolal\w*|bolec|bol|bolu|bole|bolem|bolow|obolal\w*|kluje|klucie|rwie|piecze|kontuzj\w*|uraz\w*|skrecil\w*|naciagn\w*|migren\w*)\b/;
   const BODY_PART = /\b(glowa|glowe|glowy|kolan\w*|plecy|plecach|plecami|kregoslup\w*|brzuch\w*|zoladek|zoladk\w*|szyj\w*|kark\w*|bark\w*|ramie|ramion\w*|nog[aiei]|nogach|nodze|stop[aey]|stopie|kostk\w*|lydk\w*|reka|reke|reki|rece|dlon\w*|nadgarst\w*|lokie\w*|lokci\w*|biodr\w*|zab|zeba|zebow|zebach|ucho|uszy|ucha|gardl\w*|miesn\w*|staw\w*|kosc\w*|udo|uda)\b/;
+  // Symptoms other than pain ('mam gorączkę', 'kręci mi się w głowie'), and questions about the chat itself
+  const SYMPTOM = /\b(goraczk\w*|temperatur\w*|katar\w*|kaszel|kaszl\w*|wysypk\w*|swedz\w*|swedzi|zawrot\w*|kreci mi sie w glowie|mdli|mdlosci|nudnosci|wymiot\w*|biegunk\w*|zaparci\w*|krwawi\w*|krwotok\w*|opuchl\w*|obrzek\w*|spuchl\w*|puchnie|mrowi\w*|oslabion\w*|oslabieni\w*|przeziebi\w*|grypa|grype|grypy|infekcj\w*|chory|chora|choruje)\b/;
+  const DIAGNOSIS = /\b(co mi jest|co mi dolega|co to moze byc|czy jestem chor\w*|postaw\w* (mi )?diagnoz\w*|zdiagnozuj\w*)\b/;
+  const HELP = /^(prosze )?(pomocy|pomoz( mi)?|pomoz mi prosze|potrzebuje pomocy|ratunku|help( me)?|sos)$/;
+  const ABOUT = /\b(kim|czym) (ty )?jestes\b|\bco (ty )?(umiesz|potrafisz)\b|\bw czym (mi )?(mozesz|pomozesz)\b|\bjak (mi )?mozesz (mi )?pomoc\b|\bjestes (botem|ai|czlowiekiem|robotem|sztuczn\w*|prawdziw\w*)\b/;
+  const HOW_ARE_YOU = /\b(jak sie (masz|czujesz)|co u ciebie|jak (tam )?u ciebie)\b/;
   const GREETING = /^(hej\w*|czesc|witaj\w*|dzien dobry|dobry wieczor|siema\w*|elo|halo|hello|hi|hey|yo|serwus|dobry)\b/;
   const THANKS = /\b(dzieki|dziekuje|dziekuj\w*|dzieks|thx|thanks|wdzieczn\w*)\b/;
   const BYE = /\b(pa pa|papa|dobranoc|do zobaczenia|do uslyszenia|na razie|narazie|lece|ide spac|bywaj)\b|^pa$/;
 
   // Short answers that only make sense in the context of the previous message
-  const YES = /^(tak|tak tak|no tak|jasne|ok|okej|okay|oki|dobrze|dobra|sprobuje|sprobujmy|moge|chce|zgoda|pewnie|spoko|niech bedzie|no|da sie|dam rade|chetnie|tak chce|tak sprobuje|czemu nie|zrobione|zrobilem|zrobilam|gotowe)$/;
+  const YES = /^(tak|tak tak|no tak|tak opowiedz|opowiedz|tak poprosze|poprosze|tak chetnie|dawaj|tak dawaj|jasne|ok|okej|okay|oki|dobrze|dobra|sprobuje|sprobujmy|moge|chce|zgoda|pewnie|spoko|niech bedzie|no|da sie|dam rade|chetnie|tak chce|tak sprobuje|czemu nie|zrobione|zrobilem|zrobilam|gotowe)$/;
   const NO = /^(nie|nie chce|raczej nie|nie bardzo|nie teraz|nope|nie dzieki|nie dziekuje|nie moge|wolalbym nie|wolalabym nie|nie za bardzo|no nie)$/;
   const DUNNO = /^(nie wiem|sam nie wiem|sama nie wiem|nie mam pojecia|trudno powiedziec|ciezko powiedziec|moze|chyba|hm+|eh+|ech|no nie wiem|w sumie nie wiem|nie jestem pewn\w*|nie wiem co powiedziec|nie wiem co mysle)$/;
 
@@ -232,7 +241,7 @@
       ['write', 'To brzmi naprawdę frustrująco. Czasem pomaga wypisać wszystko na kartce — bez cenzury — a potem ją podrzeć. Spróbujesz?'],
     ],
     tired: [
-      ['ask', 'Zmęczenie sprawia, że wszystko wydaje się trudniejsze, niż jest. Jak ostatnio śpisz?'],
+      ['ask', 'Zmęczenie i kiepski sen sprawiają, że wszystko wydaje się trudniejsze, niż jest. Od kiedy tak jest i co najbardziej przeszkadza: zasypianie, budzenie się w nocy czy myśli, które nie dają spokoju?'],
       ['ask', 'Brzmi, jakby twoje baterie były na wyczerpaniu. Co mogłoby dziś odrobinę ci ulżyć — krótka drzemka, wcześniejszy sen czy chwila tylko dla siebie?'],
       ['breath', 'Rozumiem. Przed snem może pomóc odłożenie telefonu pół godziny wcześniej i kilka spokojnych oddechów: 4 sekundy wdechu, 6 sekund wydechu. Spróbujesz dziś?'],
       ['ask', 'Słyszę, że brakuje ci sił. Odpoczynek to nie lenistwo, tylko część dbania o siebie. Co ostatnio najbardziej cię męczy? (Jeśli od dawna nie możesz spać, warto powiedzieć o tym lekarzowi.)'],
@@ -249,10 +258,22 @@
       ['write', 'Cieszę się razem z tobą! Mały pomysł: zapisz dziś trzy zdania o tym, co było dobre. W gorszy dzień miło będzie do nich wrócić.'],
       ['ask', 'Super! Takie chwile dodają sił na później. Co dziś najbardziej ci pomogło?'],
     ],
+    // Pain or another symptom with no checked entry: say plainly when not to wait, instead of sending the user elsewhere
     pain: [
-      ['ask', `Przykro mi, że coś cię boli — ból potrafi zepsuć cały dzień i nastrój. Nie postawię diagnozy, ale w „${CHECKER}” wskażesz miejsce na sylwetce i odpowiesz na kilka pytań, a w ${ATLAS} zobaczysz tę część ciała z bliska. Jak ból wpływa dziś na twój nastrój?`],
-      ['ask', `Oj, to nieprzyjemne. Ciało i emocje są mocno połączone — ból potrafi przygnębić, a stres potrafi boleć. Sprawdź objaw krok po kroku w „${CHECKER}” albo zajrzyj do ${ATLAS}. Od kiedy to czujesz?`],
-      ['ask', `Rozumiem, to męczące. Jeśli ból nie mija albo się nasila, warto pokazać się lekarzowi. Na początek możesz skorzystać z „${CHECKER}” albo zobaczyć tę okolicę w ${ATLAS}. Jak się z tym czujesz?`],
+      ['ask', `Przykro mi, że cię boli. Nie postawię diagnozy, ale powiem ci, kiedy nie czekać: jeśli ból jest nagły i bardzo silny, narasta mimo odpoczynku albo pojawia się z dusznością czy omdleniem, dzwoń pod ${TEL112}. Jeśli jest mocny, nie mija po kilku dniach albo dochodzi gorączka lub obrzęk, idź do lekarza rodzinnego (${AFTER_HOURS}). Gdzie dokładnie boli i od kiedy?`],
+      ['ask', `Oj, to nieprzyjemne. Najważniejsze na początek: nagły, bardzo silny ból albo ból z dusznością czy omdleniem to powód, żeby od razu dzwonić pod ${TEL112}. Silny ból, który nie mija po kilku dniach, albo ból z gorączką czy obrzękiem to sprawa dla lekarza rodzinnego (${AFTER_HOURS}). Od kiedy to czujesz i co go nasila?`],
+    ],
+    symptom: [
+      ['ask', `Przykro mi, że źle się czujesz. Nie postawię diagnozy, ale powiem ci, kiedy nie czekać: duszność, ból w klatce piersiowej, omdlenie, nagłe splątanie albo stan, który szybko się pogarsza, to powód, żeby dzwonić pod ${TEL112}. Jeśli objawy są silne, nie mijają po kilku dniach albo wysoka gorączka nie spada, idź do lekarza rodzinnego (${AFTER_HOURS}). Od kiedy to trwa i co jeszcze czujesz?`],
+    ],
+    help: [
+      ['ask', `Jestem tu. Jeśli tobie albo komuś obok grozi niebezpieczeństwo, dzwoń teraz pod ${TEL112}. Jeśli nie, napisz, co się dzieje: chodzi o samopoczucie, o objaw w ciele, czy masz pytanie o zdrowie?`],
+    ],
+    diagnosis: [
+      ['ask', 'Nie postawię diagnozy, uczciwie nie zrobi tego żaden czat. Mogę za to pomóc ocenić, czy to sprawa na 112, na wizytę u lekarza jeszcze dziś, czy może poczekać. Napisz, co czujesz, gdzie i od kiedy.'],
+    ],
+    howareyou: [
+      ['ask', 'Dziękuję, że pytasz! Jestem programem, więc nie miewam gorszych dni, za to mam czas dla ciebie. A jak ty się dziś czujesz?'],
     ],
     greeting: [
       ['ask', 'Hej! Miło, że jesteś. Jak się dziś czujesz — tak naprawdę?'],
@@ -300,7 +321,10 @@
     motivation: ['Rozumiem. A gdyby to zadanie podzielić na trzy małe kawałki — jaki byłby pierwszy?', 'Słyszę cię. A gdyby zrobić dziś tylko połowę i uznać to za sukces?'],
     joy: ['Pięknie! Jak chcesz to dziś uczcić, choćby drobiazgiem?', 'Cieszę się! Co z tego dnia chcesz zabrać ze sobą na kolejne?'],
     meh: ['Rozumiem. Co by sprawiło, że ten dzień byłby choć o jeden stopień lepszy?', 'Dzięki, że mówisz. Jest coś, o czym chcesz dziś pogadać?'],
-    pain: [`Rozumiem. Gdy ciało boli, łatwiej o gorszy nastrój — potraktuj się dziś łagodnie. „${CHECKER}” i ${ATLAS} są pod ręką, jeśli zechcesz sprawdzić więcej.`, 'Dziękuję, że mi o tym mówisz. Co dziś pomaga ci choć trochę lepiej się poczuć?'],
+    pain: ['Dziękuję, że opisujesz. Do czasu wizyty oszczędzaj bolące miejsce i obserwuj, czy ból słabnie. Jeśli się nasila albo pojawia się coś nowego, na przykład gorączka czy obrzęk, nie zwlekaj z lekarzem. Jak ból wpływa dziś na twój dzień?',
+      'Rozumiem. Ból potrafi popsuć nastrój i sen, więc dobrze, że o tym mówisz. Jeśli nie mija albo przeszkadza ci normalnie funkcjonować, umów się do lekarza rodzinnego. Co dziś pomaga ci choć trochę?'],
+    symptom: ['Dziękuję. Do czasu wizyty odpoczywaj i pij więcej płynów. Jeśli coś się pogarsza albo pojawia się nowy objaw, nie zwlekaj z lekarzem. Jak się z tym czujesz?',
+      'Rozumiem. Jeśli objawy się nasilają albo nie widzisz poprawy, skontaktuj się z lekarzem rodzinnym. Co jeszcze cię niepokoi?'],
   };
 
   // Guided small steps, after "tak" in reply to an offer
@@ -338,7 +362,7 @@
     'Możesz dalej do mnie pisać. Ale proszę, zadzwoń też do jednego z tych numerów — tam po drugiej stronie jest człowiek:',
   ];
   const REMINDER = '<span class="hy-reminder">Gdyby znów było bardzo ciężko: <a class="hy-tel" href="tel:116123">116 123</a> <a class="hy-tel" href="tel:800702222">800 70 2222</a> <a class="hy-tel" href="tel:112">112</a></span>';
-  const RED_FLAG_REPLY = `To może być pilne. Jeśli ból w klatce piersiowej jest silny, trudno ci oddychać, serce wali i nie zwalnia mimo odpoczynku, nagle opada kącik ust, drętwieje ręka albo mowa staje się niewyraźna, ktoś nagle jest splątany, traci przytomność albo mógł przedawkować leki — nie czekaj, dzwoń pod <a class="hy-tel" href="tel:112">112</a>. Nie postawię diagnozy, ale gdy sytuacja jest spokojna, możesz sprawdzić objaw w „${CHECKER}”.`;
+  const RED_FLAG_REPLY = `To może być pilne. Jeśli ból w klatce piersiowej jest silny, trudno ci oddychać, puchnie gardło, język albo usta, serce wali i nie zwalnia mimo odpoczynku, nagle opada kącik ust, drętwieje ręka albo mowa staje się niewyraźna, ktoś nagle jest splątany, traci przytomność albo mógł przedawkować leki — nie czekaj, dzwoń pod ${TEL112}. Jeśli nic z tego się nie dzieje, a objaw cię niepokoi, skontaktuj się jeszcze dziś z lekarzem rodzinnym (${AFTER_HOURS}).`;
 
   const strip = (html) => html.replace(/<\/?a\b[^>]*>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').replace(/ ([,.?!:])/g, '$1').trim();
 
@@ -368,18 +392,50 @@
 
   // Best entry for the message, or null. Score = matched keyword words, so longer phrases win.
   function findInfo(kb, raw, d) {
+    // A body symptom ('boli mnie głowa od rana') gets the checked entry, if there is one, rather than small talk.
+    // So does a fear of hurting one's child ('boję się, że skrzywdzę dziecko'), a worry that someone close will hurt
+    // themselves ('boję się, że brat coś sobie zrobi') or a death ('smutno mi, bo zmarł dziadek').
+    if (!(raw.includes('?') || QUESTION.test(d.n) || ['open', 'pain', 'symptom'].includes(d.topic) || NEEDS_FACTS.some((re) => re.test(d.n)))) return null;
+    return matchInfo(kb, d.n);
+  }
+
+  // Best entry for the normalized message, or null. Score = matched keyword words, so longer phrases win.
+  function matchInfo(kb, n) {
     if (!kb || !kb.length) return null;
-    // A fear of hurting one's child ('boję się, że skrzywdzę dziecko'), a worry that someone close will hurt themselves
-    // ('boję się, że brat coś sobie zrobi') or a death ('smutno mi, bo zmarł dziadek') is better met by the checked
-    // entry than by a breathing exercise or "co się dziś wydarzyło?"
-    if (!(raw.includes('?') || QUESTION.test(d.n) || d.topic === 'open' || NEEDS_FACTS.some((re) => re.test(d.n)))) return null;
     let best = null, bestScore = 0;
     for (const item of kb) {
-      const score = item.keys.reduce((s, k) => s + (k.re.test(d.n) ? k.words : 0), 0);
+      const score = item.keys.reduce((s, k) => s + (k.re.test(n) ? k.words : 0), 0);
       if (score > bestScore) { best = item.entry; bestScore = score; }
     }
     return best;
   }
+
+  // "Ból głowy: rodzaje, domowe sposoby…" -> "ból głowy"; a few of them name what the chat can answer
+  const shortTitle = (e) => lowerFirst(String(e.title || e.id).split(':')[0].replace(/\s*\([^)]*\)/g, '').trim());
+  function knownTopics(kb, rand) {
+    const all = (kb || []).map((item) => shortTitle(item.entry));
+    for (let i = all.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [all[i], all[j]] = [all[j], all[i]]; }
+    return all.slice(0, 6).join(', ');
+  }
+  const HEALTH = /\b(lek|leki|lekow|lekiem|lekarstw\w*|tabletk\w*|dawk\w*|ciaz\w*|chorob\w*|zdrow\w*|lekarz\w*|szczepi\w*|diet\w*|schudn\w*|odchudz\w*|witamin\w*|suplement\w*|antybiotyk\w*|recept\w*|badani\w*|wynik\w*)\b/;
+  // A question with no checked answer: say so, instead of asking the user to tell more
+  function unknownReply(kb, rand, n) {
+    const topics = knownTopics(kb, rand);
+    const health = HEALTH.test(n) || SYMPTOM.test(n) || PAIN_WORD.test(n);
+    return 'Na to pytanie nie mam jeszcze sprawdzonej odpowiedzi' +
+      (health ? ', a w sprawach zdrowia wolę nie zgadywać. Najpewniej odpowie ci lekarz rodzinny albo farmaceuta.' : '.') +
+      (topics ? ` Sprawdzone odpowiedzi mam na przykład o tematach: ${topics}.` : '') + ' Możemy też po prostu porozmawiać.';
+  }
+  function aboutReply(kb, rand) {
+    const topics = knownTopics(kb, rand);
+    return 'Jestem Doco, czat wsparcia. Mogę z tobą porozmawiać, gdy jest ci ciężko, podsunąć proste ćwiczenia, na przykład spokojny oddech, ' +
+      'i odpowiedzieć na pytania o zdrowie, na które mam sprawdzone odpowiedzi' + (topics ? ` (na przykład: ${topics})` : '') +
+      `. Nie jestem lekarzem i nie postawię diagnozy, ale powiem ci, kiedy trzeba dzwonić pod ${TEL112}. O czym chcesz porozmawiać?`;
+  }
+  // After a feeling ('mam depresję', 'nie mogę spać') the conversation comes first; the checked entry is offered
+  const HAVE_CONDITION = /^(chyba |pewnie |raczej |chyba juz |juz )?(mam|miewam|choruje na|lecze sie na|zdiagnozowano u mnie|stwierdzono u mnie)\b/;
+  const OFFER_AFTER = ['sad', 'anxiety', 'stress', 'lonely', 'anger', 'tired', 'motivation', 'work', 'conflict'];
+  const offerLine = (e) => ` Jeśli chcesz, opowiem ci też, co wiadomo o temacie „${shortTitle(e)}”. Wystarczy napisać „tak”.`;
 
   function infoReply(e) {
     let html = esc(e.answer);
@@ -401,6 +457,9 @@
     if (RED_FLAG.some((re) => re.test(n))) return { topic: 'redflag', n };
     if (ASSAULT.test(n)) return { topic: 'assault', n };
     if (VIOLENCE.some((re) => re.test(n))) return { topic: 'violence', n };
+    if (HELP.test(n)) return { topic: 'help', n };
+    if (ABOUT.test(n)) return { topic: 'about', n };
+    if (HOW_ARE_YOU.test(n)) return { topic: 'howareyou', n };
     const score = {};
     for (const [topic, list] of Object.entries(T)) score[topic] = list.filter((re) => re.test(n)).length;
     if (score.joy && NEGATED_JOY.test(n)) { score.joy = 0; score.sad += 1; }
@@ -413,6 +472,8 @@
     let best = null;
     for (const t of order) if (score[t] > 0 && (!best || score[t] > score[best])) best = t;
     if (best) return { topic: best, n, score };
+    if (SYMPTOM.test(n)) return { topic: 'symptom', n };
+    if (DIAGNOSIS.test(n)) return { topic: 'diagnosis', n };
     if (MEH.test(n)) return { topic: 'meh', n };
     if (FINE.test(n)) return { topic: 'fine', n };
     if (YES.test(n)) return { topic: 'yes', n };
@@ -431,6 +492,7 @@
     let topic = null; // current conversation topic
     let lastKind = null; // what the last reply offered ('ask' or the step name)
     let crisisSeen = false; // after a crisis signal every later reply keeps the numbers at hand
+    let offered = null; // a checked entry offered in the last reply ("Wystarczy napisać „tak”")
 
     // Pick an unused item from the list (no repeats until all are used)
     function pick(key, list) {
@@ -444,6 +506,9 @@
 
     function respond(raw) {
       const d = detect(raw);
+      const kb = ownKnowledge || sharedKnowledge;
+      const wasOffered = offered;
+      offered = null;
       let t = d.topic;
       let html, info, kind = 'ask';
       if (t === 'crisis') {
@@ -462,11 +527,17 @@
       } else if (t === 'violence' || t === 'assault') {
         html = t === 'assault' ? ASSAULT_REPLY : VIOLENCE_REPLY;
         topic = t;
-      } else if ((info = findInfo(ownKnowledge || sharedKnowledge, raw, d))) {
+      } else if ((info = findInfo(kb, raw, d) || (t === 'yes' && wasOffered))) {
         html = infoReply(info);
         kind = 'info';
         t = `info:${info.id}`;
         topic = 'info';
+      } else if (t === 'about') {
+        html = aboutReply(kb, rand);
+        topic = t;
+      } else if (t === 'open' && !(topic && MORE[topic]) && (raw.includes('?') || QUESTION.test(d.n))) {
+        html = unknownReply(kb, rand, d.n);
+        topic = t;
       } else if (t === 'fine' && topic && STEP[lastKind]) {
         html = STEP[lastKind]; kind = 'done'; t = `${topic}:yes`;
       } else if (t === 'yes' || t === 'no' || t === 'dunno') {
@@ -484,20 +555,24 @@
       } else if (t === 'open' && topic && MORE[topic] && MORE[topic].length) {
         html = pick(`more:${topic}`, MORE[topic]);
         t = `${topic}:more`;
-      } else if (t === topic && MORE[t] && (used[t] || []).length >= R[t].length && (used[`more:${t}`] || []).length < MORE[t].length) {
-        // Same topic again and its openers are used up: continue the thread before repeating anything
+      } else if (t === topic && MORE[t] && ((used[t] || []).length >= R[t].length || t === 'pain' || t === 'symptom') && (used[`more:${t}`] || []).length < MORE[t].length) {
+        // Same topic again and its openers are used up (or it's the same symptom, described more): continue the thread
         html = pick(`more:${t}`, MORE[t]);
         t = `${t}:more`;
       } else {
         [kind, html] = pick(t, R[t]);
         topic = t;
+        const offer = OFFER_AFTER.includes(t) && matchInfo(kb, d.n);
+        // 'mam depresję' names a condition, it doesn't say what happened today
+        if (offer && HAVE_CONDITION.test(d.n)) [kind, html] = ['ask', 'Dziękuję, że mi o tym mówisz. Jak się dziś z tym czujesz?'];
+        if (offer && kind === 'ask') { html += offerLine(offer); offered = offer; }
       }
       lastKind = kind;
       if (t === 'crisis') crisisSeen = true;
       else if (crisisSeen) html += REMINDER;
 
       const text = strip(html);
-      return { topic: t, kind, html, text, delay: 600 + Math.round(rand() * 300) + Math.min(300, text.length) };
+      return { topic: t, kind, html, text, offer: !!offered, delay: 600 + Math.round(rand() * 300) + Math.min(300, text.length) };
     }
 
     return { reply: respond, get topic() { return topic; } };

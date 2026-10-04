@@ -35,7 +35,16 @@ node tools/soleil/offline-companion.test.mjs  # rozmowa Soleil bez zmian
 
 ## Jak czat korzysta z bazy
 
-Kolejność w `offline-companion.js`: 1) sygnały kryzysu psychicznego (zawsze numery pomocy), 2) pilne objawy (112), 3) napaść seksualna i przemoc w domu (własne odpowiedzi z 112 i numerami pomocy), 4) **pytanie o temat z bazy**, 5) rozmowa o emocjach. Wpis odpowiada, gdy wiadomość trafia w jego `keywords` i jest pytaniem („jak…”, „co robić…”, „czy…”, „czego…”, znak zapytania), hasłem („objawy depresji”, „depresja objawy”, „test na depresję”, „adhd a depresja”) albo samą nazwą tematu („rabdomioliza”). Bez pytania do bazy trafiają też wiadomości, przy których sprawdzone fakty są lepsze niż rozmowa: czyjaś śmierć („smutno mi, bo zmarł dziadek”), strach o bliską osobę („boję się, że brat coś sobie zrobi”), lęk przed skrzywdzeniem dziecka („boję się, że skrzywdzę dziecko”) i nazwa leku uspokajającego („xanax przed egzaminem”). Zwykłe zwierzenia („nie mogę spać”, „boli mnie głowa”), kafelki tematów i buźki nastroju zostają w rozmowie Soleil. Baza ładuje się w tle; gdy jej nie ma, czat działa jak wcześniej.
+Na GitHub Pages nie ma serwera AI, więc odpowiada `soleil-main/offline-companion.js` (po polsku). Kolejność: 1) sygnały kryzysu psychicznego (zawsze numery pomocy), 2) pilne objawy (112), 3) napaść seksualna i przemoc w domu (własne odpowiedzi z 112 i numerami pomocy), 4) **wpis z bazy**, 5) rozmowa o emocjach.
+
+- **Pytanie** trafiające w `keywords` wpisu dostaje wpis: „jak…”, „co robić…”, „czy…”, „czego…”, znak zapytania, hasło („objawy depresji”, „depresja objawy”, „test na depresję”, „adhd a depresja”) albo sama nazwa tematu („rabdomioliza”).
+- **Objaw w ciele** też dostaje wpis, jeśli jest sprawdzony („boli mnie głowa od rana” → ból głowy). Ból albo inny objaw bez wpisu („boli mnie kolano”, „mam gorączkę”, „kręci mi się w głowie”) dostaje odpowiedź na miejscu: kiedy dzwonić pod 112, kiedy iść do lekarza rodzinnego albo do nocnej i świątecznej opieki zdrowotnej, i pytanie, gdzie i od kiedy boli. Czat nie odsyła już tekstem do zakładek; pod odpowiedzią jest tylko opcjonalny przycisk „Gdzie boli?”.
+- **Zwierzenie** („mam depresję”, „nie mogę spać”, „chyba mam nerwicę”) zostaje rozmową, ale gdy w bazie jest pasujący wpis, czat go proponuje („Jeśli chcesz, opowiem ci też, co wiadomo o temacie…”), a przycisk „Tak, opowiedz” albo „tak” podaje wpis. Kafelki tematów i buźki nastroju zostają rozmową.
+- **Bez pytania do bazy trafiają też** wiadomości, przy których sprawdzone fakty są lepsze niż rozmowa: czyjaś śmierć („smutno mi, bo zmarł dziadek”), strach o bliską osobę („boję się, że brat coś sobie zrobi”), lęk przed skrzywdzeniem dziecka („boję się, że skrzywdzę dziecko”) i nazwa leku uspokajającego („xanax przed egzaminem”).
+- **Pytanie, na które bazy nie ma** („czy mogę pić kawę w ciąży?”), dostaje uczciwe „nie mam jeszcze sprawdzonej odpowiedzi” z radą, kogo zapytać (lekarz, farmaceuta), i kilkoma tematami, o których czat wie. Wcześniej czat prosił wtedy „opowiedz mi więcej”.
+- **Pytania o sam czat** („kim jesteś?”, „co umiesz?”, „jak się czujesz?”), „pomóż mi” i „co mi jest?” mają własne odpowiedzi.
+
+Baza ładuje się w tle; gdy jej nie ma, czat działa bez niej. Przyciski pod odpowiedziami (`chat.js`) działają teraz także w rozmowie, którą strona zaczyna przez `SoleilOffline.create()`; wcześniej się nie pokazywały.
 
 ### Zmiany w czacie przy serii o zdrowiu psychicznym (2026-10-04)
 
@@ -50,12 +59,12 @@ Badacze i testerzy tej serii znaleźli wiadomości, na które czat odpowiadał �
 ## Stan bazy
 
 <!-- raport:start -->
-Stan na **2026-10-04**: **16 wpisów** (4 z pilota i 12 z serii o zdrowiu psychicznym). Wszystkie przeszły weryfikację i testy.
+Stan na **2026-10-04**: **17 wpisów** (4 z pilota i 13 z serii o zdrowiu psychicznym). Wszystkie przeszły weryfikację i testy.
 
-- Dziedziny: psychika 13, objawy 1, samobadanie 1, sport 1, profilaktyka 0.
-- Poziomy: tier 1: 6 (ból głowy, bezsenność, lęk i niepokój, obniżony nastrój, stres na co dzień, stres przed egzaminem), tier 2: 6 (atak paniki, gdzie szukać pomocy, jak pomóc osobie w kryzysie, wypalenie zawodowe, żałoba, pomiar ciśnienia), tier 3: 4 (depresja poporodowa, PTSD, zaburzenia odżywiania, rabdomioliza wysiłkowa).
-- Razem w ostatnich rundach: 1461 kontroli twierdzeń (1272 potwierdzone, 182 poprawione, 4 usunięte, 3 niesprawdzalne) i 396 testów, wszystkie zaliczone.
-- Sprawdzenia po scaleniu i redakcji archiwisty: `sprawdz.mjs` OK (7 uwag o długości answer, niżej), `wiedza.test.mjs` OK (296 pytań trafia do swojego wpisu, kryzys i 112 mają pierwszeństwo, kafelki i buźki czatu zostają rozmową), `offline-companion.test.mjs` OK, `tools/wiedza/robocze/pytania-sporne.mjs --wszystkie` OK (wynik niżej).
+- Dziedziny: psychika 14, objawy 1, samobadanie 1, sport 1, profilaktyka 0.
+- Poziomy: tier 1: 6 (ból głowy, bezsenność, lęk i niepokój, obniżony nastrój, stres na co dzień, stres przed egzaminem), tier 2: 6 (atak paniki, gdzie szukać pomocy, jak pomóc osobie w kryzysie, wypalenie zawodowe, żałoba, pomiar ciśnienia), tier 3: 5 (ADHD u dorosłych, depresja poporodowa, PTSD, zaburzenia odżywiania, rabdomioliza wysiłkowa).
+- Razem w ostatnich rundach: 1597 kontroli twierdzeń (1404 potwierdzone, 186 poprawionych, 4 usunięte, 3 niesprawdzalne) i 422 testy, wszystkie zaliczone.
+- Sprawdzenia po scaleniu ADHD i redakcji archiwisty: `sprawdz.mjs` OK (8 uwag o długości answer, niżej), `wiedza.test.mjs` OK (315 pytań trafia do swojego wpisu, kryzys i 112 mają pierwszeństwo, kafelki i buźki czatu zostają rozmową), `offline-companion.test.mjs` OK, `tools/wiedza/robocze/pytania-sporne.mjs --wszystkie` OK (wynik niżej). W trakcie tej rundy koordynator przerabiał kod czatu i jego testy. W jednym z pośrednich uruchomień `offline-companion.test.mjs` pokazał 3 błędy: odpowiedzi o bólu nie miały linków do `cialo/` i `gdzie-boli/`. Ten test nie korzysta z bazy, a po zmianach koordynatora przechodzi. Wszystkie wyniki w raporcie pochodzą z ostatniego uruchomienia na obecnym kodzie czatu.
 
 | Temat | Dziedzina | Tier | Twierdzenia: potwierdzone / poprawione / usunięte / niesprawdzalne | Testy | Poprawki |
 |---|---|---|---|---|---|
@@ -70,13 +79,14 @@ Stan na **2026-10-04**: **16 wpisów** (4 z pilota i 12 z serii o zdrowiu psychi
 | Jak pomóc bliskiej osobie w kryzysie psychicznym (`jak-pomoc-osobie-w-kryzysie`) | psychika | 2 | 49 / 19 / 0 / 0 | 21/21 | 0 |
 | Wypalenie zawodowe (`wypalenie-zawodowe`) | psychika | 2 | 60 / 19 / 0 / 0 | 21/21 | 0 |
 | Żałoba i strata bliskiej osoby (`zaloba`) | psychika | 2 | 84 / 12 / 0 / 0 | 23/23 | 0 |
+| ADHD u dorosłych (`adhd-u-doroslych`) | psychika | 3 | 132 / 4 / 0 / 0 | 26/26 | 2 |
 | Depresja poporodowa (`depresja-poporodowa`) | psychika | 3 | 102 / 15 / 0 / 0 | 26/26 | 0 |
 | Zespół stresu pourazowego (PTSD) (`ptsd`) | psychika | 3 | 71 / 15 / 0 / 1 | 25/25 | 0 |
 | Zaburzenia odżywiania: sygnały ostrzegawcze (`zaburzenia-odzywiania`) | psychika | 3 | 101 / 14 / 0 / 0 | 24/24 | 0 |
 | Domowy pomiar ciśnienia tętniczego (`pomiar-cisnienia`) | samobadanie | 2 | 75 / 5 / 0 / 1 | 25/25 | 1 |
 | Rabdomioliza wysiłkowa (`rabdomioliza-wysilkowa`) | sport | 3 | 44 / 9 / 0 / 0 | 23/23 | 0 |
 
-Twierdzenia są liczone z ostatniej rundy weryfikacji. Przy tematach z poprawką ta runda objęła wszystkie twierdzenia, a te, które nie zmieniły się od poprzedniej rundy, dostały w niej status „potwierdzone”. Dlatego liczby poprawek w tabeli są małe. We wszystkich rundach razem weryfikator dał status „poprawione” albo „usunięte” (poprawione / usunięte): ból głowy 32 razy (31 / 1), bezsenność 23 (22 / 1), pomiar ciśnienia 19 (17 / 2), rabdomioliza 9 (9 / 0), stres na co dzień 22 (21 / 1), lęk i niepokój 23 (22 / 1), atak paniki 20 (20 / 0). Pozostałe tematy serii miały jedną rundę.
+Twierdzenia są liczone z ostatniej rundy weryfikacji. Przy tematach z poprawką ta runda objęła wszystkie twierdzenia, a te, które nie zmieniły się od poprzedniej rundy, dostały w niej status „potwierdzone”. Dlatego liczby poprawek w tabeli są małe. We wszystkich rundach razem weryfikator dał status „poprawione” albo „usunięte” (poprawione / usunięte): ból głowy 32 razy (31 / 1), bezsenność 23 (22 / 1), pomiar ciśnienia 19 (17 / 2), rabdomioliza 9 (9 / 0), stres na co dzień 22 (21 / 1), lęk i niepokój 23 (22 / 1), atak paniki 20 (20 / 0), ADHD 18 (18 / 0). Pozostałe tematy serii miały jedną rundę.
 
 ### Historia poprawek
 
@@ -87,6 +97,7 @@ Twierdzenia są liczone z ostatniej rundy weryfikacji. Przy tematach z poprawką
 - **Stres na co dzień:** 2 rundy (r0, r1). W r0 weryfikator: 68 / 19 / 1 / 0, tester: 19/21, jeden bloker. Answer (jedyny tekst wpisu, który czat pokazuje, poza 3 sygnałami 112) nie odpowiadał na pytania trafiające do wpisu: brakowało ostrzeżenia GIS przed ashwagandhą (ciąża, karmienie, leki nasenne i uspokajające) i czegokolwiek o objawach stresu. W r1 weryfikator: 87 / 2 / 0 / 0, tester: 23/23.
 - **Lęk i niepokój:** 2 rundy (r0, r1). W r0 weryfikator: 72 / 16 / 0 / 0, tester: 21/25, dwa blokery. Przy kołataniu serca brakowało progu „objawy minęły, więc pilnie do lekarza jeszcze dziś” (NHS), a sygnał gp nie zgadzał się z faktem. Answer nie mówił, że benzodiazepin nie wolno odstawiać nagle. W r1 weryfikator: 91 / 6 / 1 / 0, tester: 31/31.
 - **Atak paniki:** 2 rundy (r0, r1). W r0 weryfikator: 92 / 15 / 0 / 0, tester: 20/24, dwa blokery. Astma i niedocukrzenie nie pojawiały się w odpowiedzi czatu. Zator płucny u osoby z zaburzeniem panicznym (nagła duszność, ciąża i połóg, antykoncepcja, długa podróż) nie miał sygnału. W r1 weryfikator: 114 / 5 / 0 / 0, tester: 27/27.
+- **ADHD u dorosłych:** 3 rundy (r0–r2). W r0 weryfikator: 78 / 9 / 0 / 0, tester: 16/20, trzy blokery (`archiwum/3-test.r0.json`). Wpis nie mówił nic o ciąży i karmieniu piersią przy lekach na ADHD. Nowe tiki po metylofenidacie (NHS: pilny kontakt z lekarzem) nie miały sygnału. Nie było też sygnału dla kłopotów z uwagą lub pamięcią, które zaczęły się dopiero w dorosłości albo się nasilają (np. u seniora). W r1 weryfikator: 115 / 5 / 0 / 0, tester: 19/24, dwa blokery (`archiwum/3-test.r1.json`). Nagłe splątanie (112) i tiki były tylko w sygnałach, których czat nie pokazuje. Na „tata od wczoraj jest splątany, czy to ADHD?” czat radził lekarza rodzinnego, a pytania o tiki po leku zostawały bez odpowiedzi. W r2 oba zdania weszły do answer. Weryfikator: 132 / 4 / 0 / 0, tester: 26/26.
 - **Pozostałe 9 tematów serii** (obniżony nastrój, stres przed egzaminem, wypalenie, żałoba, jak pomóc, gdzie szukać pomocy, depresja poporodowa, zaburzenia odżywiania, PTSD): 1 runda (r0), tester bez blokerów.
 
 ### Najważniejsze poprawki weryfikatora
@@ -113,6 +124,8 @@ Twierdzenia są liczone z ostatniej rundy weryfikacji. Przy tematach z poprawką
 - Depresja poporodowa: natrętne myśli o skrzywdzeniu dziecka podniesione z gp do urgent. Z sygnału 112 wypadło „boisz się, że możesz to zrobić”, bo to typowe natręctwo. Usunięte „dziecka się nie odbiera” (tylko źródła brytyjskie). Przy zuranolonie dopisane, że rejestracja w UE nie oznacza dostępności w Polsce.
 - Zaburzenia odżywiania: wymioty z krwią to zawsze 112. Leczenie bez zgody opisane według ustawy o ochronie zdrowia psychicznego. Przy insulinie „nie pomijaj dawek” zamiast „nie odstawiaj całkowicie”.
 - PTSD: dezorientacja i halucynacje po traumie podniesione z urgent do emergency (PFA). Potwierdzony numer 116 006 (od 1.09.2026). Dopisane okno 72 godzin na leki chroniące przed HIV po napaści.
+- ADHD (r0): brak refundacji leków dla dorosłych potwierdzony w obwieszczeniu MZ na 1.10.2026, a w answer jest data. „Co najmniej 3 objawy przed 12. rokiem życia” to wymóg polskich rekomendacji, a nie DSM-5-TR czy ICD-11. CZP pomaga tylko tam, gdzie działa (to pilotaż). Za duża dawka własnego leku z objawami zatrucia to 112.
+- ADHD (r1–r2): kłopoty z uwagą zaczynające się w dorosłości stopniowo oznaczają lekarza rodzinnego, a nagle i ze splątaniem 112 (NHS, MSD). Nowy sygnał urgent o objawach u dziecka karmionego piersią (NHS). Obrzęk ust, języka lub gardła i duszność po leku dopisane do sygnału 112 (NHS, ulotki). „Nasilenie tików” przypisane tylko ulotce Medikinet CR.
 
 ### Redakcja archiwisty po scaleniu (keywords i questions, bez zmian treści medycznej)
 
@@ -125,6 +138,7 @@ Twierdzenia są liczone z ostatniej rundy weryfikacji. Przy tematach z poprawką
   - `lek-i-niepokoj`: 10 fraz o lekach uspokajających przed egzaminem lub wystąpieniem („uspokajaj* przed”, „xanax* przed”, „relanium* przed” i inne nazwy benzodiazepin, „uspokajaj* na trem*”) i 13 fraz porównujących lęk paniczny z uogólnionym. Do tego 3 pytania.
   - `obnizony-nastroj-czy-depresja`: 6 fraz „depresj*/nerwic* czy/a/od nerwic*/depresj*” i pytanie „Depresja czy nerwica?”.
   - `zaloba`: 10 fraz („wspomnieni* o zmarl*”, „wspomnieni* o smierc*”, depresja poporodowa a poronienie, „po strac* ciaz*”) i 2 pytania.
+  - `adhd-u-doroslych` (runda ADHD): 11 fraz („adhd czy/a/i/to/od nerwic*”, „nerwic* czy/a/i/od adhd”, „adhd to to samo co nerwic*” i odwrotnie) oraz pytanie „Czy to ADHD czy nerwica?”. Wcześniej „czy mam adhd czy nerwicę?” i „czy adhd to to samo co nerwica?” dawały remis z lękiem i niepokojem (1:1) i rozstrzygała go kolejność wpisów. Wzór jest ten sam co w „adhd czy depresj*” badacza i „depresj* czy nerwic*”. Poza tym wpis jest identyczny z `entry` testera r2. 16 pozostałych wpisów zostało bez zmian.
   - Wpisy pilota bez zmian.
 - **Kontrola:** skrypty kolizji 12 testerów (`kolizje.mjs`) uruchomione na kopii, w której szkice zastąpiłem wpisami po scaleniu, nie pokazały żadnego nowego problemu, a remisy z ich list się rozstrzygnęły. Zostały tylko te same zgłoszenia co przed scaleniem, wynikające z kodu czatu (np. odpowiedzi 112, kryzysowa i o napaści mają pierwszeństwo przed bazą). Jedno odstępstwo od oczekiwania testera lęku: „czy mogę wziąć tabletkę uspokajającą przed egzaminem?” trafia do lęku i niepokoju, a nie do stresu przed egzaminem, zgodnie z decyzją koordynatora (ten wpis ma ostrzeżenia o lekach).
 
@@ -139,7 +153,9 @@ Skrypt `tools/wiedza/robocze/pytania-sporne.mjs` przepuszcza pytania przez czat 
 | ćwiczenia oddechowe przy ataku paniki | bez „?”: rozmowa (lęk, ćwiczenie „nazwij pięć rzeczy”); z „?” albo „jakie…”: atak paniki (5:2) | wcześniej remis ze stresem na co dzień |
 | przestałam jeść przed sesją | bez „?”: rozmowa (szkoła i praca); z „?”: zaburzenia odżywiania (5:2) | Przestanie jedzenia to sygnał ostrzegawczy z tego wpisu („głodzenie się”, „idź szybko do lekarza”), a wpis o egzaminie o jedzeniu milczy. „Nie mogę nic zjeść przed egzaminem” zostaje przy stresie przed egzaminem. |
 | czy lęk paniczny to to samo co lęk uogólniony? | lęk i niepokój (5:2) | Wpis przeglądowy, a fakt wymienia oba jako osobne zaburzenia lękowe. „Co to jest lęk paniczny?” dalej trafia do ataku paniki. |
-| xanax przed egzaminem; tabletka uspokajająca przed egzaminem | bez „?”: rozmowa (szkoła i praca); z „?”: lęk i niepokój (3:1) | wcześniej remis ze stresem przed egzaminem |
+| xanax przed egzaminem; tabletka uspokajająca przed egzaminem | lęk i niepokój (3:1), z „?” i bez niego | Wcześniej był remis ze stresem przed egzaminem, a bez „?” rozmowa (szkoła i praca). Bez pytajnika trafia do bazy od zmiany czatu w rundzie ADHD. |
+| ritalin przed egzaminem | bez „?”: rozmowa (szkoła i praca); z „?”: ADHD (3:1) | Nazwy leków na ADHD nie otwierają bramki czatu tak jak leki uspokajające. „Czy mogę wziąć ritalin przed maturą?” trafia do ADHD. |
+| czy mam adhd czy nerwicę? | ADHD (4:1) | Wcześniej był remis z lękiem i niepokojem, teraz rozstrzyga go redakcja archiwisty. Answer ADHD mówi, że objawy trwają od dzieciństwa, a rozpoznaje je psychiatra. Samo „nerwica” zostaje przy lęku i niepokoju. |
 | depresja czy nerwica? | obniżony nastrój czy depresja (4:1) | Answer podaje kryteria depresji (2 tygodnie) i mówi, gdzie iść. Samo „nerwica” zostaje przy lęku i niepokoju. |
 | jak odróżnić żałobę od depresji? | żałoba (4:1) | bez zmian |
 | czy depresja poporodowa może być po poronieniu? | żałoba (5:2) | Answer żałoby mówi o poronieniu (psycholog w szpitalu) i nie zakłada, że dziecko żyje. Wpis o depresji poporodowej (baby blues, karmienie, myśli o dziecku) nie opisuje poronienia. |
@@ -147,11 +163,15 @@ Skrypt `tools/wiedza/robocze/pytania-sporne.mjs` przepuszcza pytania przez czat 
 | natrętne wspomnienia o zmarłym tacie | żałoba (4:2) | wcześniej PTSD (1:2) |
 | wypalenie kurzajki | bez „?”: rozmowa (zmęczenie); z „?”: wypalenie zawodowe (1 punkt) | **Wyjątek.** Nie da się tego naprawić bez psucia innych pytań: „ile trwa wypalenie?”, „co pomaga na wypalenie?”, „mam wypalenie, co robić?”, „jak leczyć wypalenie?” i podobne trafiają do wpisu tylko dzięki samemu „wypaleni*”, a te same ramy pasują do kurzajki. Rozwiąże to dopiero wpis o kurzajkach. |
 
-Poza tym 35 innych sformułowań tych pytań trafia jednoznacznie, a wszystkie 296 `questions` trafiają do swoich wpisów w obu kolejnościach bazy (bez remisów). Pięć wiadomości bez znaku zapytania (oznaczonych wyżej „bez »?«”) zawiera słowo z tematów rozmowy (egzamin, sesja, panika, wypalenie), więc czat nie wpuszcza ich do bazy. Tego nie da się zmienić danymi.
+Poza tym 52 inne sformułowania tych pytań trafiają jednoznacznie (w tym 17 nowych z rundy ADHD), a wszystkie 315 `questions` trafiają do swoich wpisów w obu kolejnościach bazy (bez remisów).
+
+**Wiadomości bez „?”.** Koordynator zmienił kod czatu: nazwa leku uspokajającego wpuszcza wiadomość do bazy także bez pytajnika. Chodzi o nazwy benzodiazepin i leków nasennych (np. xanax, alprazolam, afobam, relanium, diazepam, lorazepam, klonazepam, zolpidem) oraz „tabletkę lub lek uspokajający albo nasenny”. Skrypt to potwierdza: „xanax przed egzaminem” i „tabletka uspokajająca przed egzaminem” trafiają bez „?” do lęku i niepokoju (3:1, w obu kolejnościach wpisów). Tak samo „relanium przed maturą”, „tabletki uspokajające przed sesją”, „xanax przed wystąpieniem”, „afobam przed egzaminem” i „lek uspokajający przed egzaminem”. W rozmowie zostają jeszcze cztery wiadomości bez „?”: „ćwiczenia oddechowe przy ataku paniki”, „przestałam jeść przed sesją”, „wypalenie kurzajki” i „ritalin przed egzaminem”. Mają słowo z tematów rozmowy (panika, sesja, wypalenie, egzamin) i nie mają nazwy leku uspokajającego. Tego nie da się zmienić danymi. Po zmianie czatu „tata od wczoraj jest splątany, czy to może być ADHD?” dostaje od razu odpowiedź 112 (pilne objawy), zanim czat zajrzy do bazy. Wcześniej trafiało do wpisu ADHD, którego answer też kieruje pod 112.
+
+**Wiadomości o dwóch tematach naraz** („adhd i bezsenność?”, „mam adhd i wypalenie, co robić?”, „czy mogę wziąć xanax i concertę?”) dają remis 1:1 i trafiają do wpisu, który jest wcześniej w bazie. Tak samo działo się już przed ADHD („depresja i bezsenność?”, „żałoba i bezsenność?”). Oba wpisy pasują do takiego pytania i oba mają sygnały 112 oraz numery kryzysowe, więc tego nie zmieniałem.
 
 ### Długość odpowiedzi (answer ponad 700 znaków)
 
-Treści medycznej nie skracałem. Ponad zalecane 700 znaków mają: ból głowy 759, atak paniki 755, gdzie szukać pomocy 749, stres przed egzaminem 747, stres na co dzień 719, lęk i niepokój 713, depresja poporodowa 711 (żałoba i bezsenność mają równo 700). Powód jest wszędzie ten sam: czat pokazuje tylko answer i 3 pierwsze sygnały 112, więc w answer musiały się zmieścić zdania ważne dla bezpieczeństwa. Przy bólu głowy to stan przedrzucawkowy i czad (zgoda koordynatora z pilota), przy ataku paniki astma, insulina i nagła duszność w ciąży, przy lęku zakaz nagłego odstawiania benzodiazepin, przy stresie na co dzień ostrzeżenia o ashwagandzie, przy depresji poporodowej numer 116 111, a przy gdzie szukać pomocy i stresie przed egzaminem odpowiedzi na pytania z `questions`. Walidator zgłasza to jako uwagę, nie błąd.
+Treści medycznej nie skracałem. Ponad zalecane 700 znaków mają: ADHD u dorosłych 799, ból głowy 759, atak paniki 755, gdzie szukać pomocy 749, stres przed egzaminem 747, stres na co dzień 719, lęk i niepokój 713, depresja poporodowa 711 (żałoba i bezsenność mają równo 700). Powód jest wszędzie ten sam: czat pokazuje tylko answer i 3 pierwsze sygnały 112, więc w answer musiały się zmieścić zdania ważne dla bezpieczeństwa. Przy bólu głowy to stan przedrzucawkowy i czad (zgoda koordynatora z pilota), przy ataku paniki astma, insulina i nagła duszność w ciąży, przy lęku zakaz nagłego odstawiania benzodiazepin, przy stresie na co dzień ostrzeżenia o ashwagandzie, przy depresji poporodowej numer 116 111, a przy gdzie szukać pomocy i stresie przed egzaminem odpowiedzi na pytania z `questions`. ADHD (799) to świadomy wyjątek, za zgodą koordynatora najwyżej ok. 800 znaków. Answer musiał pomieścić nagłe splątanie (112), nowe lub nasilone tiki po leku (lekarz jeszcze dziś) oraz ciążę i karmienie piersią, czyli blokery r0 i r1. Walidator zgłasza to jako uwagę, nie błąd.
 
 ### Do przeglądu
 
@@ -160,6 +180,7 @@ Treści medycznej nie skracałem. Ponad zalecane 700 znaków mają: ból głowy 
 - Wypalenie zawodowe: od 1.01.2027 zmieniają się zasady L4 przy kilku tytułach ubezpieczenia. Wpis jest aktualny na 2026 r.
 - Żałoba: weryfikator zostawił do decyzji człowieka twierdzenia oparte tylko na poradniku Fundacji Hospicyjnej (s11).
 - PTSD: nie udało się potwierdzić polskiej ścieżki po napaści seksualnej (izba przyjęć, leki chroniące przed HIV, antykoncepcja awaryjna), stąd 1 niesprawdzalne. To temat na osobny wpis z polskimi źródłami.
+- ADHD u dorosłych: brak refundacji leków dla dorosłych jest podany „stan na 1.10.2026” (obwieszczenie MZ). Sprawdzić przy każdym nowym obwieszczeniu.
 
 ### Uwagi testerów na kolejne wersje (niewiążące)
 
@@ -185,7 +206,5 @@ Testerzy znaleźli luki w wykrywaniu kryzysu i stanów nagłych w `soleil-main/o
 
 ### Tematy, które nie weszły
 
-- **ADHD u dorosłych** (`adhd-u-doroslych`): w toku, trwa druga poprawka (r2). W r0 tester dał `fail` (16/20, 3 blokery), w r1 też `fail` (19/24) z dwoma blokerami: nagłe splątanie (112) i tiki po leku są tylko w sygnałach, których czat nie pokazuje, więc na pytanie „mama nagle nie wie, gdzie jest, czy to ADHD?” czat radzi lekarza rodzinnego zamiast 112, a pytania o tiki po leku zostają bez odpowiedzi. Dopisanie obu zdań wydłużyłoby answer do ok. 790 znaków, więc decyzja wróciła do badacza (`1-badanie.json` ma już `revision: 2`). Status zostaje `w-toku`, koordynator doda temat osobno.
-
-Pozostałe 12 tematów serii ma w `3-test.json` werdykt `pass`, zero blokerów i wszystkie testy zaliczone, a weryfikator żadnego nie odrzucił.
+Brak. Wszystkie 13 tematów serii (ADHD po r2) ma w `3-test.json` werdykt `pass`, zero blokerów i wszystkie testy zaliczone, a weryfikator żadnego nie odrzucił.
 <!-- raport:end -->

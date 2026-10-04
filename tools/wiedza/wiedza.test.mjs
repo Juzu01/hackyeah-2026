@@ -63,6 +63,20 @@ for (const msg of FEELINGS) {
   check(`rozmowa: "${msg}"`, () => assert.ok(!ask(db, msg).topic.startsWith('info:'), `poszło do bazy: ${ask(db, msg).topic}`))
 }
 
+// 3b. The chat answers instead of sending the user elsewhere
+const has = (id) => db.entries.some((e) => e.id === id)
+if (has('bol-glowy')) check('objaw w ciele: "boli mnie głowa od rana" dostaje wpis', () => assert.equal(ask(db, 'boli mnie głowa od rana').topic, 'info:bol-glowy'))
+if (has('obnizony-nastroj-czy-depresja')) check('zwierzenie z nazwą choroby: rozmowa + propozycja wpisu, po „tak” wpis', () => {
+  const c = create({ knowledge: db, random: () => 0 })
+  const first = c.reply('mam depresję')
+  assert.ok(!first.topic.startsWith('info:') && first.offer, `${first.topic} offer=${first.offer}`)
+  assert.equal(c.reply('Tak, opowiedz').topic, 'info:obnizony-nastroj-czy-depresja')
+})
+check('pytanie bez sprawdzonej odpowiedzi: czat mówi to wprost', () => {
+  const { topic, text } = ask(db, 'czy mogę jeść grejpfruty?')
+  assert.ok(topic === 'open' && /nie mam jeszcze sprawdzonej odpowiedzi/.test(text), `${topic}: ${text}`)
+})
+
 // 4. Base text is escaped and links are https only
 const evil = {
   id: 'test-html', domain: 'objawy', tier: 1, keywords: ['zzztest*'], answer: '<img src=x onerror=alert(1)> "uwaga"',
