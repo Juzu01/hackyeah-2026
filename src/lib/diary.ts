@@ -1,9 +1,9 @@
 import type { Duration, Onset, Trend, Triage } from '../data/types.ts'
 
-// Soleil's diary ("Więcej → Dziennik", soleil-main/diary.js) shows the user's pain entries
+// Doco's diary (the Dziennik tab, doco/diary.js) shows the user's pain entries
 // next to their mood. "Gdzie boli?" adds an entry from its result. Both apps run on the same
 // origin and the same Clerk instance, so the entry goes straight into the account's list in
-// localStorage; keep the key and the entry shape in step with soleil-main/diary.js.
+// localStorage; keep the key and the entry shape in step with doco/diary.js.
 
 export interface DiaryPainEntry {
   id: string
@@ -25,7 +25,7 @@ export interface DiaryPainEntry {
   source: 'gdzie-boli'
 }
 
-const key = (userId: string) => `soleil_pain_diary_v1_${userId}`
+const key = (userId: string) => `doco_pain_diary_v1_${userId}`
 
 export function addToDiary(userId: string, entry: Omit<DiaryPainEntry, 'id' | 'type' | 'source'>): boolean {
   try {
@@ -39,20 +39,20 @@ export function addToDiary(userId: string, entry: Omit<DiaryPainEntry, 'id' | 't
   }
 }
 
-/** Soleil around us (the "Objawy" tab shows this app in a frame), if any. */
-type SoleilShell = Window & { hyShowView?: (view: string) => void; openAuth?: () => void; Clerk?: { user?: { id: string } | null } }
-export function soleilShell(): SoleilShell | null {
+/** Doco around us (the "Objawy" tab shows this app in a frame), if any. */
+type DocoShell = Window & { hyShowView?: (view: string) => void; openAuth?: () => void; Clerk?: { user?: { id: string } | null } }
+export function docoShell(): DocoShell | null {
   try {
-    const parent = window.parent as SoleilShell
+    const parent = window.parent as DocoShell
     return parent !== window && typeof parent.hyShowView === 'function' ? parent : null
   } catch {
     return null
   }
 }
 
-/** Opens Soleil's diary: in the surrounding app when framed, otherwise by going there. */
+/** Opens Doco's diary: in the surrounding app when framed, otherwise by going there. */
 export function openDiary() {
-  const shell = soleilShell()
+  const shell = docoShell()
   if (shell) shell.hyShowView?.('dziennik')
   else window.location.href = '../#dziennik'
 }

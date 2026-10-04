@@ -189,7 +189,7 @@
   };
 
   // ── Topics: six from art.js's pool of twenty, new on every visit ──────
-  const Art = window.SoleilArt;
+  const Art = window.DocoArt;
   let topics = null;
   function renderTopics(animate) {
     const box = $('hyTopics');
@@ -305,7 +305,7 @@
     returnFocus = document.activeElement;
     cycle = 0;
     $('hyBreatheAfter').hidden = true;
-    // The line starts empty without sliding back; then each new breath moves it on by a sixth (soleil.css)
+    // The line starts empty without sliding back; then each new breath moves it on by a sixth (doco.css)
     const bar = $('hyBreatheProgress');
     bar.style.transition = 'none';
     bar.style.transform = 'scaleX(0)';
@@ -344,15 +344,15 @@
   // gets the symptom checker, "how are you?" gets the faces.
   const STEPS = ['walk', 'write', 'text', 'ground', 'pause', 'small'];
   let lastReply = null;
-  if (window.SoleilOffline) {
-    const baseReply = window.SoleilOffline.reply;
-    window.SoleilOffline.reply = function (text) {
+  if (window.DocoOffline) {
+    const baseReply = window.DocoOffline.reply;
+    window.DocoOffline.reply = function (text) {
       lastReply = baseReply.call(this, text);
       return lastReply;
     };
     // The page starts its own conversation with create() (index.html, offlineReply), so its replies are caught too
-    const baseCreate = window.SoleilOffline.create;
-    window.SoleilOffline.create = function () {
+    const baseCreate = window.DocoOffline.create;
+    window.DocoOffline.create = function () {
       const chat = baseCreate.apply(this, arguments);
       const reply = chat.reply;
       chat.reply = (text) => (lastReply = reply(text));

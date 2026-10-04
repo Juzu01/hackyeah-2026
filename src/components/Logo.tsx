@@ -1,5 +1,5 @@
 // Doco's logo: the lemur from the logo art, hugging a heart, its ringed tail curled round it.
-// The same drawing is the #lemur symbol in soleil-main/index.html; change both together.
+// The same drawing is the #lemur symbol in doco/index.html; change both together.
 
 /** The heart takes the text colour, so give it the app's accent (e.g. text-green). */
 export function Logo({ className = 'h-8 w-8' }: { className?: string }) {

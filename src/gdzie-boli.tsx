@@ -7,13 +7,13 @@ import './gdzie-boli.css'
 import { followDocoTheme } from './lib/accent.ts'
 import GdzieBoliApp from './GdzieBoliApp.tsx'
 import { AccountProvider } from './lib/auth.tsx'
-import { stayOrOpenInSoleil } from './shell.ts'
+import { stayOrOpenInDoco } from './shell.ts'
 
 // Entry of the "Gdzie boli?" build (VITE_APP=gdzie-boli, see vite.config.ts); src/main.tsx is the body map's.
 // gdzie-boli.css is this app's whole Tailwind entry, so src/index.css (the atlas's) is not imported here.
 followDocoTheme()
 
-if (stayOrOpenInSoleil('objawy')) {
+if (stayOrOpenInDoco('objawy')) {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <AccountProvider>

@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 
-const DB = readFileSync(new URL('../soleil-main/data/wiedza.json', import.meta.url), 'utf8')
+const DB = readFileSync(new URL('../doco/data/wiedza.json', import.meta.url), 'utf8')
 let sent = null
 const tried = []
 const down = {} // host -> HTTP status it answers with, to play an outage, a rate limit or no credit

@@ -1,4 +1,4 @@
-// Asks Soleil's chat a few questions in a real (headless) Firefox and saves a screenshot of the answers.
+// Asks Doco's chat a few questions in a real (headless) Firefox and saves a screenshot of the answers.
 // node tools/browser/czat-wiedza.mjs <url> <out.png> ["pytanie" ...]
 import { openPage } from './firefox.mjs'
 
@@ -9,7 +9,7 @@ if (!url || !out) {
 }
 const page = await openPage(url, { width: 390, height: 844, waitMs: 3000 })
 // The knowledge base loads in the background; wait for it before asking
-await page.js(`new Promise((ok) => { const t = setInterval(() => { if (window.SoleilOffline) { clearInterval(t); ok() } }, 100) })`)
+await page.js(`new Promise((ok) => { const t = setInterval(() => { if (window.DocoOffline) { clearInterval(t); ok() } }, 100) })`)
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 for (const q of questions.length ? questions : ['jak zmierzyć ciśnienie w domu?']) {
   await page.js(`(() => { const i = document.getElementById('userInput'); i.value = ${JSON.stringify(q)}; window.sendMessage(); })()`)

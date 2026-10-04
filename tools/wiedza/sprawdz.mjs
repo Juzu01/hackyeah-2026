@@ -1,4 +1,4 @@
-// Checks Soleil's knowledge base (soleil-main/data/wiedza.json) or one working file of the agent team.
+// Checks Doco's knowledge base (doco/data/wiedza.json) or one working file of the agent team.
 // Run: node tools/wiedza/sprawdz.mjs [file]
 //   no file:        the whole base and tools/wiedza/tematy.json
 //   1-badanie.json, 2-weryfikacja.json, 3-test.json or a bare entry: that file only
@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname, join, resolve, relative } from 'node:path'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..')
-export const DB_PATH = join(ROOT, 'soleil-main/data/wiedza.json')
+export const DB_PATH = join(ROOT, 'doco/data/wiedza.json')
 export const TOPICS_PATH = join(ROOT, 'tools/wiedza/tematy.json')
 
 export const DOMAINS = ['psychika', 'objawy', 'sport', 'samobadanie', 'profilaktyka']

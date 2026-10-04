@@ -3,7 +3,7 @@
 
 /* Black and green: the body floats in black with a faint green light around it; a light,
    pastel green is the one accent (selection, the active layer, the primary action, the voice
-   button). Shares its palette with Soleil, the app around it. */
+   button). Shares its palette with Doco, the app around it. */
 :root {
   --bg-0: #000000;
   --bg-1: #0d130a;

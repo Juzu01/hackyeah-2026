@@ -5,7 +5,7 @@
    3) questions about something in the knowledge base (data/wiedza.json, built and checked by the agent team,
    see tools/wiedza/ZASADY.md), 4) topics, 5) short answers in the context of the previous topic, 6) open question.
    Never diagnoses. Never repeats the user's words; knowledge-base text is escaped (safe for innerHTML).
-   In the browser: window.SoleilOffline.reply(text) -> { topic, kind, html, text, delay, local };
+   In the browser: window.DocoOffline.reply(text) -> { topic, kind, html, text, delay, local };
    kind is what the reply offers ('ask', a small step such as 'breath', 'done', 'end', 'info'), for chat.js's quick replies.
    In Node: require('./offline-companion.js').create({ knowledge }) (see offline-companion.test.mjs, tools/wiedza/wiedza.test.mjs). */
 (function (root) {
@@ -731,7 +731,7 @@
   api.detect = detect;
   api.normalize = normalize;
   api.setKnowledge = setKnowledge;
-  root.SoleilOffline = api;
+  root.DocoOffline = api;
   if (typeof module === 'object' && module.exports) module.exports = api;
   // In the browser the knowledge base loads in the background; until it arrives (or if it's missing) the chat works without it
   if (typeof document !== 'undefined' && typeof fetch === 'function') {

@@ -141,7 +141,7 @@ let voiceEntering = false;
 let voiceTimerId = 0;
 let voiceSdkPromise = null;
 // Kept in sessionStorage too: signing in with Google reloads the page on the way back
-let voiceLoginRequestedAt = Number(sessionStorage.getItem('soleil_voice_login')) || 0;
+let voiceLoginRequestedAt = Number(sessionStorage.getItem('doco_voice_login')) || 0;
 let voicePreview = null;
 
 function vt() { return voiceTexts[currentLanguage] || voiceTexts.pl; }
@@ -276,7 +276,7 @@ function updateVoiceLanguage() {
 
 // WYBÓR GŁOSU (menu użytkownika); wybór zapamiętuje przeglądarka, tak jak język
 function currentVoiceOption() {
-  return VOICE_OPTIONS.find(v => v.id === localStorage.getItem('soleil_voice')) || VOICE_OPTIONS[0];
+  return VOICE_OPTIONS.find(v => v.id === localStorage.getItem('doco_voice')) || VOICE_OPTIONS[0];
 }
 
 function openVoicePicker() {
@@ -307,7 +307,7 @@ function renderVoicePicker() {
 }
 
 function selectVoice(id) {
-  localStorage.setItem('soleil_voice', id);
+  localStorage.setItem('doco_voice', id);
   closeVoicePicker();
 }
 
@@ -371,7 +371,7 @@ function closeVoiceCall() {
 
 function voiceMainAction() {
   if (voiceLive) endVoiceCall();
-  else if (voiceState === 'locked') { voiceLoginRequestedAt = Date.now(); sessionStorage.setItem('soleil_voice_login', voiceLoginRequestedAt); closeVoiceCall(); openAuth(); }
+  else if (voiceState === 'locked') { voiceLoginRequestedAt = Date.now(); sessionStorage.setItem('doco_voice_login', voiceLoginRequestedAt); closeVoiceCall(); openAuth(); }
   else startVoiceCall();
 }
 
@@ -379,7 +379,7 @@ function voiceMainAction() {
 function updateVoiceAuth(user) {
   if (user && Date.now() - voiceLoginRequestedAt < 5 * 60 * 1000) {
     voiceLoginRequestedAt = 0;
-    sessionStorage.removeItem('soleil_voice_login');
+    sessionStorage.removeItem('doco_voice_login');
     openVoiceCall();
   } else if (!user && voiceLive) {
     closeVoiceCall();
@@ -389,7 +389,7 @@ function updateVoiceAuth(user) {
 async function startVoiceCall() {
   const t = vt();
   if (voiceLive) return;
-  if (!(currentUser || clerk?.user)) {
+  if (!currentUser) {
     document.getElementById('voiceTranscript').innerHTML = '';
     document.getElementById('voiceHint').style.display = 'none';
     stopVoiceTimer(true);

@@ -7,10 +7,10 @@ Strona Doco działa na GitHub Pages, które nie mają serwera, więc klucza API 
 - przy każdej wiadomości pobiera aktualną bazę wiedzy z `https://juzu01.github.io/hackyeah-2026/data/wiedza.json` (co 10 minut), wybiera 1–2 pasujące wpisy i podaje je modelowi jako „sprawdzoną wiedzę”, więc fakty medyczne pochodzą z bazy, a nie z pamięci modelu,
 - przyjmuje wiadomości tylko ze strony zespołu (`https://juzu01.github.io`) i z localhost, z limitem 30 wiadomości na 10 minut z jednego adresu,
 - rozmawia tylko o zdrowiu i samopoczuciu: prośby spoza (przepis, zadanie domowe, kod, pogoda, wyniki) odrzuca jednym zdaniem; przy dolegliwości najpierw dopytuje (gdzie, od kiedy, od czego się zaczęło), potem daje konkretne kroki z bazy,
-- dostaje od strony `context`: krótkie podsumowanie tego, co użytkownik zapisał w aplikacji (nastrój, ból w dzienniku, sprawdzenia w „Gdzie boli?”, z `soleil-main/kontekst.js`), żeby nawiązać do wcześniejszych wpisów,
+- dostaje od strony `context`: krótkie podsumowanie tego, co użytkownik zapisał w aplikacji (nastrój, ból w dzienniku, sprawdzenia w „Gdzie boli?”, z `doco/kontekst.js`), żeby nawiązać do wcześniejszych wpisów,
 - odpowiada `{ reply, sources, entries, provider }` (`provider`: który model odpowiedział); strona dokleja źródła pod odpowiedzią. Gdy żaden nie odpowie: 502 `{ error: 'upstream', failed: ['xai:403', 'groq:429'] }`.
 
-Strona (`soleil-main/index.html`) pyta serwer, którego adres jest w `soleil-main/ai-config.js`. Wiadomości o kryzysie i objawach nagłych w ogóle nie idą do AI: od razu odpowiada `offline-companion.js` ze sprawdzonym tekstem i numerami. Gdy serwer nie odpowie w 20 sekund, zwróci błąd albo skończy się limit, czat odpowiada offline jak wcześniej.
+Strona (`doco/index.html`) pyta serwer, którego adres jest w `doco/ai-config.js`. Wiadomości o kryzysie i objawach nagłych w ogóle nie idą do AI: od razu odpowiada `offline-companion.js` ze sprawdzonym tekstem i numerami. Gdy serwer nie odpowie w 20 sekund, zwróci błąd albo skończy się limit, czat odpowiada offline jak wcześniej.
 
 ## Modele
 
@@ -25,7 +25,7 @@ Projekt `doco-ai` na Vercel już jest (konto mat10005, katalog główny projektu
 1. Klucz: console.x.ai (Grok) albo console.groq.com (Groq) → API Keys → Create API Key.
 2. Klucz na Vercel: Settings → Environment Variables → `XAI_API_KEY` albo `GROQ_API_KEY`, środowisko Production (wklejasz go tylko tam, nigdy do repo ani czatu).
 3. Ponowne wdrożenie, żeby funkcja widziała klucz: Deployments → ostatnie → Redeploy (albo `npx vercel redeploy <adres wdrożenia>`).
-4. W `soleil-main/ai-config.js`: `window.DOCO_AI_URL = 'https://doco-ai-xi.vercel.app/api/chat';`, commit i push.
+4. W `doco/ai-config.js`: `window.DOCO_AI_URL = 'https://doco-ai-xi.vercel.app/api/chat';`, commit i push.
 
 Baza wiedzy aktualizuje się na serwerze sama (pobiera ją z GitHub Pages), więc po dodaniu tematów nie trzeba wdrażać serwera ponownie. Wdrożenie jest potrzebne tylko po zmianie `api/chat.js`.
 

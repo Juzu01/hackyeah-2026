@@ -14,14 +14,14 @@
   var langs = ['pl', 'en', 'uk', 'de', 'es'];
   var asked = new URLSearchParams(location.search).get('lang');
   var saved = null;
-  try { saved = localStorage.getItem('soleil_language'); } catch (e) {}
+  try { saved = localStorage.getItem('doco_language'); } catch (e) {}
   var lang = langs.indexOf(asked) >= 0 ? asked : langs.indexOf(saved) >= 0 ? saved : 'pl';
   document.documentElement.lang = lang;
   document.documentElement.setAttribute('data-lang', lang);
 })();
 </script>
 <style>
-/* The same look as Doco (soleil.css): black, warm sage green, Fraunces titles, Nunito text,
+/* The same look as Doco (doco.css): black, warm sage green, Fraunces titles, Nunito text,
    sharp corners cut at an angle instead of rounded ones. */
 @font-face { font-family: 'Nunito'; font-style: normal; font-display: swap; font-weight: 200 1000; src: url(fonts/nunito-latin-ext-wght-normal.woff2) format('woff2-variations'); }
 @font-face { font-family: 'Nunito'; font-style: normal; font-display: swap; font-weight: 200 1000; src: url(fonts/nunito-latin-wght-normal.woff2) format('woff2-variations'); }
@@ -455,7 +455,7 @@ html[data-lang='es'] .lang[data-lang='es'] { display: block; }
     </section>
 
     <section class="ask">
-      <h2>¿Tienes preguntas?</h2>
+      <h2>¿Dudas?</h2>
       <p>Escríbenos y te responderemos.</p>
       <a class="btn" href="mailto:bluujuzu@gmail.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><span>bluujuzu@gmail.com</span></a>
     </section>

@@ -8,7 +8,7 @@ import { AccountContext, type Account, type AccountUser } from './account.ts'
 // when a publishable key is configured; otherwise a local, device-only
 // "account" keeps history working for demos without network access.
 
-// The team's existing Clerk development instance (already public in soleil-main/);
+// The team's existing Clerk development instance (already public in doco/);
 // override with VITE_CLERK_PUBLISHABLE_KEY, or set it to "off" for the local mode.
 const DEFAULT_KEY = 'pk_test_YXdhaXRlZC1taW5rLTQ1LmNsZXJrLmFjY291bnRzLmRldiQ'
 const KEY: string = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY ?? DEFAULT_KEY
@@ -95,7 +95,7 @@ function LocalAccount({ children }: { children: ReactNode }) {
   return <AccountContext.Provider value={value}>{children}</AccountContext.Provider>
 }
 
-// Demo (HackYeah): the same test account as the Doco shell (soleil-main/index.html), no Clerk sign-in.
+// Demo (HackYeah): the same test account as the Doco shell (doco/shell.js), no Clerk sign-in.
 // Results and diary entries are saved under it in this browser. Set to false to bring Clerk back.
 const TEST_ACCOUNT = true
 const TEST_USER: AccountUser = { id: 'test-user', name: 'Konto testowe' }

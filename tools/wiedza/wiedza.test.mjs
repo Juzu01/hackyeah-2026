@@ -1,4 +1,4 @@
-// Test of Soleil's offline chat with the knowledge base (soleil-main/data/wiedza.json).
+// Test of Doco's offline chat with the knowledge base (doco/data/wiedza.json).
 // Run: node tools/wiedza/wiedza.test.mjs                    the whole base
 //      node tools/wiedza/wiedza.test.mjs --wpis <file>      one draft entry (tester), as if it were already in the base
 //      ... --pytanie "jak zmierzyc cisnienie"              also show where this message goes (repeatable)
@@ -11,7 +11,7 @@ import assert from 'node:assert/strict'
 import { DB_PATH, readJson, validateDb, validateEntry, topicIds } from './sprawdz.mjs'
 
 const require = createRequire(import.meta.url)
-const { create } = require('../../soleil-main/offline-companion.js')
+const { create } = require('../../doco/offline-companion.js')
 
 const args = process.argv.slice(2)
 const draftPath = args.includes('--wpis') ? args[args.indexOf('--wpis') + 1] : null
@@ -59,8 +59,8 @@ for (const e of db.entries) {
 const FEELINGS = ['jestem dziś bardzo smutny', 'pokłóciłem się z mamą', 'mam dość tej pracy', 'czuję się taka samotna',
   'hej', 'dziękuję', 'tak', 'nie wiem', 'jestem zła na szefa', 'zdałam egzamin!', 'boli mnie łokieć'] // pain with no entry; with one ('boli mnie głowa') the entry answers
 // ...and so do the topic tiles (art.js) and the mood faces (chat.js) on the chat screen
-const ART = readFileSync(new URL('../../soleil-main/art.js', import.meta.url), 'utf8')
-const CHAT = readFileSync(new URL('../../soleil-main/chat.js', import.meta.url), 'utf8')
+const ART = readFileSync(new URL('../../doco/art.js', import.meta.url), 'utf8')
+const CHAT = readFileSync(new URL('../../doco/chat.js', import.meta.url), 'utf8')
 FEELINGS.push(...[...ART.matchAll(/group: '\w+', pl: '([^']+)'/g)].map((m) => m[1]),
   ...JSON.parse((CHAT.match(/say: (\[[^\]]*\])/) || ['', '[]'])[1].replace(/'/g, '"')))
 for (const msg of FEELINGS) {

@@ -1,4 +1,4 @@
-// The mode and accent colour picked in Doco (Więcej → Kolor aplikacji, soleil-main/app.js). This page
+// The mode and accent colour picked in Doco (Więcej → Kolor aplikacji, doco/app.js). This page
 // shares Doco's localStorage, so it wears the same colour from the first paint and follows a change
 // live: the storage event reaches the frame while the colour is being picked in Doco.
 // "Gdzie boli?" follows the light mode too (followDocoTheme); the atlas stays dark, its 3D scene is

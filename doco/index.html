@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!-- On a computer (mouse, window at least 700px wide) Doco opens inside a phone (telefon.html). Phones, the
+     home-screen app (standalone) and frames get the app itself. ?ramka=0 skips the phone, ?ramka=1 forces it. -->
+<script>
+(function () {
+  try {
+    var ramka = new URLSearchParams(location.search).get('ramka');
+    if (ramka === '0' || window.top !== window.self) return;
+    var app = navigator.standalone || matchMedia('(display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui), (display-mode: window-controls-overlay)').matches;
+    var computer = matchMedia('(hover: hover) and (pointer: fine)').matches && innerWidth >= 700;
+    if (ramka === '1' || (computer && !app)) {
+      document.documentElement.style.visibility = 'hidden';
+      location.replace('telefon.html' + location.search + location.hash);
+    }
+  } catch (e) {}
+})();
+// Inside that phone, pages that refuse to open in a frame (Google's sign-in) take over the whole tab instead;
+// Google sends the visitor back to ./#/sso-callback…, which lands in the phone again.
+(function () {
+  try {
+    if (window.top === window.self || !window.top.document.documentElement.hasAttribute('data-doco-frame') || !window.navigation) return;
+    navigation.addEventListener('navigate', function (e) {
+      var to = new URL(e.destination.url);
+      if (to.origin === location.origin || !e.cancelable || e.downloadRequest != null) return;
+      e.preventDefault();
+      window.top.location.href = to.href;
+    });
+  } catch (e) {}
+})();
+</script>
+<title>Doco — Twój przyjaciel</title>
+<meta name="application-name" content="Doco">
+<meta name="description" content="Doco: rozmowa o tym, co czujesz, dziennik nastroju, atlas ciała 3D i sprawdzanie objawów.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Doco">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="manifest.json?v=3">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=3">
+<link rel="stylesheet" href="doco.css?v=1">
+<link rel="stylesheet" href="voice.css?v=6">
+<link rel="stylesheet" href="diary.css?v=5">
+<!-- The mode and colour picked in Więcej → Kolor aplikacji (app.js), before the first paint -->
+<script>
+try {
+  const root = document.documentElement;
+  const theme = localStorage.getItem('doco_theme');
+  const light = theme === 'light' || (theme === 'system' && matchMedia('(prefers-color-scheme: light)').matches);
+  if (light) {
+    root.dataset.theme = 'light';
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f5f6f1');
+  }
+  const a = JSON.parse(localStorage.getItem('doco_accent'));
+  const v = a && (light ? a.light : a);
+  if (v && /^#[0-9a-f]{6}$/i.test(v.accent) && /^#[0-9a-f]{6}$/i.test(v.ink)) {
+    root.style.setProperty('--green', v.accent);
+    root.style.setProperty('--green-ink', v.ink);
+  }
+} catch (e) {}
+</script>
+</head>
+<body>
+
+<!-- Icons and the mood faces, drawn for Doco: sharp mitred lines on a slight slant, the same angle as the tab bar. -->
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="above-horizon"><polygon points="0,0 32,0 32,13.4 0,19.8"/></clipPath>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4.5 4.5h17L19 15.5h-9l-5 4 1.2-4H2z"/><path d="M8 10h8"/></symbol>
+    <symbol id="i-mood" viewBox="0 0 24 24"><path d="M2 17.5 22 13.5"/><path d="M7 16.5A5.1 5.1 0 0 1 17 14.5"/><path d="M5 21 15 19M12 4v2.5M5.4 7.6l1.7 1.7M18.6 7.6l-1.7 1.7"/></symbol>
+    <symbol id="i-body" viewBox="0 0 24 24"><path d="M12 2.5 14 5l-2 2.5L10 5z"/><path d="M7 9.5h10l-2 5.5H9z"/><path d="M7 9.5 4.5 15.5M17 9.5l2.5 6M10 15l-1 6.5M14 15l1 6.5"/></symbol>
+    <symbol id="i-symptom" viewBox="0 0 24 24"><path d="M12 2.5 21.5 12 12 21.5 2.5 12z"/><path d="M12 8v8M8 12h8"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><path d="M4 8.5 20 5.5M4 13.5l16-3M4 18.5l10-1.9"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M3 20.5 21.5 12 3 3.5 6.5 12z"/><path d="M6.5 12H13"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M4.5 3h5L11 8l-2.6 1.8a12 12 0 0 0 5.8 5.8L16 13l5 1.5v5L18.5 21A17.5 17.5 0 0 1 3 5.5z"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 4 7 12l8 8"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m5.5 5.5 13 13M18.5 5.5l-13 13"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 4 8 8-8 8"/></symbol>
+    <symbol id="i-lang" viewBox="0 0 24 24"><path d="M8.5 3h7L21 8.5v7L15.5 21h-7L3 15.5v-7z"/><path d="M12 3 9 12l3 9 3-9zM3 12h18"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 2.5 18.5 11A7 7 0 1 1 5.5 11z"/><path d="M9 15.5a3 3 0 0 0 3 2.5"/></symbol>
+    <symbol id="i-voice" viewBox="0 0 24 24"><path d="M2 12h3l2-6 3 12 3-14 3 16 2-8h4"/></symbol>
+    <symbol id="i-install" viewBox="0 0 24 24"><path d="M9 3H20v18H4V8z"/><path d="M12 8v8M8.5 12.5 12 16l3.5-3.5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5 20 5.5V12l-8 9.5L4 12V5.5z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-login" viewBox="0 0 24 24"><path d="M10 4h10v16H10"/><path d="M3 12h11M10.5 8.5 14 12l-3.5 3.5"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 4H4v16h10"/><path d="M10 12h11M17.5 8.5 21 12l-3.5 3.5"/></symbol>
+    <symbol id="i-work" viewBox="0 0 24 24"><path d="M3 8h18v11.5H3zM9 8V4.5h6V8M3 13h18"/></symbol>
+    <symbol id="i-heartbreak" viewBox="0 0 24 24"><path d="M12 20.5 3.5 12V6.5L6.5 4h3L12 6.5 14.5 4h3l3 2.5V12z"/><path d="m12 6.5-1.5 3.5 3 2.5-2 4"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2 13h5l2-4 2.5 9 3-13 2 8h5.5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/></symbol>
+    <symbol id="i-diary" viewBox="0 0 24 24"><path d="M5 3h13a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5zM8 3v18"/><path d="M10.5 12h1.5l1.2-2.5 1.6 5 1.2-2.5h1.5"/></symbol>
+    <symbol id="i-sad" viewBox="0 0 24 24"><path d="M8 2.5h8L21.5 8v8L16 21.5H8L2.5 16V8z"/><path d="M8.5 9.5h2M13.5 9.5h2M8 16.5l4-2 4 2"/></symbol>
+    <symbol id="i-breath" viewBox="0 0 24 24"><path d="M2.5 9h11a3 3 0 1 0-3-3"/><path d="M2.5 13h16a3 3 0 1 1-3 3"/><path d="M2.5 17h7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12.5 5 5L20 6.5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 22 20.5H2z"/><path d="M12 9.5v5M12 17v.5"/></symbol>
+    <!-- Mood faces: an octagon, eyes and a mouth that bends at one sharp point. -->
+    <symbol id="face-1" viewBox="0 0 40 40"><path d="M13 3h14l10 10v14L27 37H13L3 27V13z"/><path d="M11.5 14.5 17 17.5M28.5 14.5 23 17.5M13 29.5l7-5.5 7 5.5"/></symbol>
+    <symbol id="face-2" viewBox="0 0 40 40"><path d="M13 3h14l10 10v14L27 37H13L3 27V13z"/><path d="M13 16.5h4M23 16.5h4M14 28l6-3 6 3"/></symbol>
+    <symbol id="face-3" viewBox="0 0 40 40"><path d="M13 3h14l10 10v14L27 37H13L3 27V13z"/><path d="M13 16.5h4M23 16.5h4M14 26.5h12"/></symbol>
+    <symbol id="face-4" viewBox="0 0 40 40"><path d="M13 3h14l10 10v14L27 37H13L3 27V13z"/><path d="M13 16.5h4M23 16.5h4M14 25l6 3.2 6-3.2"/></symbol>
+    <symbol id="face-5" viewBox="0 0 40 40"><path d="M13 3h14l10 10v14L27 37H13L3 27V13z"/><path d="m12 18 3-3.5 3 3.5M22 18l3-3.5 3 3.5"/><path d="M12 23.5h16l-8 7z" fill="currentColor"/></symbol>
+    <!-- Doco's logo: the lemur from the logo art, hugging a heart, its ringed tail curled round it.
+         The heart takes the accent colour (currentColor); the front of the tail ring is drawn again over the body. -->
+    <symbol id="lemur" viewBox="0 0 64 64">
+      <ellipse cx="32" cy="50" rx="25" ry="8.5" fill="#1f3d24" stroke="#f7f3de" stroke-width="9"/>
+      <ellipse cx="32" cy="50" rx="25" ry="8.5" fill="none" stroke="#3f7344" stroke-width="9" stroke-dasharray="5.59 5.59"/>
+      <path d="M19 49C18 40 24 35 32 35C40 35 46 40 45 49C44.5 53 39 55 32 55C25 55 19.5 53 19 49Z" fill="#6fa45f"/>
+      <ellipse cx="32" cy="47" rx="9" ry="7" fill="#f7f3de"/>
+      <path d="M57 50A25 8.5 0 0 1 7 50" fill="none" stroke="#f7f3de" stroke-width="9"/>
+      <path d="M57 50A25 8.5 0 0 1 7 50" fill="none" stroke="#3f7344" stroke-width="9" stroke-dasharray="5.59 5.59"/>
+      <path d="M34 53C27.3 49.4 24.1 45.4 24.4 41.8C24.7 37.9 30.1 36.4 33.6 40.4C36.6 36 42 36.3 43 40C43.8 43.4 41.3 47.8 34 53Z" fill="currentColor"/>
+      <ellipse cx="41.8" cy="47" rx="2.6" ry="2.3" fill="#2f5233"/>
+      <g transform="rotate(7 32 32)">
+        <path d="M10.9 17.1C7.6 11.2 7.6 2.6 10.2 0.7C14.5 1.2 19.5 7.6 19.8 14.7C17.6 16.9 13.3 18.6 10.9 17.1Z" fill="#6fa45f"/>
+        <path d="M12.6 14.9C10.2 10.7 10.2 4.8 12.2 3.6C15.2 4.3 18.6 8.8 18.6 13.7C16.9 15.1 14.2 15.9 12.6 14.9Z" fill="#f7f3de"/>
+        <path d="M14 13.3C12.6 10.6 12.7 7.4 13.6 6.7C15.2 7.5 16.8 10.4 16.4 13.1Z" fill="#2f5233"/>
+        <path d="M53.1 17.1C56.4 11.2 56.4 2.6 53.8 0.7C49.5 1.2 44.5 7.6 44.2 14.7C46.4 16.9 50.7 18.6 53.1 17.1Z" fill="#6fa45f"/>
+        <path d="M51.4 14.9C53.8 10.7 53.8 4.8 51.8 3.6C48.8 4.3 45.4 8.8 45.4 13.7C47.1 15.1 49.8 15.9 51.4 14.9Z" fill="#f7f3de"/>
+        <path d="M50 13.3C51.4 10.6 51.3 7.4 50.4 6.7C48.8 7.5 47.2 10.4 47.6 13.1Z" fill="#2f5233"/>
+        <ellipse cx="32" cy="25" rx="17.5" ry="14.5" fill="#6fa45f"/>
+        <path d="M17.6 30.6C16.6 25.2 21.4 21.4 27.2 21.9C29.5 22.1 30.9 20.4 32 18.2C33.1 20.4 34.5 22.1 36.8 21.9C42.6 21.4 47.4 25.2 46.4 30.6C45.4 36.4 39.6 38.9 32 38.9C24.4 38.9 18.6 36.4 17.6 30.6Z" fill="#f7f3de"/>
+        <path d="M21.8 28.4Q24.8 24.9 27.8 28.4M36.2 28.4Q39.2 24.9 42.2 28.4" fill="none" stroke="#14211b" stroke-width="2.7" stroke-linecap="round"/>
+        <path d="M29.5 31.2Q32 30.2 34.5 31.2Q33.7 33.7 32 34.1Q30.3 33.7 29.5 31.2Z" fill="#14211b"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- Language: shell.js lists the five and marks the current one -->
+<div class="overlay" id="languageOverlay">
+  <div class="lang-popup" role="dialog" aria-modal="true" aria-labelledby="languageTitle">
+    <button class="popup-close" onclick="closeLanguage()" aria-label="Zamknij">✕</button>
+    <h2 id="languageTitle">Wybierz język</h2>
+    <div class="lang-options" id="languageList"></div>
+  </div>
+</div>
+
+<!-- The account corner: who is signed in, then language and Doco's voice -->
+<div class="user-menu" id="userMenu" role="menu">
+  <div class="user-menu-header">
+    <span class="ua-pic is-big" id="userMenuPic" aria-hidden="true"></span>
+    <div class="user-menu-who">
+      <div class="user-menu-name" id="userName"></div>
+      <div class="user-menu-email" id="userEmail"></div>
+    </div>
+  </div>
+  <button class="user-menu-btn" role="menuitem" onclick="openLanguage(); toggleUserMenu()"><svg class="ico"><use href="#i-lang"/></svg><span id="menuLangLabel">Język</span> <span id="menuLangFlag" class="lang-code">PL</span></button>
+  <button class="user-menu-btn" role="menuitem" onclick="openVoicePicker(); toggleUserMenu()"><svg class="ico"><use href="#i-voice"/></svg><span id="menuVoiceLabel">Głos Doco</span></button>
+</div>
+
+<!-- A minute of breathing: the sprout opens its leaves while you breathe in (4 s) and folds them while you breathe out (6 s), six times. chat.js runs it. -->
+<div class="breathe" id="hyBreathe" role="dialog" aria-modal="true" aria-labelledby="hyBreatheCue" hidden>
+  <button type="button" class="breathe-close" id="hyBreatheClose" aria-label="Zakończ"><svg class="ico"><use href="#i-close"/></svg></button>
+  <div class="breathe-scene" id="hyBreatheScene"></div>
+  <div class="breathe-text">
+    <div class="breathe-cue" id="hyBreatheCue" aria-live="polite">Wdech</div>
+    <div class="breathe-sub" id="hyBreatheSub">nosem, powoli</div>
+  </div>
+  <div class="breathe-after" id="hyBreatheAfter" hidden>
+    <div class="checkin-faces" role="group" aria-label="Jak się teraz czujesz?">
+      <button type="button" class="cface" data-mood="1" aria-label="Bardzo źle"><svg><use href="#face-1"/></svg></button>
+      <button type="button" class="cface" data-mood="2" aria-label="Źle"><svg><use href="#face-2"/></svg></button>
+      <button type="button" class="cface" data-mood="3" aria-label="Średnio"><svg><use href="#face-3"/></svg></button>
+      <button type="button" class="cface" data-mood="4" aria-label="Dobrze"><svg><use href="#face-4"/></svg></button>
+      <button type="button" class="cface" data-mood="5" aria-label="Świetnie"><svg><use href="#face-5"/></svg></button>
+    </div>
+  </div>
+  <div class="breathe-bar"><i id="hyBreatheProgress"></i><span id="hyBreatheCount">1 / 6</span></div>
+</div>
+
+<div class="app" id="app" data-view="rozmowa">
+  <header class="top">
+    <button class="back-btn" id="backBtn" onclick="goBack()" aria-label="Zacznij od nowa"><svg class="ico"><use href="#i-back"/></svg></button>
+    <svg class="logo-mark" aria-hidden="true"><use href="#lemur"/></svg>
+    <div class="header-text">
+      <h1>Doco</h1>
+      <p><span class="status-dot"></span><span id="tagline">Zawsze tutaj dla Ciebie</span></p>
+    </div>
+    <div class="header-actions">
+      <button type="button" class="user-avatar visible" id="userAvatar" onclick="toggleUserMenu()" aria-label="Menu konta" aria-haspopup="menu"><span class="ua-pic" id="userAvatarPic"></span><svg class="ico ua-go" aria-hidden="true"><use href="#i-next"/></svg></button>
+    </div>
+  </header>
+
+  <main class="views">
+    <section class="view view-chat" id="view-rozmowa" aria-label="Rozmowa">
+      <div class="chat-window" id="chatWindow" role="log" aria-live="polite">
+        <!-- The welcome: a sprout (tap it to breathe for a minute), how you feel in one tap, topics as tiles.
+             chat.js draws the scene, sets the greeting for the time of day and starts the conversation. -->
+        <div class="welcome" id="welcomeMsg">
+          <button type="button" class="hero" id="hyHero" style="--i:0" aria-label="Oddychaj ze mną przez minutę">
+            <span class="hero-scene" id="hyHeroScene"></span>
+            <span class="hero-cta"><svg class="ico"><use href="#i-breath"/></svg><span id="hyBreatheLabel">Oddychaj ze mną · 1 min</span></span>
+          </button>
+          <h2 style="--i:1">Hej, jestem tu dla Ciebie</h2>
+          <p style="--i:2">Napisz, co czujesz, albo stuknij poniżej.</p>
+
+          <!-- Six topics drawn from a pool of twenty, different on every visit (art.js, chat.js). -->
+          <div class="topics" id="hyTopics" style="--i:4"></div>
+          <button type="button" class="topics-more" id="hyTopicsMore" style="--i:7"><span id="hyTopicsMoreLabel">Pokaż inne tematy</span></button>
+
+          <!-- One signed quote a day from quotes.js (Polish); "Kolejny cytat" shows the next. shell.js fills it. -->
+          <div class="daily-card" id="dailyCard" style="--i:8" hidden>
+            <span class="daily-art" id="hyDailyArt" aria-hidden="true"></span>
+            <div class="daily-inner" id="dailyContent">
+              <div class="daily-label" id="dailyLabel">Cytat dnia</div>
+              <blockquote class="daily-quote" id="dailyQuote"></blockquote>
+              <div class="daily-author" id="dailyAuthor"></div>
+              <button type="button" class="daily-next" id="hyQuoteNext"><svg class="ico" aria-hidden="true"><use href="#i-next"/></svg><span>Kolejny cytat</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <div class="input-wrapper">
+          <textarea id="userInput" placeholder="Napisz mi o swoim dniu..." rows="1" aria-label="Wiadomość do Doco" enterkeyhint="send"></textarea>
+          <button class="send-btn call-btn" id="voiceCallBtn" onclick="openVoiceCall()" title="Porozmawiaj z Doco" aria-label="Porozmawiaj z Doco"><svg class="ico"><use href="#i-phone"/></svg></button>
+          <button class="send-btn" onclick="sendMessage()" aria-label="Wyślij" title="Wyślij"><svg class="ico"><use href="#i-send"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="view view-page" id="view-nastroj" aria-labelledby="moodHeading" hidden>
+      <div class="page">
+        <h2 class="page-title" id="moodHeading">Jak się dziś czujesz?</h2>
+        <p class="page-lead">Wybierz jedną twarz. Zapisuje się tylko na tym urządzeniu.</p>
+        <div class="faces" role="radiogroup" aria-label="Nastrój">
+          <button type="button" class="face" role="radio" aria-checked="false" data-mood="1"><svg><use href="#face-1"/></svg><span>Bardzo źle</span></button>
+          <button type="button" class="face" role="radio" aria-checked="false" data-mood="2"><svg><use href="#face-2"/></svg><span>Źle</span></button>
+          <button type="button" class="face" role="radio" aria-checked="false" data-mood="3"><svg><use href="#face-3"/></svg><span>Średnio</span></button>
+          <button type="button" class="face" role="radio" aria-checked="false" data-mood="4"><svg><use href="#face-4"/></svg><span>Dobrze</span></button>
+          <button type="button" class="face" role="radio" aria-checked="false" data-mood="5"><svg><use href="#face-5"/></svg><span>Świetnie</span></button>
+        </div>
+        <textarea class="field" id="hyMoodNote" rows="2" placeholder="Chcesz coś dodać? (nie musisz)" aria-label="Notatka do nastroju"></textarea>
+        <button type="button" class="btn-green" id="hyMoodSave" disabled>Zapisz nastrój</button>
+        <p class="saved-note" id="hyMoodStatus" role="status"></p>
+
+        <h3 class="page-sub">Ostatnie 7 dni</h3>
+        <ol class="week" id="hyWeek" aria-label="Nastrój w ostatnich 7 dniach"></ol>
+
+        <!-- A minute of movement: pick what feels tight, get one short exercise (shell.js, MOVES). -->
+        <div class="body-card" id="moveCard">
+          <h3 class="page-sub" id="moveTitle">Minuta ruchu</h3>
+          <div class="body-card-sub" id="moveLead">Co jest spięte? Wybierz, a podpowiem jedno krótkie ćwiczenie.</div>
+          <div class="body-chips" id="moveChips" role="group" aria-label="Co jest spięte"></div>
+          <div class="body-detail" id="moveDetail" aria-live="polite">
+            <div class="body-detail-placeholder" id="movePlaceholder">Wybierz miejsce</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dziennik: samopoczucie i ból na jednym ekranie (diary.js) -->
+    <section class="view view-page" id="view-dziennik" aria-labelledby="diaryHeading" hidden>
+      <div class="page" id="diaryPage"></div>
+    </section>
+
+    <section class="view view-frame" id="view-cialo" aria-label="Atlas ciała" hidden>
+      <iframe data-src="cialo/" title="Atlas ciała" allow="microphone; fullscreen"></iframe>
+    </section>
+
+    <section class="view view-frame" id="view-objawy" aria-label="Gdzie boli?" hidden>
+      <iframe data-src="gdzie-boli/" title="Gdzie boli? Sprawdź objaw"></iframe>
+    </section>
+
+    <section class="view view-page" id="view-wiecej" aria-labelledby="moreHeading" hidden>
+      <div class="page">
+        <h2 class="page-title" id="moreHeading">Więcej</h2>
+
+        <div class="account" id="hyAccount">
+          <p class="account-who" id="hyAccountWho">Piszesz bez konta.</p>
+          <p class="page-lead" id="hyAccountWhy">Z kontem Doco zapamięta rozmowy, a słuchawka połączy Cię z Doco głosem.</p>
+          <button type="button" class="btn-green" id="hyAccountBtn" onclick="openAuth()"><svg class="ico"><use href="#i-login"/></svg><span>Zaloguj się</span></button>
+          <button type="button" class="btn-line" id="hyRegisterBtn" onclick="openAuth('signUp')"><svg class="ico"><use href="#i-user"/></svg><span>Załóż konto</span></button>
+        </div>
+
+        <ul class="rows">
+          <li id="hyNameRowItem" hidden><button type="button" class="row" onclick="hyOpenNamePrompt()"><svg class="ico"><use href="#i-user"/></svg><span class="row-text" id="hyNameRow">Jak mam się do Ciebie zwracać</span><span class="row-value" id="hyNameValue"></span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
+          <li><button type="button" class="row" onclick="openLanguage()"><svg class="ico"><use href="#i-lang"/></svg><span class="row-text">Język</span><span class="row-value" id="hyLangValue">Polski</span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
+          <li><button type="button" class="row" onclick="hyOpenAccent()"><svg class="ico"><use href="#i-palette"/></svg><span class="row-text" id="hyAccentRow">Kolor aplikacji</span><span class="row-value"><i class="row-swatch" aria-hidden="true"></i><span id="hyAccentValue">Mięta</span></span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
+          <li><button type="button" class="row" onclick="openVoicePicker()"><svg class="ico"><use href="#i-voice"/></svg><span class="row-text">Głos Doco w rozmowie telefonicznej</span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
+          <li>
+            <button type="button" class="row" id="hyInstallRow" aria-expanded="false" aria-controls="hyInstallHow"><svg class="ico"><use href="#i-install"/></svg><span class="row-text">Dodaj do ekranu głównego</span><svg class="ico row-go"><use href="#i-next"/></svg></button>
+            <div class="install-how" id="hyInstallHow" hidden>
+              <p id="hyInstallText">Doco działa jak aplikacja, bez sklepu.</p>
+              <ol class="steps" id="hyInstallSteps"></ol>
+              <button type="button" class="btn-green" id="hyInstallBtn" hidden><svg class="ico"><use href="#i-install"/></svg><span>Dodaj teraz</span></button>
+            </div>
+          </li>
+          <li><a class="row" href="privacy.html" id="privacyLink"><svg class="ico"><use href="#i-shield"/></svg><span class="row-text">Polityka prywatności</span><svg class="ico row-go"><use href="#i-next"/></svg></a></li>
+        </ul>
+
+        <p class="fine">Doco nie jest lekarzem ani terapeutą. W nagłej sytuacji dzwoń pod <a href="tel:112">112</a>, a w kryzysie psychicznym pod <a href="tel:800702222">800 70 2222</a> (całą dobę).</p>
+      </div>
+    </section>
+  </main>
+
+
+  <!-- The tab bar: a black slab whose top edge rises left to right; the open section is a patch of light
+       hanging from that edge, and the edge glows brighter above it. app.js fits both to the line. -->
+  <nav class="tabbar" aria-label="Sekcje aplikacji">
+    <div class="tabbar-slab" aria-hidden="true"></div>
+    <div class="tabbar-lit" aria-hidden="true"></div>
+    <svg class="tabbar-edge" viewBox="0 0 100 16" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="15.5" x2="100" y2="0.5" vector-effect="non-scaling-stroke"/></svg>
+    <div class="tabbar-glow" aria-hidden="true"><i class="tabbar-lit-edge"></i></div>
+    <div class="tabs">
+      <a class="tab" href="#rozmowa" data-view="rozmowa" style="--k:0"><svg class="ico"><use href="#i-chat"/></svg><span>Rozmowa</span></a>
+      <a class="tab" href="#nastroj" data-view="nastroj" style="--k:1"><svg class="ico"><use href="#i-mood"/></svg><span>Nastrój</span></a>
+      <a class="tab" href="#cialo" data-view="cialo" style="--k:2"><svg class="ico"><use href="#i-body"/></svg><span>Ciało</span></a>
+      <a class="tab" href="#objawy" data-view="objawy" style="--k:3"><svg class="ico"><use href="#i-symptom"/></svg><span>Objawy</span></a>
+      <a class="tab" href="#dziennik" data-view="dziennik" style="--k:4"><svg class="ico"><use href="#i-diary"/></svg><span>Dziennik</span></a>
+      <a class="tab" href="#wiecej" data-view="wiecej" style="--k:5"><svg class="ico"><use href="#i-more"/></svg><span>Więcej</span></a>
+    </div>
+  </nav>
+</div>
+
+<script src="shell.js?v=1"></script>
+<script src="ai-config.js?v=1"></script>
+<script src="kontekst.js?v=2"></script>
+<script src="offline-companion.js?v=9"></script>
+<script src="lemur.js?v=5"></script>
+<script src="voice.js?v=8"></script>
+<script src="diary.js?v=5"></script>
+<script src="app.js?v=13"></script>
+<script src="quotes.js?v=5"></script>
+<script src="art.js?v=9"></script>
+<script src="chat.js?v=10"></script>
+</body>
+</html>

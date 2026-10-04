@@ -75,7 +75,7 @@ export default function Chat({ talk, onFocus, onClose }: Props) {
           </ul>
           {/* Doco's voice call (ElevenLabs), opened over this tab; on its own the atlas goes to Doco's Rozmowa. */}
           <a
-            className="talk-soleil"
+            className="talk-doco"
             href="../#rozmowa"
             target="_top"
             onClick={(e) => {

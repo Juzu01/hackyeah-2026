@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <!-- Doco's app icon: the lemur from the app's top-left corner (the #lemur symbol in
-       soleil-main/index.html), on black in a soft glow of the default accent (Mięta). Full bleed; the
+       doco/index.html), on black in a soft glow of the default accent (Mięta). Full bleed; the
        lemur stays inside the maskable safe zone (a circle of 40% radius), so round masks on Android and
-       the rounded corners on iOS never cut it. Render: sh tools/soleil/icons.sh -->
+       the rounded corners on iOS never cut it. Render: sh tools/doco/icons.sh -->
   <defs>
     <radialGradient id="glow" cx="50%" cy="50%" r="50%">
       <stop offset="0" stop-color="#45E499" stop-opacity="0.24"/>

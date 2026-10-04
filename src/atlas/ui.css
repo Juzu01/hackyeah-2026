@@ -1173,7 +1173,7 @@ body {
 .talk-suggest button:active {
   background: var(--surface-2);
 }
-.talk-soleil {
+.talk-doco {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -1183,11 +1183,11 @@ body {
   font-size: 1rem;
   text-decoration: none;
 }
-.talk-soleil svg {
+.talk-doco svg {
   flex: none;
   color: var(--accent);
 }
-.talk-soleil strong {
+.talk-doco strong {
   color: var(--accent);
   font-weight: 650;
 }

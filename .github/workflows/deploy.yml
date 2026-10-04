@@ -25,12 +25,12 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # Soleil is plain static files, so nothing to build. Pages can't run its api/
-      # serverless functions (those need Vercel), so they're left out of the site.
+      # Doco (doco/) is plain static files, so nothing to build. Its package.json only tells Node (the tests in
+      # tools/) that these scripts are classic ones, so it stays off the site.
       - run: |
           mkdir _site
-          cp -r soleil-main/. _site/
-          rm -rf _site/api
+          cp -r doco/. _site/
+          rm _site/package.json
           echo "${{ github.sha }}" > _site/version.txt
           cp -r pomysly _site/pomysly
 

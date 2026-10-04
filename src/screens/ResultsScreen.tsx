@@ -9,7 +9,7 @@ import type { Triage } from '../data/types.ts'
 import { useAccount } from '../lib/account.ts'
 import { analyzeTogether, hasAiAnalysis, type Analysis } from '../lib/analysis.ts'
 import { canBePregnant, courseSummary, interviewRedFlags, overallCourse, regionDefIds, regionsSummary, toInput, type CheckDraft } from '../lib/check.ts'
-import { addToDiary, openDiary, soleilShell } from '../lib/diary.ts'
+import { addToDiary, openDiary, docoShell } from '../lib/diary.ts'
 import { analyze, analyzeBySymptom, TRIAGE_INFO } from '../lib/engine.ts'
 import { saveCheck } from '../lib/history.ts'
 
@@ -103,10 +103,10 @@ export default function ResultsScreen({ draft, savedAt, onRestart, onToast }: Pr
   const [diaryLogin, setDiaryLogin] = useState(false)
   const addEntry = () => {
     if (forOther) return
-    const userId = account.user?.id ?? soleilShell()?.Clerk?.user?.id
+    const userId = account.user?.id ?? docoShell()?.Clerk?.user?.id
     if (!userId) {
       setDiaryLogin(true)
-      const shell = soleilShell()
+      const shell = docoShell()
       if (shell?.openAuth) shell.openAuth()
       else account.signIn()
       return

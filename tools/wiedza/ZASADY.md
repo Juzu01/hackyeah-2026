@@ -1,15 +1,15 @@
-# Baza wiedzy Soleil: zasady dla zespołu agentów
+# Baza wiedzy Doco: zasady dla zespołu agentów
 
 Ten plik czyta każdy z czterech agentów (`.claude/agents/`) przed rozpoczęciem pracy. Opisuje, jak przepływa praca, jak ma wyglądać wpis i czego nie wolno.
 
 ## Po co ta baza
 
-Soleil na GitHub Pages nie ma serwera AI. Na wiadomości odpowiada czat offline z `soleil-main/offline-companion.js`. Gdy użytkownik pyta o coś konkretnego („jak zmierzyć ciśnienie?”, „co robić przy skręconej kostce?”), czat szuka odpowiedzi w bazie `soleil-main/data/wiedza.json`. Każdy wpis w tej bazie musi być zebrany, sprawdzony w źródłach i przetestowany, zanim trafi do aplikacji, bo czytają go ludzie, którzy mogą być chorzy albo w kryzysie.
+Doco na GitHub Pages nie ma serwera AI. Na wiadomości odpowiada czat offline z `doco/offline-companion.js`. Gdy użytkownik pyta o coś konkretnego („jak zmierzyć ciśnienie?”, „co robić przy skręconej kostce?”), czat szuka odpowiedzi w bazie `doco/data/wiedza.json`. Każdy wpis w tej bazie musi być zebrany, sprawdzony w źródłach i przetestowany, zanim trafi do aplikacji, bo czytają go ludzie, którzy mogą być chorzy albo w kryzysie.
 
 ## Zespół i przepływ
 
 ```
-badacz ──► weryfikator ──► tester ──► archiwista ──► soleil-main/data/wiedza.json
+badacz ──► weryfikator ──► tester ──► archiwista ──► doco/data/wiedza.json
    ▲             │             │
    └─────────────┴─────────────┘  odrzucenie albo problem blokujący: wraca do badacza (najwyżej 2 poprawki)
 ```
@@ -19,7 +19,7 @@ badacz ──► weryfikator ──► tester ──► archiwista ──► sol
 | **badacz** | temat z `tools/wiedza/tematy.json` albo nowy | `tools/wiedza/robocze/<id>/1-badanie.json` |
 | **weryfikator** | `1-badanie.json` | `tools/wiedza/robocze/<id>/2-weryfikacja.json` |
 | **tester** | `2-weryfikacja.json` | `tools/wiedza/robocze/<id>/3-test.json` |
-| **archiwista** | wszystkie `3-test.json` z werdyktem `pass` | `soleil-main/data/wiedza.json`, status w `tematy.json`, raport w `docs/baza-wiedzy.md` |
+| **archiwista** | wszystkie `3-test.json` z werdyktem `pass` | `doco/data/wiedza.json`, status w `tematy.json`, raport w `docs/baza-wiedzy.md` |
 
 Pliki w `tools/wiedza/robocze/` są robocze i nie trafiają do repo (`.gitignore`). Ślad weryfikacji zostaje w bazie w polu `review` i w raporcie.
 
@@ -60,7 +60,7 @@ Pliki w `tools/wiedza/robocze/` są robocze i nie trafiają do repo (`.gitignore
     "Czy ciśnieniomierz na nadgarstek jest dobry?"
   ],
   "summary": "1–2 zdania: co to jest i po co.",
-  "answer": "Odpowiedź czatu: 3–6 krótkich zdań w tonie Soleil (ciepło, konkretnie, na „ty”). Najważniejsze liczby i kiedy iść do lekarza.",
+  "answer": "Odpowiedź czatu: 3–6 krótkich zdań w tonie Doco (ciepło, konkretnie, na „ty”). Najważniejsze liczby i kiedy iść do lekarza.",
   "facts": [
     { "text": "Jedno sprawdzalne twierdzenie, najlepiej z liczbą.", "sources": ["s1"] }
   ],
@@ -86,7 +86,7 @@ Pola:
 - `id`: kebab-case, bez polskich znaków, taki sam jak w `tematy.json`.
 - `domain`: `psychika` | `objawy` | `sport` | `samobadanie` | `profilaktyka`.
 - `tier`: 1 = popularne (pyta prawie każdy), 2 = średnio zaawansowane, 3 = specjalistyczne.
-- `keywords`: co najmniej 4 frazy, po których czat rozpozna temat. Zapis jak po `normalize()` z `offline-companion.js`: małe litery, bez polskich znaków (ł → l), tylko `a-z`, cyfry, spacje i `*`. Gwiazdka na końcu słowa łapie końcówki odmiany: `cisnieni*` pasuje do „ciśnienie”, „ciśnienia”, „ciśnieniu”. Frazy mają być specyficzne dla tematu. Nie dawaj samych słów z codziennych emocji („zmeczony”, „stres”, „smutno”), bo z nimi radzi sobie rozmowa Soleil; przy temacie emocjonalnym dawaj frazy pytające o wiedzę („atak* paniki”, „objawy depresji”).
+- `keywords`: co najmniej 4 frazy, po których czat rozpozna temat. Zapis jak po `normalize()` z `offline-companion.js`: małe litery, bez polskich znaków (ł → l), tylko `a-z`, cyfry, spacje i `*`. Gwiazdka na końcu słowa łapie końcówki odmiany: `cisnieni*` pasuje do „ciśnienie”, „ciśnienia”, „ciśnieniu”. Frazy mają być specyficzne dla tematu. Nie dawaj samych słów z codziennych emocji („zmeczony”, „stres”, „smutno”), bo z nimi radzi sobie rozmowa Doco; przy temacie emocjonalnym dawaj frazy pytające o wiedzę („atak* paniki”, „objawy depresji”).
 - `questions`: co najmniej 3 realne pytania użytkownika w naturalnym polskim, z polskimi znakami. Test sprawdza, że każde trafia do tego wpisu.
 - `answer`: bez HTML, bez linków, bez emotek. Najwyżej ok. 700 znaków.
 - `facts`: co najmniej 3 atomowe twierdzenia, każde z co najmniej jednym `sources` (id ze `sources` wpisu). Liczby, progi i zalecenia muszą być w `facts`.

@@ -6,9 +6,9 @@ import './lib/accent.ts'
 import App from './App.tsx'
 // Imported early: the install prompt can fire before the app renders.
 import './atlas/install.ts'
-import { stayOrOpenInSoleil } from './shell.ts'
+import { stayOrOpenInDoco } from './shell.ts'
 
-if (stayOrOpenInSoleil('cialo')) {
+if (stayOrOpenInDoco('cialo')) {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <App />

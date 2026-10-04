@@ -256,7 +256,7 @@
   window.openSummary = () => window.hyShowView('nastroj');
 
   // ── Mood diary (this device only) ───────────────────────────────────
-  const KEY = 'soleil_moods_v1';
+  const KEY = 'doco_moods_v1';
   const moodName = (n) => T().faces[n - 1];
   const TONES = { 1: 'var(--mood-1)', 2: 'var(--mood-2)', 3: 'var(--mood-3)', 4: 'var(--mood-4)', 5: 'var(--green)' };
   const dayKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -364,8 +364,7 @@
   // ── Name ──────────────────────────────────────────────────────────────
   // Optional first name on the Clerk account (the sign-up form asks for it too). Doco greets by it
   // in the chat (chat.js) and in voice calls (voice.js). Asked once after signing in if it's missing.
-  /* global clerk */
-  const account$ = () => user$() || (typeof clerk !== 'undefined' && clerk ? clerk.user : null);
+  const account$ = user$;
   window.hyUserName = () => (account$()?.firstName || '').trim() || null;
   document.body.insertAdjacentHTML('beforeend', `
 <div class="overlay" id="namePromptOverlay">

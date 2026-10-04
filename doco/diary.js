@@ -1,7 +1,7 @@
 // DZIENNIK — samopoczucie i ból zalogowanego użytkownika na jednym ekranie (zakładka Dziennik, #dziennik).
-// Nastrój pochodzi z dziennika nastroju (app.js: soleil_moods_v1, te same twarze co w zakładce Nastrój),
+// Nastrój pochodzi z dziennika nastroju (app.js: doco_moods_v1, te same twarze co w zakładce Nastrój),
 // a wpisy o bólu dodaje „Gdzie boli?” przyciskiem „Dodaj wpis do dziennika” (src/lib/diary.ts).
-// Wpisy o bólu należą do konta i leżą na tym urządzeniu: localStorage['soleil_pain_diary_v1_<id konta>'] =
+// Wpisy o bólu należą do konta i leżą na tym urządzeniu: localStorage['doco_pain_diary_v1_<id konta>'] =
 // [{ id, type: 'pain', at (ISO), where, regions, symptoms, level (1–10), duration, onset, trend, triage, advice, source }]
 
 const DIARY_DAYS = 30; // okres podsumowania
@@ -93,11 +93,11 @@ const diaryTexts = {
 };
 
 // Kept in sessionStorage too: signing in with Google reloads the page on the way back
-let diaryLoginRequestedAt = Number(sessionStorage.getItem('soleil_diary_login')) || 0;
+let diaryLoginRequestedAt = Number(sessionStorage.getItem('doco_diary_login')) || 0;
 
 function dt() { return diaryTexts[currentLanguage] || diaryTexts.pl; }
-const diaryUser = () => currentUser || clerk?.user || null;
-const diaryKey = () => 'soleil_pain_diary_v1_' + diaryUser().id;
+const diaryUser = () => currentUser || null;
+const diaryKey = () => 'doco_pain_diary_v1_' + diaryUser().id;
 const diaryEsc = (s) => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const diaryVisible = () => document.getElementById('app')?.dataset.view === 'dziennik';
 const diaryNum = (n) => new Intl.NumberFormat(dt().locale, { maximumFractionDigits: 1 }).format(n);
@@ -127,7 +127,7 @@ function updateDiaryLanguage() {
 function updateDiaryAuth(user) {
   if (user && Date.now() - diaryLoginRequestedAt < 5 * 60 * 1000) {
     diaryLoginRequestedAt = 0;
-    sessionStorage.removeItem('soleil_diary_login');
+    sessionStorage.removeItem('doco_diary_login');
     hyShowView('dziennik');
   }
   if (diaryVisible()) renderDiaryView();
@@ -135,7 +135,7 @@ function updateDiaryAuth(user) {
 
 function diaryLogin() {
   diaryLoginRequestedAt = Date.now();
-  sessionStorage.setItem('soleil_diary_login', diaryLoginRequestedAt);
+  sessionStorage.setItem('doco_diary_login', diaryLoginRequestedAt);
   openAuth();
 }
 

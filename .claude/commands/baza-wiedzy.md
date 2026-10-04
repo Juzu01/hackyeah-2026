@@ -1,9 +1,9 @@
 ---
-description: Uruchamia zespół 4 agentów (badacz → weryfikator → tester → archiwista) i rozbudowuje bazę wiedzy czatu Soleil
+description: Uruchamia zespół 4 agentów (badacz → weryfikator → tester → archiwista) i rozbudowuje bazę wiedzy czatu Doco
 argument-hint: "[id tematów z tools/wiedza/tematy.json albo opis nowego tematu]"
 ---
 
-Rozbuduj bazę wiedzy czatu Soleil zespołem czterech agentów. Zasady: `tools/wiedza/ZASADY.md`, raport: `docs/baza-wiedzy.md`.
+Rozbuduj bazę wiedzy czatu Doco zespołem czterech agentów. Zasady: `tools/wiedza/ZASADY.md`, raport: `docs/baza-wiedzy.md`.
 
 Tematy: $ARGUMENTS
 Jeśli nie podano tematów, weź 3 pierwsze tematy ze statusem `do-zbadania` z `tools/wiedza/tematy.json`, zaczynając od najniższego `tier`. Jeśli podano opis nowego tematu, najpierw poproś agenta `badacz` (tryb 3) o dopisanie go do `tematy.json`.

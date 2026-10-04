@@ -16,9 +16,9 @@ const LANGS = { pl: 'polski', en: 'angielski', uk: 'ukraiński', de: 'niemiecki'
 const LIMIT = { requests: 30, minutes: 10 }; // per IP, per running instance: a brake, not a wall
 const MAX_CHARS = 2000;
 const MAX_MESSAGES = 12;
-const MAX_CONTEXT = 1500; // the page's summary of the mood and pain diary (soleil-main/kontekst.js)
+const MAX_CONTEXT = 1500; // the page's summary of the mood and pain diary (doco/kontekst.js)
 
-// ---- Knowledge base: the same matching as the offline chat (soleil-main/offline-companion.js) ----
+// ---- Knowledge base: the same matching as the offline chat (doco/offline-companion.js) ----
 const normalize = (s) => String(s || '').toLowerCase().replace(/ł/g, 'l')
   .normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 
@@ -40,7 +40,7 @@ export function search(kb, text, n = 2) {
 }
 
 // What started a muscle pain picks the entry when no keyword does ('boli mnie łydka, po bieganiu' -> zakwasy).
-// The same rules as CAUSES in soleil-main/offline-companion.js: a sudden injury first, then exercise, then sitting or stress;
+// The same rules as CAUSES in doco/offline-companion.js: a sudden injury first, then exercise, then sitting or stress;
 // only for muscles, never for a joint, the head, chest or belly, a cramp or a swollen, red or numb limb.
 const CAUSES = [
   ['naciagniecie-miesnia', /\b(nagle|nagly|nagla|nagle mnie|naciagn\w*|naderw\w*|strzelil\w*|strzyknel\w*|chrupnel\w*|trzasnel\w*|szarpn\w*|uraz\w*|kontuzj\w*|upadl\w*|upadek|przewrocil\w*|poslizgn\w*|przy (sprincie|skoku|podnoszeniu|wyskoku|zrywie|kopnieciu)|(w trakcie|podczas|w czasie) (biegu|treningu|meczu|cwiczen\w*|gry))\b/],

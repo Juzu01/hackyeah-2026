@@ -1,18 +1,18 @@
 #!/usr/bin/env node
-// Zakłada albo aktualizuje agenta głosowego Soleil w ElevenLabs. Mózgiem agenta jest Claude.
+// Zakłada albo aktualizuje agenta głosowego Doco w ElevenLabs. Mózgiem agenta jest Claude.
 //
 //   ELEVENLABS_API_KEY=... node tools/elevenlabs-agent.mjs
 //
-// Pierwsze uruchomienie tworzy agenta i wpisuje jego ID do soleil-main/voice.js.
+// Pierwsze uruchomienie tworzy agenta i wpisuje jego ID do doco/voice.js.
 // Kolejne aktualizują tego samego agenta, np. po zmianie promptu poniżej. Domyślny głos
 // wybrany w panelu ElevenLabs zostaje, chyba że podasz ELEVENLABS_VOICE_ID. Użytkownik
-// może go zmienić dla siebie w menu Soleil (lista głosów: VOICE_OPTIONS w voice.js).
+// może go zmienić dla siebie w menu Doco (lista głosów: VOICE_OPTIONS w voice.js).
 // ELEVENLABS_LLM zmienia model (domyślnie claude-haiku-4-5, ten sam co w darmowym czacie).
 // Klucz API zostaje u ciebie, nie wpisuj go do repo.
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const API = 'https://api.elevenlabs.io/v1';
-const VOICE_JS = new URL('../soleil-main/voice.js', import.meta.url);
+const VOICE_JS = new URL('../doco/voice.js', import.meta.url);
 const AGENT_ID_LINE = /const ELEVENLABS_AGENT_ID = '([^']*)'/;
 const PREFERRED_VOICES = ['Matilda', 'Jessica', 'Sarah', 'Laura', 'Alice'];
 
@@ -36,7 +36,7 @@ async function api(method, path, body) {
   return data;
 }
 
-// Ten sam charakter co czat (soleil-main/api/chat.js), przerobiony na rozmowę głosową.
+// Ten sam charakter co czat Doco (doco-ai/api/chat.js), przerobiony na rozmowę głosową.
 // Zmieniasz zachowanie czatu? Zmień też tutaj i uruchom skrypt ponownie.
 const prompt = `Jesteś Doco — emocjonalnie inteligentnym towarzyszem AI. Rozmawiasz z użytkownikiem głosowo, w aplikacji Doco.
 
@@ -104,7 +104,7 @@ const llm = process.env.ELEVENLABS_LLM || 'claude-haiku-4-5';
 
 const config = {
   name: 'Doco — rozmowa głosowa',
-  tags: ['soleil', 'doco', 'hackyeah-2026'],
+  tags: ['doco', 'hackyeah-2026'],
   conversation_config: {
     agent: {
       first_message: 'Hej, tu Doco. Jestem tu dla ciebie. Jak się dziś czujesz?',
@@ -135,5 +135,5 @@ if (agentId) {
 } else {
   const { agent_id } = await api('POST', '/convai/agents/create', config);
   writeFileSync(VOICE_JS, source.replace(AGENT_ID_LINE, `const ELEVENLABS_AGENT_ID = '${agent_id}'`));
-  console.log(`Utworzono agenta ${agent_id} (głos: ${voice.name}, model: ${llm}) i wpisano jego ID do soleil-main/voice.js.`);
+  console.log(`Utworzono agenta ${agent_id} (głos: ${voice.name}, model: ${llm}) i wpisano jego ID do doco/voice.js.`);
 }

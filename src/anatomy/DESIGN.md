@@ -6,7 +6,7 @@ The art direction and engineering contract for `src/anatomy/` and its app chrome
 
 *Revision 4 (its own look, and a voice):* the near-black-and-mint look read like every other dark app. The atlas is now an **operating theatre**: the body lies on surgical green (red's complement, which is why scrubs are green, so tissue reads cleanly) under a warm lamp, the one accent. Names are set like an anatomical plate (Latin in italic). *(Revision 6: the type is now Nunito with Fraunces for names, as in Doco, see §3.)* The layer switch became a depth gauge at the top left, and the bottom belongs to a voice button shaped like a stethoscope's chest piece: say what hurts and the body shows it (§6).
 
-*Revision 5 (one product with Soleil):* the atlas now lives in a tab of Soleil, the app around it, and shares its palette: black, a faint green light around the body, and a soft mint green `#45E499` as the one accent (no gold). Everything else in revision 4 stands.
+*Revision 5 (one product with Doco):* the atlas now lives in a tab of Doco, the app around it, and shares its palette: black, a faint green light around the body, and a soft mint green `#45E499` as the one accent (no gold). Everything else in revision 4 stands.
 
 ## 1. Principles
 

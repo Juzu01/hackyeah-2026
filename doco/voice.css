@@ -1,7 +1,7 @@
-/* ROZMOWA GŁOSOWA, in Doco's colours (tokens in soleil.css). On a phone it is a full call screen:
+/* ROZMOWA GŁOSOWA, in Doco's colours (tokens in doco.css). On a phone it is a full call screen:
    the caller's name and the call time on top, Doco the lemur sitting on the app's horizon line in
    the middle, what was said below and the call buttons at the bottom. On wider screens the same
-   screen is a card. The phone button on the input bar uses .send-btn.call-btn from soleil.css. */
+   screen is a card. The phone button on the input bar uses .send-btn.call-btn from doco.css. */
 .voice-call {
   position: relative;
   display: flex;

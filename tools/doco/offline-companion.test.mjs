@@ -1,5 +1,5 @@
-// Quick test for Soleil's offline companion (offline-companion.js).
-// Run: node tools/soleil/offline-companion.test.mjs
+// Quick test for Doco's offline companion (offline-companion.js).
+// Run: node tools/doco/offline-companion.test.mjs
 // Prints topic -> reply for sample messages; fails (exit 1) if any crisis message
 // comes back without the crisis contacts, or a topic is detected wrongly.
 import { createRequire } from 'node:module'
@@ -7,7 +7,7 @@ import { readFileSync } from 'node:fs'
 import assert from 'node:assert/strict'
 
 const require = createRequire(import.meta.url)
-const { create, detect } = require('../../soleil-main/offline-companion.js')
+const { create, detect } = require('../../doco/offline-companion.js')
 
 const CONTACTS = ['tel:112', 'tel:116123', 'tel:800702222', 'tel:116111']
 let failures = 0
@@ -184,7 +184,7 @@ const TOPICS = [
   ['Czuję się świetnie!', 'joy'],
   ['Mam w głowie gonitwę myśli', 'anxiety'],
   // Every topic tile in art.js's pool lands on its own topic
-  ...[...readFileSync(new URL('../../soleil-main/art.js', import.meta.url), 'utf8').matchAll(/group: '(\w+)', pl: '([^']+)'/g)].map(([, group, pl]) => [pl, group]),
+  ...[...readFileSync(new URL('../../doco/art.js', import.meta.url), 'utf8').matchAll(/group: '(\w+)', pl: '([^']+)'/g)].map(([, group, pl]) => [pl, group]),
 ]
 console.log('\n— Topics (fresh conversation each) —')
 for (const [msg, want] of TOPICS) {
@@ -246,7 +246,7 @@ for (const [msg, want] of ON) {
 // Pain: without details Doco asks where, since when and what started it; the answer picks the checked entry
 // (sore after training -> zakwasy, sudden injury -> naciągnięcie, from sitting -> spięte mięśnie), a joint doesn't
 console.log('\n— Pain follow-up —')
-const kb = JSON.parse(readFileSync(new URL('../../soleil-main/data/wiedza.json', import.meta.url), 'utf8'))
+const kb = JSON.parse(readFileSync(new URL('../../doco/data/wiedza.json', import.meta.url), 'utf8'))
 const stub = (id) => ({ id, title: id, domain: 'sport', keywords: [id], answer: `Odpowiedź ${id}.`, selfCare: ['Krok jeden.', 'Krok dwa.'], warningSigns: [], sources: [] })
 for (const id of ['zakwasy', 'naciagniecie-miesnia', 'spiete-miesnie-automasaz']) if (!kb.entries.some((e) => e.id === id)) kb.entries.push(stub(id))
 const pains = [{ where: 'Łydka (prawa strona)', level: 5, at: new Date(Date.now() - 2 * 864e5).toISOString() }]

@@ -1,6 +1,6 @@
-# Baza wiedzy czatu Soleil
+# Baza wiedzy czatu Doco
 
-Soleil na GitHub Pages nie ma serwera AI, więc rozmawia z użytkownikiem czat offline (`soleil-main/offline-companion.js`). Gdy ktoś pyta o konkretny temat zdrowotny („jak zmierzyć ciśnienie?”, „co na ból głowy?”), czat odpowiada z bazy `soleil-main/data/wiedza.json`: krótko, w tonie Soleil, z sygnałami alarmowymi (112) i linkami do źródeł. Każdy wpis przed trafieniem do bazy przechodzi przez czterech agentów: zebranie wiedzy, sprawdzenie faktów, testy i zapis.
+Doco na GitHub Pages nie ma serwera AI, więc rozmawia z użytkownikiem czat offline (`doco/offline-companion.js`). Gdy ktoś pyta o konkretny temat zdrowotny („jak zmierzyć ciśnienie?”, „co na ból głowy?”), czat odpowiada z bazy `doco/data/wiedza.json`: krótko, w tonie Doco, z sygnałami alarmowymi (112) i linkami do źródeł. Każdy wpis przed trafieniem do bazy przechodzi przez czterech agentów: zebranie wiedzy, sprawdzenie faktów, testy i zapis.
 
 ## Zespół
 
@@ -30,12 +30,12 @@ Sprawdzenie bazy ręcznie:
 ```bash
 node tools/wiedza/sprawdz.mjs                 # format bazy i listy tematów
 node tools/wiedza/wiedza.test.mjs             # czat znajduje każdy wpis, kryzys i 112 mają pierwszeństwo
-node tools/soleil/offline-companion.test.mjs  # rozmowa Soleil bez zmian
+node tools/doco/offline-companion.test.mjs  # rozmowa Doco bez zmian
 ```
 
 ## Jak czat korzysta z bazy
 
-Na GitHub Pages nie ma serwera AI, więc odpowiada `soleil-main/offline-companion.js` (po polsku). Kolejność: 1) sygnały kryzysu psychicznego (zawsze numery pomocy), 2) pilne objawy (112), 3) napaść seksualna i przemoc w domu (własne odpowiedzi z 112 i numerami pomocy), 4) **wpis z bazy**, 5) rozmowa o emocjach.
+Na GitHub Pages nie ma serwera AI, więc odpowiada `doco/offline-companion.js` (po polsku). Kolejność: 1) sygnały kryzysu psychicznego (zawsze numery pomocy), 2) pilne objawy (112), 3) napaść seksualna i przemoc w domu (własne odpowiedzi z 112 i numerami pomocy), 4) **wpis z bazy**, 5) rozmowa o emocjach.
 
 - **Pytanie** trafiające w `keywords` wpisu dostaje wpis: „jak…”, „co robić…”, „czy…”, „czego…”, znak zapytania, hasło („objawy depresji”, „depresja objawy”, „test na depresję”, „adhd a depresja”) albo sama nazwa tematu („rabdomioliza”).
 - **Objaw w ciele** też dostaje wpis, jeśli jest sprawdzony („boli mnie głowa od rana” → ból głowy). Ból albo inny objaw bez wpisu („boli mnie kolano”, „mam gorączkę”, „kręci mi się w głowie”) dostaje odpowiedź na miejscu: kiedy dzwonić pod 112, kiedy iść do lekarza rodzinnego albo do nocnej i świątecznej opieki zdrowotnej, i pytanie, gdzie i od kiedy boli. Czat nie odsyła już tekstem do zakładek; pod odpowiedzią jest tylko opcjonalny przycisk „Gdzie boli?”.
@@ -46,15 +46,15 @@ Na GitHub Pages nie ma serwera AI, więc odpowiada `soleil-main/offline-companio
 
 - **Objaw nagły** („ból w klatce piersiowej”, „duszność”, „zemdlał”) dostaje najpierw odpowiedź 112, a gdy w bazie jest pasujący wpis z dziedziny `objawy`, czat proponuje go po niej („Gdy sytuacja jest spokojna, opowiem ci też…”). `wiedza.test.mjs` liczy to jako trafienie pytania. Przy zadławieniu odpowiedź zaczyna się od pierwszej pomocy (uderzenia między łopatki i uciśnięcia nadbrzusza, u niemowlęcia klatki piersiowej; według ERC 2025 i NHS).
 
-Baza ładuje się w tle; gdy jej nie ma, czat działa bez niej. Przyciski pod odpowiedziami (`chat.js`) działają teraz także w rozmowie, którą strona zaczyna przez `SoleilOffline.create()`; wcześniej się nie pokazywały.
+Baza ładuje się w tle; gdy jej nie ma, czat działa bez niej. Przyciski pod odpowiedziami (`chat.js`) działają teraz także w rozmowie, którą strona zaczyna przez `DocoOffline.create()`; wcześniej się nie pokazywały.
 
 ### Czat z modelem językowym (`doco-ai/`)
 
-Gotowy jest mały serwer na Vercel (`doco-ai/api/chat.js`, opis w `doco-ai/README.md`): trzyma klucz API (Grok od xAI, darmowy Groq albo Claude), przy każdej wiadomości pobiera tę bazę z GitHub Pages, wybiera 1–2 pasujące wpisy i każe modelowi brać fakty medyczne tylko z nich. Strona pyta go, gdy w `soleil-main/ai-config.js` jest jego adres; teraz adres jest pusty, więc czat działa jak wyżej. Wiadomości o kryzysie, przemocy i objawach nagłych nigdy nie idą do modelu: od razu odpowiada `offline-companion.js`. Serwer stoi na Vercel (`https://doco-ai-xi.vercel.app/api/chat`); do działania potrzebuje klucza `XAI_API_KEY` (console.x.ai), `GROQ_API_KEY` (console.groq.com, darmowy) albo `ANTHROPIC_API_KEY`.
+Gotowy jest mały serwer na Vercel (`doco-ai/api/chat.js`, opis w `doco-ai/README.md`): trzyma klucz API (Grok od xAI, darmowy Groq albo Claude), przy każdej wiadomości pobiera tę bazę z GitHub Pages, wybiera 1–2 pasujące wpisy i każe modelowi brać fakty medyczne tylko z nich. Strona pyta go, gdy w `doco/ai-config.js` jest jego adres; teraz adres jest pusty, więc czat działa jak wyżej. Wiadomości o kryzysie, przemocy i objawach nagłych nigdy nie idą do modelu: od razu odpowiada `offline-companion.js`. Serwer stoi na Vercel (`https://doco-ai-xi.vercel.app/api/chat`); do działania potrzebuje klucza `XAI_API_KEY` (console.x.ai), `GROQ_API_KEY` (console.groq.com, darmowy) albo `ANTHROPIC_API_KEY`.
 
 ### Zmiany w czacie przy serii o zdrowiu psychicznym (2026-10-04)
 
-Badacze i testerzy tej serii znaleźli wiadomości, na które czat odpowiadał źle albo wcale. Koordynator poprawił `offline-companion.js`; każdy przypadek jest w `tools/soleil/offline-companion.test.mjs`.
+Badacze i testerzy tej serii znaleźli wiadomości, na które czat odpowiadał źle albo wcale. Koordynator poprawił `offline-companion.js`; każdy przypadek jest w `tools/doco/offline-companion.test.mjs`.
 
 - **Kryzys (numery 112, 116 123, 800 70 2222, 116 111):** „lepiej by było nie żyć”, „lepiej żebym nie żył”, „wolałabym nie istnieć”, „chciałabym zniknąć”, „czasem myślę o śmierci”, „chcę dołączyć do mamy” (po jej śmierci), „chciałabym już być z mężem”. Zamiar skrzywdzenia dziecka („chcę skrzywdzić dziecko”, „uduszę dziecko”, „zabiję dziecko, jak nie przestanie płakać”, „głosy każą mi skrzywdzić dziecko”) dostaje dodatkowo pierwszy krok: połóż dziecko w bezpiecznym miejscu, wyjdź na chwilę z pokoju, zadzwoń do kogoś, a gdy dziecku grozi niebezpieczeństwo, 112. Gdy wiadomość kryzysowa dotyczy bliskiej osoby („mój syn mówi, że chce się zabić”), odpowiedź dostaje zdanie dla tego, kto się martwi: 112, nie zostawiaj jej samej, pod 800 70 2222 i 116 123 możesz zapytać, jak pomóc (potwierdzone przez weryfikatora na stronach operatorów).
 - **Pilne objawy (112):** kołatanie serca, które nie mija („serce mi wali od 20 minut i nie przestaje”), „ciężko mi oddychać”, nagłe splątanie („tata nagle jest splątany”, „mama nagle nie wie, gdzie jest”), przedawkowanie konkretnego leku („wzięłam 10 tabletek sertraliny”, „całe opakowanie”), dziecko, które coś połknęło, „nie mogę złapać tchu”, sine usta, zadławienie, wstrząs anafilaktyczny, obrzęk gardła lub języka, splątanie przy infekcji lub gorączce, drętwienie krocza albo zatrzymanie moczu (zespół ogona końskiego); samo drętwienie nogi z bólem pleców (rwa kulszowa) już nie daje 112, leki uspokajające lub nasenne wzięte razem z alkoholem („wziąłem 3 tabletki alprazolamu i wypiłem 2 piwa”; pytanie zadane wcześniej, „czy mogę wypić wino, biorąc xanax?”, idzie do wpisu o lęku), potrząśnięte niemowlę (112 albo SOR, nawet jeśli dziecko wygląda dobrze).
@@ -219,7 +219,7 @@ Treści medycznej nie skracałem. Ponad zalecane 700 znaków mają: ADHD u doros
 
 ### Zmiany w czacie przy okazji pilota
 
-Testerzy znaleźli luki w wykrywaniu kryzysu i stanów nagłych w `soleil-main/offline-companion.js`, a koordynator je poprawił. Czat rozpoznaje teraz myśli samobójcze związane ze snem i tabletkami („chcę zasnąć i się nie obudzić”, „obym się jutro nie obudziła”, „wezmę wszystkie tabletki nasenne naraz”, „ile tabletek trzeba, żeby umrzeć”) i podaje numery kryzysowe. Do 112 kieruje przedawkowanie i nieprzytomność, także u innej osoby („przedawkowałem leki nasenne”, „nie mogę dobudzić mamy po tabletkach nasennych”, „tata wziął tabletkę nasenną i oddycha bardzo wolno”, „dziecko zjadło tabletki na sen”), ból w klatce w różnych sformułowaniach („boli mnie w klatce piersiowej”, „kłuje mnie w klatce”), duszność („budzę się z dusznością”, „się duszę”, „dusi mnie kaszel”) i objawy udaru („mamie opada kącik ust”, „tata nagle mówi niewyraźnie”). „Żeby” nie jest już mylone z „zęby”. Przypadki są w `tools/soleil/offline-companion.test.mjs`. Po raporcie archiwisty doszły jeszcze „krzywa buzia” i „tata nie reaguje” (112). Czat przy wątpliwościach woli zareagować za mocno: np. „mam nadzieję, że się nie obudzę z bólem głowy” dostaje numery pomocy.
+Testerzy znaleźli luki w wykrywaniu kryzysu i stanów nagłych w `doco/offline-companion.js`, a koordynator je poprawił. Czat rozpoznaje teraz myśli samobójcze związane ze snem i tabletkami („chcę zasnąć i się nie obudzić”, „obym się jutro nie obudziła”, „wezmę wszystkie tabletki nasenne naraz”, „ile tabletek trzeba, żeby umrzeć”) i podaje numery kryzysowe. Do 112 kieruje przedawkowanie i nieprzytomność, także u innej osoby („przedawkowałem leki nasenne”, „nie mogę dobudzić mamy po tabletkach nasennych”, „tata wziął tabletkę nasenną i oddycha bardzo wolno”, „dziecko zjadło tabletki na sen”), ból w klatce w różnych sformułowaniach („boli mnie w klatce piersiowej”, „kłuje mnie w klatce”), duszność („budzę się z dusznością”, „się duszę”, „dusi mnie kaszel”) i objawy udaru („mamie opada kącik ust”, „tata nagle mówi niewyraźnie”). „Żeby” nie jest już mylone z „zęby”. Przypadki są w `tools/doco/offline-companion.test.mjs`. Po raporcie archiwisty doszły jeszcze „krzywa buzia” i „tata nie reaguje” (112). Czat przy wątpliwościach woli zareagować za mocno: np. „mam nadzieję, że się nie obudzę z bólem głowy” dostaje numery pomocy.
 
 ### Tematy, które nie weszły
 
