@@ -24,15 +24,15 @@ const PREGNANCY_LINE: Record<Pregnancy, string> = { yes: 'w ciąży', unknown: '
 
 /**
  * Who the check is for, their sex and age, and for women of childbearing age whether they're
- * pregnant. One line on top ("Dla mnie · kobieta · 34 lata") that always stays; the form under it
- * opens with a tap and folds by itself once it's filled in and you move on: a tap anywhere else, or
- * scrolling it out of sight. A profile remembered from last time starts folded.
+ * pregnant. It starts folded to one line ("Dla mnie · kobieta · 34 lata", or "podaj płeć i wiek")
+ * with "Zmień" on the right; a tap opens the form, and it folds again by itself when you move on:
+ * a tap anywhere else, or scrolling it out of sight. "Dalej" without sex or age opens it (invalid).
  */
 export default function PersonCard({ draft, update, invalid, onEdit }: Props) {
   const complete = !!draft.sex && draft.age !== undefined && !Number.isNaN(draft.age)
   const [editing, setEditing] = useState(false)
   const card = useRef<HTMLDivElement>(null)
-  const open = editing || !complete || invalid
+  const open = editing || invalid
   const changed = (patch: Partial<CheckDraft>) => {
     // A different sex drops what belongs to the other one: the pregnancy answer, the period.
     if (patch.sex && patch.sex !== draft.sex) {
@@ -46,7 +46,7 @@ export default function PersonCard({ draft, update, invalid, onEdit }: Props) {
   }
 
   // Fold when the person moves on. Pointer events, not focus: phones don't focus tapped buttons.
-  const canFold = open && complete && !invalid
+  const canFold = open && !invalid
   useEffect(() => {
     const el = card.current
     if (!canFold || !el) return
@@ -67,7 +67,7 @@ export default function PersonCard({ draft, update, invalid, onEdit }: Props) {
   const who = draft.forWhom === 'me' ? 'Dla mnie' : 'Dla kogoś innego'
   const sex = draft.sex === 'f' ? 'kobieta' : 'mężczyzna'
   const pregnancy = canBePregnant(draft) && draft.pregnancy ? PREGNANCY_LINE[draft.pregnancy] : ''
-  const summary = complete ? `${sex} · ${years(draft.age!)}${pregnancy ? ` · ${pregnancy}` : ''}` : 'płeć i wiek'
+  const summary = complete ? `${sex} · ${years(draft.age!)}${pregnancy ? ` · ${pregnancy}` : ''}` : 'podaj płeć i wiek'
 
   return (
     <div ref={card} className={`person cut ${open ? 'is-open' : ''} ${invalid ? 'is-invalid' : ''}`}>
@@ -76,7 +76,7 @@ export default function PersonCard({ draft, update, invalid, onEdit }: Props) {
         className="person-head"
         aria-expanded={open}
         aria-controls="person-form"
-        disabled={!complete || invalid}
+        disabled={invalid}
         onClick={() => setEditing(!open)}
       >
         <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 shrink-0 text-green" fill="none" stroke="currentColor" strokeWidth={1.8}>
@@ -87,10 +87,13 @@ export default function PersonCard({ draft, update, invalid, onEdit }: Props) {
           <span className="font-bold text-ink">{who}</span>
           <span className="text-ink-2"> · {summary}</span>
         </span>
-        {complete && !invalid && (
-          <svg aria-hidden="true" viewBox="0 0 24 24" className="person-chevron" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
-            <path d="m6 9 6 6 6-6" />
-          </svg>
+        {!invalid && (
+          <span className="person-edit">
+            {open ? 'Gotowe' : 'Zmień'}
+            <svg aria-hidden="true" viewBox="0 0 24 24" className="person-chevron" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </span>
         )}
       </button>
       <div className="person-body" id="person-form" inert={!open}>

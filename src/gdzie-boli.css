@@ -651,9 +651,17 @@ header nav :is(a, button) {
   .person-head:disabled {
     cursor: default;
   }
+  .person-edit {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 4px;
+    color: var(--green);
+    font-weight: 700;
+  }
   .person-chevron {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     flex: none;
     color: var(--green);
     transition: transform 320ms var(--ease);
