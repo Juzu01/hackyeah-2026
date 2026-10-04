@@ -5,7 +5,7 @@
    3) questions about something in the knowledge base (data/wiedza.json, built and checked by the agent team,
    see tools/wiedza/ZASADY.md), 4) topics, 5) short answers in the context of the previous topic, 6) open question.
    Never diagnoses. Never repeats the user's words; knowledge-base text is escaped (safe for innerHTML).
-   In the browser: window.SoleilOffline.reply(text) -> { topic, kind, html, text, delay };
+   In the browser: window.SoleilOffline.reply(text) -> { topic, kind, html, text, delay, local };
    kind is what the reply offers ('ask', a small step such as 'breath', 'done', 'end', 'info'), for chat.js's quick replies.
    In Node: require('./offline-companion.js').create({ knowledge }) (see offline-companion.test.mjs, tools/wiedza/wiedza.test.mjs). */
 (function (root) {
@@ -636,6 +636,7 @@
       const d = detect(raw);
       const kb = ownKnowledge || sharedKnowledge;
       const wasOffered = offered;
+      const inPain = d.topic === 'pain' || topic === 'pain'; // this message is about pain, or answers the pain questions
       offered = null;
       let t = d.topic;
       let html, info, kind = 'ask';
@@ -717,7 +718,9 @@
       // Doco 'thinks' before answering, longer for a longer answer; crisis and emergency answers come at once
       const urgent = ['crisis', 'redflag', 'violence', 'assault'].includes(t);
       const delay = urgent ? 500 : 1000 + Math.round(rand() * 500) + Math.min(1500, text.length * 3);
-      return { topic: t, kind, html, text, offer: offered ? offered.id : null, delay };
+      // local: the page shows this reply even when an AI is connected: the pain questions and the checked advice they lead to
+      const local = t === 'pain' || (kind === 'info' && inPain);
+      return { topic: t, kind, html, text, offer: offered ? offered.id : null, delay, local };
     }
 
     return { reply: respond, get topic() { return topic; } };

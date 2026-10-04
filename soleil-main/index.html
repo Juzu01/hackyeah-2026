@@ -2209,8 +2209,11 @@ async function sendMessage() {
   appendMessage('user', escapeHtml(text));
   conversationHistory.push({ role: 'user', content: text });
   showTyping();
+  // The offline companion reads every message, so it follows the thread. Its checked reply is shown when it has to answer
+  // here (crisis, emergency, off-topic, the pain questions and the muscle advice they lead to) or when the AI can't.
+  const offline = offlineReply(text);
   try {
-    if (safetyFirst(text)) throw new Error('safety first');
+    if (safetyFirst(text) || (offline && offline.local)) throw new Error('answered here');
     const res = await fetch(window.DOCO_AI_URL || 'api/chat', {
       method: 'POST',
       signal: AbortSignal.timeout ? AbortSignal.timeout(20000) : undefined, // a hanging server falls back to offline
@@ -2239,7 +2242,6 @@ async function sendMessage() {
     appendMessage('ai', escapeHtml(reply) + sourcesHtml(data.sources));
   } catch (err) {
     // No AI server (GitHub Pages without ai-config.js), it failed, or a crisis/emergency -> the offline companion answers
-    const offline = offlineReply(text);
     if (offline) {
       await new Promise(r => setTimeout(r, offline.delay));
       removeTyping();
@@ -2321,7 +2323,7 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
 </script>
 <script src="ai-config.js?v=1"></script>
 <script src="kontekst.js?v=1"></script>
-<script src="offline-companion.js?v=7"></script>
+<script src="offline-companion.js?v=8"></script>
 <script src="lemur.js?v=5"></script>
 <script src="voice.js?v=7"></script>
 <script src="diary.js?v=4"></script>

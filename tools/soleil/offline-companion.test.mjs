@@ -272,6 +272,13 @@ check('a cramp or "zakwaszony organizm" is not zakwasy', () => {
   assert.notEqual(create({ knowledge: kb, random: () => 0 }).reply('skurcz łydki po treningu').topic, 'info:zakwasy')
   assert.notEqual(create({ knowledge: kb, random: () => 0 }).reply('czy mam zakwaszony organizm').topic, 'info:zakwasy')
 })
+check('pain questions and the advice they lead to are answered here even with an AI (local), small talk is not', () => {
+  const chat = create({ knowledge: kb, random: () => 0 })
+  assert.equal(chat.reply('boli mnie mięsień').local, true)
+  assert.equal(chat.reply('łydka, od wczoraj, po bieganiu').local, true)
+  assert.equal(chat.reply('dzięki, a jak się masz?').local, false)
+  assert.equal(create({ knowledge: kb, random: () => 0 }).reply('jak radzić sobie ze stresem?').local, false)
+})
 check('the diary pain is mentioned for the same place', () => assert.match(create({ knowledge: kb, random: () => 0, context: () => ({ pains }) }).reply('boli mnie łydka').text, /w dzienniku.*łydka/))
 check('…and not for another one', () => assert.doesNotMatch(create({ knowledge: kb, random: () => 0, context: () => ({ pains }) }).reply('boli mnie brzuch').text, /w dzienniku/))
 
