@@ -6,7 +6,10 @@ interface Props {
   path: Path
 }
 
-/** Logo left, "Historia" and the optional account on the right: login never gates the checker. */
+/**
+ * Logo left, "Historia" and, once signed in, the account on the right. No sign-in button: the checker
+ * works without an account, and login is asked for only when saving a result or adding to the diary.
+ */
 export default function Header({ path }: Props) {
   const account = useAccount()
   const link = (to: Path, label: string) => (
@@ -33,16 +36,6 @@ export default function Header({ path }: Props) {
         <nav className="flex items-center gap-1" aria-label="Główna">
           {link('/historia', 'Historia')}
           <span className="hidden sm:inline">{link('/pomoc', 'Jak to działa')}</span>
-          {account.status === 'signed-out' && (
-            <button
-              type="button"
-              onClick={account.signIn}
-              className="btn-secondary is-sm ml-1"
-            >
-              Zaloguj się
-            </button>
-          )}
-          {account.status === 'loading' && <span className="ml-1 w-20 animate-pulse bg-s2 py-1.5 text-center text-xs text-ink-2">…</span>}
           {account.status === 'signed-in' && account.user && (
             <details className="relative ml-1">
               <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 border border-line-2 py-1 pr-3 pl-1 hover:bg-s2 [&::-webkit-details-marker]:hidden">

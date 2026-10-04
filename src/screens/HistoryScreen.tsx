@@ -29,13 +29,8 @@ export default function HistoryScreen({ onOpen }: Props) {
       <p className="mt-2 text-base text-ink-2">
         {account.status === 'signed-in'
           ? `Analizy zapisane dla konta ${account.user?.name}.`
-          : 'Bez logowania historia jest zapisywana tylko w tej przeglądarce. Zaloguj się, żeby przypisać ją do konta.'}
+          : 'Bez konta historia zostaje tylko w tej przeglądarce.'}
       </p>
-      {account.status === 'signed-out' && (
-        <button type="button" onClick={account.signIn} className="btn-secondary mt-4">
-          Zaloguj się
-        </button>
-      )}
 
       {items.length === 0 ? (
         <div className="mt-6 border border-line p-6 text-center text-base text-ink-2">
