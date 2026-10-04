@@ -628,32 +628,68 @@ header nav :is(a, button) {
     text-underline-offset: 3px;
   }
 
-  /* ── Who it's for (components/PersonCard.tsx): a small form, then one line ── */
+  /* ── Who it's for (components/PersonCard.tsx): one line on top, the form folds under it ── */
   .person {
-    display: grid;
-    gap: 12px;
-    padding: 12px 14px 14px;
     border: 1px solid var(--line);
     background: var(--s1);
+    transition: border-color 200ms var(--ease);
   }
   .person.is-invalid {
     border-color: var(--alarm-line);
   }
-  .person-line {
+  .person-head {
     display: flex;
     width: 100%;
-    min-height: 48px;
+    min-height: 50px;
     align-items: center;
     gap: 10px;
     padding: 0 14px;
-    border: 1px solid var(--line);
-    background: var(--s1);
+    border-radius: inherit;
     font-size: 0.9375rem;
     cursor: pointer;
   }
-  .person-line:hover {
-    border-color: var(--line-2);
-    background: var(--s2);
+  .person-head:disabled {
+    cursor: default;
+  }
+  .person-chevron {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    color: var(--green);
+    transition: transform 320ms var(--ease);
+  }
+  .person.is-open .person-chevron {
+    transform: rotate(180deg);
+  }
+  .person-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 340ms var(--ease);
+  }
+  .person.is-open .person-body {
+    grid-template-rows: 1fr;
+  }
+  .person-form {
+    display: grid;
+    min-height: 0;
+    gap: 12px;
+    overflow: hidden;
+    padding: 0 14px;
+    opacity: 0;
+    transition: opacity 240ms var(--ease);
+  }
+  .person.is-open .person-form {
+    opacity: 1;
+  }
+  .person-form > :last-child {
+    margin-bottom: 14px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .person-body,
+    .person-form,
+    .person-chevron {
+      transition: none;
+    }
   }
 
   /* ── The body on its stage (StartScreen + components/BodyMap.tsx): the figure in a soft light ── */
@@ -692,19 +728,53 @@ header nav :is(a, button) {
     height: min(56vh, 560px);
     margin: 6px auto 0;
   }
-  .stage-more {
+  .stage-tags {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
+    gap: 6px;
+    margin-top: 2px;
   }
-  .stage-more .chip {
-    min-height: 2.75rem;
-  }
-  .chip-sub {
+  .stage-tag {
+    display: inline-flex;
+    min-height: 2.25rem;
+    align-items: center;
+    gap: 5px;
+    padding: 0 11px 0 9px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: var(--s2);
+    color: var(--ink);
     font-size: 0.875rem;
-    opacity: 0.7;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color 160ms var(--ease),
+      border-color 160ms var(--ease);
+  }
+  .stage-tag svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    color: var(--green);
+  }
+  .stage-tag:hover {
+    border-color: color-mix(in srgb, var(--green) 50%, transparent);
+  }
+  .stage-tag[aria-pressed='true'] {
+    border-color: var(--green);
+    background: var(--green);
+    color: var(--green-ink);
+  }
+  .stage-tag[aria-pressed='true'] svg {
+    color: inherit;
+  }
+  .stage-back {
+    margin-top: 8px;
+    color: var(--ink-2);
+    font-size: 0.8438rem;
+    text-align: center;
   }
   .stage-select {
     height: 2.75rem;
@@ -847,20 +917,30 @@ header nav :is(a, button) {
   }
   .tray-chips {
     display: flex;
+    flex-wrap: wrap;
     gap: 6px;
-    margin: 0 -16px 10px;
-    padding: 0 16px;
-    overflow-x: auto;
+    margin: 0 0 10px;
+    padding: 0;
     list-style: none;
-    scrollbar-width: none;
   }
-  .tray-chips::-webkit-scrollbar {
-    display: none;
+  .tray-chips.is-open {
+    max-height: 38vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  .tray-chip-item {
+    min-width: 0;
+    max-width: 100%;
+    animation: chip-in 380ms var(--ease) both;
+  }
+  /* Folded, long names shorten so two rows hold three or four of them; opened, they're whole. */
+  .tray-chips:not(.is-open) .tray-chip-item:not([data-id='more']) {
+    max-width: min(100%, 10.5rem);
   }
   .tray-chip {
     display: inline-flex;
-    max-width: 15rem;
-    min-height: 38px;
+    max-width: 100%;
+    min-height: 36px;
     align-items: center;
     gap: 8px;
     padding: 0 10px 0 14px;
@@ -871,6 +951,40 @@ header nav :is(a, button) {
     font-size: 0.9375rem;
     white-space: nowrap;
     cursor: pointer;
+  }
+  .tray-chip-item .tray-chip {
+    animation: chip-glow 900ms var(--ease) both;
+  }
+  .tray-chip.is-more {
+    padding: 0 14px;
+    border-color: var(--line-2);
+    background: var(--s2);
+    color: var(--green);
+    font-weight: 700;
+  }
+  @keyframes chip-in {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+  @keyframes chip-glow {
+    from {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--green) 55%, transparent);
+    }
+    to {
+      box-shadow: 0 0 0 10px transparent;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tray-chip-item,
+    .tray-chip-item .tray-chip {
+      animation: none;
+    }
   }
   .tray-chip svg {
     color: var(--green);
@@ -894,18 +1008,6 @@ header nav :is(a, button) {
     line-height: 1.3;
     cursor: pointer;
   }
-  .tray-count {
-    display: grid;
-    min-width: 22px;
-    height: 22px;
-    padding: 0 5px;
-    place-items: center;
-    border-radius: 999px;
-    background: var(--green-ink);
-    color: var(--green);
-    font-size: 0.8125rem;
-    font-weight: 800;
-  }
   @media (min-width: 1024px) {
     .tray,
     html.in-doco .tray {
@@ -915,11 +1017,6 @@ header nav :is(a, button) {
       border: 1px solid var(--line);
       border-radius: var(--r);
       background: var(--s1);
-    }
-    .tray-chips {
-      flex-wrap: wrap;
-      margin: 0 0 12px;
-      padding: 0;
     }
   }
 
