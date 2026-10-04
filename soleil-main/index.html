@@ -2119,6 +2119,18 @@ function showTyping() {
 function removeTyping() { const t = document.getElementById('typingRow'); if (t) t.remove(); }
 function sendSuggestion(text) { input.value = text; sendMessage(); }
 
+// Doco AI (doco-ai/ on Vercel, address in ai-config.js) answers with Claude, grounded in the checked knowledge base.
+// Crisis and emergency messages never wait for it: the offline companion's checked reply with the numbers comes at once.
+function safetyFirst(text) {
+  if (!window.SoleilOffline) return false;
+  if (currentLanguage === 'pl') return ['crisis', 'redflag', 'violence', 'assault'].includes(window.SoleilOffline.detect(text).topic);
+  const t = chatText();
+  return !!(t.crisis && (t.crisis.test(text) || t.redflag.test(text)));
+}
+const SOURCES_LABEL = { pl: 'Źródła', en: 'Sources', uk: 'Джерела', de: 'Quellen', es: 'Fuentes' };
+const sourcesHtml = (list) => (list || []).length ? `<span class="hy-reminder">${SOURCES_LABEL[currentLanguage] || SOURCES_LABEL.pl}: ` +
+  list.map((s) => `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener">${escapeHtml(s.publisher)}</a>`).join(' ') + '</span>' : '';
+
 async function sendMessage() {
   const text = input.value.trim();
   if (!text) return;
@@ -2127,8 +2139,10 @@ async function sendMessage() {
   conversationHistory.push({ role: 'user', content: text });
   showTyping();
   try {
-    const res = await fetch('api/chat', {
+    if (safetyFirst(text)) throw new Error('safety first');
+    const res = await fetch(window.DOCO_AI_URL || 'api/chat', {
       method: 'POST',
+      signal: AbortSignal.timeout ? AbortSignal.timeout(20000) : undefined, // a hanging server falls back to offline
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages: conversationHistory, userId: currentUser?.id || null, conversationId: currentConversationId, language: currentLanguage })
     });
@@ -2146,13 +2160,13 @@ async function sendMessage() {
       return;
     }
 
-    if (!res.ok) { appendMessage('ai', chatText().error); return; }
+    if (!res.ok || !data.reply) throw new Error('AI ' + res.status); // AI down, out of credit or busy: answer offline
     if (data.conversationId) currentConversationId = data.conversationId;
-    const reply = data.reply || chatText().retry;
+    const reply = data.reply;
     conversationHistory.push({ role: 'assistant', content: reply });
-    appendMessage('ai', escapeHtml(reply));
+    appendMessage('ai', escapeHtml(reply) + sourcesHtml(data.sources));
   } catch (err) {
-    // HackYeah: no AI server (e.g. on GitHub Pages) -> the offline companion answers (offlineReply above)
+    // No AI server (GitHub Pages without ai-config.js), it failed, or a crisis/emergency -> the offline companion answers
     const offline = offlineReply(text);
     if (offline) {
       await new Promise(r => setTimeout(r, offline.delay));
@@ -2240,7 +2254,8 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
   window.addEventListener('load', hyLabelButtons);
 })();
 </script>
-<script src="offline-companion.js?v=4"></script>
+<script src="ai-config.js?v=1"></script>
+<script src="offline-companion.js?v=5"></script>
 <script src="voice.js?v=3"></script>
 <script src="diary.js?v=3"></script>
 <script src="app.js?v=9"></script>

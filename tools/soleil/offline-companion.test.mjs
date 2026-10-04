@@ -90,6 +90,10 @@ check('wanting to hurt a child: a safe first step, not the "someone close" line'
 check('a fear of hurting one\'s child is not a crisis (it goes to the knowledge base)', () => {
   assert.notEqual(create().reply('boję się, że skrzywdzę dziecko').topic, 'crisis')
 })
+check('choking: first aid comes first, then the 112 reply', () => {
+  const { text } = create().reply('dziecko się zadławiło')
+  assert.ok(text.startsWith('Jeśli ktoś się zadławił') && text.includes('między łopatki') && text.includes('112'))
+})
 check('shaken baby: 112 or SOR even if the baby looks fine', () => {
   assert.ok(create().reply('potrząsnęłam dzieckiem, co robić?').text.includes('nawet jeśli dziecko wygląda dobrze'))
 })
@@ -114,6 +118,12 @@ const TOPICS = [
   ['się duszę', 'redflag'],
   ['brakuje mi powietrza', 'redflag'],
   ['ciężko mi oddychać', 'redflag'],
+  ['nie mogę złapać tchu', 'redflag'],
+  ['bolą mnie plecy i nie czuję krocza', 'redflag'],
+  ['od rana nie mogę oddać moczu', 'redflag'],
+  ['dziecku sinieją usta', 'redflag'],
+  ['synek się zadławił', 'redflag'],
+  ['chyba mam wstrząs anafilaktyczny', 'redflag'],
   ['tata nagle jest splątany, co robić?', 'redflag'],
   ['mama nagle nie wie, gdzie jest', 'redflag'],
   ['boli mnie klatka w nocy', 'redflag'],
@@ -147,6 +157,7 @@ const TOPICS = [
   ['co robić po gwałcie?', 'assault'],
   ['puchnie mi gardło po leku', 'redflag'],
   ['tata od wczoraj jest splątany', 'redflag'],
+  ['babcia ma zapalenie płuc i jest splątana', 'redflag'],
   ['bolą mnie zęby', 'pain'],
   // Other symptoms and questions about the chat get an answer, not "tell me more"
   ['mam gorączkę 39', 'symptom'],

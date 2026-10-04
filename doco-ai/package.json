@@ -1,0 +1,12 @@
+{
+  "name": "doco-ai",
+  "private": true,
+  "type": "module",
+  "description": "Serwer czatu Doco na Vercel: trzyma klucz Claude API i podaje modelowi sprawdzoną bazę wiedzy",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node test.mjs"
+  }
+}

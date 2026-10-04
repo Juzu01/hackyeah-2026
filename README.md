@@ -43,6 +43,10 @@ Zmienne środowiskowe (opcjonalne): `VITE_CLERK_PUBLISHABLE_KEY` – klucz Clerk
 
 Na pytania o zdrowie („jak zmierzyć ciśnienie?”, „co na ból głowy?”, „czy to depresja?”) i na objawy, o których ma sprawdzony wpis („boli mnie głowa od rana”), czat Doco odpowiada z bazy `soleil-main/data/wiedza.json` (17 tematów, w tym 14 o zdrowiu psychicznym). Gdy ktoś pisze o swoich uczuciach („mam depresję”, „nie mogę spać”), czat najpierw rozmawia i proponuje sprawdzone informacje („Tak, opowiedz”). Na pytanie, na które bazy nie ma, mówi wprost, że nie ma sprawdzonej odpowiedzi, zamiast zgadywać. Każdy wpis zbiera, sprawdza w źródłach, testuje i zapisuje zespół czterech agentów Claude Code (`.claude/agents/`: badacz, weryfikator, tester, archiwista). Kolejne tematy dodaje się komendą `/baza-wiedzy` w Claude Code. Opis, zasady i stan bazy: [`docs/baza-wiedzy.md`](docs/baza-wiedzy.md).
 
+## Czat z AI (Claude)
+
+Strona na GitHub Pages nie ma serwera, więc czat odpowiada regułami i bazą wiedzy (wyżej). Prawdziwy model Claude może odpowiadać przez mały serwer w `doco-ai/` (Vercel): trzyma klucz API poza stroną i podaje modelowi sprawdzone wpisy z bazy. Wiadomości o kryzysie i objawach nagłych zawsze dostają sprawdzoną odpowiedź offline z numerami. Uruchomienie: `doco-ai/README.md`; po wdrożeniu adres wpisuje się w `soleil-main/ai-config.js`. Klucz API zakłada się w console.anthropic.com (subskrypcja Claude go nie daje); nigdy nie trafia do repo.
+
 ## Rozmowa głosowa
 
 Słuchawka na pasku pisania (obok wysyłania) otwiera rozmowę głosową z Soleil. Rozmawiać mogą tylko zalogowani. Rozmowę prowadzi agent ElevenLabs, którego mózgiem jest Claude, z tym samym charakterem co czat, w języku wybranym w aplikacji. Po rozłączeniu zapis rozmowy trafia do czatu.

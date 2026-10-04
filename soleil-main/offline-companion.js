@@ -88,24 +88,35 @@
   const SEDATIVE_ALCOHOL = new RegExp(`\\b${SEDATIVE} (\\w+ ){0,8}${ALCOHOL}|\\b${ALCOHOL} (\\w+ ){0,8}${SEDATIVE}`);
   const TOOK = /\b(wzi[ae]l\w*|lykn\w*|zazyl\w*|polkn\w*|wypil\w*|pil(em|am)|po (\w+ )?(piwie|winie|wodce|alkoholu|drinku|drinkach))\b/;
   const SHAKEN = /\bpotrza(s|sn)\w* (\w+ )?(dzieck\w*|niemowl\w*|synk\w*|coreczk\w*|maluch\w*|maluszk\w*)/;
-  const SHAKEN_LINE = ' Jeśli niemowlę zostało potrząśnięte, od razu dzwoń pod <a class="hy-tel" href="tel:112">112</a> albo jedź na SOR, nawet jeśli dziecko wygląda dobrze.';
+  // Choking: what to do right now, worded as in the verified 'dusznosc' entry (ERC 2025, NHS)
+  const CHOKING = /\b(zadlawil\w*|dlawi sie|sie dlawi|zakrztusil\w*)\b/;
+  const CHOKING_LINE = ' Jeśli ktoś się zadławił i głośno kaszle, zachęcaj go do kaszlu. Jeśli nie może kaszleć, mówić ani oddychać: niech ktoś dzwoni pod <a class="hy-tel" href="tel:112">112</a>, a ty rób na zmianę do 5 uderzeń nasadą dłoni między łopatki i do 5 uciśnięć nadbrzusza (u niemowlęcia: klatki piersiowej). Nie wyciągaj niczego palcem na ślepo.';
+  const SHAKEN_LINE =' Jeśli niemowlę zostało potrząśnięte, od razu dzwoń pod <a class="hy-tel" href="tel:112">112</a> albo jedź na SOR, nawet jeśli dziecko wygląda dobrze.';
   const RED_FLAG = [
     /\bbol\w* (\w+ ){0,2}(w|na) klat/, /\b(kluje|klucie|sciska|ucisk\w*|gniecie|piecze) (\w+ ){0,2}(w|na) klat/,
     /\bklat\w* (\w+ )?(boli|bola|kluje|sciska|piecze)\b/, /\bbol\w* (\w+ )?klatk/, /\bklat\w* piersiow/,
     /\bdusz(nosc\w*|e sie|i mnie)\b/, /\bsie dusze\b/, /\bbrak\w* (mi )?(tchu|powietrza)\b/, /\b(dusi|dlawi) (mnie|go|ja|sie)\b/,
     /\boddycha\w* (\w+ )?(wolno|plytko|slabo|chrapliwie|nieregularnie)\b/, /\bnie oddycha\b/, /\bprzesta\w* oddychac\b/,
-    /\bnie moge (zlapac )?(oddechu|oddychac)\b/, /\b(trudno|ciezko) (mi )?(oddychac|zlapac oddech|sie oddycha)/,
+    /\bnie moge (zlapac )?(oddechu|oddychac)\b/, /\b(trudno|ciezko) (mi )?(oddychac|zlapac oddech|sie oddycha)/, /\b(trudno|ciezko) (\w+ )?oddycha\b/,
+    /\bnie (moge|moze) (zlapac )?tchu\b/, /\bduszno mi\b/, /\bsin(e|ieja|ieja mu|ieja jej) (\w+ )?(usta|wargi)\b/, /\b(usta|wargi) (mu |jej |mi )?sin\w*/,
+    /\bzadlawil\w*/, /\banafilak\w*/,
+    // Cauda equina: numb groin or buttocks, or can't pass urine ('nie czuję krocza', 'nie mogę oddać moczu')
+    /\b(dretw\w*|zdretwial\w*|nie czuj\w*|mrowi\w*) (mi |mnie )?(\w+ )?(krocz\w*|posladk\w*|okolic\w* odbytu)/, /\b(krocz\w*|posladk\w*) (mi )?(dretwie\w*|zdretwial\w*)/,
+    /\bnie (moge|moze|mozna) (sie )?(wysikac|oddac moczu|oddac mocz|zrobic siku)\b/,
     // Sudden confusion ('tata nagle jest splątany', 'mama nagle nie wie, gdzie jest')
     /\bnagle (\w+ ){0,3}(splatan\w*|zdezorientowan\w*|nie wie gdzie jest|nikogo nie poznaje|nie poznaje mnie|mowi bez sensu)/,
     /\b(splatan\w*|zdezorientowan\w*) (\w+ ){0,2}(nagle|od wczoraj|od rana|od kilku godzin|od dzis)\b/,
     /\b(od wczoraj|od rana|od kilku godzin|od dzis) (\w+ ){0,2}(splatan\w*|zdezorientowan\w*)/,
+    // Confusion with an infection or fever may be sepsis ('babcia ma zapalenie płuc i jest splątana')
+    { test: (n) => /\b(splatan\w*|zdezorientowan\w*)/.test(n) && /\b(goraczk\w*|zapaleni\w*|infekcj\w*|zakazeni\w*|sepsa|sepsy|temperatur\w*)/.test(n) },
     // Swelling of the throat, tongue or lips: a severe allergic reaction ('puchnie mi gardło po leku')
     /\b(puchn\w*|spuchl\w*|obrzek\w*|opuchl\w*) (mi |ci )?(\w+ )?(gardl\w*|jezyk\w*|usta|ust|warg\w*)\b/, /\b(gardlo|jezyk|usta|wargi) (mi )?(puchn\w*|spuchl\w*)/,
     // Heart racing that doesn't stop ('serce mi wali od 20 minut i nie przestaje')
     /\b(serce|serducho|serduszko) (mi )?(wali|kolacze|bije|lomocze|galopuje|szaleje)\b (\w+ ){0,5}(nie przestaje|nie mija|nie zwalnia|nie przechodzi)\b/,
     /\b(serce|serducho|serduszko) (mi )?(wali|kolacze|lomocze|galopuje|szaleje) od (\w+ )?(minut\w*|godzin\w*)\b/,
     /\bkolatani\w* (serca )?(\w+ ){0,3}(nie mija|nie przechodzi|nie ustepuje|nie przestaje|od (\w+ )?(minut\w*|godzin\w*))\b/,
-    /\bdretwie\w* (mi )?(twarz|reka|noga|polowa)/, /\bopadl\w* (mi )?kacik/, /\bzemdl/, /\bstracil\w* przytomnosc/,
+    // A numb leg alone is usually sciatica; face, arm, half of the body, or a sudden numb leg may be a stroke
+    /\bdretwie\w* (mi )?(twarz|reka|polowa)/, /\bnagle (\w+ )?(zdretwial\w*|dretwie\w*) (mi )?(noga|reka|twarz)/, /\bopadl\w* (mi )?kacik/, /\bzemdl/, /\bstracil\w* przytomnosc/,
     // Stroke signs ('opadający kącik ust', 'mówi niewyraźnie', 'bełkocze')
     /\bkrzyw\w* (\w+ )?(buzi\w*|twarz\w*|usta)\b/, /\b(mama|tata|maz|zona|dziecko|syn|corka|babcia|dziadek|brat|siostra)\w* (\w+ )?nie reaguje( na nic)?$/,
     /\bopada\w* (\w+ )?kacik/, /\bkacik\w* (\w+ ){0,2}opad/, /\bmowi\w* (\w+ )?niewyrazn/, /\bbelko(cz|t)\w*/, /\bnagle (\w+ )?nie (moze|moge) (nic )?(powiedziec|mowic)\b/,
@@ -435,7 +446,7 @@
   // After a feeling ('mam depresję', 'nie mogę spać') the conversation comes first; the checked entry is offered
   const HAVE_CONDITION = /^(chyba |pewnie |raczej |chyba juz |juz )?(mam|miewam|choruje na|lecze sie na|zdiagnozowano u mnie|stwierdzono u mnie)\b/;
   const OFFER_AFTER = ['sad', 'anxiety', 'stress', 'lonely', 'anger', 'tired', 'motivation', 'work', 'conflict'];
-  const offerLine = (e) => ` Jeśli chcesz, opowiem ci też, co wiadomo o temacie „${shortTitle(e)}”. Wystarczy napisać „tak”.`;
+  const offerLine = (e, lead = ' Jeśli chcesz,') => `${lead} opowiem ci też, co wiadomo o temacie „${shortTitle(e)}”. Wystarczy napisać „tak”.`;
 
   function infoReply(e) {
     let html = esc(e.answer);
@@ -522,8 +533,11 @@
         t = 'crisis';
         html = pick('crisisF', CRISIS_FOLLOW) + HELP_HTML;
       } else if (t === 'redflag') {
-        html = RED_FLAG_REPLY + (SHAKEN.test(d.n) ? SHAKEN_LINE : '');
+        html = (CHOKING.test(d.n) ? CHOKING_LINE.trim() + ' ' : '') + RED_FLAG_REPLY + (SHAKEN.test(d.n) ? SHAKEN_LINE : '');
         topic = 'pain';
+        // 112 comes first; a checked symptom entry ('ból w klatce piersiowej') is offered for when things are calm
+        const offer = matchInfo((kb || []).filter((item) => item.entry.domain === 'objawy'), d.n);
+        if (offer) { html += offerLine(offer, ' Gdy sytuacja jest spokojna,'); offered = offer; }
       } else if (t === 'violence' || t === 'assault') {
         html = t === 'assault' ? ASSAULT_REPLY : VIOLENCE_REPLY;
         topic = t;
@@ -572,7 +586,7 @@
       else if (crisisSeen) html += REMINDER;
 
       const text = strip(html);
-      return { topic: t, kind, html, text, offer: !!offered, delay: 600 + Math.round(rand() * 300) + Math.min(300, text.length) };
+      return { topic: t, kind, html, text, offer: offered ? offered.id : null, delay: 600 + Math.round(rand() * 300) + Math.min(300, text.length) };
     }
 
     return { reply: respond, get topic() { return topic; } };

@@ -36,10 +36,14 @@ if (draftPath) {
   errors.forEach((e) => { failures++; console.log(`  ✗ format: ${e}`) })
 }
 
-// 1. Every sample question reaches its own entry
+// 1. Every sample question reaches its own entry. A question with an emergency sign ('ból w klatce piersiowej')
+// gets the 112 reply first, and then the entry is offered ("napisz „tak”"); that counts too.
 for (const e of db.entries) {
   for (const q of e.questions || []) {
-    check(`${e.id}: "${q}"`, () => assert.equal(ask(db, q).topic, `info:${e.id}`))
+    check(`${e.id}: "${q}"`, () => {
+      const r = ask(db, q)
+      assert.ok(r.topic === `info:${e.id}` || (r.topic === 'redflag' && r.offer === e.id), `${r.topic}${r.offer ? ' (oferta: ' + r.offer + ')' : ''}`)
+    })
   }
 }
 
@@ -53,7 +57,7 @@ for (const e of db.entries) {
 
 // 3. Plain feelings and small talk stay with the conversation
 const FEELINGS = ['jestem dziś bardzo smutny', 'pokłóciłem się z mamą', 'mam dość tej pracy', 'czuję się taka samotna',
-  'hej', 'dziękuję', 'tak', 'nie wiem', 'jestem zła na szefa', 'zdałam egzamin!', 'boli mnie kolano']
+  'hej', 'dziękuję', 'tak', 'nie wiem', 'jestem zła na szefa', 'zdałam egzamin!', 'boli mnie łokieć'] // pain with no entry; with one ('boli mnie głowa') the entry answers
 // ...and so do the topic tiles (art.js) and the mood faces (chat.js) on the chat screen
 const ART = readFileSync(new URL('../../soleil-main/art.js', import.meta.url), 'utf8')
 const CHAT = readFileSync(new URL('../../soleil-main/chat.js', import.meta.url), 'utf8')
