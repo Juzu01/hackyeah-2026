@@ -203,7 +203,10 @@
 
   // ── Sections ────────────────────────────────────────────────────────
   // The atlas and "Gdzie boli?" are their own pages, shown in a frame so the tab bar stays;
-  // each loads the first time its tab is opened.
+  // each loads the first time its tab is opened. Their pages are asked for afresh once per visit
+  // (they're tiny; the scripts and styles they load are hashed and stay cached), so a deploy shows
+  // in the tabs right away instead of after the browser's ten-minute page cache.
+  const visit = Date.now().toString(36);
   function show(view) {
     if (!VIEWS.includes(view)) view = 'rozmowa';
     app.dataset.view = view;
@@ -211,7 +214,7 @@
       const section = $('view-' + v);
       section.hidden = v !== view;
       const frame = section.querySelector('iframe[data-src]');
-      if (v === view && frame && !frame.src) frame.src = frame.dataset.src;
+      if (v === view && frame && !frame.src) frame.src = `${frame.dataset.src}?v=${visit}`;
     });
     document.querySelectorAll('.tab').forEach((t) => {
       if (t.dataset.view === view) t.setAttribute('aria-current', 'page');
