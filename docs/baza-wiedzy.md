@@ -48,9 +48,9 @@ Na GitHub Pages nie ma serwera AI, więc odpowiada `soleil-main/offline-companio
 
 Baza ładuje się w tle; gdy jej nie ma, czat działa bez niej. Przyciski pod odpowiedziami (`chat.js`) działają teraz także w rozmowie, którą strona zaczyna przez `SoleilOffline.create()`; wcześniej się nie pokazywały.
 
-### Czat z modelem Claude (`doco-ai/`, jeszcze nie uruchomiony)
+### Czat z modelem językowym (`doco-ai/`)
 
-Gotowy jest mały serwer na Vercel (`doco-ai/api/chat.js`, opis w `doco-ai/README.md`): trzyma klucz Claude API, przy każdej wiadomości pobiera tę bazę z GitHub Pages, wybiera 1–2 pasujące wpisy i każe modelowi brać fakty medyczne tylko z nich. Strona pyta go, gdy w `soleil-main/ai-config.js` jest jego adres; teraz adres jest pusty, więc czat działa jak wyżej. Wiadomości o kryzysie, przemocy i objawach nagłych nigdy nie idą do modelu: od razu odpowiada `offline-companion.js`. Do uruchomienia potrzebny jest klucz API z console.anthropic.com (subskrypcja Claude go nie daje) i konto Vercel.
+Gotowy jest mały serwer na Vercel (`doco-ai/api/chat.js`, opis w `doco-ai/README.md`): trzyma klucz API (Grok od xAI, darmowy Groq albo Claude), przy każdej wiadomości pobiera tę bazę z GitHub Pages, wybiera 1–2 pasujące wpisy i każe modelowi brać fakty medyczne tylko z nich. Strona pyta go, gdy w `soleil-main/ai-config.js` jest jego adres; teraz adres jest pusty, więc czat działa jak wyżej. Wiadomości o kryzysie, przemocy i objawach nagłych nigdy nie idą do modelu: od razu odpowiada `offline-companion.js`. Serwer stoi na Vercel (`https://doco-ai-xi.vercel.app/api/chat`); do działania potrzebuje klucza `XAI_API_KEY` (console.x.ai), `GROQ_API_KEY` (console.groq.com, darmowy) albo `ANTHROPIC_API_KEY`.
 
 ### Zmiany w czacie przy serii o zdrowiu psychicznym (2026-10-04)
 

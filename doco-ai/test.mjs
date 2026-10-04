@@ -1,18 +1,22 @@
 // Test of the Doco AI function without the network and without a key: fetch is replaced by a fake that serves
-// the local knowledge base and answers instead of the Claude API.
+// the local knowledge base and answers instead of the Claude, Grok and Groq APIs.
 // Run: node doco-ai/test.mjs
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 
 const DB = readFileSync(new URL('../soleil-main/data/wiedza.json', import.meta.url), 'utf8')
 let sent = null
+const tried = []
+const down = {} // host -> HTTP status it answers with, to play an outage, a rate limit or no credit
 globalThis.fetch = async (url, init) => {
   if (String(url).endsWith('data/wiedza.json')) return new Response(DB, { status: 200 })
-  if (String(url).startsWith('https://api.anthropic.com/')) {
-    sent = { headers: init.headers, body: JSON.parse(init.body) }
-    return new Response(JSON.stringify({ content: [{ type: 'text', text: 'Odpowiedź testowa.' }] }), { status: 200 })
-  }
-  throw new Error('unexpected fetch ' + url)
+  const host = new URL(url).hostname
+  if (!['api.anthropic.com', 'api.groq.com', 'api.x.ai'].includes(host)) throw new Error('unexpected fetch ' + url)
+  sent = { url, headers: init.headers, body: JSON.parse(init.body) }
+  tried.push(host)
+  const status = down[host] || 200
+  if (host === 'api.anthropic.com') return new Response(JSON.stringify({ content: [{ type: 'text', text: 'Odpowiedź testowa.' }] }), { status })
+  return new Response(JSON.stringify({ choices: [{ message: { content: '## Ból głowy\n**Odpowiedź** z Groq.' } }] }), { status })
 }
 const { default: handler, search, cleanMessages } = await import('./api/chat.js')
 
@@ -33,9 +37,91 @@ const check = async (label, fn) => {
 
 await check('bez klucza: 503 not-configured', async () => {
   delete process.env.ANTHROPIC_API_KEY
+  delete process.env.GROQ_API_KEY
   const r = await ask('hej')
   assert.equal(r.code, 503)
 })
+
+// Groq (free plan): shorter context and history, OpenAI-style request, markdown stripped from the reply
+process.env.GROQ_API_KEY = 'groq-key'
+let groqSystem = ''
+await check('Groq: pytanie o ból głowy idzie do Groq z wpisem bol-glowy', async () => {
+  const r = await ask('boli mnie głowa od rana, co mogę wziąć?', { ip: '7.7.7.1' })
+  assert.equal(r.code, 200)
+  assert.match(sent.url, /^https:\/\/api\.groq\.com\/openai\/v1\/chat\/completions$/)
+  assert.equal(sent.headers.authorization, 'Bearer groq-key')
+  assert.equal(sent.body.messages[0].role, 'system')
+  assert.equal(sent.body.messages.at(-1).content, 'boli mnie głowa od rana, co mogę wziąć?')
+  groqSystem = sent.body.messages[0].content
+  assert.match(groqSystem, /Ból głowy/)
+  assert.deepEqual(r.data.entries.slice(0, 1), ['bol-glowy'])
+  assert.equal(r.data.reply, 'Ból głowy\nOdpowiedź z Groq.')
+})
+await check('Groq: wyciąg z bazy ma najwyżej 8 faktów i wszystkie sygnały „emergency”', () => {
+  const e = JSON.parse(DB).entries.find((x) => x.id === 'bol-glowy')
+  const facts = groqSystem.split('Fakty:\n')[1].split('\nCo można')[0].split('\n')
+  assert.ok(facts.length <= 8, `faktów: ${facts.length}`)
+  for (const w of e.warningSigns.filter((w) => w.triage === 'emergency')) assert.ok(groqSystem.includes(w.sign), w.sign)
+  assert.ok(groqSystem.length < 12000, `prompt: ${groqSystem.length} znaków`)
+})
+await check('Groq: historia najwyżej 6 wiadomości', async () => {
+  const long = Array.from({ length: 11 }, (_, i) => ({ role: i % 2 ? 'assistant' : 'user', content: 'ból głowy ' + i }))
+  await call({ messages: long }, { ip: '7.7.7.2' })
+  assert.ok(sent.body.messages.length - 1 <= 6 && sent.body.messages[1].role === 'user')
+})
+await check('Groq: limit darmowego planu (429), a zapasu brak → 502, strona odpowiada offline', async () => {
+  down['api.groq.com'] = 429
+  const r = await ask('hej', { ip: '7.7.7.3' })
+  delete down['api.groq.com']
+  assert.equal(r.code, 502)
+  assert.deepEqual(r.data.failed, ['groq:429'])
+})
+await check('Grok (xAI): ma pierwszeństwo przed Groq, dłuższy wyciąg niż Groq', async () => {
+  process.env.XAI_API_KEY = 'xai-key'
+  const r = await ask('boli mnie głowa od rana, co mogę wziąć?', { ip: '7.7.7.5' })
+  assert.equal(r.data.provider, 'xai')
+  assert.equal(sent.url, 'https://api.x.ai/v1/chat/completions')
+  assert.equal(sent.headers.authorization, 'Bearer xai-key')
+  assert.equal(sent.body.model, 'grok-4.3')
+  const facts = sent.body.messages[0].content.split('Fakty:\n')[1].split('\nCo można')[0].split('\n')
+  assert.ok(facts.length > 8 && facts.length <= 15, `faktów: ${facts.length}`)
+})
+await check('zapas: Grokowi skończyły się środki (403) → odpowiada Groq z krótszym wyciągiem', async () => {
+  down['api.x.ai'] = 403
+  tried.length = 0
+  const r = await ask('boli mnie głowa od rana, co mogę wziąć?', { ip: '7.7.7.6' })
+  delete down['api.x.ai']
+  assert.equal(r.code, 200)
+  assert.equal(r.data.provider, 'groq')
+  assert.deepEqual(tried, ['api.x.ai', 'api.groq.com'])
+  assert.ok(r.data.sources.length > 0)
+  assert.ok(sent.body.messages[0].content.split('Fakty:\n')[1].split('\nCo można')[0].split('\n').length <= 8)
+})
+await check('zapas: oba padły → 502 z listą, co zawiodło', async () => {
+  down['api.x.ai'] = 500
+  down['api.groq.com'] = 429
+  const r = await ask('hej', { ip: '7.7.7.7' })
+  delete down['api.x.ai']
+  delete down['api.groq.com']
+  assert.equal(r.code, 502)
+  assert.deepEqual(r.data.failed, ['xai:500', 'groq:429'])
+})
+await check('DOCO_PROVIDERS=groq,xai: najpierw darmowy Groq', async () => {
+  process.env.DOCO_PROVIDERS = 'groq,xai'
+  tried.length = 0
+  const r = await ask('hej', { ip: '7.7.7.8' })
+  delete process.env.DOCO_PROVIDERS
+  assert.equal(r.data.provider, 'groq')
+  assert.deepEqual(tried, ['api.groq.com'])
+})
+await check('wszystkie klucze: wygrywa Claude', async () => {
+  process.env.ANTHROPIC_API_KEY = 'test-key'
+  const r = await ask('hej', { ip: '7.7.7.4' })
+  assert.match(sent.url, /api\.anthropic\.com/)
+  assert.equal(r.data.provider, 'anthropic')
+})
+delete process.env.GROQ_API_KEY
+delete process.env.XAI_API_KEY
 process.env.ANTHROPIC_API_KEY = 'test-key'
 await check('obca strona: 403, bez nagłówków CORS', async () => {
   const r = await ask('hej', { origin: 'https://evil.example' })
