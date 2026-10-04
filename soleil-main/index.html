@@ -35,9 +35,27 @@
   src="https://awaited-mink-45.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
   type="text/javascript"
 ></script>
-<link rel="stylesheet" href="soleil.css?v=9">
-<link rel="stylesheet" href="voice.css?v=2">
-<link rel="stylesheet" href="diary.css?v=3">
+<link rel="stylesheet" href="soleil.css?v=10">
+<link rel="stylesheet" href="voice.css?v=3">
+<link rel="stylesheet" href="diary.css?v=4">
+<!-- The mode and colour picked in Więcej → Kolor aplikacji (app.js), before the first paint -->
+<script>
+try {
+  const root = document.documentElement;
+  const theme = localStorage.getItem('doco_theme');
+  const light = theme === 'light' || (theme === 'system' && matchMedia('(prefers-color-scheme: light)').matches);
+  if (light) {
+    root.dataset.theme = 'light';
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f5f6f1');
+  }
+  const a = JSON.parse(localStorage.getItem('doco_accent'));
+  const v = a && (light ? a.light : a);
+  if (v && /^#[0-9a-f]{6}$/i.test(v.accent) && /^#[0-9a-f]{6}$/i.test(v.ink)) {
+    root.style.setProperty('--green', v.accent);
+    root.style.setProperty('--green-ink', v.ink);
+  }
+} catch (e) {}
+</script>
 </head>
 <body>
 
@@ -63,6 +81,7 @@
     <symbol id="i-close" viewBox="0 0 24 24"><path d="m5.5 5.5 13 13M18.5 5.5l-13 13"/></symbol>
     <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 4 8 8-8 8"/></symbol>
     <symbol id="i-lang" viewBox="0 0 24 24"><path d="M8.5 3h7L21 8.5v7L15.5 21h-7L3 15.5v-7z"/><path d="M12 3 9 12l3 9 3-9zM3 12h18"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 2.5 18.5 11A7 7 0 1 1 5.5 11z"/><path d="M9 15.5a3 3 0 0 0 3 2.5"/></symbol>
     <symbol id="i-voice" viewBox="0 0 24 24"><path d="M2 12h3l2-6 3 12 3-14 3 16 2-8h4"/></symbol>
     <symbol id="i-install" viewBox="0 0 24 24"><path d="M9 3H20v18H4V8z"/><path d="M12 8v8M8.5 12.5 12 16l3.5-3.5"/></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5 20 5.5V12l-8 9.5L4 12V5.5z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
@@ -390,6 +409,7 @@
         <ul class="rows">
           <li id="hyNameRowItem" hidden><button type="button" class="row" onclick="hyOpenNamePrompt()"><svg class="ico"><use href="#i-user"/></svg><span class="row-text" id="hyNameRow">Jak mam się do Ciebie zwracać</span><span class="row-value" id="hyNameValue"></span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
           <li><button type="button" class="row" onclick="openLanguage()"><svg class="ico"><use href="#i-lang"/></svg><span class="row-text">Język</span><span class="row-value" id="hyLangValue">Polski</span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
+          <li><button type="button" class="row" onclick="hyOpenAccent()"><svg class="ico"><use href="#i-palette"/></svg><span class="row-text" id="hyAccentRow">Kolor aplikacji</span><span class="row-value"><i class="row-swatch" aria-hidden="true"></i><span id="hyAccentValue">Mięta</span></span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
           <li><button type="button" class="row" onclick="openVoicePicker()"><svg class="ico"><use href="#i-voice"/></svg><span class="row-text">Głos Doco w rozmowie telefonicznej</span><svg class="ico row-go"><use href="#i-next"/></svg></button></li>
           <li>
             <button type="button" class="row" id="hyInstallRow" aria-expanded="false" aria-controls="hyInstallHow"><svg class="ico"><use href="#i-install"/></svg><span class="row-text">Dodaj do ekranu głównego</span><svg class="ico row-go"><use href="#i-next"/></svg></button>
@@ -1061,11 +1081,18 @@ function openAuth(mode) {
   document.getElementById('authOverlay').classList.add('visible');
   if (clerk && clerk.loaded) mountClerkSignIn();
 }
-const clerkAppearance = { variables: { colorPrimary: '#c0e4b2', colorTextOnPrimaryBackground: '#0b1307', colorBackground: '#0c100b', colorInputBackground: '#141912', colorInputText: '#f2f5ed', colorText: '#f2f5ed', colorTextSecondary: '#a8b1a1', colorNeutral: '#f2f5ed', colorDanger: '#ff7a6b', borderRadius: '0px', fontFamily: "'Nunito', system-ui, sans-serif", fontSize: '1rem' }, elements: { rootBox: { width: '100%' }, cardBox: { width: '100%', boxShadow: 'none', border: '1px solid rgba(211,235,202,0.18)' }, card: { boxShadow: 'none' } } };
+const clerkAppearance = { variables: { colorPrimary: '#45e499', colorTextOnPrimaryBackground: '#04140c', colorBackground: '#0c100b', colorInputBackground: '#141912', colorInputText: '#f2f5ed', colorText: '#f2f5ed', colorTextSecondary: '#a8b1a1', colorNeutral: '#f2f5ed', colorDanger: '#ff7a6b', borderRadius: '0px', fontFamily: "'Nunito', system-ui, sans-serif", fontSize: '1rem' }, elements: { rootBox: { width: '100%' }, cardBox: { width: '100%', boxShadow: 'none', border: '1px solid var(--line-2)' }, card: { boxShadow: 'none' } } };
 function mountClerkSignIn() {
   const el = document.getElementById('clerk-sign-in'), back = authReturnUrl();
   clerk.unmountSignIn(el);
   clerk.unmountSignUp(el);
+  // the mode and colour the user picked (Więcej → Kolor aplikacji)
+  const css = getComputedStyle(document.documentElement), token = (name) => css.getPropertyValue(name).trim();
+  Object.assign(clerkAppearance.variables, {
+    colorPrimary: token('--green'), colorTextOnPrimaryBackground: token('--green-ink'), colorBackground: token('--s1'),
+    colorInputBackground: token('--s2'), colorInputText: token('--ink'), colorText: token('--ink'),
+    colorTextSecondary: token('--ink-2'), colorNeutral: token('--ink'), colorDanger: token('--alarm'),
+  });
   if (authMode === 'signUp') clerk.mountSignUp(el, { routing: 'virtual', forceRedirectUrl: back, signInForceRedirectUrl: back, appearance: clerkAppearance });
   else clerk.mountSignIn(el, { routing: 'virtual', withSignUp: true, forceRedirectUrl: back, signUpForceRedirectUrl: back, appearance: clerkAppearance });
 }
@@ -2216,9 +2243,9 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
 <script src="offline-companion.js?v=4"></script>
 <script src="voice.js?v=3"></script>
 <script src="diary.js?v=2"></script>
-<script src="app.js?v=8"></script>
+<script src="app.js?v=9"></script>
 <script src="quotes.js?v=5"></script>
-<script src="art.js?v=5"></script>
-<script src="chat.js?v=8"></script>
+<script src="art.js?v=6"></script>
+<script src="chat.js?v=9"></script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+// The accent colour picked in Doco, before the first render
+import './lib/accent.ts'
 import App from './App.tsx'
 // Imported early: the install prompt can fire before the app renders.
 import './atlas/install.ts'

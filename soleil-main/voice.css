@@ -20,7 +20,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(60% 40% at 50% 34%, rgb(192 228 178 / 0.12), transparent 70%);
+  background: radial-gradient(60% 40% at 50% 34%, color-mix(in srgb, var(--green) 12%, transparent), transparent 70%);
 }
 .voice-call > * {
   position: relative;
@@ -62,11 +62,11 @@
 .voice-orb-ring {
   position: absolute;
   inset: 0;
-  background: radial-gradient(closest-side, rgb(192 228 178 / 0.45), rgb(192 228 178 / 0) 100%);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--green) 45%, transparent), color-mix(in srgb, var(--green) 0%, transparent) 100%);
   transform: scale(calc(1 + var(--level) * 0.5));
 }
 .voice-orb-ring.outer {
-  background: radial-gradient(closest-side, rgb(192 228 178 / 0.18), rgb(192 228 178 / 0) 100%);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--green) 18%, transparent), color-mix(in srgb, var(--green) 0%, transparent) 100%);
   transform: scale(calc(1.2 + var(--level) * 0.9));
 }
 .voice-orb {
@@ -189,7 +189,7 @@
 }
 .voice-btn.hangup {
   background: var(--alarm);
-  color: #1a0503;
+  color: var(--alarm-ink);
 }
 .voice-btn.call {
   background: var(--green);
@@ -227,7 +227,7 @@
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
 }
 .voice-option-avatar.m {
-  background: #8fa3c2;
+  background: var(--mood-1);
 }
 .voice-option-text {
   flex: 1;

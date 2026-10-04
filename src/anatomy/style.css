@@ -12,9 +12,9 @@
   --ink-3: #6b7364;
   --hair: rgb(211 235 202 / 0.12);
   --hair-strong: rgb(211 235 202 / 0.24);
-  --accent: #c0e4b2;
-  --accent-ink: #0b1307;
-  --accent-soft: rgb(192 228 178 / 0.13);
+  --accent: #45e499;
+  --accent-ink: #04140c;
+  --accent-soft: color-mix(in srgb, var(--accent) 13%, transparent);
   --glass: #cfe9dd;
   /* Raised surfaces: sheets (solid), floating controls (glass). */
   --surface: rgb(12 16 11 / 0.86);
@@ -76,7 +76,7 @@ body {
   -webkit-touch-callout: none;
   overscroll-behavior: none;
   background:
-    radial-gradient(42% 30% at 50% 36%, rgb(192 228 178 / 0.06), transparent 100%),
+    radial-gradient(42% 30% at 50% 36%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 100%),
     radial-gradient(110% 80% at 50% 40%, var(--bg-1) 0%, #030806 55%, var(--bg-0) 100%);
 }
 
@@ -118,7 +118,7 @@ body {
   stroke-width: 1.5;
 }
 .atlas-marker-ring {
-  fill: rgb(192 228 178 / 0.14);
+  fill: color-mix(in srgb, var(--accent) 14%, transparent);
   stroke: var(--accent);
   stroke-width: 1.25;
   stroke-opacity: 0.7;

@@ -118,7 +118,7 @@
       .join('');
     return `<svg class="scene" viewBox="0 0 360 160" aria-hidden="true" focusable="false">
   <defs>
-    <radialGradient id="${id}-glow"><stop offset="0" stop-color="#c0e4b2" stop-opacity=".34"/><stop offset=".45" stop-color="#c0e4b2" stop-opacity=".1"/><stop offset="1" stop-color="#c0e4b2" stop-opacity="0"/></radialGradient>
+    <radialGradient id="${id}-glow"><stop offset="0" style="stop-color: var(--green)" stop-opacity=".34"/><stop offset=".45" style="stop-color: var(--green)" stop-opacity=".1"/><stop offset="1" style="stop-color: var(--green)" stop-opacity="0"/></radialGradient>
   </defs>
   <circle class="sc-glow" cx="180" cy="72" r="86" fill="url(#${id}-glow)"/>
   <g class="sc-motes">${motes}</g>

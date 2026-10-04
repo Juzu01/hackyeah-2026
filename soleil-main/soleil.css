@@ -88,11 +88,19 @@
   --ink: #f2f5ed;
   --ink-2: #a8b1a1;
   --ink-3: #6b7364;
-  --green: #c0e4b2;
-  --green-ink: #0b1307;
-  --green-soft: rgb(192 228 178 / 0.13);
-  --green-glow: rgb(192 228 178 / 0.28);
+  --green: #45e499;
+  --green-ink: #04140c;
+  --green-soft: color-mix(in srgb, var(--green) 13%, transparent);
+  --green-glow: color-mix(in srgb, var(--green) 28%, transparent);
+  /* The mood scale, "very bad" to "great": cool greys up to the accent; "good" is halfway there. */
+  --mood-1: #8fa3c2;
+  --mood-2: #9fb8bb;
+  --mood-3: #bac5b7;
+  --mood-4: color-mix(in srgb, var(--green) 55%, var(--mood-3));
   --alarm: #ff7a6b;
+  --alarm-ink: #1a0503;
+  /* behind popups */
+  --scrim: rgb(0 0 0 / 0.72);
   --cut: 12px;
   --sat: env(safe-area-inset-top, 0px);
   --sab: env(safe-area-inset-bottom, 0px);
@@ -107,6 +115,28 @@
   --text: var(--ink);
   --muted: var(--ink-2);
   color-scheme: dark;
+}
+/* Light mode (Więcej → Kolor aplikacji, app.js): warm off-white with white cards; every accent has
+   a deeper twin for it, set by app.js (the default's is here). The text tokens keep ≥ 4.5:1. */
+:root[data-theme='light'] {
+  --bg: #f5f6f1;
+  --s1: #ffffff;
+  --s2: #eceee7;
+  --s3: #e1e5dc;
+  --line: rgb(30 40 25 / 0.12);
+  --line-2: rgb(30 40 25 / 0.22);
+  --ink: #171a14;
+  --ink-2: #4b5446;
+  --ink-3: #687062;
+  --green: #048251;
+  --green-ink: #ffffff;
+  --mood-1: #5d7396;
+  --mood-2: #587a7e;
+  --mood-3: #717b6b;
+  --alarm: #c43a2c;
+  --alarm-ink: #ffffff;
+  --scrim: rgb(20 25 18 / 0.4);
+  color-scheme: light;
 }
 
 *,
@@ -187,8 +217,8 @@ a {
   grid-template-columns: minmax(0, 1fr);
   /* Ambient light: a faint pastel glow from the top left and under the horizon. */
   background:
-    radial-gradient(70% 38% at 12% 0%, rgb(192 228 178 / 0.09), transparent 70%),
-    radial-gradient(80% 30% at 85% 100%, rgb(192 228 178 / 0.07), transparent 70%),
+    radial-gradient(70% 38% at 12% 0%, color-mix(in srgb, var(--green) 9%, transparent), transparent 70%),
+    radial-gradient(80% 30% at 85% 100%, color-mix(in srgb, var(--green) 7%, transparent), transparent 70%),
     var(--bg);
 }
 /* The header (logo, name, sign-in) belongs to Rozmowa only; the other tabs start with their own title. */
@@ -425,7 +455,7 @@ a {
   min-height: 40px;
   padding: 0 16px 0 13px;
   border: 1px solid var(--line-2);
-  background: rgb(12 16 11 / 0.86);
+  background: color-mix(in srgb, var(--s1) 86%, transparent);
   color: var(--green);
   font-size: 0.875rem;
   font-weight: 650;
@@ -653,16 +683,16 @@ a {
   transition: opacity 260ms var(--ease), transform 360ms var(--ease);
 }
 .cface[data-mood='1'] {
-  --tone: #8fa3c2;
+  --tone: var(--mood-1);
 }
 .cface[data-mood='2'] {
-  --tone: #9fb8bb;
+  --tone: var(--mood-2);
 }
 .cface[data-mood='3'] {
-  --tone: #bac5b7;
+  --tone: var(--mood-3);
 }
 .cface[data-mood='4'] {
-  --tone: #bdddb9;
+  --tone: var(--mood-4);
 }
 .cface[data-mood='5'] {
   --tone: var(--green);
@@ -805,7 +835,7 @@ a {
 }
 .art .f,
 .sprout .f {
-  fill: rgb(192 228 178 / 0.15);
+  fill: color-mix(in srgb, var(--green) 15%, transparent);
 }
 .art .s {
   fill: var(--green);
@@ -1122,7 +1152,7 @@ a {
   animation: spin 30s linear infinite;
 }
 .sky-cloud path {
-  fill: #12201a;
+  fill: var(--s2);
   stroke: var(--green);
   stroke-width: 2;
   stroke-linejoin: round;
@@ -1563,7 +1593,7 @@ a {
   min-width: 96px;
   padding: 0 14px;
   background: var(--alarm);
-  color: #1a0503;
+  color: var(--alarm-ink);
   font-weight: 800;
   text-decoration: none;
 }
@@ -1586,7 +1616,7 @@ a {
 }
 .input-wrapper:focus-within {
   border-color: var(--green);
-  box-shadow: 0 0 24px rgb(192 228 178 / 0.12);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--green) 12%, transparent);
 }
 #userInput {
   flex: 1;
@@ -1673,16 +1703,16 @@ a {
   color: var(--ink-2);
 }
 .face[data-mood='1'] {
-  --tone: #8fa3c2;
+  --tone: var(--mood-1);
 }
 .face[data-mood='2'] {
-  --tone: #9fb8bb;
+  --tone: var(--mood-2);
 }
 .face[data-mood='3'] {
-  --tone: #bac5b7;
+  --tone: var(--mood-3);
 }
 .face[data-mood='4'] {
-  --tone: #bdddb9;
+  --tone: var(--mood-4);
 }
 .face[data-mood='5'] {
   --tone: var(--green);
@@ -1993,9 +2023,9 @@ a {
 .tabbar-lit {
   background: linear-gradient(
     to bottom,
-    rgb(192 228 178 / 0.2),
-    rgb(192 228 178 / 0.07) 55%,
-    rgb(192 228 178 / 0) 85%
+    color-mix(in srgb, var(--green) 20%, transparent),
+    color-mix(in srgb, var(--green) 7%, transparent) 55%,
+    color-mix(in srgb, var(--green) 0%, transparent) 85%
   );
   clip-path: polygon(0 0, 0 0, 0 0, 0 0);
   transition: clip-path 420ms var(--ease);
@@ -2119,7 +2149,7 @@ a {
   justify-content: center;
   padding: calc(var(--sat) + 64px) 20px calc(var(--sab) + 84px);
   background:
-    radial-gradient(80% 50% at 50% 42%, rgb(192 228 178 / 0.1), transparent 70%),
+    radial-gradient(80% 50% at 50% 42%, color-mix(in srgb, var(--green) 10%, transparent), transparent 70%),
     var(--bg);
   opacity: 0;
   transition: opacity 500ms var(--ease);
@@ -2264,7 +2294,7 @@ a {
   align-items: center;
   justify-content: center;
   padding: 16px;
-  background: rgb(0 0 0 / 0.72);
+  background: var(--scrim);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   animation: fade 200ms var(--ease);
@@ -2286,7 +2316,7 @@ a {
   padding: 26px 22px 22px;
   border: 1px solid var(--line-2);
   background: var(--s1);
-  box-shadow: 0 0 60px rgb(192 228 178 / 0.08);
+  box-shadow: 0 0 60px color-mix(in srgb, var(--green) 8%, transparent);
   clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
   animation: view-in 240ms var(--ease);
 }
@@ -2483,4 +2513,77 @@ a {
   margin-top: 6px;
   color: var(--ink-2);
   font-weight: 700;
+}
+
+/* Więcej → Kolor aplikacji (app.js): dark, light or the device's mode, and twelve colours */
+.row-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+  vertical-align: -2px;
+  background: var(--green);
+  clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 0 100%);
+}
+.popup > .accent-label {
+  margin: 18px 0 8px;
+  color: var(--ink-2);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+/* Like the sign-in switch above it in style, three ways */
+.theme-switch {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line-2);
+  background: var(--s1);
+}
+.theme-switch button {
+  min-height: 44px;
+  padding: 0 6px;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  font-weight: 750;
+  line-height: 1.15;
+  transition: background-color 160ms var(--ease), color 160ms var(--ease);
+}
+.theme-switch button[aria-checked='true'] {
+  background: var(--green);
+  color: var(--green-ink);
+}
+.accent-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+/* --sw and --sw-ink: the colour in the current mode and the ink that goes on it */
+.accent-swatch {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--sw);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  transition: transform 160ms var(--ease);
+}
+.accent-swatch:active {
+  transform: scale(0.94);
+}
+/* The clip-path cuts off outlines: the ring is drawn inside. */
+.accent-swatch[aria-checked='true'],
+.accent-swatch:focus-visible {
+  box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--sw-ink) 60%, transparent);
+}
+.accent-swatch[aria-checked='true']::after {
+  content: '';
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  width: 9px;
+  height: 17px;
+  border: solid var(--sw-ink);
+  border-width: 0 3px 3px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
 }

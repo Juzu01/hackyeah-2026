@@ -27,7 +27,10 @@
       promptSteps: '<li>Stuknij <strong>Dodaj teraz</strong> poniżej.</li>',
       menuSteps: '<li>Otwórz menu przeglądarki (trzy kropki).</li><li>Wybierz <strong>Dodaj do ekranu głównego</strong> albo <strong>Zainstaluj aplikację</strong>.</li>',
       installNow: 'Dodaj teraz',
-      nameTitle: 'Jak mam się do Ciebie zwracać?', nameLead: 'Nie musisz. Jeśli podasz imię, Doco będzie mówić do Ciebie po imieniu — w czacie i w rozmowie głosowej.', namePh: 'Twoje imię', nameSave: 'Zapisz', nameSkip: 'Pomiń', nameError: 'Nie udało się zapisać imienia. Spróbuj jeszcze raz.', nameRow: 'Jak mam się do Ciebie zwracać', nameNone: 'nie podano'
+      nameTitle: 'Jak mam się do Ciebie zwracać?', nameLead: 'Nie musisz. Jeśli podasz imię, Doco będzie mówić do Ciebie po imieniu — w czacie i w rozmowie głosowej.', namePh: 'Twoje imię', nameSave: 'Zapisz', nameSkip: 'Pomiń', nameError: 'Nie udało się zapisać imienia. Spróbuj jeszcze raz.', nameRow: 'Jak mam się do Ciebie zwracać', nameNone: 'nie podano',
+      accent: 'Kolor aplikacji', accentLead: 'Wybierz tryb i kolor, które lubisz. Zapamiętamy je na tym urządzeniu.', themeLabel: 'Tryb', colorLabel: 'Kolor',
+      themeNames: ['Ciemny', 'Jasny', 'Systemowy'], accentDone: 'Gotowe',
+      accentNames: ['Mięta', 'Szałwia', 'Limonka', 'Cytryna', 'Bursztyn', 'Koral', 'Róż', 'Fiołek', 'Lawenda', 'Błękit', 'Turkus', 'Srebro']
     },
     en: {
       locale: 'en-GB', chooseLanguage: 'Choose a language', loadingQuote: 'Loading the thought of the day…', tabsLabel: 'App sections',
@@ -46,7 +49,10 @@
       promptSteps: '<li>Tap <strong>Add now</strong> below.</li>',
       menuSteps: '<li>Open the browser menu (three dots).</li><li>Choose <strong>Add to Home screen</strong> or <strong>Install app</strong>.</li>',
       installNow: 'Add now',
-      nameTitle: 'What should I call you?', nameLead: 'Optional. If you tell me your name, Doco will use it in the chat and in voice calls.', namePh: 'Your first name', nameSave: 'Save', nameSkip: 'Skip', nameError: 'Couldn\'t save your name. Please try again.', nameRow: 'What should I call you', nameNone: 'not set'
+      nameTitle: 'What should I call you?', nameLead: 'Optional. If you tell me your name, Doco will use it in the chat and in voice calls.', namePh: 'Your first name', nameSave: 'Save', nameSkip: 'Skip', nameError: 'Couldn\'t save your name. Please try again.', nameRow: 'What should I call you', nameNone: 'not set',
+      accent: 'App colour', accentLead: 'Pick the mode and colour you like. They\'re remembered on this device.', themeLabel: 'Mode', colorLabel: 'Colour',
+      themeNames: ['Dark', 'Light', 'System'], accentDone: 'Done',
+      accentNames: ['Mint', 'Sage', 'Lime', 'Lemon', 'Amber', 'Coral', 'Pink', 'Violet', 'Lavender', 'Sky blue', 'Turquoise', 'Silver']
     },
     uk: {
       locale: 'uk-UA', chooseLanguage: 'Обери мову', loadingQuote: 'Завантаження думки дня…', tabsLabel: 'Розділи застосунку',
@@ -65,7 +71,10 @@
       promptSteps: '<li>Натисни <strong>Додати зараз</strong> нижче.</li>',
       menuSteps: '<li>Відкрий меню браузера (три крапки).</li><li>Обери <strong>Додати на головний екран</strong> або <strong>Встановити застосунок</strong>.</li>',
       installNow: 'Додати зараз',
-      nameTitle: 'Як до тебе звертатися?', nameLead: 'Необов\'язково. Якщо вкажеш ім\'я, Doco звертатиметься до тебе на ім\'я — у чаті й у голосовій розмові.', namePh: 'Твоє ім\'я', nameSave: 'Зберегти', nameSkip: 'Пропустити', nameError: 'Не вдалося зберегти ім\'я. Спробуй ще раз.', nameRow: 'Як до тебе звертатися', nameNone: 'не вказано'
+      nameTitle: 'Як до тебе звертатися?', nameLead: 'Необов\'язково. Якщо вкажеш ім\'я, Doco звертатиметься до тебе на ім\'я — у чаті й у голосовій розмові.', namePh: 'Твоє ім\'я', nameSave: 'Зберегти', nameSkip: 'Пропустити', nameError: 'Не вдалося зберегти ім\'я. Спробуй ще раз.', nameRow: 'Як до тебе звертатися', nameNone: 'не вказано',
+      accent: 'Колір застосунку', accentLead: 'Обери режим і колір, які тобі подобаються. Ми запам\'ятаємо їх на цьому пристрої.', themeLabel: 'Режим', colorLabel: 'Колір',
+      themeNames: ['Темний', 'Світлий', 'Системний'], accentDone: 'Готово',
+      accentNames: ['М\'ята', 'Шавлія', 'Лайм', 'Лимон', 'Бурштин', 'Корал', 'Рожевий', 'Фіалка', 'Лаванда', 'Блакитний', 'Бірюза', 'Срібло']
     },
     de: {
       locale: 'de-DE', chooseLanguage: 'Sprache wählen', loadingQuote: 'Gedanke des Tages wird geladen…', tabsLabel: 'Bereiche der App',
@@ -84,7 +93,10 @@
       promptSteps: '<li>Tippe unten auf <strong>Jetzt hinzufügen</strong>.</li>',
       menuSteps: '<li>Öffne das Browsermenü (drei Punkte).</li><li>Wähle <strong>Zum Startbildschirm hinzufügen</strong> oder <strong>App installieren</strong>.</li>',
       installNow: 'Jetzt hinzufügen',
-      nameTitle: 'Wie soll ich dich nennen?', nameLead: 'Freiwillig. Wenn du deinen Namen angibst, spricht Doco dich im Chat und im Sprachgespräch damit an.', namePh: 'Dein Vorname', nameSave: 'Speichern', nameSkip: 'Überspringen', nameError: 'Der Name konnte nicht gespeichert werden. Versuch es noch einmal.', nameRow: 'Wie soll ich dich nennen', nameNone: 'nicht angegeben'
+      nameTitle: 'Wie soll ich dich nennen?', nameLead: 'Freiwillig. Wenn du deinen Namen angibst, spricht Doco dich im Chat und im Sprachgespräch damit an.', namePh: 'Dein Vorname', nameSave: 'Speichern', nameSkip: 'Überspringen', nameError: 'Der Name konnte nicht gespeichert werden. Versuch es noch einmal.', nameRow: 'Wie soll ich dich nennen', nameNone: 'nicht angegeben',
+      accent: 'App-Farbe', accentLead: 'Wähle den Modus und die Farbe, die dir gefallen. Sie werden auf diesem Gerät gespeichert.', themeLabel: 'Modus', colorLabel: 'Farbe',
+      themeNames: ['Dunkel', 'Hell', 'System'], accentDone: 'Fertig',
+      accentNames: ['Minze', 'Salbei', 'Limette', 'Zitrone', 'Bernstein', 'Koralle', 'Rosa', 'Veilchen', 'Lavendel', 'Himmelblau', 'Türkis', 'Silber']
     },
     es: {
       locale: 'es-ES', chooseLanguage: 'Elige un idioma', loadingQuote: 'Cargando el pensamiento del día…', tabsLabel: 'Secciones de la app',
@@ -103,7 +115,10 @@
       promptSteps: '<li>Toca <strong>Añadir ahora</strong> abajo.</li>',
       menuSteps: '<li>Abre el menú del navegador (tres puntos).</li><li>Elige <strong>Añadir a pantalla de inicio</strong> o <strong>Instalar aplicación</strong>.</li>',
       installNow: 'Añadir ahora',
-      nameTitle: '¿Cómo quieres que te llame?', nameLead: 'Es opcional. Si me dices tu nombre, Doco lo usará en el chat y en las llamadas de voz.', namePh: 'Tu nombre', nameSave: 'Guardar', nameSkip: 'Omitir', nameError: 'No se pudo guardar el nombre. Inténtalo de nuevo.', nameRow: 'Cómo quieres que te llame', nameNone: 'sin indicar'
+      nameTitle: '¿Cómo quieres que te llame?', nameLead: 'Es opcional. Si me dices tu nombre, Doco lo usará en el chat y en las llamadas de voz.', namePh: 'Tu nombre', nameSave: 'Guardar', nameSkip: 'Omitir', nameError: 'No se pudo guardar el nombre. Inténtalo de nuevo.', nameRow: 'Cómo quieres que te llame', nameNone: 'sin indicar',
+      accent: 'Color de la app', accentLead: 'Elige el modo y el color que más te gusten. Se guardan en este dispositivo.', themeLabel: 'Modo', colorLabel: 'Color',
+      themeNames: ['Oscuro', 'Claro', 'Sistema'], accentDone: 'Listo',
+      accentNames: ['Menta', 'Salvia', 'Lima', 'Limón', 'Ámbar', 'Coral', 'Rosa', 'Violeta', 'Lavanda', 'Celeste', 'Turquesa', 'Plata']
     }
   };
   /* global currentLanguage */
@@ -138,6 +153,13 @@
     $('hyNameInput').placeholder = t.namePh;
     setText($('hyNameSave'), t.nameSave);
     setText($('hyNameSkip'), t.nameSkip);
+    setText($('hyAccentRow'), t.accent);
+    setText($('hyAccentTitle'), t.accent);
+    setText($('hyAccentLead'), t.accentLead);
+    setText($('hyThemeLabel'), t.themeLabel);
+    setText($('hyColorLabel'), t.colorLabel);
+    setText($('hyAccentDone'), t.accentDone);
+    renderAppearance();
     if (typeof window.updateDiaryLanguage === 'function') window.updateDiaryLanguage();
     setText(document.querySelector('#hyInstallBtn span'), t.installNow);
     const fine = document.querySelector('#view-wiecej .fine');
@@ -233,7 +255,7 @@
   // ── Mood diary (this device only) ───────────────────────────────────
   const KEY = 'soleil_moods_v1';
   const moodName = (n) => T().faces[n - 1];
-  const TONES = { 1: '#8fa3c2', 2: '#9fb8bb', 3: '#bac5b7', 4: '#bdddb9', 5: '#c0e4b2' };
+  const TONES = { 1: 'var(--mood-1)', 2: 'var(--mood-2)', 3: 'var(--mood-3)', 4: 'var(--mood-4)', 5: 'var(--green)' };
   const dayKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   const load = () => {
     try {
@@ -386,6 +408,144 @@
     setTimeout(window.hyOpenNamePrompt, 600); // after the sign-in popup has closed
   }
 
+  // ── Mode and accent colour ────────────────────────────────────────────
+  // Więcej → Kolor aplikacji: dark (the default), light or whatever the device uses, and twelve
+  // colours. Each colour has a light one for black and a deeper one for light mode, both ≥ 4.8:1
+  // against their background, and an ink for text on it. Everything green is var(--green), so one
+  // colour on <html> repaints the app; the <head> script does the same before the first paint, and
+  // "Gdzie boli?" and the atlas read the same keys (src/lib/accent.ts). The first colour is the default.
+  const ACCENT_KEY = 'doco_accent';
+  const THEME_KEY = 'doco_theme';
+  const THEMES = ['dark', 'light', 'system'];
+  const ACCENTS = [
+    { accent: '#45e499', ink: '#04140c', light: { accent: '#048251', ink: '#ffffff' } },
+    { accent: '#c0e4b2', ink: '#0b1307', light: { accent: '#4e7d3a', ink: '#ffffff' } },
+    { accent: '#bdeb58', ink: '#121904', light: { accent: '#5d7b05', ink: '#ffffff' } },
+    { accent: '#fade4e', ink: '#1b1601', light: { accent: '#837106', ink: '#ffffff' } },
+    { accent: '#ffbd59', ink: '#211201', light: { accent: '#9f6401', ink: '#ffffff' } },
+    { accent: '#ff9180', ink: '#250e0a', light: { accent: '#cf3a21', ink: '#ffffff' } },
+    { accent: '#f990c4', ink: '#240e17', light: { accent: '#c8387e', ink: '#ffffff' } },
+    { accent: '#e08ced', ink: '#1e0f21', light: { accent: '#ac44bd', ink: '#ffffff' } },
+    { accent: '#baa3fe', ink: '#171226', light: { accent: '#8257d9', ink: '#ffffff' } },
+    { accent: '#71bfff', ink: '#071727', light: { accent: '#0574c7', ink: '#ffffff' } },
+    { accent: '#36dede', ink: '#001b1c', light: { accent: '#0a7e83', ink: '#ffffff' } },
+    { accent: '#cdd3cc', ink: '#111311', light: { accent: '#4d524c', ink: '#ffffff' } },
+  ];
+  const read = (key) => {
+    try {
+      return localStorage.getItem(key);
+    } catch (e) {
+      return null;
+    }
+  };
+  const write = (key, value) => {
+    try {
+      if (value) localStorage.setItem(key, value);
+      else localStorage.removeItem(key);
+    } catch (e) {
+      /* private mode: the choice lasts until the page closes */
+    }
+  };
+  const savedTheme = () => (THEMES.includes(read(THEME_KEY)) ? read(THEME_KEY) : 'dark');
+  // -1: something else is stored there
+  const savedAccent = () => {
+    try {
+      const a = JSON.parse(read(ACCENT_KEY));
+      return a ? ACCENTS.findIndex((c) => c.accent === a.accent) : 0;
+    } catch (e) {
+      return 0;
+    }
+  };
+  // In private mode nothing can be read back, so the current choice is also kept here.
+  let theme = savedTheme();
+  let accent = savedAccent();
+  const systemLight = matchMedia('(prefers-color-scheme: light)');
+  const isLight = () => theme === 'light' || (theme === 'system' && systemLight.matches);
+  function applyAppearance() {
+    const root = document.documentElement;
+    const light = isLight();
+    if (light) root.dataset.theme = 'light';
+    else delete root.dataset.theme;
+    const c = accent > 0 && ACCENTS[accent];
+    const v = c && (light ? c.light : c);
+    if (v) {
+      root.style.setProperty('--green', v.accent);
+      root.style.setProperty('--green-ink', v.ink);
+    } else {
+      root.style.removeProperty('--green');
+      root.style.removeProperty('--green-ink');
+    }
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', light ? '#f5f6f1' : '#000000');
+    renderAppearance();
+  }
+  function setAccent(i) {
+    accent = i;
+    write(ACCENT_KEY, i > 0 ? JSON.stringify(ACCENTS[i]) : null);
+    applyAppearance();
+  }
+  function setTheme(t) {
+    theme = t;
+    write(THEME_KEY, t === 'dark' ? null : t);
+    applyAppearance();
+  }
+  document.body.insertAdjacentHTML('beforeend', `
+<div class="overlay" id="accentOverlay">
+  <div class="popup" role="dialog" aria-modal="true" aria-labelledby="hyAccentTitle">
+    <button class="popup-close" onclick="hyCloseAccent()" aria-label="✕">✕</button>
+    <h2 id="hyAccentTitle"></h2>
+    <p id="hyAccentLead"></p>
+    <p class="accent-label" id="hyThemeLabel"></p>
+    <div class="theme-switch" role="radiogroup" aria-labelledby="hyThemeLabel">
+      ${THEMES.map((t) => `<button type="button" role="radio" data-theme-pick="${t}"></button>`).join('')}
+    </div>
+    <p class="accent-label" id="hyColorLabel"></p>
+    <div class="accent-grid" role="radiogroup" aria-labelledby="hyColorLabel">
+      ${ACCENTS.map(() => '<button type="button" role="radio" class="accent-swatch"></button>').join('')}
+    </div>
+    <button type="button" class="btn-green" id="hyAccentDone" onclick="hyCloseAccent()"></button>
+  </div>
+</div>`);
+  function renderAppearance() {
+    const t = T();
+    const light = isLight();
+    const i = Math.max(0, accent);
+    document.querySelectorAll('[data-theme-pick]').forEach((b, k) => {
+      b.setAttribute('aria-checked', String(THEMES[k] === theme));
+      b.textContent = t.themeNames[k];
+    });
+    document.querySelectorAll('.accent-swatch').forEach((b, k) => {
+      const v = light ? ACCENTS[k].light : ACCENTS[k];
+      b.style.setProperty('--sw', v.accent);
+      b.style.setProperty('--sw-ink', v.ink);
+      b.setAttribute('aria-checked', String(k === i));
+      b.setAttribute('aria-label', t.accentNames[k]);
+      b.title = t.accentNames[k];
+    });
+    setText($('hyAccentValue'), `${t.accentNames[i]} · ${t.themeNames[THEMES.indexOf(theme)].toLowerCase()}`);
+  }
+  document.querySelectorAll('[data-theme-pick]').forEach((b) => b.addEventListener('click', () => setTheme(b.dataset.themePick)));
+  document.querySelectorAll('.accent-swatch').forEach((b, i) => b.addEventListener('click', () => setAccent(i)));
+  window.hyOpenAccent = () => {
+    renderAppearance();
+    window.pushOverlayState('accentOverlay');
+    $('accentOverlay').classList.add('visible');
+  };
+  window.hyCloseAccent = () => $('accentOverlay').classList.remove('visible');
+  $('accentOverlay').addEventListener('click', (e) => { if (e.target.id === 'accentOverlay') window.hyCloseAccent(); });
+  window.addEventListener('popstate', window.hyCloseAccent);
+  // The device switched between light and dark
+  systemLight.addEventListener('change', () => { if (theme === 'system') applyAppearance(); });
+  // Changed in another tab of Doco
+  window.addEventListener('storage', (e) => {
+    if (e.key !== ACCENT_KEY && e.key !== THEME_KEY && e.key !== null) return;
+    theme = savedTheme();
+    accent = Math.max(0, savedAccent());
+    applyAppearance();
+  });
+  // A colour that isn't one of the twelve goes back to the default, here and in the frames
+  if (accent < 0) setAccent(0);
+  else applyAppearance();
+
   // Keep the section in step with logging in and out, and with the language.
   if (typeof window.updateAuthUI === 'function') {
     const base = window.updateAuthUI;
@@ -451,6 +611,7 @@
     authOverlay: () => window.closeAuth(),
     languageOverlay: () => window.closeLanguage(),
     namePromptOverlay: () => window.hyCloseNamePrompt(),
+    accentOverlay: () => window.hyCloseAccent(),
   };
   document.addEventListener('keydown', (e) => {
     const el = e.target;

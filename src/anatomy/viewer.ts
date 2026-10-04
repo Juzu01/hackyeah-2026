@@ -9,6 +9,7 @@ import '@fontsource-variable/fraunces/full-italic.css'
 import './style.css'
 
 import { Box3, Group, MathUtils, Mesh, Plane, Ray, SphereGeometry, Vector3, type Material } from 'three'
+import { onAccent } from '../lib/accent.ts'
 import type { PartInfo } from './content.ts'
 import { attachGestures, CameraRig, type View } from './controls.ts'
 import { createDepthState, depthAt, FOCUS_ZOOM, LAYER_ZOOM, layerOf, type DepthName, type LayerName } from './depth.ts'
@@ -207,6 +208,8 @@ class Viewer implements AnatomyViewer {
     const onKey = (e: KeyboardEvent) => this.onKey(e)
     window.addEventListener('keydown', onKey)
     this.cleanup.push(() => window.removeEventListener('keydown', onKey))
+    // The accent picked in Doco: the shaders already hold the new colour, draw a frame with it
+    this.cleanup.push(onAccent(() => this.requestRender()))
     const onLost = (e: Event) => e.preventDefault()
     const onRestored = () => this.requestRender()
     this.canvas.addEventListener('webglcontextlost', onLost)

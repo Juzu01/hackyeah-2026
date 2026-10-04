@@ -36,11 +36,11 @@
 .diary-level { display: grid; place-items: center; min-width: 30px; height: 26px; padding: 0 6px; font-weight: 800; font-size: 0.875rem; }
 .diary-pain-ico { color: var(--alarm); }
 .diary-face { width: 28px; height: 28px; fill: none; stroke: var(--tone, var(--green)); stroke-width: 2.4; stroke-linejoin: miter; stroke-linecap: square; }
-.diary-tile.is-mood[data-mood='1'] { --tone: #8fa3c2; }
-.diary-tile.is-mood[data-mood='2'] { --tone: #9fb8bb; }
-.diary-tile.is-mood[data-mood='3'] { --tone: #bac5b7; }
-.diary-tile.is-mood[data-mood='4'] { --tone: #bdddb9; }
-.diary-tile.is-mood[data-mood='5'] { --tone: #c0e4b2; }
+.diary-tile.is-mood[data-mood='1'] { --tone: var(--mood-1); }
+.diary-tile.is-mood[data-mood='2'] { --tone: var(--mood-2); }
+.diary-tile.is-mood[data-mood='3'] { --tone: var(--mood-3); }
+.diary-tile.is-mood[data-mood='4'] { --tone: var(--mood-4); }
+.diary-tile.is-mood[data-mood='5'] { --tone: var(--green); }
 .diary-delete { display: grid; place-items: center; width: 36px; height: 36px; margin: -6px -8px -6px 0; color: var(--ink-3); }
 .diary-delete:active, .diary-delete:focus-visible { color: var(--alarm); }
 .diary-delete .ico { width: 16px; height: 16px; }

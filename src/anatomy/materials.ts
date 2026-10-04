@@ -15,9 +15,13 @@ import {
   SrcAlphaFactor,
   type Material,
 } from 'three'
+import { onAccent } from '../lib/accent.ts'
 import type { CatalogEntry } from './content.ts'
 
-export const ACCENT = new Color('#C0E4B2')
+const DEFAULT_ACCENT = '#45E499'
+/** Doco's accent, the one the user picked: shaders hold this object, so a change shows on the next frame. */
+export const ACCENT = new Color(DEFAULT_ACCENT)
+onAccent((a) => ACCENT.set(a?.accent ?? DEFAULT_ACCENT))
 export const GLASS = new Color('#CFE9DD')
 export const HAIR = new Color('#C4E8DA')
 
