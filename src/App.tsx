@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { PartInfo } from './anatomy/content.ts'
 import type { LayerName } from './anatomy/depth.ts'
+import type { Body } from './anatomy/model.ts'
 import { search } from './anatomy/search.ts'
 import { mountAnatomyViewer, type AnatomyViewer, type ViewerState } from './anatomy/viewer.ts'
+import BodySwitch from './atlas/BodySwitch.tsx'
 import { isTouchDevice, memory, tick } from './atlas/device.ts'
 import type { Act } from './atlas/chat/assistant.ts'
 import Chat from './atlas/chat/Chat.tsx'
@@ -32,6 +34,24 @@ const params = new URLSearchParams(location.search)
 /** Remembered on this device: the welcome was seen, a part was tapped once. */
 const WELCOMED = 'atlas-welcomed'
 const TAPPED = 'atlas-tapped'
+/** The body last chosen here. */
+const BODY = 'atlas-body'
+
+/** ?body=f|m, then the last choice, then the sex given in "Gdzie boli?" on this device, then the man. */
+function firstBody(): Body {
+  const isBody = (v: unknown): v is Body => v === 'f' || v === 'm'
+  const asked = params.get('body')
+  if (isBody(asked)) return asked
+  const saved = memory.get(BODY)
+  if (isBody(saved)) return saved
+  try {
+    const sex: unknown = JSON.parse(memory.get('gdzieboli:profile:anon') ?? '{}').sex
+    if (isBody(sex)) return sex
+  } catch {
+    // no profile
+  }
+  return 'm'
+}
 
 /** Test hooks for the app's own pieces (the viewer's are window.__atlas). */
 interface AtlasUiHooks {
@@ -52,6 +72,7 @@ function App() {
   const viewer = useRef<AnatomyViewer | null>(null)
   const [selected, setSelected] = useState<PartInfo | null>(null)
   const [view, setView] = useState<ViewerState>({ layer: 'muscles', back: false })
+  const [body, setBody] = useState<Body>(firstBody)
   // The selection sheet shows the part's card, or the pain form in its place.
   const [mode, setMode] = useState<'card' | 'pain'>('card')
   const [expanded, setExpanded] = useState(false)
@@ -97,6 +118,7 @@ function App() {
 
   useEffect(() => {
     const handle = mountAnatomyViewer(stage.current!, {
+      body,
       onSelect: (p) => {
         setSelected(p)
         setExpanded(false)
@@ -118,12 +140,13 @@ function App() {
     })
     viewer.current = handle
     return () => handle.destroy()
-  }, [])
+    // A new body is a new model: the viewer mounts again.
+  }, [body])
 
   // Until the first tap, a soft pulse on the body says where to start (not while the welcome is up).
   useEffect(() => {
     viewer.current?.setHint(!tapped && !welcome ? (touch ? 'Dotknij dowolnego miejsca' : 'Kliknij dowolne miejsce') : null)
-  }, [tapped, welcome, touch])
+  }, [tapped, welcome, touch, body])
 
   // The viewer keeps the selected part visible above (or beside) the sheet.
   const sheetRef = useCallback((el: HTMLElement | null) => viewer.current?.setOccluder(el), [])
@@ -146,6 +169,12 @@ function App() {
   const finishWelcome = () => {
     setWelcome(false)
     memory.set(WELCOMED, '1')
+  }
+  const pickBody = (next: Body) => {
+    setSelected(null)
+    setMode('card')
+    setBody(next)
+    memory.set(BODY, next)
   }
   const pickLayer = (layer: LayerName) => {
     viewer.current?.setLayer(layer)
@@ -212,6 +241,7 @@ function App() {
         onPress={pressVoice}
       />
       <LayerSwitch value={view.layer} onChange={pickLayer} hidden={(!!selected || chat) && !wide} />
+      <BodySwitch value={body} onChange={pickBody} hidden={!!selected || chat} />
       {caption && !selected && !chat && (
         <p className="layer-caption" role="status">
           {caption}

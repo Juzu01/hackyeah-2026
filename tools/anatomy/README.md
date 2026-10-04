@@ -33,6 +33,29 @@ The preview loads the GLB with `GLTFLoader` + `MeshoptDecoder`, colours each par
 tissue palette, logs the node names, and reports catalog ids that are missing or whose `extras`
 disagree with the catalog. `window.__pick(x, y)` returns the part a tap at that pixel would hit.
 
+## The two bodies the atlas shows
+
+The viewer loads `body-m.glb` (a man) or `body-f.glb` (a woman), not `body.glb` itself. After a build:
+
+```sh
+node shapes.mjs         # ≈ 15 s; reads body.glb, writes body-m.glb and body-f.glb
+```
+
+- **No genitals on either body** (`lib/neutral.mjs`). BodyParts3D's skin has the penis and scrotum. Skin in
+  front of the line from the pubic skin down to the crotch, in the midline and more than 11 mm from any
+  catalog part, is cut out (the selection closed by two rings, then cut further wherever the opening's edge
+  touches itself, so it is one simple loop); the opening is closed with eight rings relaxed into a smooth
+  membrane, and a 26 mm band of skin around it eases in.
+- **The woman** is the same anatomy reshaped, since BodyParts3D only segmented a man and no open female
+  dataset lines up with it. One smooth deformation moves every part, so skin, muscles, bones and organs stay
+  nested: 0.95 × the height, narrower shoulders (0.885) and waist (0.875, and slimmer from the side), wider
+  hips (1.065) and fuller buttocks, as monotone cubic curves over the height. The arms (their bones and
+  muscles, and the skin nearest them) are carried by the shoulder joint and swung out 3° (the wider
+  carrying angle), so the hands clear the hips. Breasts are added to the skin only, smooth and without
+  detail. All the numbers are at the top of `shapes.mjs`.
+
+Check them in the preview with `glb=body-f.glb` or `glb=body-m.glb`.
+
 ## Output
 
 - **body.glb**: one mesh node per catalog id (`node.name = mesh.name = id`), `extras = { system, layer,

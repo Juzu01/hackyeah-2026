@@ -15,7 +15,7 @@ import { createDepthState, depthAt, FOCUS_ZOOM, LAYER_ZOOM, layerOf, type DepthN
 import { BodyHint, Hud } from './hud.ts'
 import { Announcer, HoverTag, Marker } from './labels.ts'
 import { AtlasMaterials, ORDER, setGhostWeight, setSolidWeight } from './materials.ts'
-import { buildAtlas, loadModel, type Atlas, type Part } from './model.ts'
+import { buildAtlas, loadModel, type Atlas, type Body, type Part } from './model.ts'
 import { PICK_RADIUS, Picker, type Hit } from './picking.ts'
 import { createRenderer, createStage, FOV, type Stage } from './scene.ts'
 import { Tethers } from './tethers.ts'
@@ -27,6 +27,8 @@ export interface ViewerState {
 }
 
 export interface ViewerOptions {
+  /** Which body to show (default the man); switching mounts a new viewer. */
+  body?: Body
   onSelect?(part: PartInfo | null): void
   /** Called when the layer or the front/back side changes (live, while zooming and rotating). */
   onChange?(state: ViewerState): void
@@ -217,7 +219,7 @@ class Viewer implements AnatomyViewer {
 
   private async load() {
     try {
-      const model = await loadModel((f) => this.hud.setProgress(f), this.abort.signal)
+      const model = await loadModel(this.options.body ?? 'm', (f) => this.hud.setProgress(f), this.abort.signal)
       if (this.destroyed) return
       this.source = model.source
       this.atlas = buildAtlas(model, this.materials)

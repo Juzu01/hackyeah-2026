@@ -3,7 +3,8 @@
   Checks public/anatomy/body.glb with plain three.js. Serve the repo root and open
   http://localhost:5182/tools/anatomy/preview.html (cd ../.. && python3 -m http.server 5182).
   Params: view=front|back|left|right|top|bottom|fl|fr, layers=shell,muscles,deep (default all),
-  skin=glass|solid, only=id,id (show just these), zoom=2, target=x_y_z (m) or a part id, axes.
+  skin=glass|solid, only=id,id (show just these), zoom=2, target=x_y_z (m) or a part id, axes,
+  glb=body-f.glb (another file in public/anatomy/, e.g. the female body).
   The page title becomes "done" (or "error: …") once rendered, for automated screenshots;
   window.__pick(x, y) and window.__project(id) help check picking from a script.
 -->
@@ -71,7 +72,7 @@
       })
 
       const t0 = performance.now()
-      const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync('../../public/anatomy/body.glb')
+      const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync('../../public/anatomy/' + (q.get('glb') ?? 'body.glb'))
       const loadMs = Math.round(performance.now() - t0)
       const catalog = (await (await fetch('../../src/anatomy/data/catalog.json')).json()).parts
       const root = gltf.scene

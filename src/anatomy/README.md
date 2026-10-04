@@ -21,7 +21,7 @@ The engine here is framework-free TypeScript on three.js. The app around it (tit
 | `labels.ts` | selection marker (ring on the part), hover tag, aria-live announcer |
 | `hud.ts` | first-run hint, loading (with the model's credit), no-WebGL |
 | `content.ts` | catalog + Polish copy → `PartInfo` |
-| `placeholder.ts` | procedural stand-ins while `public/anatomy/body.glb` is missing |
+| `placeholder.ts` | procedural stand-ins while `public/anatomy/body-m.glb` / `body-f.glb` is missing |
 | `style.css` | tokens (on `:root`, shared with `src/atlas/ui.css`) and the viewer's overlays |
 
 Also here: `plain.ts` (plain-language copy from `data/plain.pl.json`: where a part is, one simple sentence, everyday aliases, search suggestions; falls back to the clinical copy) and `search.ts` (everyday-word search: diacritic-insensitive, endings tolerated on aliases and "where", side words like "lewa" put that side first; tests in `search.test.ts`).

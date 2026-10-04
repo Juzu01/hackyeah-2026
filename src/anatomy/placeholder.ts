@@ -1,4 +1,4 @@
-// Stand-in anatomy for when public/anatomy/body.glb is missing: each catalog
+// Stand-in anatomy for when public/anatomy/body-m.glb (or body-f.glb) is missing: each catalog
 // entry becomes a rough, anatomically placed shape (capsules and ellipsoids
 // blended as signed distance fields, then meshed), named and tagged exactly like
 // the GLB's nodes. Metres, soles at y = 0, patient's left = +X, facing +Z.

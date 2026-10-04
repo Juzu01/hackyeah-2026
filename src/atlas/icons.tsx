@@ -135,6 +135,21 @@ export const ApartIcon = () => (
   </Icon>
 )
 
+/** The two bodies: the Venus and Mars signs, as in medicine and biology. */
+export const FemaleIcon = () => (
+  <Icon size={18}>
+    <circle cx="12" cy="9" r="5" />
+    <path d="M12 14v7.5M8.8 18.2h6.4" />
+  </Icon>
+)
+
+export const MaleIcon = () => (
+  <Icon size={18}>
+    <circle cx="10" cy="14" r="5" />
+    <path d="m13.6 10.4 6.4-6.4M15 4h5v5" />
+  </Icon>
+)
+
 /** Faces for the pain scale: at ease, uneasy, hurting, hurting a lot. */
 export const PainFace = ({ level }: { level: 0 | 1 | 2 | 3 }) => {
   const mouth = ['M8.5 14.5c2 2 5 2 7 0', 'M9 15h6', 'M8.5 16c2-2 5-2 7 0', 'M8.5 16.5c2-3 5-3 7 0'][level]

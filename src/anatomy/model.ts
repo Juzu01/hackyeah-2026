@@ -13,18 +13,20 @@ import { convexPieces, footprintOf, footprintStats, gridAround, poleOf, rasteriz
 import { ORDER, type AtlasMaterials, type Tissue } from './materials.ts'
 import { buildPlaceholder } from './placeholder.ts'
 
-export const MODEL_URL = './anatomy/body.glb'
+/** The atlas has two bodies, made by tools/anatomy/shapes.mjs from the same anatomy. */
+export type Body = 'f' | 'm'
+export const modelUrl = (body: Body) => `./anatomy/body-${body}.glb`
 
 export interface LoadedModel {
   root: Object3D
   source: 'glb' | 'placeholder'
 }
 
-/** Fetches and parses the GLB, reporting progress (null while the size is unknown). */
-export async function loadModel(onProgress: (fraction: number | null) => void, signal: AbortSignal): Promise<LoadedModel> {
+/** Fetches and parses the body's GLB, reporting progress (null while the size is unknown). */
+export async function loadModel(body: Body, onProgress: (fraction: number | null) => void, signal: AbortSignal): Promise<LoadedModel> {
   let bytes: Uint8Array | null = null
   try {
-    const res = await fetch(MODEL_URL, { signal })
+    const res = await fetch(modelUrl(body), { signal })
     if (res.ok && res.body) {
       const total = Number(res.headers.get('content-length')) || 0
       const reader = res.body.getReader()
@@ -50,7 +52,7 @@ export async function loadModel(onProgress: (fraction: number | null) => void, s
   // Dev servers answer a missing file with index.html; a real GLB starts with "glTF".
   const isGlb = bytes && bytes.length > 12 && String.fromCharCode(...bytes.subarray(0, 4)) === 'glTF'
   if (!bytes || !isGlb) {
-    console.info('Atlas: no anatomy/body.glb yet, showing placeholder shapes')
+    console.info(`Atlas: no ${modelUrl(body)} yet, showing placeholder shapes`)
     return { root: buildPlaceholder(catalog), source: 'placeholder' }
   }
   onProgress(1)
