@@ -11,8 +11,9 @@
 <meta name="apple-mobile-web-app-title" content="Doco">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#000000">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json?v=2">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=2">
 <!-- HackYeah: the site runs only on GitHub Pages, which has no server (api/*). There, fetch('api/...')
      fails at once without a network request, so every feature takes its local path: the chat answers
      from offline-companion.js (see sendMessage), the daily card from its built-in list. -->
@@ -1811,7 +1812,7 @@ async function shareWeekSummary() {
       img.crossOrigin = 'anonymous';
       img.onload = () => resolve(img);
       img.onerror = reject;
-      img.src = 'logosoleil.png';
+      img.src = 'icon-512.png?v=2';
     });
     ctx.drawImage(logo, W / 2 - 70, 100, 140, 140);
   } catch (e) { /* logo opcjonalne */ }
