@@ -1,26 +1,30 @@
-/* ROZMOWA GŁOSOWA, in Doco's black and pastel green (tokens in soleil.css). The phone button
-   on the input bar uses .send-btn.call-btn from soleil.css. */
+/* ROZMOWA GŁOSOWA, in Doco's colours (tokens in soleil.css). On a phone it is a full call screen:
+   the caller's name and the call time on top, Doco the lemur sitting on the app's horizon line in
+   the middle, what was said below and the call buttons at the bottom. On wider screens the same
+   screen is a card. The phone button on the input bar uses .send-btn.call-btn from soleil.css. */
 .voice-call {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: min(420px, 100%);
-  height: min(660px, calc(100dvh - 32px));
-  padding: 28px 20px 22px;
+  height: min(720px, calc(100dvh - 32px));
+  padding: 30px 20px 20px;
   overflow: hidden;
   border: 1px solid var(--line-2);
   background: var(--s1);
   clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
   animation: view-in 240ms var(--ease);
 }
-/* Ambient light behind the orb. */
+/* Ambient light like the app's: a faint glow from the top left and a patch of light under the horizon. */
 .voice-call::before {
   content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(60% 40% at 50% 34%, color-mix(in srgb, var(--green) 12%, transparent), transparent 70%);
+  background:
+    radial-gradient(70% 30% at 10% 0%, color-mix(in srgb, var(--green) 8%, transparent), transparent 70%),
+    radial-gradient(60% 22% at 46% 58%, color-mix(in srgb, var(--green) 9%, transparent), transparent 70%);
 }
 .voice-call > * {
   position: relative;
@@ -28,15 +32,149 @@
 .voice-call > .popup-close {
   position: absolute;
 }
+@media (max-width: 560px) {
+  #voiceOverlay {
+    padding: 0;
+  }
+  .voice-call {
+    width: 100%;
+    height: 100%;
+    padding: calc(var(--sat) + 30px) 18px calc(var(--sab) + 18px);
+    border: 0;
+    background: var(--bg);
+    clip-path: none;
+  }
+  .voice-call > .popup-close {
+    top: calc(var(--sat) + 10px);
+  }
+}
+
+/* The caller, as on a phone: the name, and under it the time since Doco picked up. */
 .voice-title {
   font-family: var(--serif);
-  font-size: 1.625rem;
+  font-size: 2.25rem;
   font-weight: 640;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
 }
+/* While Doco comes down on his tail the name waits (the tail would cross it); it fades in when he lands. */
+.voice-call:not(.entering) .voice-title,
+.voice-call:not(.entering) .voice-timer {
+  transition: opacity 0.5s var(--ease);
+}
+.voice-call.entering .voice-title,
+.voice-call.entering .voice-timer {
+  opacity: 0;
+}
+.voice-timer {
+  min-height: 1.5em;
+  margin-top: 4px;
+  color: var(--ink-2);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+/* The stage runs edge to edge so the horizon can cross the whole screen; the lemur sits on it. */
+.voice-stage {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-self: stretch;
+  margin: 10px -20px 0;
+  padding: 28px 0 30px;
+}
+.voice-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.vs-horizon {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+}
+.vs-horizon2 {
+  stroke: var(--green);
+  stroke-width: 1.3;
+  opacity: 0.3;
+}
+/* Between turns a glint runs along the horizon now and then, as in Rozmowa. */
+.vs-glint {
+  stroke: #f5fbed;
+  stroke-width: 2.4;
+  stroke-dasharray: 7 193;
+  stroke-dashoffset: 7;
+  opacity: 0;
+}
+.voice-call.locked .vs-glint,
+.voice-call.ended .vs-glint {
+  opacity: 1;
+  animation: glint 8s var(--ease) 1.2s infinite;
+}
+:root[data-theme='light'] .vs-glint {
+  display: none;
+}
+/* Ringing: octagons, the shape of the call button, spread out from behind the lemur. */
+.vs-ring {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 1.3;
+  opacity: 0;
+  transform-box: view-box;
+}
+.voice-call.connecting .vs-ring {
+  animation: vs-ring 2.4s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+}
+.voice-call.connecting .vs-ring:nth-child(2) {
+  animation-delay: 0.8s;
+}
+.voice-call.connecting .vs-ring:nth-child(3) {
+  animation-delay: 1.6s;
+}
+.voice-call.entering .vs-ring {
+  animation: none;
+}
+@keyframes vs-ring {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  12% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.1);
+  }
+}
+
+/* Doco, the lemur (lemur.js): nods while you talk, moves its mouth with its voice, can be tapped. */
+.voice-lemur {
+  position: relative;
+  flex-shrink: 0;
+  width: clamp(150px, 33dvh, 280px);
+}
+.voice-lemur svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* What is happening right now, under the lemur like a caption. */
 .voice-status {
-  min-height: 1.4em;
+  min-height: 1.5em;
   max-width: 300px;
-  margin-top: 6px;
   color: var(--ink-2);
   font-size: 0.9375rem;
   line-height: 1.5;
@@ -45,62 +183,28 @@
 .voice-status .status-dot {
   display: none;
 }
+.voice-call.connecting .voice-status .status-dot,
 .voice-call.listening .voice-status .status-dot,
 .voice-call.speaking .voice-status .status-dot {
   display: inline-block;
 }
-
-/* The orb is a diamond of light that breathes with the voice level. */
-.voice-orb-wrap {
-  --level: 0;
-  position: relative;
-  flex-shrink: 0;
-  width: 150px;
-  height: 150px;
-  margin: 26px 0 16px;
+.voice-call.speaking .voice-status {
+  color: var(--green);
 }
-.voice-orb-ring {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--green) 45%, transparent), color-mix(in srgb, var(--green) 0%, transparent) 100%);
-  transform: scale(calc(1 + var(--level) * 0.5));
+.voice-call.connecting .voice-status .status-dot {
+  animation: vs-blink 1.2s ease-in-out infinite;
 }
-.voice-orb-ring.outer {
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--green) 18%, transparent), color-mix(in srgb, var(--green) 0%, transparent) 100%);
-  transform: scale(calc(1.2 + var(--level) * 0.9));
-}
-.voice-orb {
-  position: absolute;
-  inset: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--green);
-  box-shadow: 0 0 40px var(--green-glow);
-  transform: rotate(45deg);
-  transition: filter 0.3s ease;
-}
-.voice-orb img {
-  display: none;
-}
-.voice-call.connecting .voice-orb {
-  animation: voice-breathe 1.6s ease-in-out infinite;
-}
-.voice-call.ended .voice-orb,
-.voice-call.error .voice-orb,
-.voice-call.locked .voice-orb {
-  filter: saturate(0.3) brightness(0.6);
-}
-@keyframes voice-breathe {
+@keyframes vs-blink {
   50% {
-    transform: rotate(45deg) scale(0.9);
+    opacity: 0.25;
   }
 }
 
 .voice-hint {
   max-width: 290px;
-  color: var(--ink-2);
-  font-size: 0.9375rem;
+  margin-top: 2px;
+  color: var(--ink-3);
+  font-size: 0.875rem;
   line-height: 1.5;
   text-align: center;
 }
@@ -112,6 +216,8 @@
   width: 100%;
   overflow-y: auto;
   padding: 14px 2px 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
   -webkit-mask-image: linear-gradient(to bottom, transparent, black 22px);
   mask-image: linear-gradient(to bottom, transparent, black 22px);
 }
@@ -264,7 +370,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .voice-call.connecting .voice-orb {
+  .voice-call.connecting .vs-ring {
+    animation: none;
+  }
+  .voice-call.connecting .vs-ring:first-child {
+    opacity: 0.5;
+    transform: scale(1.3);
+  }
+  .voice-call.locked .vs-glint,
+  .voice-call.ended .vs-glint,
+  .voice-call.connecting .voice-status .status-dot {
     animation: none;
   }
 }

@@ -103,8 +103,6 @@ const voiceTexts = {
   }
 };
 
-const VOICE_SUN_IMG = 'https://fonts.gstatic.com/s/e/notoemoji/latest/2600_fe0f/128.png';
-
 // Głosy do wyboru w menu użytkownika (gotowe głosy ElevenLabs, dostępne na każdym koncie).
 // Pierwszy jest domyślnym głosem agenta. Płeć głosu decyduje o rodzaju gramatycznym, w jakim Doco mówi o sobie.
 const VOICE_PREVIEW_BASE = 'https://storage.googleapis.com/eleven-public-prod/premade/voices/';
@@ -137,6 +135,10 @@ let voiceSoundOff = false;
 let voiceState = 'ended';
 let voiceLines = [];
 let voiceLevelFrame = 0;
+let voiceCallStart = 0;
+let voiceEnterNext = false; // okno właśnie się otworzyło: Doco ma zjechać na swoje miejsce
+let voiceEntering = false;
+let voiceTimerId = 0;
 let voiceSdkPromise = null;
 // Kept in sessionStorage too: signing in with Google reloads the page on the way back
 let voiceLoginRequestedAt = Number(sessionStorage.getItem('soleil_voice_login')) || 0;
@@ -146,14 +148,15 @@ function vt() { return voiceTexts[currentLanguage] || voiceTexts.pl; }
 
 document.body.insertAdjacentHTML('beforeend', `
 <div class="overlay" id="voiceOverlay">
-  <div class="voice-call" id="voiceCall">
+  <div class="voice-call" id="voiceCall" role="dialog" aria-modal="true">
     <button class="popup-close" onclick="closeVoiceCall()">✕</button>
-    <h2 class="voice-title" id="voiceTitle"></h2>
-    <div class="voice-status"><span class="status-dot"></span><span id="voiceStatus"></span></div>
-    <div class="voice-orb-wrap" id="voiceOrb">
-      <div class="voice-orb-ring outer"></div><div class="voice-orb-ring"></div>
-      <div class="voice-orb"><img src="${VOICE_SUN_IMG}" alt=""></div>
+    <h2 class="voice-title" id="voiceTitle">Doco</h2>
+    <p class="voice-timer" id="voiceTimer" aria-hidden="true"></p>
+    <div class="voice-stage" id="voiceStage">
+      <svg class="voice-scene" id="voiceScene" aria-hidden="true"></svg>
+      <div class="voice-lemur" id="voiceLemur"></div>
     </div>
+    <div class="voice-status" aria-live="polite"><span class="status-dot"></span><span id="voiceStatus"></span></div>
     <p class="voice-hint" id="voiceHint"></p>
     <div class="voice-transcript" id="voiceTranscript"></div>
     <div class="voice-controls">
@@ -173,6 +176,96 @@ document.body.insertAdjacentHTML('beforeend', `
     <p class="voice-picker-note" id="voicePickerNote"></p>
   </div>
 </div>`);
+
+// Doco jako lemur z logo (lemur.js): kiwa głową, gdy mówisz, i porusza pyszczkiem, gdy mówi
+const voiceLemur = window.DocoLemur ? DocoLemur.create(document.getElementById('voiceLemur')) : null;
+
+// SCENA: lemur siedzi na linii horyzontu, tej samej co w Rozmowie (wznosi się od lewej do prawej).
+// Gdy ktoś mówi, linia po obu stronach lemura faluje: głos Doco rozchodzi się od niego na boki,
+// twój płynie do niego od brzegów. Przy łączeniu spod lemura rozchodzą się ośmiokąty jak dzwonek
+// (kształt przycisków rozmowy). Fala rysuje się tylko wtedy, gdy coś słychać albo jeszcze opada.
+const voiceStage = (() => {
+  const stage = document.getElementById('voiceStage');
+  const svg = document.getElementById('voiceScene');
+  const lemur = document.getElementById('voiceLemur');
+  const SLOPE = 17.8 / 400; // nachylenie .sc-horizon z chat.js
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  const ring = '<polygon class="vs-ring" vector-effect="non-scaling-stroke"/>';
+  svg.innerHTML = `<g class="vs-rings">${ring + ring + ring}</g><line class="vs-horizon2"/><path class="vs-horizon"/><line class="vs-glint" pathLength="100"/>`;
+  const [line2, horizon, glint] = ['.vs-horizon2', '.vs-horizon', '.vs-glint'].map(s => svg.querySelector(s));
+  let w = 0, cx = 0, seat = 0, reach = 0;
+  let input = 0, output = 0, ampIn = 0, ampOut = 0, phase = 0, frame = 0, last = 0;
+  let hitAt = -1, hit = 0; // lądowanie lemura: linia ugina się pod nim i odbija
+  const y = x => seat - (x - cx) * SLOPE;
+  const smooth = (a, b, v) => { const t = Math.min(1, Math.max(0, (v - a) / (b - a))); return t * t * (3 - 2 * t); };
+
+  function draw() {
+    let d = '';
+    for (let x = -8; x <= w + 8; x += 5) {
+      const dist = Math.abs(x - cx);
+      // od krawędzi lemura (pod nim fali i tak nie widać) do brzegu sceny
+      const u = (dist - reach) / Math.max(1, (x < cx ? cx : w - cx) - reach);
+      const win = smooth(0, 0.22, u) * (1 - smooth(0.6, 1, u));
+      const swell = 0.75 + 0.25 * Math.sin(dist * 0.031 - phase * 2.3);
+      const off = win * swell * (ampOut * Math.sin(dist * 0.09 - phase * 7) + ampIn * Math.sin(dist * 0.09 + phase * 6));
+      const sag = hit ? hit * Math.exp(-(((x - cx) / (reach * 1.9)) ** 2)) : 0;
+      d += `${d ? 'L' : 'M'}${x} ${(y(x) - off + sag).toFixed(1)}`;
+    }
+    horizon.setAttribute('d', d);
+  }
+
+  function layout() {
+    w = stage.clientWidth;
+    const h = stage.clientHeight, s = stage.getBoundingClientRect(), r = lemur.getBoundingClientRect();
+    if (!w || !r.width) return;
+    // w rysunku lemura (240×260) twarz jest na x 110, a stopy kończą się na y ≈ 252
+    cx = r.left - s.left + r.width * 110 / 240;
+    seat = r.top - s.top + r.height * 250 / 260;
+    reach = r.width * 0.27;
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    const x1 = w * 0.08, x2 = w * 0.92;
+    Object.entries({ x1, y1: y(x1) + 24, x2, y2: y(x2) + 24 }).forEach(([k, v]) => line2.setAttribute(k, v.toFixed(1)));
+    Object.entries({ x1: 0, y1: y(0), x2: w, y2: y(w) }).forEach(([k, v]) => glint.setAttribute(k, v.toFixed(1)));
+    // ośmiokąt jak przycisk rozmowy (rogi ścięte na 30%), wokół głowy lemura
+    const hx = cx, hy = r.top - s.top + r.height * 80 / 260, a = r.width * 0.25, b = a * 0.4;
+    const pts = [[-b, -a], [b, -a], [a, -b], [a, b], [b, a], [-b, a], [-a, b], [-a, -b]].map(([px, py]) => `${(hx + px).toFixed(1)},${(hy + py).toFixed(1)}`).join(' ');
+    svg.querySelectorAll('.vs-ring').forEach(p => { p.setAttribute('points', pts); p.style.transformOrigin = `${hx}px ${hy}px`; });
+    draw();
+  }
+
+  function tick(ms) {
+    const dt = Math.min(0.05, (ms - (last || ms)) / 1000);
+    last = ms;
+    phase += dt;
+    // szybki atak, wolniejsze opadanie, jak wskazówka miernika
+    const ease = (cur, level) => { const target = Math.min(1, level * 3.5) * 9; return cur + (target - cur) * (1 - Math.exp(-dt / (target > cur ? 0.06 : 0.3))); };
+    ampOut = ease(ampOut, output);
+    ampIn = ease(ampIn, input);
+    // ugięcie: w 80 ms w dół (razem z przysiadem lemura), potem gasnące odbicie
+    const age = hitAt < 0 ? 9 : Math.max(0, (ms - hitAt) / 1000);
+    hit = age >= 1 ? 0 : 6 * (age < 0.08 ? Math.sin(age / 0.08 * Math.PI / 2) : Math.exp(-(age - 0.08) / 0.18) * Math.cos((age - 0.08) * 2 * Math.PI / 0.45));
+    draw();
+    frame = ampOut + ampIn > 0.02 || input + output > 0.004 || hit ? requestAnimationFrame(tick) : (ampOut = ampIn = 0, draw(), 0);
+  }
+
+  new ResizeObserver(layout).observe(stage);
+  return {
+    layout,
+    impact() {
+      if (still.matches) return;
+      hitAt = performance.now();
+      if (!frame) { last = 0; frame = requestAnimationFrame(tick); }
+    },
+    setLevels(i, o) {
+      input = Number.isFinite(i) ? i : 0;
+      output = Number.isFinite(o) ? o : 0;
+      if (!frame && (input + output > 0.004 || ampIn + ampOut > 0.02) && !still.matches) {
+        last = 0;
+        frame = requestAnimationFrame(tick);
+      }
+    }
+  };
+})();
 
 function updateVoiceLanguage() {
   const btn = document.getElementById('voiceCallBtn');
@@ -254,9 +347,10 @@ function openVoiceCall() {
   const t = vt();
   pushOverlayState('voiceOverlay');
   document.getElementById('voiceOverlay').classList.add('visible');
-  document.getElementById('voiceTitle').textContent = t.title;
+  document.getElementById('voiceCall').setAttribute('aria-label', t.title);
   document.getElementById('voiceHint').textContent = t.hint;
   document.getElementById('voiceCredit').textContent = t.credit;
+  voiceEnterNext = !voiceLive; // otwarte w trakcie rozmowy: Doco już siedzi na miejscu
   startVoiceCall();
 }
 
@@ -288,6 +382,8 @@ async function startVoiceCall() {
   if (!(currentUser || clerk?.user)) {
     document.getElementById('voiceTranscript').innerHTML = '';
     document.getElementById('voiceHint').style.display = 'none';
+    stopVoiceTimer(true);
+    voiceEnterNext = voiceEntering = false;
     setVoiceState('locked', t.loginNeeded);
     return;
   }
@@ -297,7 +393,9 @@ async function startVoiceCall() {
   voiceLive = true; voiceMicOff = false; voiceSoundOff = false; voiceLines = [];
   document.getElementById('voiceTranscript').innerHTML = '';
   document.getElementById('voiceHint').style.display = '';
+  stopVoiceTimer(true);
   setVoiceState('connecting');
+  if (voiceEnterNext) { voiceEnterNext = false; enterVoiceLemur(); }
   try {
     const mic = await navigator.mediaDevices.getUserMedia({ audio: true });
     mic.getTracks().forEach(track => track.stop());
@@ -323,6 +421,7 @@ async function startVoiceCall() {
     if (!current()) { conversation.endSession().catch(() => {}); return; }
     voiceConversation = conversation;
     if (voiceState === 'connecting') setVoiceState('listening');
+    startVoiceTimer();
     startVoiceLevels();
   } catch (err) {
     console.error('Doco voice:', err);
@@ -340,7 +439,9 @@ function finishVoiceCall(errorMessage) {
   if (!voiceLive) return;
   voiceLive = false; voiceConversation = null;
   cancelAnimationFrame(voiceLevelFrame);
-  document.getElementById('voiceOrb').style.setProperty('--level', 0);
+  voiceLemur?.setLevels(0, 0);
+  voiceStage.setLevels(0, 0);
+  stopVoiceTimer(!voiceCallStart);
   setVoiceState(errorMessage ? 'error' : 'ended', errorMessage);
   copyVoiceLinesToChat();
 }
@@ -356,7 +457,8 @@ function renderVoiceButton(id, { icon, title, label, on, disabled, className }) 
 function setVoiceState(state, message) {
   const t = vt();
   voiceState = state;
-  document.getElementById('voiceCall').className = `voice-call ${state}`;
+  document.getElementById('voiceCall').className = `voice-call ${state}${voiceEntering ? ' entering' : ''}`;
+  voiceLemur?.setState(state);
   document.getElementById('voiceStatus').textContent = message || t[state];
   const inCall = state === 'listening' || state === 'speaking';
   const loginLabel = (translations[currentLanguage] || translations.pl).loginBtn;
@@ -402,6 +504,37 @@ function addVoiceLine(role, text) {
   box.scrollTop = box.scrollHeight;
 }
 
+// Doco zjeżdża z góry na ogonie na swoje miejsce na horyzoncie, gdy rozmowa staje się dostępna.
+// Imię i licznik pojawiają się dopiero, gdy wyląduje (lina przechodziłaby przez nie), wtedy też ugina się linia.
+function enterVoiceLemur() {
+  if (!voiceLemur?.enter) return;
+  const call = document.getElementById('voiceCall');
+  voiceEntering = true;
+  call.classList.add('entering');
+  voiceLemur.enter({ onLand: () => {
+    voiceEntering = false;
+    call.classList.remove('entering');
+    voiceStage.impact();
+  } });
+}
+
+// Licznik jak w telefonie: od odebrania do rozłączenia; po rozmowie zostaje na ekranie jej długość
+function renderVoiceTimer() {
+  const s = Math.floor((Date.now() - voiceCallStart) / 1000), m = Math.floor(s / 60);
+  const pad = n => String(n).padStart(2, '0');
+  document.getElementById('voiceTimer').textContent = (m >= 60 ? `${Math.floor(m / 60)}:${pad(m % 60)}` : m) + ':' + pad(s % 60);
+}
+function startVoiceTimer() {
+  voiceCallStart = Date.now();
+  renderVoiceTimer();
+  clearInterval(voiceTimerId);
+  voiceTimerId = setInterval(renderVoiceTimer, 1000);
+}
+function stopVoiceTimer(clear) {
+  clearInterval(voiceTimerId);
+  if (clear) { voiceCallStart = 0; document.getElementById('voiceTimer').textContent = ''; }
+}
+
 // Po rozmowie jej zapis trafia do czatu, żeby można było ją kontynuować pisząc
 function copyVoiceLinesToChat() {
   const start = voiceLines.findIndex(line => line.role === 'user');
@@ -414,16 +547,15 @@ function copyVoiceLinesToChat() {
   voiceLines = [];
 }
 
-// Pierścienie wokół słońca pulsują w rytm głosu: Doco, gdy mówi, użytkownika, gdy słucha
+// Lemur dostaje oba poziomy głosu: twój (kiwa głową, gdy mówisz) i swój (pyszczek); horyzont pod nim faluje.
+// Przy wyciszonym głośniku głośność Doco spada do zera, więc wtedy pyszczek rusza się sam.
 function startVoiceLevels() {
-  const orb = document.getElementById('voiceOrb');
-  let level = 0;
   const tick = () => {
     const conversation = voiceConversation;
     if (!conversation) return;
-    const raw = voiceState === 'speaking' ? conversation.getOutputVolume() : (voiceMicOff ? 0 : conversation.getInputVolume());
-    level += (Math.min(1, raw * 2.5) - level) * 0.2;
-    orb.style.setProperty('--level', level.toFixed(3));
+    const input = voiceMicOff ? 0 : conversation.getInputVolume(), output = conversation.getOutputVolume();
+    voiceLemur?.setLevels(input, output, { muted: voiceSoundOff });
+    voiceStage.setLevels(input, output);
     voiceLevelFrame = requestAnimationFrame(tick);
   };
   cancelAnimationFrame(voiceLevelFrame);
