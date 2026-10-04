@@ -170,3 +170,43 @@ export const PhoneIcon = () => (
     <path d="M6.5 3.5h3l1.5 4-2 1.5a11 11 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5.5a2 2 0 0 1 2-2z" />
   </Icon>
 )
+
+/** The part card's "Więcej": what it does, how it's built, exercises, a fact, sport, and a closer look. */
+export const ActionIcon = () => (
+  <Icon size={18}>
+    <path d="M13 2.5 5 13.5h6l-1 8 8-11h-6z" />
+  </Icon>
+)
+
+export const BuildIcon = () => (
+  <Icon size={18}>
+    <path d="M12 3.5 3 8.5l9 5 9-5z" />
+    <path d="m3 13 9 5 9-5" />
+  </Icon>
+)
+
+export const ExerciseIcon = () => (
+  <Icon size={18}>
+    <path d="M3 9.5v5M6.5 7v10M17.5 7v10M21 9.5v5M6.5 12h11" />
+  </Icon>
+)
+
+export const FactIcon = () => (
+  <Icon size={18}>
+    <path d="M9.5 18h5M10.5 21h3" />
+    <path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" />
+  </Icon>
+)
+
+export const HealthIcon = () => (
+  <Icon size={18}>
+    <path d="M3 12.5h4l2.2-5 3.6 10 2.2-5H21" />
+  </Icon>
+)
+
+export const ZoomInIcon = () => (
+  <Icon size={20}>
+    <circle cx="10.5" cy="10.5" r="6.5" />
+    <path d="m15.5 15.5 5 5M10.5 7.8v5.4M7.8 10.5h5.4" />
+  </Icon>
+)

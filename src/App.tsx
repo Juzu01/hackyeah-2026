@@ -213,7 +213,16 @@ function App() {
           onDismiss={dismiss}
           onExpand={() => setExpanded(true)}
         >
-          <PartCard part={part} expanded={expanded} onToggle={() => setExpanded((e) => !e)} onClose={deselect} />
+          <PartCard
+            part={part}
+            expanded={expanded}
+            onToggle={() => setExpanded((e) => !e)}
+            onClose={deselect}
+            onFocus={() => {
+              setExpanded(false)
+              viewer.current?.focus(part.id)
+            }}
+          />
         </Sheet>
       )}
 

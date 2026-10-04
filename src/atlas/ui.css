@@ -699,44 +699,129 @@ body {
   font-weight: 650;
 }
 
-.card-more section {
-  margin-top: 16px;
-  padding-left: 14px;
-  border-left: 2px solid var(--hair-strong);
+/* "Więcej": blocks by kind. A small label with its icon over each; what the part does sits in a
+   lit box, facts and sport in quiet boxes, exercises as a numbered list. */
+.card-more:not([hidden]) {
+  display: grid;
+  gap: 20px;
+  margin-top: 20px;
 }
-.card-more h3 {
-  margin: 0 0 4px;
+.more-block h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  color: var(--ink-2);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.more-block h3 svg {
+  flex: none;
+  color: var(--accent);
+}
+.more-block p {
+  margin: 0;
+  color: var(--ink-1);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.more-block.is-lit,
+.more-block.is-box {
+  padding: 14px 16px 16px;
+  border-radius: var(--radius);
+}
+.more-block.is-lit {
+  background: var(--accent-soft);
+}
+.more-block.is-lit h3 {
+  color: var(--accent);
+}
+.more-block.is-lit p {
+  font-size: 1.0625rem;
+}
+.more-block.is-box {
+  border: 1px solid var(--hair);
+  background: var(--surface-2);
+}
+.more-steps {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--hair);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  list-style: none;
+}
+.more-steps li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 50px;
+  padding: 8px 14px;
+  color: var(--ink-1);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+.more-steps li + li {
+  border-top: 1px solid var(--hair);
+}
+.more-n {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+/* The exercises are written in lower case, as list items in a sentence; start each with a capital. */
+.more-step {
+  display: block;
+}
+.more-step::first-letter {
+  text-transform: uppercase;
+}
+.more-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.more-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+.more-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px 0 14px;
+  border: 1px solid var(--hair-strong);
+  border-radius: 999px;
+  background: transparent;
   color: var(--ink-1);
   font-size: 0.9375rem;
   font-weight: 700;
 }
-.card-more p {
-  margin: 0;
-  color: var(--ink-2);
-  font-size: 1rem;
-  line-height: 1.55;
+.more-zoom svg {
+  color: var(--accent);
 }
-.card-more ul {
-  margin: 2px 0 0;
-  padding: 0;
-  list-style: none;
-}
-.card-more li {
-  position: relative;
-  padding: 3px 0 3px 16px;
-  color: var(--ink-2);
-  font-size: 1rem;
-  line-height: 1.45;
-}
-.card-more li::before {
-  content: '';
-  position: absolute;
-  top: 12px;
-  left: 1px;
-  width: 6px;
-  height: 6px;
-  border-radius: 2px;
-  background: var(--accent);
+.more-zoom:active {
+  background: var(--surface-3);
 }
 
 /* ── Pain form ─────────────────────────────────────────────────────── */
