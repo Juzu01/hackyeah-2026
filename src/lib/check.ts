@@ -75,7 +75,7 @@ export function regionDefIds(draft: CheckDraft): string[] {
 
 /** Red-flag questions for this check, emergencies first, capped so the interview stays short. */
 export function interviewRedFlags(draft: CheckDraft, cap = 8): RedFlag[] {
-  const flags = redFlagsFor(regionDefIds(draft), draft.sex)
+  const flags = redFlagsFor(regionDefIds(draft), draft.sex, pickedSymptoms(draft))
   const rank = (f: RedFlag) => (f.regions.includes('*') ? 0 : f.triage === 'emergency' ? 1 : 2)
   return flags.sort((a, b) => rank(a) - rank(b)).slice(0, cap)
 }

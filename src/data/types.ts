@@ -45,6 +45,8 @@ export interface RedFlag {
   /** Shown in the result as the reason for the triage. */
   reason: string
   sex?: Sex
+  /** Asked only when one of these symptoms was picked (e.g. after a head injury). */
+  symptoms?: string[]
 }
 
 export type Duration = 'hours' | 'days' | 'weeks' | 'months'

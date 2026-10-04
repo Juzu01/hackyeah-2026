@@ -93,6 +93,26 @@ describe('engine', () => {
     expect(r.reasons).toContain('możliwa przyczyna: Uszkodzenie więzadła kolana (np. ACL, MCL)')
   })
 
+  it('a weak best guess without any hallmark does not escalate', () => {
+    // Loss of appetite alone is not appendicitis, dizziness alone is not a concussion.
+    const mild = { severity: 4, duration: 'days' as const }
+    expect(analyze({ regions: ['upper-abdomen'], symptoms: ['appetite-loss'], redFlags: [], ...mild }).triage).toBe('self-care')
+    expect(analyze({ regions: ['head'], symptoms: ['dizziness'], redFlags: [], ...mild }).triage).toBe('self-care')
+  })
+
+  it('one hallmark of an emergency on thin evidence means a doctor today, not an ambulance', () => {
+    const r = analyze({ regions: ['lower-abdomen'], symptoms: ['abd-pain-rlq'], redFlags: [], severity: 4, duration: 'days' })
+    expect(r.triage).toBe('urgent')
+    expect(r.reasons).toContain('lekarz powinien wykluczyć: Zapalenie wyrostka robaczkowego')
+  })
+
+  it("a symptom's badge agrees with the overall result its causes drive", () => {
+    const input = { regions: ['chest'], symptoms: ['cough', 'fever'], redFlags: [], severity: 4, duration: 'days' as const }
+    const overall = analyze(input).triage
+    expect(overall).toBe('urgent')
+    expect(analyzeBySymptom(input).map((s) => s.triage)).toEqual([overall, overall])
+  })
+
   it('returns nothing without symptoms', () => {
     expect(rankConditions({ regions: [], symptoms: [], redFlags: [] })).toEqual([])
     expect(analyze({ regions: [], symptoms: [], redFlags: [] }).conditions).toEqual([])

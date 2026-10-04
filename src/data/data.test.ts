@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { REGION_DEFS, REGION_IDS, buildRegions } from '../body/regions.ts'
 import { CONDITIONS } from './conditions.ts'
-import { RED_FLAGS } from './redFlags.ts'
+import { RED_FLAGS, redFlagsFor } from './redFlags.ts'
 import { SYMPTOMS, SYMPTOM_BY_ID, searchSymptoms, symptomsForRegion } from './symptoms.ts'
 
 describe('knowledge base integrity', () => {
@@ -59,5 +59,13 @@ describe('knowledge base integrity', () => {
   it('search is accent-insensitive', () => {
     expect(searchSymptoms('bol glowy').map((s) => s.id)).toContain('headache')
     expect(searchSymptoms('ZGAGA').map((s) => s.id)).toContain('heartburn')
+  })
+})
+
+describe('alarm questions', () => {
+  it('asks about a head injury only after one', () => {
+    const ids = (symptoms: string[]) => redFlagsFor(['head'], 'f', symptoms).map((f) => f.id)
+    expect(ids(['headache'])).not.toContain('rf-head-injury')
+    expect(ids(['head-injury'])).toContain('rf-head-injury')
   })
 })

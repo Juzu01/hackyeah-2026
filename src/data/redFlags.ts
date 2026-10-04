@@ -2,7 +2,9 @@ import type { RedFlag } from './types.ts'
 
 // Alarm questions asked after the symptoms (the "any of these?" step that
 // Symptomate, Ada and NHS 111 all put before the interview). A "yes" overrides
-// everything else in the triage.
+// everything else in the triage, so each question names only signs that really
+// are alarming together: no "…or nausea", "…or light sensitivity", "…or numbness"
+// that half of all people with a migraine or a flu would answer "yes" to.
 
 const HEAD = ['head', 'neck', 'nape']
 const ABDOMEN = ['upper-abdomen', 'lower-abdomen', 'pelvis', 'lower-back']
@@ -18,14 +20,14 @@ export const RED_FLAGS: RedFlag[] = [
   },
   {
     id: 'rf-consciousness',
-    question: 'Zasłabnięcie, utrata przytomności, splątanie lub trudność z wybudzeniem?',
+    question: 'Utrata przytomności, drgawki albo splątanie (nie wiadomo, gdzie się jest, trudno się dobudzić)?',
     regions: ['*'],
     triage: 'emergency',
-    reason: 'zaburzenia świadomości lub omdlenie',
+    reason: 'utrata przytomności, drgawki lub splątanie',
   },
   {
     id: 'rf-stroke',
-    question: 'Nagłe osłabienie lub drętwienie jednej strony ciała, opadnięty kącik ust, bełkotliwa mowa lub nagłe zaburzenia widzenia?',
+    question: 'Nagle pojawił się opadnięty kącik ust, osłabienie ręki lub nogi po jednej stronie ciała, bełkotliwa mowa albo nagła utrata widzenia?',
     regions: [...HEAD, 'upper-arm', 'forearm', 'hand', 'thigh', 'shin', 'calf'],
     triage: 'emergency',
     reason: 'objawy mogące wskazywać na udar',
@@ -39,15 +41,16 @@ export const RED_FLAGS: RedFlag[] = [
   },
   {
     id: 'rf-meningism',
-    question: 'Gorączka razem ze sztywnością karku, wysypką nieblednącą pod uciskiem lub nadwrażliwością na światło?',
+    question: 'Gorączka i do tego sztywny kark (trudno dotknąć brodą klatki piersiowej) albo wysypka, która nie blednie pod naciskiem szklanki?',
     regions: ['head', 'neck', 'nape'],
     triage: 'emergency',
     reason: 'gorączka ze sztywnością karku (podejrzenie zapalenia opon)',
   },
   {
     id: 'rf-head-injury',
-    question: 'Po urazie głowy: wymioty, senność, utrata przytomności, drgawki lub narastający ból?',
+    question: 'Po tym urazie głowy: wymioty, senność, utrata przytomności, drgawki lub narastający ból?',
     regions: ['head'],
+    symptoms: ['head-injury'],
     triage: 'emergency',
     reason: 'niepokojące objawy po urazie głowy',
   },
@@ -60,7 +63,7 @@ export const RED_FLAGS: RedFlag[] = [
   },
   {
     id: 'rf-cardiac',
-    question: 'Ucisk lub gniecenie w klatce piersiowej trwające ponad 15 minut, promieniujące do ramienia, szyi lub żuchwy, z zimnym potem lub nudnościami?',
+    question: 'Silny ucisk, gniecenie lub pieczenie w klatce piersiowej, które trwa ponad 15 minut (często promieniuje do ręki, szyi lub żuchwy)?',
     regions: ['chest', 'upper-abdomen', 'upper-back', 'shoulder', 'upper-arm'],
     triage: 'emergency',
     reason: 'ból w klatce piersiowej o cechach sercowych',
@@ -132,7 +135,7 @@ export const RED_FLAGS: RedFlag[] = [
   },
   {
     id: 'rf-limb-ischemia',
-    question: 'Kończyna jest blada, zimna, sina lub straciła czucie?',
+    question: 'Kończyna nagle zrobiła się blada lub sina, zimna w dotyku i bardzo boli?',
     regions: LIMBS,
     triage: 'emergency',
     reason: 'objawy niedokrwienia kończyny',
@@ -153,8 +156,14 @@ export const RED_FLAGS: RedFlag[] = [
   },
 ]
 
-/** Questions relevant to the chosen regions (always including the general ones). */
-export function redFlagsFor(regionDefIds: Iterable<string>, sex?: 'f' | 'm'): RedFlag[] {
+/** Questions relevant to the chosen regions (always including the general ones) and, where a question needs it, to the picked symptoms. */
+export function redFlagsFor(regionDefIds: Iterable<string>, sex?: 'f' | 'm', symptomIds: Iterable<string> = []): RedFlag[] {
   const set = new Set(regionDefIds)
-  return RED_FLAGS.filter((f) => (!f.sex || !sex || f.sex === sex) && (f.regions.includes('*') || f.regions.some((r) => set.has(r))))
+  const picked = new Set(symptomIds)
+  return RED_FLAGS.filter(
+    (f) =>
+      (!f.sex || !sex || f.sex === sex) &&
+      (f.regions.includes('*') || f.regions.some((r) => set.has(r))) &&
+      (!f.symptoms || f.symptoms.some((id) => picked.has(id))),
+  )
 }

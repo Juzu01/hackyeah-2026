@@ -83,6 +83,8 @@ const DURATION_ORDER: Duration[] = ['hours', 'days', 'weeks', 'months']
 
 const maxTriage = (a: Triage, b: Triage): Triage => (TRIAGE_LEVELS.indexOf(a) >= TRIAGE_LEVELS.indexOf(b) ? a : b)
 const atLeast = maxTriage
+/** One level less urgent, never below a doctor's visit: emergency → urgent → gp. */
+const stepDown = (t: Triage): Triage => (t === 'emergency' ? 'urgent' : t === 'urgent' ? 'gp' : t)
 
 function applies(c: Condition, input: CheckInput): boolean {
   if (c.sex && input.sex && c.sex !== input.sex) return false
@@ -163,12 +165,16 @@ export function analyzeBySymptom(input: CheckInput, perSymptom = 3): SymptomResu
       onset: input.onset,
       trend: input.trend,
     }
-    const conditions = ranked.filter((r) => r.matched.includes(symptomId)).slice(0, perSymptom)
+    // The urgency looks as far down the list as the overall result does (top 6), so a symptom's
+    // badge never reads "Samoopieka" under an overall "today" that comes from its own causes.
+    const mine = ranked.filter((r) => r.matched.includes(symptomId))
+    const conditions = mine.slice(0, perSymptom)
     const flags = RED_FLAGS.filter(
       (f) => input.redFlags.includes(f.id) && (f.regions.includes('*') || symptom.regions.includes('*') || f.regions.some((r) => symptom.regions.includes(r))),
     )
     const own = { ...input, symptoms: [symptomId], courses: [{ symptomId, ...course }], answeredRedFlags: false }
-    return [{ symptomId, course, conditions, ...decide(own, conditions, flags) }]
+    const overall = new Set(ranked.slice(0, 6))
+    return [{ symptomId, course, conditions, ...decide(own, [...conditions, ...mine.slice(perSymptom).filter((r) => overall.has(r))], flags) }]
   })
 }
 
@@ -183,19 +189,24 @@ function decide(input: CheckInput, conditions: RankedCondition[], flags: RedFlag
     reasons.push(f.reason)
   }
 
-  // Then the most urgent plausible cause. A condition may raise the triage only
-  // when the evidence is strong, or moderate with at least one of its hallmark
-  // symptoms reported, or it is the best guess overall. A moderate match that
-  // lacks every hallmark (e.g. a swollen knee with fever but no hot, red joint)
-  // is listed but does not send anyone to the ER on its own.
+  // Then the causes. A convincing one (strong evidence, or moderate with one of its hallmark
+  // symptoms reported) sets the triage to its own level. The best guess on thinner evidence still
+  // counts, one level softer (an emergency becomes "see a doctor today"), and only if the person
+  // reported at least one of its hallmarks or the match is moderate: loss of appetite alone does
+  // not mean appendicitis, nor dizziness a concussion. A moderate match that lacks every hallmark
+  // further down the list (e.g. a swollen knee with fever but no hot, red joint) is listed but
+  // raises nothing. Real emergencies are what the alarm questions above are for.
   const hasHallmark = (r: RankedCondition) => r.matched.some((id) => r.condition.symptoms[id] === 3)
-  const plausible = conditions.filter((r, i) => i === 0 || r.evidence === 'strong' || (r.evidence === 'moderate' && hasHallmark(r)))
-  for (const r of plausible) {
-    if (TRIAGE_LEVELS.indexOf(r.condition.triage) > TRIAGE_LEVELS.indexOf(triage)) {
-      triage = r.condition.triage
-      reasons.push(`możliwa przyczyna: ${r.condition.name}`)
+  conditions.forEach((r, i) => {
+    const convincing = r.evidence === 'strong' || (r.evidence === 'moderate' && hasHallmark(r))
+    const bestGuess = i === 0 && (r.evidence === 'moderate' || hasHallmark(r))
+    if (!convincing && !bestGuess) return
+    const level = convincing ? r.condition.triage : stepDown(r.condition.triage)
+    if (TRIAGE_LEVELS.indexOf(level) > TRIAGE_LEVELS.indexOf(triage)) {
+      triage = level
+      reasons.push(`${convincing ? 'możliwa przyczyna' : 'lekarz powinien wykluczyć'}: ${r.condition.name}`)
     }
-  }
+  })
   if (flags.length === 0 && input.answeredRedFlags) reasons.push('w wywiadzie nie zgłoszono objawów alarmowych')
 
   // Modifiers from the follow-up questions, symptom by symptom. With several symptoms the
