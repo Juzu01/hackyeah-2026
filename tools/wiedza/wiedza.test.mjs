@@ -5,7 +5,7 @@
 // Fails (exit 1) when the base breaks the format, a sample question doesn't reach its entry, the base answers
 // instead of the crisis lines or the 112 reply, plain feelings get a knowledge answer, or base text isn't escaped.
 import { createRequire } from 'node:module'
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import assert from 'node:assert/strict'
 import { DB_PATH, readJson, validateDb, validateEntry, topicIds } from './sprawdz.mjs'
@@ -54,6 +54,11 @@ for (const e of db.entries) {
 // 3. Plain feelings and small talk stay with the conversation
 const FEELINGS = ['jestem dziś bardzo smutny', 'pokłóciłem się z mamą', 'mam dość tej pracy', 'czuję się taka samotna',
   'hej', 'dziękuję', 'tak', 'nie wiem', 'jestem zła na szefa', 'zdałam egzamin!', 'boli mnie kolano']
+// ...and so do the topic tiles (art.js) and the mood faces (chat.js) on the chat screen
+const ART = readFileSync(new URL('../../soleil-main/art.js', import.meta.url), 'utf8')
+const CHAT = readFileSync(new URL('../../soleil-main/chat.js', import.meta.url), 'utf8')
+FEELINGS.push(...[...ART.matchAll(/group: '\w+', pl: '([^']+)'/g)].map((m) => m[1]),
+  ...JSON.parse((CHAT.match(/say: (\[[^\]]*\])/) || ['', '[]'])[1].replace(/'/g, '"')))
 for (const msg of FEELINGS) {
   check(`rozmowa: "${msg}"`, () => assert.ok(!ask(db, msg).topic.startsWith('info:'), `poszło do bazy: ${ask(db, msg).topic}`))
 }
@@ -69,6 +74,7 @@ check('tekst z bazy jest escapowany', () => {
   assert.ok(!/<img|<b>|<i>|javascript:|"onmouseover/.test(html), html)
   assert.ok(html.includes('href="tel:112"'))
 })
+check('hasło bez pytajnika ("objawy ...") też trafia do bazy', () => assert.equal(ask({ entries: [evil] }, 'objawy zzztestu').topic, 'info:test-html'))
 check('bez bazy czat działa jak wcześniej', () => assert.equal(ask(null, 'jak zmierzyć ciśnienie?').topic.startsWith('info:'), false))
 
 // 5. Questions from the command line: just show where they go

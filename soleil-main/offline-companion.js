@@ -34,6 +34,14 @@
     /\b(pociac|potne|tne|ciac) sie\b/, /\bsie (pociac|potne|tne)\b/,
     /\b(powiesic|powiesze) sie\b/, /\bsie powiesic\b/, /\bwyskocz\w* (z okna|z mostu|z balkonu)/, /\brzuc\w* sie pod (pociag|auto|samochod)/,
     /\bnie chce sie (juz )?obudzic\b/, /\b(lepiej|lzej) (by )?(bylo|bedzie) (wszystkim )?beze mnie\b/, /\b(lepiej|lzej) beze mnie\b/, /\bbeze mnie (\w+ ){0,2}(lepiej|lzej)\b/,
+    /\b(lepiej|lzej) (by )?(bylo|bedzie|byloby) (mi )?(juz )?(nie zyc|umrzec|nie istniec)\b/, /\b(wolalbym|wolalabym|wole) (juz )?(nie zyc|nie istniec)\b/,
+    /\b(zebym|abym|gdybym) (juz )?(nie zyl|nie zyla|umarl|umarla|nie istnial|nie istniala)\b/,
+    /\b(chce|chcialbym|chcialabym|wolalbym|wolalabym) (\w+ )?zniknac( na zawsze| z tego swiata)?$/,
+    // Wanting to join someone who died ('chcę dołączyć do mamy', 'chciałabym już być z mężem')
+    /\b(chce|chcialbym|chcialabym|wolalbym|wolalabym) (juz )?dolaczyc do (mamy|taty|meza|zony|syna|corki|dziecka|babci|dziadka|brata|siostry|niego|niej|nich)$/,
+    /\b(chce|chcialbym|chcialabym) juz byc (z|przy) (mama|tata|mezem|zona|synem|corka|dzieckiem|babcia|dziadkiem|bratem|siostra|nim|nia)$/,
+    /\b(chce|chcialbym|chcialabym) (juz )?(byc|isc|dolaczyc) (\w+ ){0,2}(w niebie|do nieba|na tamtym swiecie|po drugiej stronie)\b/,
+    /\bmysle o (wlasnej )?smierci\b(?! (mam|mamy|tat|babc|dziad|brat|siostr|mez|zon|syn|cork|przyjaci|psa|kota|bliski))/,
     /\btargnac sie\b/, /\bzniknac na zawsze\b/, /\bnie dam rady (dluzej |dalej )?zyc\b/,
     // Sleep and pills ('zasnąć i się nie obudzić', 'wszystkie tabletki naraz'); 'zasnąłem i nie obudziłem się na czas' is not crisis
     /\b(za|u)sn(ac|e) (i )?((sie|juz|nigdy|wiecej) ){0,3}nie (obudzic|obudze|budzic)\b/, /\b(za|u)sn(ac|e) na (zawsze|wieki)\b/,
@@ -55,14 +63,45 @@
   ];
   const HELP_HTML = '<span class="hy-help">' + HELP_LINES.map(([tel, label, what]) =>
     `<a class="hy-tel-row" href="tel:${tel}"><strong>${label}</strong><span>${what}</span></a>`).join('') + '</span>';
+  // Wanting to hurt a child ('chcę skrzywdzić dziecko') is a crisis too, with its own first step
+  const HARM_CHILD = /\b(chce|chcialbym|chcialabym|zamierzam|zaraz|mam ochote) (\w+ )?(skrzywdzic|skrzywdze|udusic|udusze|uderzyc|uderze|zabic|zabije|zrobic krzywde|zrobie krzywde) (\w+ )?(dziecko|dziecku|dzieci|dzieciom|synka|synkowi|syna|corke|coreczke|niemowle|malucha|maluszka)\b/;
+  // 'uduszę dziecko', 'zabiję dziecko, jak nie przestanie płakać', 'wyrzucę dziecko przez okno' are a crisis too,
+  // but 'boję się, że skrzywdzę dziecko' (a fear, usually an intrusive thought) goes to the knowledge base
+  const HARM_CHILD_NOW = /\b(udusze|zabije|skrzywdze|uderze|wyrzuce|utopie|zrobie krzywde) (\w+ )?(to |moje |swoje )?(dziecko|dziecku|synka|synkowi|syna|coreczke|coreczce|corke|niemowle|niemowleciu|malucha|maluchowi|maluszka)\b|\bzrobie (dziecku|synkowi|coreczce|niemowleciu|maluchowi) krzywde\b/;
+  const FEAR_OR_THOUGHT = /\b(boje sie|obawiam sie|strach|mysl\w*|natret\w*)\b/;
+  CRISIS.push(HARM_CHILD, { test: (n) => HARM_CHILD_NOW.test(n) && !FEAR_OR_THOUGHT.test(n) },
+    /\bglos\w* (\w+ ){0,2}(kaz\w*|rozkaz\w*|mowia mi zeby) (\w+ ){0,2}(skrzywdzic|zabic|zrobic krzywde|udusic)\b/);
+  const HARM_CHILD_LINE = ' Jeśli boisz się, że zrobisz krzywdę dziecku: połóż je w bezpiecznym miejscu, na przykład w łóżeczku, wyjdź na chwilę z pokoju i zadzwoń do kogoś. Gdy dziecku grozi niebezpieczeństwo, dzwoń pod <a class="hy-tel" href="tel:112">112</a>.';
+  // A crisis message that mentions someone close ('mój syn mówi, że chce się zabić') also gets a line for the one who worries
+  const OTHER_PERSON = new RegExp('\\b(syn|synek|syna|synowi|corka|corki|corke|corce|coreczka|brat|brata|bratu|siostra|siostry|siostre|siostrze|' +
+    'mama|mamy|mame|mamie|matka|matki|matke|matce|tata|taty|tate|tacie|ojciec|ojca|ojcu|babcia|babci|babcie|dziadek|dziadka|dziadkowi|' +
+    'maz|meza|mezowi|zona|zony|zone|zonie|chlopak|chlopaka|chlopakowi|dziewczyna|dziewczyny|dziewczynie|partner|partnera|partnerowi|partnerka|partnerki|partnerce|' +
+    'przyjaciel|przyjaciela|przyjacielowi|przyjaciolka|przyjaciolki|przyjaciolke|przyjaciolce|kolega|kolegi|kolege|koledze|kolezanka|kolezanki|kolezanke|kolezance|' +
+    'kumpel|kumpla|kumplowi|znajomy|znajoma|dziecko|dziecka|dziecku|uczen|ucznia|uczennica|ktos bliski|bliska osoba|bliskiej osoby)\\b');
+  const OTHER_PERSON_LINE = ' Jeśli piszesz o bliskiej osobie: gdy grozi jej niebezpieczeństwo, dzwoń pod <a class="hy-tel" href="tel:112">112</a> i nie zostawiaj jej samej. Pod 800 70 2222 i 116 123 możesz też zapytać, jak jej pomóc.';
 
   // ---- 2. Urgent body symptoms: point to 112, no diagnosis ----
+  // A shaken baby needs a doctor at once, even if it looks fine ('potrząsnęłam dzieckiem')
+  const SEDATIVE = '(alprazolam\\w*|xanax\\w*|afobam\\w*|lorazepam\\w*|lorafen\\w*|diazepam\\w*|relanium\\w*|klonazepam\\w*|clonazepam\\w*|rivotril\\w*|' +
+    'zolpidem\\w*|stilnox\\w*|zopiklon\\w*|benzo\\w*|(tabletk\\w*|lek\\w*|proszk\\w*) (na sen|nasenn\\w*|uspokajaj\\w*))';
+  const ALCOHOL = '(piwo|piwa|piw|piwie|wodka|wodki|wodke|wodce|wino|wina|winie|alkohol\\w*|drink\\w*|kieliszk\\w*|shot\\w*|whisky)\\b';
+  const SEDATIVE_ALCOHOL = new RegExp(`\\b${SEDATIVE} (\\w+ ){0,8}${ALCOHOL}|\\b${ALCOHOL} (\\w+ ){0,8}${SEDATIVE}`);
+  const TOOK = /\b(wzi[ae]l\w*|lykn\w*|zazyl\w*|polkn\w*|wypil\w*|pil(em|am)|po (\w+ )?(piwie|winie|wodce|alkoholu|drinku|drinkach))\b/;
+  const SHAKEN = /\bpotrza(s|sn)\w* (\w+ )?(dzieck\w*|niemowl\w*|synk\w*|coreczk\w*|maluch\w*|maluszk\w*)/;
+  const SHAKEN_LINE = ' Jeśli niemowlę zostało potrząśnięte, od razu dzwoń pod <a class="hy-tel" href="tel:112">112</a> albo jedź na SOR, nawet jeśli dziecko wygląda dobrze.';
   const RED_FLAG = [
     /\bbol\w* (\w+ ){0,2}(w|na) klat/, /\b(kluje|klucie|sciska|ucisk\w*|gniecie|piecze) (\w+ ){0,2}(w|na) klat/,
     /\bklat\w* (\w+ )?(boli|bola|kluje|sciska|piecze)\b/, /\bbol\w* (\w+ )?klatk/, /\bklat\w* piersiow/,
     /\bdusz(nosc\w*|e sie|i mnie)\b/, /\bsie dusze\b/, /\bbrak\w* (mi )?(tchu|powietrza)\b/, /\b(dusi|dlawi) (mnie|go|ja|sie)\b/,
     /\boddycha\w* (\w+ )?(wolno|plytko|slabo|chrapliwie|nieregularnie)\b/, /\bnie oddycha\b/, /\bprzesta\w* oddychac\b/,
-    /\bnie moge (zlapac )?(oddechu|oddychac)\b/, /\btrudno (mi )?(oddychac|zlapac oddech)/,
+    /\bnie moge (zlapac )?(oddechu|oddychac)\b/, /\b(trudno|ciezko) (mi )?(oddychac|zlapac oddech|sie oddycha)/,
+    // Sudden confusion ('tata nagle jest splątany', 'mama nagle nie wie, gdzie jest')
+    /\bnagle (\w+ ){0,3}(splatan\w*|zdezorientowan\w*|nie wie gdzie jest|nikogo nie poznaje|nie poznaje mnie|mowi bez sensu)/,
+    /\b(splatan\w*|zdezorientowan\w*) (\w+ ){0,2}nagle\b/,
+    // Heart racing that doesn't stop ('serce mi wali od 20 minut i nie przestaje')
+    /\b(serce|serducho|serduszko) (mi )?(wali|kolacze|bije|lomocze|galopuje|szaleje)\b (\w+ ){0,5}(nie przestaje|nie mija|nie zwalnia|nie przechodzi)\b/,
+    /\b(serce|serducho|serduszko) (mi )?(wali|kolacze|lomocze|galopuje|szaleje) od (\w+ )?(minut\w*|godzin\w*)\b/,
+    /\bkolatani\w* (serca )?(\w+ ){0,3}(nie mija|nie przechodzi|nie ustepuje|nie przestaje|od (\w+ )?(minut\w*|godzin\w*))\b/,
     /\bdretwie\w* (mi )?(twarz|reka|noga|polowa)/, /\bopadl\w* (mi )?kacik/, /\bzemdl/, /\bstracil\w* przytomnosc/,
     // Stroke signs ('opadający kącik ust', 'mówi niewyraźnie', 'bełkocze')
     /\bkrzyw\w* (\w+ )?(buzi\w*|twarz\w*|usta)\b/, /\b(mama|tata|maz|zona|dziecko|syn|corka|babcia|dziadek|brat|siostra)\w* (\w+ )?nie reaguje( na nic)?$/,
@@ -72,8 +111,35 @@
     /\bnie (moge|mozemy|da sie) (go|jej|ich|mamy|taty|meza|zony|dziecka|syna|corki|babci|dziadka|brata|siostry) obudzic\b/,
     /\bnie reaguj\w* na (glos|bodzc\w*|wolanie|dotyk|potrzasani\w*|szczypani\w*)/, /\bledwo (\w+ )?oddycha/,
     /\b(dziecko|synek|syn|corka|coreczka|maluch|niemowle|wnuk|wnuczka)\w* (\w+ ){0,2}(zjadl|polkn|lykn)\w* (\w+ ){0,2}(tabletk\w*|leki|lekow|lekarstw\w*|pigulk\w*|melatonin\w*|kapsulk\w*)/, /\bzatru\w* (\w+ )?(lekami|lekiem|tabletkami)\b/,
+    /\b(dziecko|synek|corka|coreczka|maluch|niemowle|wnuk|wnuczka)\w* (\w+ ){0,2}polkn\w*/, // swallowed: a pill, a battery, a coin
+    SHAKEN,
     /\b(zjadl|polkn|lykn|wzi[ae]l|zazyl)\w* (\w+ ){0,2}(cale opakowanie|cala paczke|caly blister|wszystkie|garsc|duzo|kilkanascie|kilkadziesiat) (\w+ ){0,2}(tabletek|tabletki|lekow|leki|pigulek|pigulki|tabsow|tabsy|kapsulek|kapsulki|melatonin\w*)\b/,
+    /\b(zjadl|polkn|lykn|wzi[ae]l|zazyl)\w* (\w+ ){0,2}(cale opakowanie|cala paczke|caly blister|cala fiolke)\b/,
+    /\b(zjadl|polkn|lykn|wzi[ae]l|zazyl)\w* (\w+ )?([1-9]\d|\d{3,}) (tabletek|tabletki|tabsow|pigulek|kapsulek|kapsulki)\b/,
+    // Sedatives or sleeping pills already taken with alcohol ('wziąłem 3 tabletki alprazolamu i wypiłem 2 piwa');
+    // asking ahead ('czy mogę wypić wino, biorąc xanax?') goes to the knowledge base
+    { test: (n) => SEDATIVE_ALCOHOL.test(n) && TOOK.test(n) },
   ];
+
+  // ---- 2b. Violence at home: 112 and the Niebieska Linia ('mąż mnie bije') ----
+  const VIOLENCE = [
+    /\b(mnie|nas|mame|mamie|dzieci|dziecko|siostre|brata) (\w+ )?(bije|bija|bil|bila|bili|uderza|uderzyl\w*|kopie|kopal\w*|szarpie|szarpal\w*|popycha|popchnal\w*|katuje|dusil\w*)\b/,
+    /\b(bije|bija|bil|bila|bili|uderza|kopie|szarpie|popycha|katuje) (mnie|nas|mame|dzieci|dziecko)\b/,
+    /\bprzemoc\w* (domow\w*|w domu|w rodzinie|w zwiazku)\b/, /\b(doznaj\w*|doswiadcz\w*) przemocy\b/,
+    /\bzneca\w* sie nad(e)? (mna|nami|dziec\w*|mam\w*|zon\w*|mezem)\b/, /\bnad(e)? (mna|nami) (\w+ )?zneca/,
+    /\b(grozi|grozil\w*) (mi|nam) (\w+ )?(smiercia|pobiciem|nozem|ze (mnie|nas) (zabije|pobije))\b/,
+    /\b(mi|nam) (grozi|grozil\w*) (\w+ )?(smiercia|pobiciem|nozem|ze (mnie|nas) (zabije|pobije))\b/,
+  ];
+  const VIOLENCE_REPLY = 'To, co opisujesz, to przemoc, i to nie twoja wina. Jeśli grozi ci niebezpieczeństwo teraz, dzwoń pod <a class="hy-tel" href="tel:112">112</a> albo idź w bezpieczne miejsce. ' +
+    'Całą dobę i bezpłatnie pomoże Niebieska Linia dla osób doznających przemocy domowej: <a class="hy-tel" href="tel:800120002">800 120 002</a>. Dzieci i młodzież: <a class="hy-tel" href="tel:116111">116 111</a>. ' +
+    'Jestem tu, jeśli chcesz napisać, co się dzieje.';
+
+  // Sexual assault ('zostałam zgwałcona'): time matters, so SOR and the 72 hours come first. Wording from the
+  // verified 'ptsd' entry in data/wiedza.json.
+  const ASSAULT = /\b(zgwalcil\w*|zgwalcon\w*|zgwalcili|zgwalcono|gwalcil\w*|gwalci mnie|po gwalcie|wykorzystal\w* mnie seksualnie|napasc\w* seksualn\w*|molestowal\w* mnie|molestuje mnie|mnie (\w+ )?(molestuje|molestowal\w*)|dotykal\w* mnie bez zgody|dotyka mnie bez zgody)\b/;
+  const ASSAULT_REPLY = 'To, co cię spotkało, to przemoc i to nie twoja wina. Jeśli grozi ci niebezpieczeństwo, dzwoń pod <a class="hy-tel" href="tel:112">112</a>. ' +
+    'Jeśli to było w ostatnich dniach, jak najszybciej jedź na SOR (niech ktoś cię zawiezie) i powiedz, co się stało. Liczy się czas: leki chroniące przed HIV trzeba zacząć w ciągu 72 godzin, a antykoncepcję awaryjną przyjąć w ciągu 3–5 dni. ' +
+    'Wsparcie psychologiczne i prawne całą dobę: <a class="hy-tel" href="tel:116006">116 006</a>. Jestem tu, jeśli chcesz napisać więcej.';
 
   // ---- 3. Topics ----
   const T = {
@@ -272,14 +338,19 @@
     'Możesz dalej do mnie pisać. Ale proszę, zadzwoń też do jednego z tych numerów — tam po drugiej stronie jest człowiek:',
   ];
   const REMINDER = '<span class="hy-reminder">Gdyby znów było bardzo ciężko: <a class="hy-tel" href="tel:116123">116 123</a> <a class="hy-tel" href="tel:800702222">800 70 2222</a> <a class="hy-tel" href="tel:112">112</a></span>';
-  const RED_FLAG_REPLY = `To może być pilne. Jeśli ból w klatce piersiowej jest silny, trudno ci oddychać, nagle opada kącik ust, drętwieje ręka albo mowa staje się niewyraźna, ktoś traci przytomność albo mógł przedawkować leki — nie czekaj, dzwoń pod <a class="hy-tel" href="tel:112">112</a>. Nie postawię diagnozy, ale gdy sytuacja jest spokojna, możesz sprawdzić objaw w „${CHECKER}”.`;
+  const RED_FLAG_REPLY = `To może być pilne. Jeśli ból w klatce piersiowej jest silny, trudno ci oddychać, serce wali i nie zwalnia mimo odpoczynku, nagle opada kącik ust, drętwieje ręka albo mowa staje się niewyraźna, ktoś nagle jest splątany, traci przytomność albo mógł przedawkować leki — nie czekaj, dzwoń pod <a class="hy-tel" href="tel:112">112</a>. Nie postawię diagnozy, ale gdy sytuacja jest spokojna, możesz sprawdzić objaw w „${CHECKER}”.`;
 
   const strip = (html) => html.replace(/<\/?a\b[^>]*>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').replace(/ ([,.?!:])/g, '$1').trim();
 
   // ---- 3. Knowledge base: data/wiedza.json (entries verified and tested before they get here) ----
-  // An entry answers when the message hits one of its keywords AND is a question ("jak zmierzyć ciśnienie?")
-  // or has no feeling in it ("ciśnienie"). Plain feelings ("nie mogę spać") stay with the conversation.
-  const QUESTION = /^(jak\w*|co|czy|kiedy|ile|dlaczego|czemu|gdzie|po co|czym|kto|ktor\w+|w jaki sposob)\b|\b(dlaczego|czemu)$|\b(co (robic|zrobic|pomaga|oznacza|to jest|to znaczy|moge|mam|warto|wziac|brac)|jak (sie )?\w+|czy (to|moge|mozna|warto|trzeba|powinien\w*|musze)|powiedz|wyjasnij|wytlumacz|opowiedz|porad\w*|informacj\w*)\b/;
+  // An entry answers when the message hits one of its keywords AND is a question ("jak zmierzyć ciśnienie?",
+  // "objawy depresji") or has no feeling in it ("ciśnienie"). Plain feelings ("nie mogę spać") stay with the conversation.
+  const QUESTION = /^(jak\w*|co|czego|czy|kiedy|ile|dlaczego|czemu|gdzie|po co|czym|kto|ktor\w+|w jaki sposob|objaw\w*|przyczyn\w*|leczeni\w*|skutk\w*|sposob\w* na|test\w* na)\b|\b(objawy|przyczyny|leczenie|skutki|diagnoza|definicja)$|^\w+ a \w+$|\b(dlaczego|czemu)$|\b(co (robic|zrobic|pomaga|oznacza|to jest|to znaczy|moge|mam|warto|wziac|brac)|jak (sie )?\w+|czy (to|moge|mozna|warto|trzeba|powinien\w*|musze)|powiedz|wyjasnij|wytlumacz|opowiedz|porad\w*|informacj\w*)\b/;
+  const LOSS = /\b(zmarl|zmarla|zmarlo|zmarli|umarl|umarla|umarlo|zginal|zginela|odszedl od nas|odeszla od nas|poronilam|poronienie|pogrzeb\w*)\b/;
+  const HURT_CHILD_FEAR = /\b(skrzywdz\w*|krzywd\w*) (\w+ ){0,2}(dzieck\w*|synk\w*|coreczk\w*|niemowl\w*|malucha|maluszk\w*)\b|\b(dzieck\w*|synk\w*|coreczk\w*|niemowl\w*|malucha|maluszk\w*) (\w+ ){0,2}krzywd\w*|\bzrobi\w* cos (\w+ )?(dzieck\w*|synk\w*|coreczc\w*|niemowl\w*|maluch\w*)\b/;
+  const OTHER_AT_RISK = /\b(cos sobie zrobi|zrobi sobie krzywd\w*|sie tnie|tnie sie|sie okalecza|okalecza sie)\b/;
+  // A sedative by name ('xanax przed egzaminem') is a question about the medicine, not small talk about exams
+  const NEEDS_FACTS = [LOSS, HURT_CHILD_FEAR, OTHER_AT_RISK, new RegExp(`\\b${SEDATIVE}`)];
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   const lowerFirst = (s) => (/^\p{Lu}\p{Ll}/u.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
 
@@ -298,7 +369,10 @@
   // Best entry for the message, or null. Score = matched keyword words, so longer phrases win.
   function findInfo(kb, raw, d) {
     if (!kb || !kb.length) return null;
-    if (!(raw.includes('?') || QUESTION.test(d.n) || d.topic === 'open')) return null;
+    // A fear of hurting one's child ('boję się, że skrzywdzę dziecko'), a worry that someone close will hurt themselves
+    // ('boję się, że brat coś sobie zrobi') or a death ('smutno mi, bo zmarł dziadek') is better met by the checked
+    // entry than by a breathing exercise or "co się dziś wydarzyło?"
+    if (!(raw.includes('?') || QUESTION.test(d.n) || d.topic === 'open' || NEEDS_FACTS.some((re) => re.test(d.n)))) return null;
     let best = null, bestScore = 0;
     for (const item of kb) {
       const score = item.keys.reduce((s, k) => s + (k.re.test(d.n) ? k.words : 0), 0);
@@ -325,6 +399,8 @@
     if (!n) return { topic: 'open', n };
     if (CRISIS.some((re) => re.test(n))) return { topic: 'crisis', n };
     if (RED_FLAG.some((re) => re.test(n))) return { topic: 'redflag', n };
+    if (ASSAULT.test(n)) return { topic: 'assault', n };
+    if (VIOLENCE.some((re) => re.test(n))) return { topic: 'violence', n };
     const score = {};
     for (const [topic, list] of Object.entries(T)) score[topic] = list.filter((re) => re.test(n)).length;
     if (score.joy && NEGATED_JOY.test(n)) { score.joy = 0; score.sad += 1; }
@@ -373,15 +449,19 @@
       if (t === 'crisis') {
         const again = topic === 'crisis';
         html = (again ? pick('crisisF', CRISIS_FOLLOW) : pick('crisis', CRISIS_REPLIES)) + HELP_HTML +
-          (again ? '' : 'Jestem tu i możesz dalej do mnie pisać. Czy jest teraz ktoś blisko, do kogo możesz zadzwonić albo napisać?');
+          (again ? '' : 'Jestem tu i możesz dalej do mnie pisać. Czy jest teraz ktoś blisko, do kogo możesz zadzwonić albo napisać?') +
+          (HARM_CHILD.test(d.n) || HARM_CHILD_NOW.test(d.n) ? HARM_CHILD_LINE : OTHER_PERSON.test(d.n) ? OTHER_PERSON_LINE : '');
         topic = 'crisis';
       } else if (topic === 'crisis' && ['yes', 'no', 'dunno', 'open', 'fine', 'meh', 'sad', 'lonely', 'tired', 'thanks', 'bye'].includes(t)) {
         // After a crisis signal, keep a caring tone and keep the numbers close at hand
         t = 'crisis';
         html = pick('crisisF', CRISIS_FOLLOW) + HELP_HTML;
       } else if (t === 'redflag') {
-        html = RED_FLAG_REPLY;
+        html = RED_FLAG_REPLY + (SHAKEN.test(d.n) ? SHAKEN_LINE : '');
         topic = 'pain';
+      } else if (t === 'violence' || t === 'assault') {
+        html = t === 'assault' ? ASSAULT_REPLY : VIOLENCE_REPLY;
+        topic = t;
       } else if ((info = findInfo(ownKnowledge || sharedKnowledge, raw, d))) {
         html = infoReply(info);
         kind = 'info';

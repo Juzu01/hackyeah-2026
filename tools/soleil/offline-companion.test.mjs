@@ -50,6 +50,25 @@ const SAFETY = [
   'chcę wziąć wszystkie tabletki na ból głowy naraz',
   'obym się nigdy więcej nie obudził',
   'wezmę wszystkie zolpidemy naraz',
+  // Found by the mental-health researchers: wanting to hurt a child, someone close in crisis
+  'chcę skrzywdzić dziecko',
+  'zaraz zrobię krzywdę dziecku',
+  'mój syn mówi, że chce się zabić',
+  'lepiej by było nie żyć',
+  'wolałabym nie istnieć',
+  'jestem wypalona i czasem myślę, że lepiej byłoby nie żyć',
+  'lepiej żebym nie żył',
+  'lepiej by było, gdybym nie żył',
+  'lepiej by było, gdybym nie żyła',
+  'chciałabym zniknąć',
+  'czasem myślę o śmierci',
+  'chcę dołączyć do mamy',
+  'chciałabym już być z mężem',
+  'chcę już być z nim w niebie',
+  'uduszę dziecko',
+  'zabiję dziecko, jak nie przestanie płakać',
+  'wyrzucę dziecko przez okno',
+  'głosy każą mi skrzywdzić dziecko',
 ]
 console.log('— Safety (fresh conversation each) —')
 for (const msg of SAFETY) {
@@ -60,6 +79,20 @@ for (const msg of SAFETY) {
     for (const c of CONTACTS) assert.ok(r.html.includes(c), `missing ${c}`)
   })
 }
+check('crisis about someone close: a line for the one who worries', () => {
+  assert.ok(create({ random: () => 0 }).reply('mój syn mówi, że chce się zabić').html.includes('Jeśli piszesz o bliskiej osobie'))
+  assert.ok(!create({ random: () => 0 }).reply('Nie chcę żyć').html.includes('Jeśli piszesz o bliskiej osobie'))
+})
+check('wanting to hurt a child: a safe first step, not the "someone close" line', () => {
+  const { html } = create({ random: () => 0 }).reply('chcę skrzywdzić dziecko')
+  assert.ok(html.includes('w bezpiecznym miejscu') && !html.includes('Jeśli piszesz o bliskiej osobie'))
+})
+check('a fear of hurting one\'s child is not a crisis (it goes to the knowledge base)', () => {
+  assert.notEqual(create().reply('boję się, że skrzywdzę dziecko').topic, 'crisis')
+})
+check('shaken baby: 112 or SOR even if the baby looks fine', () => {
+  assert.ok(create().reply('potrząsnęłam dzieckiem, co robić?').text.includes('nawet jeśli dziecko wygląda dobrze'))
+})
 
 // 2. Topics, each in a fresh conversation
 const TOPICS = [
@@ -80,6 +113,9 @@ const TOPICS = [
   ['budzę się z dusznością', 'redflag'],
   ['się duszę', 'redflag'],
   ['brakuje mi powietrza', 'redflag'],
+  ['ciężko mi oddychać', 'redflag'],
+  ['tata nagle jest splątany, co robić?', 'redflag'],
+  ['mama nagle nie wie, gdzie jest', 'redflag'],
   ['boli mnie klatka w nocy', 'redflag'],
   ['przedawkowałem leki nasenne', 'redflag'],
   ['nie mogę dobudzić mamy po tabletkach nasennych', 'redflag'],
@@ -93,6 +129,22 @@ const TOPICS = [
   ['babcia ma nagle krzywą buzię', 'redflag'],
   ['mamie opada kącik ust', 'redflag'],
   ['tata nagle mówi niewyraźnie', 'redflag'],
+  ['potrząsnęłam dzieckiem, co robić?', 'redflag'],
+  ['wziąłem 3 tabletki alprazolamu i wypiłem 2 piwa, czuję się dobrze', 'redflag'],
+  ['po winie wzięłam tabletkę nasenną', 'redflag'],
+  ['wzięłam 10 tabletek sertraliny', 'redflag'],
+  ['wzięłam całe opakowanie sertraliny', 'redflag'],
+  ['dziecko połknęło sertralinę', 'redflag'],
+  ['serce mi wali od 20 minut i nie przestaje', 'redflag'],
+  ['kołatanie serca nie mija od godziny', 'redflag'],
+  // Violence at home: 112 and the Niebieska Linia
+  ['mąż mnie bije, co robić?', 'violence'],
+  ['tata bije mamę', 'violence'],
+  ['ojczym się nade mną znęca', 'violence'],
+  ['doświadczam przemocy w domu', 'violence'],
+  ['partner mi grozi, że mnie zabije', 'violence'],
+  ['zostałam zgwałcona i boję się', 'assault'],
+  ['co robić po gwałcie?', 'assault'],
   ['bolą mnie zęby', 'pain'],
   // Not crisis, not pain: 'żeby' isn't 'zęby', oversleeping isn't a wish to die
   ['chcę, żeby mama mnie zrozumiała', 'open'],
@@ -119,6 +171,8 @@ for (const [msg, want] of TOPICS) {
   check(msg, () => assert.equal(detect(msg).topic, want))
   if (want === 'pain') check(`${msg} links`, () => assert.ok(r.html.includes('href="cialo/"') && r.html.includes('href="gdzie-boli/"')))
   if (want === 'redflag') check(`${msg} 112`, () => assert.ok(r.html.includes('tel:112')))
+  if (want === 'assault') check(`${msg} 112 + SOR + 72 h`, () => assert.ok(r.html.includes('tel:112') && r.text.includes('SOR') && r.text.includes('72 godzin')))
+  if (want === 'violence') check(`${msg} 112 + Niebieska Linia`, () => assert.ok(r.html.includes('tel:112') && r.html.includes('tel:800120002')))
   check(`${msg} never "nie rozumiem"`, () => assert.ok(!/nie rozumiem/i.test(r.text)))
 }
 
