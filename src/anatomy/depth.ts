@@ -3,7 +3,8 @@
 // and bones solidify, then the organs pull apart (exploded view).
 
 export const ZOOM_MIN = 0.85
-export const ZOOM_MAX = 9
+/** Close enough for the smallest organs, not so close you fly through the body. */
+export const ZOOM_MAX = 6
 
 /** Zoom at which each transition starts and ends. */
 export const DEPTH = {

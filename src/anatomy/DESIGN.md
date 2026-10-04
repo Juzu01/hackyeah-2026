@@ -13,7 +13,7 @@ The art direction and engineering contract for `src/anatomy/` and its app chrome
 1. **Clinical restraint.** Near-black canvas and cool neutral hairlines. Colour appears only where it means something: tissue colour on the active layer, plus one accent for "selected / active".
 2. **Precision language, app manners.** Latin terminology, thin hairlines, one tag style; but touch targets ≥ 44 px, 15–16 px body text on phones, sentence case, and the safe areas respected.
 3. **Zoom is depth.** Zooming in goes deeper: skin → muscles → organs and bones → organs pulled apart (exploded view). A three-way layer switch is a shortcut to the same depths and mirrors the zoom live.
-4. **Calm motion.** Critically damped easing, 200–600 ms, no bounce, no wobble. Inertia on rotation. Respect `prefers-reduced-motion`.
+4. **Calm motion.** Critically damped easing, 200–600 ms, no bounce, no wobble. No inertia: the body moves only while you hold it. Respect `prefers-reduced-motion`.
 5. **One hero.** The body is the whole show. The chrome is a title bar and a bottom control; a selected part always stays visible above (or beside) its sheet.
 
 ## 2. Data contract
@@ -60,9 +60,9 @@ Typography, bundled via `@fontsource` (no network fonts): **Nunito** (revision 6
 ## 5. Camera, gestures, depth
 
 - `PerspectiveCamera`, **fov 30°** (telephoto, atlas-like, little distortion), orbiting a target. The initial framing fits the whole body (≈ 1.75 m) with comfortable margins in both portrait and landscape.
-- **One finger / left mouse:** turntable rotate. Azimuth is unlimited; polar angle is clamped to about ±25° from horizontal. Inertia with exponential decay.
-- **Two fingers:** pinch to zoom **towards the point between the fingers** (the 3D point under the midpoint; fall back to a plane through the target), plus pan by the midpoint delta. **Wheel / trackpad pinch:** zoom to the cursor. **Right-drag or shift-drag:** pan. The target stays inside the body's bounds.
-- Zoom factor `z = fitDistance / distance` ranges from 0.85 to about 9.
+- **One finger / left mouse:** turntable rotate. Azimuth is unlimited; polar angle is clamped to about ±25° from horizontal. No inertia: the body turns only while held, so it can't be flung.
+- **Two fingers:** pinch to zoom **towards the point between the fingers** (the 3D point under the midpoint; fall back to a plane through the target). **Wheel / trackpad pinch:** zoom to the cursor. No panning. Zooming out always heads back to the fitted view (the target's offset shrinks with the zoom and is gone at zoom 1). The target stays inside the body's bounds.
+- Zoom factor `z = fitDistance / distance` ranges from 0.85 to 6.
 - **Depth mapping** (all values are interpolated and eased):
   - `z < 1.35`: **Muscles** layer active and solid; deep layer ghosted; skin shell visible.
   - `1.35 → 2.0`: muscles cross-fade to ghost while organs and bones cross-fade to solid. Pickability switches at the midpoint.

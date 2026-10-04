@@ -15,7 +15,7 @@ The engine here is framework-free TypeScript on three.js. The app around it (tit
 | `footprint.ts` | frontal occupancy grids: explode silhouettes, label anchors, the skeleton's depth |
 | `explode.ts` | the explode solver (convex hulls + SAT, ported from the 2D map) |
 | `depth.ts` | zoom → layer weights, explode amount, depth name; the layer switch's presets |
-| `controls.ts` | orbit rig (inertia, zoom-to-point, animations) and pointer gestures |
+| `controls.ts` | orbit rig (rotate, zoom-to-point that heads home when zooming out, animations; no inertia, no panning) and pointer gestures |
 | `picking.ts` | GPU picking with the fat-finger radius |
 | `tethers.ts` | hairlines from exploded organs back to where they sit |
 | `labels.ts` | selection marker (ring on the part), hover tag, aria-live announcer |
@@ -62,7 +62,7 @@ node tools/browser/shot.mjs 'http://localhost:5181/?noscan&nohint&zoom=3.8&sel=h
 
 ## Notes
 
-- Render on demand: a frame is drawn only while input, inertia, an animation, the scan sweep or a sheet transition is running. `state().fps` measures consecutive frames only.
+- Render on demand: a frame is drawn only while input, an animation, the scan sweep or a sheet transition is running. `state().fps` measures consecutive frames only.
 - Service worker: production builds register `sw.js?v=<commit>` with the app's scope. Pages are network-first, hashed assets, icons and the model cache-first, all in one cache per build (older ones are deleted on activate). After registering, the page sends the worker what it already loaded, so the model is cached from the first visit. Cross-origin requests (Supabase) are never touched. Not registered in dev, nor in the gdzie-boli build (its `index.html` also drops the manifest).
 - Label anchors sit on the part's visible surface, separately for the front and the back (a muscle's footprint is often partly under its neighbours). A muscle hidden from one side (the brachialis under the biceps from the front) is tapped from the other.
 - BodyParts3D's external oblique includes its aponeurosis, which covers the rectus abdominis from the front, so the "six-pack" taps as the external oblique.

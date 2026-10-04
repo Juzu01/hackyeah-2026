@@ -1,6 +1,6 @@
 // The atlas viewer: mounts the canvas and its overlays into a host element,
-// loads the model, and renders on demand, only while input, inertia, an
-// animation or loading is changing something. Framework-free: the app's chrome
+// loads the model, and renders on demand, only while input, an animation or
+// loading is changing something. Framework-free: the app's chrome
 // (title bar, layer switch, sheets) talks to it through the returned handle.
 
 import '@fontsource-variable/nunito'
@@ -342,7 +342,7 @@ class Viewer implements AnatomyViewer {
     if (gap < 100) this.fps = this.fps ? MathUtils.lerp(this.fps, 1000 / Math.max(1, gap), 0.08) : 1000 / Math.max(1, gap)
     this.lastTick = now
 
-    let busy = this.rig.step(now, dt)
+    let busy = this.rig.step(now)
     busy = this.ease(dt) || busy
     busy = this.scan(now) || busy
     this.applyView()
@@ -630,25 +630,16 @@ class Viewer implements AnatomyViewer {
         this.hover.show(null)
         this.canvas.classList.add('is-dragging')
       },
-      rotate: (dx: number, dy: number, now: number) => {
+      rotate: (dx: number, dy: number) => {
         const k = rotateSpeed()
-        this.rig.rotate(-dx * k, dy * k, now)
-        interacted()
-      },
-      pan: (dx: number, dy: number) => {
-        this.rig.pan(this.stage!.camera, dx, dy, this.rig.distance, this.height)
+        this.rig.rotate(-dx * k, dy * k)
         interacted()
       },
       pinchStart: (x: number, y: number) => {
         this.pointAt(x, y, this.pinchPoint)
       },
-      pinch: (scale: number, _x: number, _y: number, dx: number, dy: number) => {
-        const camera = this.stage!.camera
+      pinch: (scale: number) => {
         this.rig.zoomAt(scale, this.pinchPoint)
-        this.applyView()
-        camera.getWorldDirection(forward)
-        const depth = Math.max(0.05, tmp.subVectors(this.pinchPoint, camera.position).dot(forward))
-        this.rig.pan(camera, dx, dy, depth, this.height)
         interacted()
       },
       wheel: (factor: number, x: number, y: number) => {
@@ -656,10 +647,9 @@ class Viewer implements AnatomyViewer {
         this.rig.zoomAt(factor, this.pointAt(x, y, tmp2))
         interacted()
       },
-      end: (now: number) => {
+      end: () => {
         this.dragging = false
         this.canvas.classList.remove('is-dragging')
-        this.rig.release(now, !this.reducedMotion.matches)
         this.requestRender()
       },
       tap: (x: number, y: number) => {

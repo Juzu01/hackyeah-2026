@@ -1,16 +1,14 @@
 // Camera and gestures. The camera orbits a target like a turntable: azimuth is
-// unlimited, elevation is clamped. One finger or the left mouse button rotates
-// (with inertia); two fingers pinch towards the point between them and pan;
-// the wheel zooms to the cursor; right- or shift-drag pans. Animations use a
-// critically damped curve: no bounce, no wobble.
+// unlimited, elevation is clamped. One finger or the left mouse button rotates;
+// two fingers pinch to zoom towards the point between them; the wheel zooms to
+// the cursor. The body can't be thrown about: it turns only while held (no
+// inertia), there is no free panning, and zooming out always brings it back to
+// the middle. Animations use a critically damped curve: no bounce, no wobble.
 
 import { Box3, MathUtils, Vector3, type PerspectiveCamera } from 'three'
 import { ZOOM_MAX, ZOOM_MIN } from './depth.ts'
 
 export const POLAR_LIMIT = MathUtils.degToRad(25)
-/** Inertia: exponential decay time constant (s) and the fastest spin a flick can start (rad/s). */
-const INERTIA_TAU = 0.24
-const MAX_SPIN = 6
 
 export interface View {
   target: Vector3
@@ -28,9 +26,6 @@ function settle(t: number): number {
   return t >= 1 ? 1 : f(t) / f(1)
 }
 
-const right = new Vector3()
-const up = new Vector3()
-
 export class CameraRig {
   readonly target = new Vector3(0, 0.9, 0)
   distance = 4
@@ -43,9 +38,6 @@ export class CameraRig {
   /** The target never leaves these bounds. */
   readonly bounds = new Box3(new Vector3(-1, 0, -1), new Vector3(1, 2, 1))
 
-  private velAz = 0
-  private velPolar = 0
-  private lastRotate = 0
   private anim: { from: View; to: View; start: number; duration: number } | null = null
 
   get zoom() {
@@ -53,10 +45,10 @@ export class CameraRig {
   }
 
   get moving() {
-    return this.anim !== null || this.velAz !== 0 || this.velPolar !== 0
+    return this.anim !== null
   }
 
-  /** True while an `animateTo` is running (not inertia). */
+  /** True while an `animateTo` is running. */
   get animating() {
     return this.anim !== null
   }
@@ -96,61 +88,35 @@ export class CameraRig {
 
   stop() {
     this.anim = null
-    this.velAz = 0
-    this.velPolar = 0
   }
 
-  /** Turntable rotation by an angle delta, tracking velocity for inertia. */
-  rotate(dAz: number, dPolar: number, now: number) {
+  /** Turntable rotation by an angle delta; it stops the moment the finger does. */
+  rotate(dAz: number, dPolar: number) {
     this.anim = null
-    const dt = Math.max(1, now - this.lastRotate) / 1000
-    if (now - this.lastRotate < 100) {
-      this.velAz = MathUtils.lerp(this.velAz, dAz / dt, 0.6)
-      this.velPolar = MathUtils.lerp(this.velPolar, dPolar / dt, 0.6)
-    } else {
-      this.velAz = 0
-      this.velPolar = 0
-    }
-    this.lastRotate = now
     this.azimuth += dAz
     this.polar = MathUtils.clamp(this.polar + dPolar, -POLAR_LIMIT, POLAR_LIMIT)
   }
 
-  /** Called when the finger lifts: keep spinning only if it was still moving. */
-  release(now: number, inertia: boolean) {
-    if (!inertia || now - this.lastRotate > 60 || Math.abs(this.velAz) < 0.3) {
-      this.velAz = 0
-      this.velPolar = 0
-    }
-    // A hard flick turns the body, it doesn't spin it like a top.
-    this.velAz = MathUtils.clamp(this.velAz, -MAX_SPIN, MAX_SPIN)
-    // Elevation inertia feels like drift; keep it short.
-    this.velPolar *= 0.5
-  }
-
-  /** Moves the view so the content follows a drag of (dx, dy) px, measured at `depth` metres. */
-  pan(camera: PerspectiveCamera, dx: number, dy: number, depth: number, viewHeight: number) {
-    this.anim = null
-    const perPx = (2 * depth * Math.tan(MathUtils.degToRad(camera.fov) / 2)) / viewHeight
-    right.setFromMatrixColumn(camera.matrixWorld, 0)
-    up.setFromMatrixColumn(camera.matrixWorld, 1)
-    this.target.addScaledVector(right, -dx * perPx).addScaledVector(up, dy * perPx)
-    this.clamp()
-  }
-
-  /** Zooms by `factor` (> 1 = closer) keeping `point` fixed on screen. */
+  /**
+   * Zooms by `factor` (> 1 = closer). Zooming in keeps `point` fixed on screen, so you can go
+   * towards a part. Zooming out heads home instead: the target's offset from the fitted view
+   * shrinks with the zoom and is gone at zoom 1, so the body always comes back to the middle.
+   */
   zoomAt(factor: number, point: Vector3) {
     this.anim = null
+    const zoom = this.zoom
     const next = MathUtils.clamp(this.distance / factor, this.fitDistance / ZOOM_MAX, this.fitDistance / ZOOM_MIN)
-    const k = next / this.distance
-    this.target.sub(point).multiplyScalar(k).add(point)
+    if (next > this.distance) {
+      const keep = zoom > 1 ? Math.max(0, (this.fitDistance / next - 1) / (zoom - 1)) : 0
+      this.target.sub(this.home).multiplyScalar(keep).add(this.home)
+    } else {
+      this.target.sub(point).multiplyScalar(next / this.distance).add(point)
+    }
     this.distance = next
     this.clamp()
   }
 
   animateTo(to: View, duration: number) {
-    this.velAz = 0
-    this.velPolar = 0
     if (duration <= 0) {
       this.set(to)
       this.anim = null
@@ -162,8 +128,8 @@ export class CameraRig {
     this.anim = { from, to, start: performance.now(), duration }
   }
 
-  /** Advances inertia and animation; returns true while still moving. */
-  step(now: number, dt: number): boolean {
+  /** Advances the animation; returns true while still moving. */
+  step(now: number): boolean {
     if (this.anim) {
       const { from, to, start, duration } = this.anim
       const t = settle((now - start) / duration)
@@ -175,34 +141,22 @@ export class CameraRig {
       this.clamp()
       return true
     }
-    if (this.velAz || this.velPolar) {
-      const decay = Math.exp(-dt / INERTIA_TAU)
-      this.azimuth += this.velAz * dt
-      this.polar = MathUtils.clamp(this.polar + this.velPolar * dt, -POLAR_LIMIT, POLAR_LIMIT)
-      this.velAz *= decay
-      this.velPolar *= decay
-      if (Math.abs(this.velAz) < 0.02) this.velAz = 0
-      if (Math.abs(this.velPolar) < 0.02) this.velPolar = 0
-      return true
-    }
     return false
   }
 }
 
 export interface GestureHandlers {
-  /** A pointer went down: stop animations and inertia. */
+  /** A pointer went down: stop animations. */
   begin(): void
   /** One-finger / left-button drag, in px. */
-  rotate(dx: number, dy: number, now: number): void
-  /** Right- or shift-drag, in px, at screen point (x, y). */
-  pan(dx: number, dy: number, x: number, y: number): void
+  rotate(dx: number, dy: number): void
   /** Two fingers came down with their midpoint at (x, y). */
   pinchStart(x: number, y: number): void
-  /** Distance ratio since the last call, midpoint, and midpoint movement. */
-  pinch(scale: number, x: number, y: number, dx: number, dy: number): void
+  /** Distance ratio since the last call. */
+  pinch(scale: number): void
   wheel(factor: number, x: number, y: number): void
   /** All pointers are up. */
-  end(now: number): void
+  end(): void
   tap(x: number, y: number): void
   doubleTap(x: number, y: number): void
   /** A mouse moved over the view with no button pressed. */
@@ -220,7 +174,7 @@ type P = { x: number; y: number }
 
 export function attachGestures(el: HTMLElement, h: GestureHandlers): () => void {
   const pointers = new Map<number, P>()
-  let mode: 'rotate' | 'pan' | 'pinch' | 'idle' = 'idle'
+  let mode: 'rotate' | 'pinch' | 'idle' = 'idle'
   let tap: (P & { id: number; t: number }) | null = null
   let lastTap: (P & { t: number }) | null = null
   let pinch: { dist: number; mx: number; my: number } | null = null
@@ -235,7 +189,7 @@ export function attachGestures(el: HTMLElement, h: GestureHandlers): () => void 
   }
 
   const onDown = (e: PointerEvent) => {
-    if (e.pointerType === 'mouse' && e.button !== 0 && e.button !== 2) return
+    if (e.pointerType === 'mouse' && e.button !== 0) return
     try {
       el.setPointerCapture(e.pointerId)
     } catch {
@@ -245,8 +199,8 @@ export function attachGestures(el: HTMLElement, h: GestureHandlers): () => void 
     pointers.set(e.pointerId, p)
     h.begin()
     if (pointers.size === 1) {
-      mode = e.button === 2 || e.shiftKey ? 'pan' : 'rotate'
-      tap = e.button === 0 ? { id: e.pointerId, t: e.timeStamp, ...p } : null
+      mode = 'rotate'
+      tap = { id: e.pointerId, t: e.timeStamp, ...p }
     } else if (pointers.size === 2) {
       tap = null
       mode = 'pinch'
@@ -268,7 +222,7 @@ export function attachGestures(el: HTMLElement, h: GestureHandlers): () => void 
     pointers.set(e.pointerId, p)
     if (mode === 'pinch' && pinch && pointers.size >= 2) {
       const cur = pinchState()
-      h.pinch(cur.dist / pinch.dist, cur.mx, cur.my, cur.mx - pinch.mx, cur.my - pinch.my)
+      h.pinch(cur.dist / pinch.dist)
       pinch = cur
       return
     }
@@ -282,8 +236,7 @@ export function attachGestures(el: HTMLElement, h: GestureHandlers): () => void 
       dy = p.y - tap.y
       tap = null
     }
-    if (mode === 'rotate') h.rotate(dx, dy, e.timeStamp)
-    else h.pan(dx, dy, p.x, p.y)
+    h.rotate(dx, dy)
   }
 
   const onUp = (e: PointerEvent) => {
@@ -308,7 +261,7 @@ export function attachGestures(el: HTMLElement, h: GestureHandlers): () => void 
     } else {
       pinch = null
       mode = 'idle'
-      h.end(e.timeStamp)
+      h.end()
     }
   }
 
