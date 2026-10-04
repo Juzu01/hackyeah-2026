@@ -3,10 +3,10 @@ import { regionLabel, type Region } from '../body/regions.ts'
 import BodyMap from '../components/BodyMap.tsx'
 import EmergencyBar from '../components/EmergencyBar.tsx'
 import PersonCard from '../components/PersonCard.tsx'
+import PickedChips from '../components/PickedChips.tsx'
 import Steps from '../components/Steps.tsx'
 import SymptomPanel, { type PanelTarget } from '../components/SymptomPanel.tsx'
 import SymptomSearch from '../components/SymptomSearch.tsx'
-import { symptomName } from '../data/symptoms.ts'
 import { PERIOD, type CheckDraft } from '../lib/check.ts'
 import { loadProfile, saveProfile } from '../lib/history.ts'
 import { useMediaQuery } from '../lib/useMediaQuery.ts'
@@ -109,18 +109,7 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
         </p>
       ) : (
         <>
-          <ul className="tray-chips" aria-label={`Twoje objawy (${n})`}>
-            {draft.picks.map((p) => (
-              <li key={p.symptomId}>
-                <button type="button" onClick={() => togglePick(p.symptomId)} className="tray-chip" aria-label={`Usuń objaw: ${symptomName(p.symptomId)}`}>
-                  <span className="truncate">{symptomName(p.symptomId)}</span>
-                  <svg aria-hidden="true" viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="square">
-                    <path d="M6 6l12 12M18 6 6 18" />
-                  </svg>
-                </button>
-              </li>
-            ))}
-          </ul>
+          <PickedChips picks={draft.picks} onRemove={(id) => togglePick(id)} />
           <div className="tray-row">
             <label className="tray-consent">
               <input type="checkbox" checked={consent} onChange={(e) => setConsentPersist(e.target.checked)} className="check" />
@@ -128,7 +117,6 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
             </label>
             <button type="button" onClick={next} className="btn-primary shrink-0 px-6">
               Dalej
-              <span className="tray-count">{n}</span>
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M5 12h14M13 6l6 6-6 6" />
               </svg>
@@ -164,17 +152,28 @@ export default function StartScreen({ draft, update, togglePick, userId, onNext 
             </p>
           </div>
           <BodyMap view="front" active={target?.kind === 'region' ? target.region.id : undefined} counts={counts} onSelect={selectRegion} onHover={setHover} className="stage-figure" />
-          <div className="stage-more">
-            <button type="button" onClick={() => setTarget({ kind: 'general' })} aria-pressed={target?.kind === 'general'} className="chip">
+          {/* What has no one place on the body: one tidy row of small pills right under the feet. */}
+          <div className="stage-tags">
+            <button type="button" onClick={() => setTarget({ kind: 'general' })} aria-pressed={target?.kind === 'general'} aria-label="Całe ciało: gorączka, osłabienie, nudności" className="stage-tag">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10 13.6V5a2 2 0 1 1 4 0v8.6a4 4 0 1 1-4 0Z" />
+                <path d="M12 9.5v6" />
+              </svg>
               Całe ciało
-              <span className="chip-sub">gorączka, osłabienie</span>
             </button>
-            <button type="button" onClick={() => setTarget({ kind: 'skin' })} aria-pressed={target?.kind === 'skin'} className="chip">
+            <button type="button" onClick={() => setTarget({ kind: 'skin' })} aria-pressed={target?.kind === 'skin'} aria-label="Skóra: wysypka, swędzenie, zmiany" className="stage-tag">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3.5" y="4.5" width="17" height="15" rx="5" />
+                <path d="M9 10h.01M14.5 9h.01M11.5 14.5h.01M16 14h.01" strokeWidth={3} />
+              </svg>
               Skóra
             </button>
             {/* The period has no place on the body: one tap adds it, and the questions come later. */}
             {draft.sex === 'f' && (
-              <button type="button" onClick={() => togglePick(PERIOD)} aria-pressed={picked.has(PERIOD)} className="chip">
+              <button type="button" onClick={() => togglePick(PERIOD)} aria-pressed={picked.has(PERIOD)} className="stage-tag">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 3.5c3.2 4.2 5.5 7.2 5.5 10.2a5.5 5.5 0 0 1-11 0c0-3 2.3-6 5.5-10.2Z" />
+                </svg>
                 Miesiączka
               </button>
             )}
