@@ -5,6 +5,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { CloseIcon, MicIcon, PhoneIcon, SendIcon, SpeakerIcon, StopIcon } from '../icons.tsx'
 import { supabase } from '../../lib/supabase.ts'
+import { callDoco } from '../../shell.ts'
 import type { Conversation, Turn } from './useConversation.ts'
 
 const SUGGESTIONS = ['Boli mnie kolano', 'Gdzie jest wątroba?', 'Jak rozciągnąć łydkę?']
@@ -78,8 +79,15 @@ export default function Chat({ talk, onFocus, onClose }: Props) {
               </li>
             ))}
           </ul>
-          {/* The team's companion app, a level up from /cialo/, has a full voice call (ElevenLabs). */}
-          <a className="talk-soleil" href="../">
+          {/* Doco's voice call (ElevenLabs), opened over this tab; on its own the atlas goes to Doco's Rozmowa. */}
+          <a
+            className="talk-soleil"
+            href="../#rozmowa"
+            target="_top"
+            onClick={(e) => {
+              if (callDoco()) e.preventDefault()
+            }}
+          >
             <PhoneIcon />
             <span>
               Chcesz po prostu porozmawiać? <strong>Zadzwoń do Doco</strong>

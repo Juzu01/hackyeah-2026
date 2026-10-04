@@ -11,3 +11,19 @@ export function stayOrOpenInSoleil(tab: 'cialo' | 'objawy'): boolean {
   location.replace(new URL(`../#${tab}`, location.href))
   return false
 }
+
+/**
+ * Starts Doco's voice call, the same as the phone button in Rozmowa. In Doco's frame it opens in the app
+ * around us, over this tab; a plain link would load a second Doco, tab bar and all, inside the frame.
+ * False when there's no Doco around (opened on its own), so the caller can go there instead.
+ */
+export function callDoco(): boolean {
+  try {
+    const doco = window.parent as Window & { openVoiceCall?: () => void }
+    if (doco === window || typeof doco.openVoiceCall !== 'function') return false
+    doco.openVoiceCall()
+    return true
+  } catch {
+    return false
+  }
+}
