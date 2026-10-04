@@ -95,7 +95,21 @@ function LocalAccount({ children }: { children: ReactNode }) {
   return <AccountContext.Provider value={value}>{children}</AccountContext.Provider>
 }
 
+// Demo (HackYeah): the same test account as the Doco shell (soleil-main/index.html), no Clerk sign-in.
+// Results and diary entries are saved under it in this browser. Set to false to bring Clerk back.
+const TEST_ACCOUNT = true
+const TEST_USER: AccountUser = { id: 'test-user', name: 'Konto testowe' }
+
+function TestAccount({ children }: { children: ReactNode }) {
+  const value = useMemo<Account>(
+    () => ({ provider: 'local', status: 'signed-in', user: TEST_USER, signIn: () => {}, signOut: async () => {}, openProfile: () => {} }),
+    [],
+  )
+  return <AccountContext.Provider value={value}>{children}</AccountContext.Provider>
+}
+
 export function AccountProvider({ children }: { children: ReactNode }) {
+  if (TEST_ACCOUNT) return <TestAccount>{children}</TestAccount>
   if (!KEY || KEY === 'off') return <LocalAccount>{children}</LocalAccount>
   return (
     <ClerkProvider publishableKey={KEY} localization={plPL} appearance={APPEARANCE}>

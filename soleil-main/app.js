@@ -354,6 +354,7 @@
     btn.querySelector('span').textContent = user ? T().logout : T().login;
     btn.querySelector('use').setAttribute('href', user ? '#i-logout' : '#i-login');
     btn.onclick = user ? () => window.signOut() : () => window.openAuth();
+    btn.style.display = user ? 'none' : ''; // the test account has no sign-out
     $('hyRegisterBtn').hidden = !!user;
     $('hyRegisterBtn').querySelector('span').textContent = T().register;
     $('hyLangValue').textContent = LANG_NAMES[lang$()] || LANG_NAMES.pl;

@@ -58,13 +58,6 @@
   };
 })();
 </script>
-<script
-  async
-  crossorigin="anonymous"
-  data-clerk-publishable-key="pk_test_YXdhaXRlZC1taW5rLTQ1LmNsZXJrLmFjY291bnRzLmRldiQ"
-  src="https://awaited-mink-45.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
-  type="text/javascript"
-></script>
 <link rel="stylesheet" href="soleil.css?v=13">
 <link rel="stylesheet" href="voice.css?v=6">
 <link rel="stylesheet" href="diary.css?v=5">
@@ -294,7 +287,7 @@ try {
   </div>
   <button class="user-menu-btn" onclick="openLanguage(); toggleUserMenu()"><svg class="ico"><use href="#i-lang"/></svg><span id="menuLangLabel">Język</span> <span id="menuLangFlag" class="lang-code">PL</span></button>
   <button class="user-menu-btn" onclick="openVoicePicker(); toggleUserMenu()"><svg class="ico"><use href="#i-voice"/></svg><span id="menuVoiceLabel">Głos Doco</span></button>
-  <button class="user-menu-btn danger" onclick="signOut()"><svg class="ico"><use href="#i-logout"/></svg><span id="menuSignOutLabel">Wyloguj się</span></button>
+  <button class="user-menu-btn danger" onclick="signOut()" style="display:none"><svg class="ico"><use href="#i-logout"/></svg><span id="menuSignOutLabel">Wyloguj się</span></button>
 </div>
 
 <!-- A minute of breathing: the sprout opens its leaves while you breathe in (4 s) and folds them while you breathe out (6 s), six times. chat.js runs it. -->
@@ -482,7 +475,22 @@ try {
 const CLERK_PUBLISHABLE_KEY = 'pk_test_YXdhaXRlZC1taW5rLTQ1LmNsZXJrLmFjY291bnRzLmRldiQ';
 const STRIPE_PUBLISHABLE_KEY = 'WSTAW_TUTAJ_STRIPE_PUBLISHABLE_KEY';
 let clerk = null;
-let currentUser = null;
+// Demo (HackYeah): everyone is signed in as one test account, no Clerk/Google sign-in. What an account unlocks (voice
+// call, diary, saving in Objawy) works from the start; the entries stay in this browser. Objawy uses the same id
+// (src/lib/auth.tsx), so its "Dodaj do dziennika" lands in this diary.
+const DOCO_TEST_USER = {
+  id: 'test-user',
+  firstName: (() => { try { return localStorage.getItem('doco_test_name') || ''; } catch (e) { return ''; } })(),
+  lastName: '',
+  emailAddresses: [{ emailAddress: 'Konto testowe' }], // the line under the name in the account menu
+  hasImage: false,
+  async update({ firstName }) { // Więcej → Imię
+    this.firstName = (firstName || '').trim();
+    try { localStorage.setItem('doco_test_name', this.firstName); } catch (e) {}
+  }
+};
+try { localStorage.setItem('doco_name_asked_test-user', '1'); } catch (e) {} // no name popup on the first visit
+let currentUser = DOCO_TEST_USER;
 let selectedMood = null;
 let currentConversationId = null;
 let userIsPremium = false;
@@ -1121,6 +1129,7 @@ function setAuthMode(mode) {
   if (clerk && clerk.loaded && document.getElementById('authOverlay').classList.contains('visible')) mountClerkSignIn();
 }
 function openAuth(mode) {
+  if (currentUser === DOCO_TEST_USER) return;
   authMode = mode === 'signUp' ? 'signUp' : 'signIn';
   renderAuthTexts();
   pushOverlayState('authOverlay');
@@ -1156,7 +1165,7 @@ function closeAuth() {
   if (isClerkRoute()) history.replaceState(history.state, '', authReturnUrl());
 }
 function toggleUserMenu() { const menu = document.getElementById('userMenu'); if (!menu.classList.contains('visible')) pushOverlayState('userMenu'); menu.classList.toggle('visible'); }
-async function signOut() { if (clerk) { await clerk.signOut({ redirectUrl: authReturnUrl() }); document.getElementById('userMenu').classList.remove('visible'); userIsPremium = false; goBack(); } } // goBack: the next person on this device must not see the conversation
+async function signOut() { if (currentUser === DOCO_TEST_USER) return; if (clerk) { await clerk.signOut({ redirectUrl: authReturnUrl() }); document.getElementById('userMenu').classList.remove('visible'); userIsPremium = false; goBack(); } } // goBack: the next person on this device must not see the conversation
 
 // PREMIUM
 function openPremium() { pushOverlayState('premiumOverlay'); document.getElementById('premiumOverlay').classList.add('visible'); document.getElementById('userMenu').classList.remove('visible'); }
@@ -2255,8 +2264,8 @@ async function sendMessage() {
 }
 
 window.__clerk_init = initClerk;
-document.querySelector('script[data-clerk-publishable-key]').onload = initClerk;
-window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangUI(); updateInterfaceLanguage(currentLanguage); loadDailyQuote(); });
+document.addEventListener('DOMContentLoaded', () => updateAuthUI(currentUser));
+window.addEventListener('load', () => { updateLangUI(); updateInterfaceLanguage(currentLanguage); loadDailyQuote(); });
 </script>
 <script>
 /* === Mobile comfort (HackYeah) ===
@@ -2327,7 +2336,7 @@ window.addEventListener('load', () => { setTimeout(initClerk, 1000); updateLangU
 <script src="lemur.js?v=5"></script>
 <script src="voice.js?v=7"></script>
 <script src="diary.js?v=4"></script>
-<script src="app.js?v=11"></script>
+<script src="app.js?v=12"></script>
 <script src="quotes.js?v=5"></script>
 <script src="art.js?v=8"></script>
 <script src="chat.js?v=9"></script>
